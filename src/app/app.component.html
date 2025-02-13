@@ -19,6 +19,7 @@
     --gray-900: oklch(19.37% 0.006 300.98);
     --gray-700: oklch(36.98% 0.014 302.71);
     --gray-400: oklch(70.9% 0.015 304.04);
+    --inter-font: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 
     --red-to-pink-to-purple-vertical-gradient: linear-gradient(
       180deg,
@@ -117,7 +118,7 @@
     border-radius: 2.75rem;
     border: 0;
     transition: background 0.3s ease;
-    font-family: var(--inter-font);
+    font-family: var(--inter-font),serif;
     font-size: 0.875rem;
     font-style: normal;
     font-weight: 500;
@@ -207,7 +208,7 @@
             id="c"
             r="1"
           >
-            <stop stop-color="#FF41F8"/>
+            <stop stop-color="#FF41F8" offset=""/>
             <stop offset=".707" stop-color="#FF41F8" stop-opacity=".5"/>
             <stop offset="1" stop-color="#FF41F8" stop-opacity="0"/>
           </radialGradient>
@@ -219,7 +220,7 @@
             y1="192"
             y2="192"
           >
-            <stop stop-color="#F0060B"/>
+            <stop stop-color="#F0060B" offset=""/>
             <stop offset="0" stop-color="#F0070C"/>
             <stop offset=".526" stop-color="#CC26D5"/>
             <stop offset="1" stop-color="#7702FF"/>
