@@ -1,1 +1,43 @@
-<p>student works!</p>
+
+<header class="header">
+  <a routerLink="">Online Exam Portal</a>
+</header>
+
+<div class="container">
+  <div class="signup-form">
+    <h2>Bạn đang đăng ký với vai trò giáo viên</h2>
+    <a routerLink="" class="change-role">← thay đổi vai trò</a>
+    <form (ngSubmit)="onSubmit()" [formGroup]="signupForm">
+      <div class="form-section">
+        <h3>Thông tin cá nhân</h3>
+        <input type="text" formControlName="fullName" placeholder="Họ tên" required>
+
+        <div class="row">
+          <input type="text" formControlName="class" placeholder="Lớp" required>
+          <input type="text" formControlName="school" placeholder="Trường" required>
+        </div>
+
+        <div class="row">
+          <input type="date" formControlName="dob" placeholder="Ngày sinh" required>
+          <select formControlName="province" required>
+            <option value="">Tỉnh</option>
+            <option value="HN">Hà Nội</option>
+            <option value="HCM">Hồ Chí Minh</option>
+            <option value="DN">Đà Nẵng</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h3>Thông tin tài khoản</h3>
+        <input type="text" formControlName="contact" placeholder="Số điện thoại hoặc email" required>
+        <input type="password" formControlName="password" placeholder="Mật khẩu" required>
+        <input type="password" formControlName="confirmPassword" placeholder="Xác nhận mật khẩu" required>
+      </div>
+
+      <button type="submit" class="submit-btn" [disabled]="signupForm.invalid">Đăng ký</button>
+    </form>
+
+    <p class="login-link">Đã có tài khoản? <a routerLink="/login">Đăng nhập ngay</a></p>
+  </div>
+</div>
