@@ -1,10 +1,13 @@
 import { Component } from '@angular/core';
+import {RouterLink} from '@angular/router';
 
 @Component({
-  selector: 'app-student',
-  imports: [],
+  selector: 'app-login-student',
   templateUrl: './student.component.html',
-  styleUrl: './student.component.scss'
+  imports: [
+    RouterLink
+  ],
+  styleUrls: ['./student.component.scss']
 })
 export class StudentComponent {
 
