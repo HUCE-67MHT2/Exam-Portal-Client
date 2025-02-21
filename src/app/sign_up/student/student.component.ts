@@ -4,7 +4,7 @@ import {RouterLink} from '@angular/router';
 import {NgIf} from '@angular/common';
 
 @Component({
-  selector: 'app-signup-teacher',
+  selector: 'app-signup-student',
   templateUrl: './student.component.html',
   imports: [
     ReactiveFormsModule,
