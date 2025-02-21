@@ -83,19 +83,36 @@ header {
       border: 1px solid #ccc;
       border-radius: 5px;
       padding: 0 10px;
-      &.ng-invalid.ng-touched {
-        border-color: red;
-      }
     }
 
+    .input-wrapper {
+      position: relative; /* Set position to relative */
+
+      input,
+      select {
+        width: 100%;
+      }
+
+      .error {
+        position: absolute; /* Position error message absolutely */
+        bottom: -3px; /* Position it right below the input field */
+        left: 0;
+        color: red;
+        font-size: 10px;
+      }
+    }
     /* Hai ô cạnh nhau (Lớp/Trường, Ngày sinh/Tỉnh) */
     .row {
       display: flex;
       gap: 10px;
 
-      input,
-      select {
+      .input-wrapper {
         width: 50%;
+
+        input,
+        select {
+          width: 100%;
+        }
       }
     }
   }
@@ -132,4 +149,3 @@ header {
     }
   }
 }
-
