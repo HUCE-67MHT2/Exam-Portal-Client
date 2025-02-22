@@ -2,16 +2,16 @@
   <div class="login-header">
     <a routerLink="">Online Exam Portal</a>
     <div class="user-type">
-      <select>
-        <option>Tôi là giáo viên</option>
-        <option>Tôi là học sinh</option>
+      <select (change)="onUserTypeChange($event)">
+        <option value="student">Tôi là học sinh</option>
+        <option value="teacher">Tôi là giáo viên</option>
       </select>
     </div>
   </div>
 
   <div class="login-container">
     <div class="login-form">
-      <h3 style="font-size: 36px">Học sinh đăng nhập</h3>
+      <h3 style="font-size: 36px">Giáo viên đăng nhập</h3>
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
         <div class="input-wrapper">
           <input type="text" formControlName="contact" placeholder="Email/ Số điện thoại" required />
