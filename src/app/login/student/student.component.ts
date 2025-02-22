@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';  // Import trực tiếp ReactiveFormsModule
-import { Router } from '@angular/router';  // Import Router để điều hướng
-import { NgIf } from '@angular/common';  // Import NgIf để sử dụng *ngIf trong template
+import {Router, RouterLink} from '@angular/router';  // Import Router để điều hướng
+import {NgIf, NgOptimizedImage} from '@angular/common';  // Import NgIf để sử dụng *ngIf trong template
 
 @Component({
   selector: 'app-login-student',
@@ -9,7 +9,10 @@ import { NgIf } from '@angular/common';  // Import NgIf để sử dụng *ngIf 
   styleUrls: ['./student.component.scss'],
   imports: [
     ReactiveFormsModule,  // Đảm bảo import ReactiveFormsModule
-    NgIf  // Import NgIf để sử dụng *ngIf trong template
+    NgIf,
+    RouterLink,
+    NgOptimizedImage,
+    // Import NgIf để sử dụng *ngIf trong template
   ]
 })
 export class StudentComponent {
@@ -29,12 +32,7 @@ export class StudentComponent {
     }
   }
 
-  onUserTypeChange(event: any) {
-    const selectedValue = event.target.value;
-    if (selectedValue === 'student') {
-      this.router.navigate(['/login/student']);
-    } else if (selectedValue === 'teacher') {
-      this.router.navigate(['/login/teacher']);
-    }
+  onUserTypeChange() {
+    this.router.navigate(['/login/teacher']);
   }
 }

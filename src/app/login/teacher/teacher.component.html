@@ -2,10 +2,7 @@
   <div class="login-header">
     <a routerLink="">Online Exam Portal</a>
     <div class="user-type">
-      <select (change)="onUserTypeChange($event)">
-        <option value="student">Tôi là học sinh</option>
-        <option value="teacher">Tôi là giáo viên</option>
-      </select>
+      <button (click)="onUserTypeChange()" class="user-type-button" data-hover="Thay đổi vai trò">Tôi là giáo viên</button>
     </div>
   </div>
 
@@ -33,7 +30,7 @@
     </div>
 
     <div class="login-image">
-      <img src="/Login.png" alt="Login Illustration" />
+      <img ngSrc="/Login.png" alt="Login Illustration" height="584" width="584"/>
     </div>
   </div>
 </div>
