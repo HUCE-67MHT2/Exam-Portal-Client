@@ -4,11 +4,16 @@ import {StudentLoginComponent} from './pages/login/student-login/student-login.c
 import {TeacherLoginComponent} from './pages/login/teacher-login/teacher-login.component';
 import {StudentSignupComponent} from './pages/sign-up/student-signup/student-signup.component';
 import {TeacherSignupComponent} from './pages/sign-up/teacher-signup/teacher-signup.component';
+import { StudentHomeComponent } from './pages/home/student-home/student-home.component';
+import { TeacherHomeComponent } from './pages/home/teacher-home/teacher-home.component';
 
 export const routes: Routes = [
+
   {path: '', component: WelcomePageComponent},
   {path: 'login/student', component: StudentLoginComponent},
   {path: 'login/teacher', component: TeacherLoginComponent},
   {path: 'sign-up/student', component: StudentSignupComponent},
-  {path: 'sign-up/teacher', component: TeacherSignupComponent}
+  {path: 'sign-up/teacher', component: TeacherSignupComponent},
+  {path: 'home/student', component: StudentHomeComponent},
+  {path: 'home/teacher', component: TeacherHomeComponent}
 ];
