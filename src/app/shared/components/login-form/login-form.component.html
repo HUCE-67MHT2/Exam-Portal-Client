@@ -1,0 +1,47 @@
+<div class="container">
+  <div class="login-header">
+    <a routerLink="">Online Exam Portal</a>
+    <div class="user-type">
+      <button (click)="navigateToLink()" class="user-type-button" data-hover="Thay đổi vai trò">
+        <ng-content select="[present_role]"></ng-content>
+      </button>
+    </div>
+  </div>
+
+  <div class="login-container">
+    <div class="login-form">
+      <h3 style="font-size: 36px">
+        <ng-content select="[login_heading]"></ng-content>
+      </h3>
+      <form (ngSubmit)="onSubmit()" [formGroup]="loginForm">
+        <div class="input-wrapper">
+          <input formControlName="contact" placeholder="Email/ Số điện thoại" required type="text"/>
+          <div *ngIf="loginForm.get('contact')?.touched && loginForm.get('contact')?.errors">
+            <small *ngIf="loginForm.get('contact')?.errors?.['required']" class="error">Liên hệ không được để
+              trống.</small>
+            <small *ngIf="loginForm.get('contact')?.errors?.['email']" class="error">Email không hợp lệ</small>
+          </div>
+        </div>
+        <div class="input-wrapper">
+          <input formControlName="password" placeholder="Mật khẩu" required type="password"/>
+          <div *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.errors">
+            <small *ngIf="loginForm.get('password')?.errors?.['required']" class="error">Mật khẩu không được để
+              trống.</small>
+          </div>
+        </div>
+        <a class="forgot-password" routerLink="/forgot-password">Quên mật khẩu?</a>
+        <button [disabled]="loginForm.invalid" type="submit">Đăng nhập</button>
+        <p class="register">Bạn chưa có tài khoản? <a [routerLink]="link">Đăng ký ngay</a></p>
+        <p *ngIf="loginError" class="error">{{ loginError }}</p>
+      </form>
+    </div>
+
+    <div class="login-image">
+      <img alt="Login Illustration" height="584" ngSrc="/Login.png" width="584"/>
+    </div>
+  </div>
+
+  <div class="custom-footer">
+    <ng-content select="[custom_footer]"></ng-content>
+  </div>
+</div>

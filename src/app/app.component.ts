@@ -1,14 +1,14 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-
+import {Component} from '@angular/core';
+import {RouterOutlet} from '@angular/router';
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [RouterOutlet],
-  template: `<router-outlet></router-outlet>`, // Dùng template trực tiếp
+  template: `
+    <router-outlet></router-outlet>`, // Sử dụng template trực tiếp
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'angularfirst';
+  title = 'Exam-Portal-Client';
 }

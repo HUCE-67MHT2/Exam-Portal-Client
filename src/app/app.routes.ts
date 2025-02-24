@@ -1,53 +1,14 @@
-import { Routes } from '@angular/router';
-    import { LayoutComponent } from './layout/layout.component';
-    import { WelcomePageComponent } from './welcome-page/welcome-page.component';
-    import { StudentComponent as LoginStudentComponent } from './login/student/student.component';
-    import { TeacherComponent as LoginTeacherComponent } from './login/teacher/teacher.component';
-    import { StudentComponent as SignUpStudentComponent } from './sign_up/student/student.component';
-    import { TeacherComponent as SignUpTeacherComponent } from './sign_up/teacher/teacher.component';
+import {Routes} from '@angular/router';
+import {WelcomePageComponent} from './pages/welcome-page/welcome-page.component';
+import {StudentLoginComponent} from './pages/login/student-login/student-login.component';
+import {TeacherLoginComponent} from './pages/login/teacher-login/teacher-login.component';
+import {StudentSignupComponent} from './pages/sign-up/student-signup/student-signup.component';
+import {TeacherSignupComponent} from './pages/sign-up/teacher-signup/teacher-signup.component';
 
-    export const routes: Routes = [
-      // Home route
-      {
-        path: '',
-        component: WelcomePageComponent,
-      },
-      // Login routes
-      {
-        path: 'login',
-        children: [
-          {
-            path: 'student',
-            component: LoginStudentComponent,
-          },
-          {
-            path: 'teacher',
-            component: LoginTeacherComponent,
-          },
-        ],
-      },
-
-      // Sign-up routes
-      {
-        path: 'sign_up',
-        children: [
-          {
-            path: 'student',
-            component: SignUpStudentComponent,
-          },
-          {
-            path: 'teacher',
-            component: SignUpTeacherComponent,
-          },
-        ],
-      },
-
-      // Layout route
-      {
-        path: 'layout',
-        component: LayoutComponent,
-        children: [
-          // Add child routes here if needed
-        ],
-      },
-    ];
+export const routes: Routes = [
+  {path: '', component: WelcomePageComponent},
+  {path: 'login/student', component: StudentLoginComponent},
+  {path: 'login/teacher', component: TeacherLoginComponent},
+  {path: 'sign-up/student', component: StudentSignupComponent},
+  {path: 'sign-up/teacher', component: TeacherSignupComponent}
+];

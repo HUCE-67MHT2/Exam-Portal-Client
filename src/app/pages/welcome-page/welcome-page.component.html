@@ -1,0 +1,22 @@
+<div class="container">
+  <div class="header">
+    <h5 style="font-size: 20px">Online Exam Portal</h5>
+    <button (click)="onRegister()" class="register-btn">Đăng ký</button>
+  </div>
+
+  <div class="content">
+    <div class="left-panel">
+      <h2 style="font-size: 36px">Chào mừng bạn đến với<br>Online Exam Portal</h2>
+      <label for="role" style="font-size: 16px">Chọn vai trò của bạn</label>
+      <select [(ngModel)]="selectedRole" id="role">
+        <option>Tôi là học sinh</option>
+        <option>Tôi là giáo viên</option>
+      </select>
+      <button (click)="onContinue()" class="continue-btn">Tiếp tục</button>
+    </div>
+
+    <div class="right-panel">
+      <img alt="Exam Portal Image" height="584" ngSrc="/Login.png" width="584"/>
+    </div>
+  </div>
+</div>

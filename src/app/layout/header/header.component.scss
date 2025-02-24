@@ -1,0 +1,43 @@
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Header */
+.header {
+  width: 100%;
+  background-color: #ffffff;
+  padding: 20px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: "Arial", sans-serif;
+}
+
+/* Logo */
+.header__logo {
+  font-size: 22px;
+  font-weight: bold;
+  color: #000000;
+  text-decoration: none;
+}
+
+/* Nút đăng ký */
+.register-btn {
+  background-color: transparent;
+  border: 1px solid #28a745;
+  color: #28a745;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+  transition: all 0.3s ease-in-out;
+}
+
+.register-btn:hover {
+  background-color: #28a745;
+  color: white;
+}

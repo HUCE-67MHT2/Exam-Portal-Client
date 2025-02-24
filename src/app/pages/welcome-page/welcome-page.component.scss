@@ -1,0 +1,101 @@
+/* Reset cơ bản */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+/* Tổng thể */
+.container {
+  padding: 20px;
+  margin-left: 7%;
+  margin-right: 7%;
+}
+
+/* Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+}
+
+.header h5 {
+  margin-left: -1.5%;
+}
+
+.register-btn {
+  background-color: white;
+  border: 1px solid #28a745;
+  color: #28a745;
+  padding: 6px 14px; /* Giảm kích thước nút đăng ký */
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.register-btn:hover {
+  background-color: #28a745;
+  color: white;
+}
+
+/* Nội dung chính */
+.content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 40px; /* Giảm khoảng cách phần nội dung */
+}
+
+/* Phần bên trái */
+.left-panel {
+  max-width: 40%;
+}
+
+.left-panel h2 {
+  font-size: 32px; /* Giảm kích thước tiêu đề */
+  margin-bottom: 16px;
+}
+
+.left-panel label {
+  display: block;
+  margin-bottom: 6px; /* Giảm khoảng cách giữa label và select */
+  font-size: 14px;
+  color: #28a745;
+}
+
+.left-panel select {
+  font-size: 14px; /* Giảm font-size */
+  height: 42px; /* Giảm chiều cao dropdown */
+  padding: 8px; /* Giảm padding */
+  border: 1px solid #ccc;
+  width: 100%;
+  margin-bottom: 12px; /* Tăng khoảng cách với nút Tiếp tục */
+  border-radius: 5px;
+}
+
+/* Nút tiếp tục */
+.continue-btn {
+  background-color: #28a745;
+  border: none;
+  color: white;
+  font-weight: bold;
+  padding: 10px; /* Giảm kích thước nút Tiếp tục */
+  border-radius: 5px;
+  width: 100%;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.continue-btn:hover {
+  background-color: #1e7e34;
+}
+
+/* Phần bên phải */
+.right-panel img {
+  width: 550px; /* Giảm kích thước ảnh một chút */
+  height: 550px;
+  border-radius: 10px;
+}
