@@ -95,7 +95,8 @@ header {
 
       .error {
         position: absolute; /* Position error message absolutely */
-        bottom: -3px; /* Position it right below the input field */
+        bottom: 8px; /* Position it right below the input field */
+        background: #ffffff;
         left: 0;
         color: red;
         font-size: 10px;
