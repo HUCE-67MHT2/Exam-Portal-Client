@@ -26,13 +26,15 @@
 }
 
 .register-btn {
+  width: 150px;
+  height: 40px;
   background-color: white;
   border: 1px solid #28a745;
   color: #28a745;
   padding: 6px 14px; /* Giảm kích thước nút đăng ký */
   border-radius: 5px;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 16px;
   transition: background-color 0.3s, color 0.3s;
 }
 
