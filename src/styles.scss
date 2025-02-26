@@ -2,6 +2,7 @@
   --primary: #fe2c55;
   --black: #000;
   --text-color: #333;
+  --primary-color: #04AA6D;
 
   --default-layout-height: 60px;
   --default-layout-width: 1150px;
@@ -18,9 +19,12 @@ html {
 body {
   font-family: 'Roboto', sans-serif;
   line-height: 1.5;
-  font-size: 1.6rem;
+  font-size: 1.4rem;
   text-rendering: optimizeSpeed;
   color: var(--text-color);
+}
+a {
+  text-decoration: none
 }
 @import "slick-carousel/slick/slick.css";
 @import "slick-carousel/slick/slick-theme.css";

@@ -1,1 +1,46 @@
-<p>student-home works!</p>
+<body style="height: 3000px">
+  <app-header></app-header>
+
+  <aside class="sidebar-links">
+    <div class="links-wrap">
+      <a href="#schedule" class="link-item">Lịch thi hôm nay</a>
+      <a href="#unfished-exam" class="link-item">Bài thi chưa làm</a>
+      <a href="achievement" class="link-item">Thành tích</a>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div id="schedule" class="wrap schedule-wrap">
+      <h3 class="heading schedule__heading">Lịch thi hôm nay</h3>
+      <div class="list schedule__list">
+        <div class="list-heading">
+          <p class="list-heading-item">Tên bài thi</p>
+          <p class="list-heading-item">Lớp</p>
+          <p class="list-heading-item">Giờ bắt đầu</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="unfished-exam" class="wrap unfished-exam__wrap">
+      <h3 class="heading unfished-exam__heading">Bài thi chưa làm</h3>
+      <div class="list unfished-exam_list">
+        <div class="list-heading">
+          <p class="list-heading-item">Tên bài thi</p>
+          <p class="list-heading-item">Lớp</p>
+          <p class="list-heading-item">Giờ kết thúc</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="achievement" class="wrap achievement__wrap">
+      <h3 class="heading achievement__heading">Thành tích</h3>
+      <div class="list achievement__list">
+        <div class="list-heading">
+          <p class="list-heading-item">Tên lớp thi</p>
+          <p class="list-heading-item">Giáo viên</p>
+          <p class="list-heading-item">ĐTB</p>
+        </div>
+      </div>
+    </div>
+  </main>
+</body>
