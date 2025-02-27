@@ -1,11 +1,16 @@
 import { Component } from '@angular/core';
-import { HeaderComponent } from "../../../layout/header/header.component";
+import {HeaderStudentComponent} from '../../../layout/header/header-student/header-student.component';
 
 @Component({
   selector: 'app-student-home',
-  imports: [HeaderComponent],
+  imports: [ HeaderStudentComponent],
   templateUrl: './student-home.component.html',
   styleUrl: './student-home.component.scss'
 })
 export class StudentHomeComponent {
+  constructor() {}
+
+  scrollToSection(elementId: string): void {
+    document.getElementById(elementId)?.scrollIntoView({ behavior: 'smooth' });
+  }
 }
