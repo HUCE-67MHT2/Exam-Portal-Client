@@ -1,3 +1,14 @@
+html {
+  scroll-behavior: smooth;
+}
+
+.link-item {
+  cursor: pointer;
+}
+
+#schedule, #unfished-exam, #achievement {
+  scroll-margin-top: 100px;
+}
 .sidebar-links {
   position: fixed;
   width: 242px;

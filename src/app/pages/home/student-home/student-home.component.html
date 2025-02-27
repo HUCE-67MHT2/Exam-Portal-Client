@@ -1,11 +1,11 @@
 <body style="height: 3000px">
-  <app-header></app-header>
+  <app-header-student></app-header-student>
 
   <aside class="sidebar-links">
     <div class="links-wrap">
-      <a href="#schedule" class="link-item">Lịch thi hôm nay</a>
-      <a href="#unfished-exam" class="link-item">Bài thi chưa làm</a>
-      <a href="achievement" class="link-item">Thành tích</a>
+      <a (click)="scrollToSection('schedule')" class="link-item">Lịch thi hôm nay</a>
+      <a (click)="scrollToSection('unfished-exam')" class="link-item">Bài thi chưa làm</a>
+      <a (click)="scrollToSection('achievement')" class="link-item">Thành tích</a>
     </div>
   </aside>
 
