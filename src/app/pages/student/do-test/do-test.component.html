@@ -23,12 +23,12 @@
         </button>
       </div>
 
-      <input type="text"
-             [value]="selectedQuestionIndex !== null ? answers[selectedQuestionIndex] : ''"
-             (input)="updateAnswer($event)"
-             placeholder="Nhập A, B, C, D"
-             class="answer-input"
-             maxlength="1">
+      <div class="answer-buttons" *ngIf="selectedQuestionIndex !== null">
+        <button (click)="updateAnswer('A')" [class.selected-answer]="answers[selectedQuestionIndex] === 'A'">A</button>
+        <button (click)="updateAnswer('B')" [class.selected-answer]="answers[selectedQuestionIndex] === 'B'">B</button>
+        <button (click)="updateAnswer('C')" [class.selected-answer]="answers[selectedQuestionIndex] === 'C'">C</button>
+        <button (click)="updateAnswer('D')" [class.selected-answer]="answers[selectedQuestionIndex] === 'D'">D</button>
+      </div>
 
       <button class="submit-btn" (click)="submit()">Nộp bài</button>
     </div>

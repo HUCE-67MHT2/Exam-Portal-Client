@@ -67,6 +67,7 @@
           cursor: pointer;
           font-weight: bold;
           transition: 0.2s;
+          border-radius: 5px;
 
           &.selected {
             background-color: lightblue;
@@ -78,16 +79,30 @@
           }
         }
       }
-      .answer-input {
-        width: 90%;
-        padding: 10px;
-        text-align: center;
-        border: 1px solid #ccc;
-        border-radius: 5px;
+      .answer-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
         margin-top: 15px;
-        font-size: 16px;
-      }
 
+        button {
+          padding: 10px 20px;
+          border: 1px solid #ccc;
+          border-radius: 5px;
+          background-color: #ffffff;
+          cursor: pointer;
+          font-size: 16px;
+          transition: background-color 0.2s;
+
+          &:hover {
+            background-color: #ddd;
+          }
+          &.selected-answer {
+            background-color: #04AA6D;
+            color: white;
+          }
+        }
+      }
       .submit-btn {
         background-color: #04aa6d;
         color: white;
