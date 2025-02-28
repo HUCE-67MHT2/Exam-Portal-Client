@@ -1,47 +1,106 @@
-.user-form {
-  max-width: 400px;
-  margin: auto;
-  padding: 20px;
+body {
+  font-family: sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4;
+}
+
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  background-color: #fff;
   border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  background: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
 
-  h2 {
-    text-align: center;
+header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+
+  .back-button {
+    img {
+      width: 24px;
+      height: 24px;
+      margin-right: 10px;
+    }
   }
 
-  .form-group {
-    margin-bottom: 15px;
+  .title {
+    font-size: 1.2em;
+    font-weight: bold;
+  }
+}
 
-    label {
-      display: block;
+main {
+  .profile {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+
+    .profile-pic {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      margin-right: 20px;
+    }
+
+    .profile-details {
+      .name {
+        font-size: 1.2em;
+        font-weight: bold;
+        margin-bottom: 5px;
+      }
+
+      .change-profile-pic {
+        color: #007bff;
+        text-decoration: none;
+      }
+    }
+  }
+
+  .student-info, .account-info, .change-password {
+    margin-bottom: 20px;
+
+    .student-label {
+      font-size: 1.1em;
       font-weight: bold;
+      margin-bottom: 10px;
     }
 
-    input {
-      width: 100%;
-      padding: 8px;
-      border: 1px solid #ccc;
+    .section-title {
+      font-size: 1em;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .form-group {
+      margin-bottom: 10px;
+
+      label {
+        display: block;
+        font-size: 0.9em;
+        margin-bottom: 5px;
+      }
+
+      input[type="text"], input[type="email"], input[type="password"], input[type="date"], select {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+      }
+    }
+
+    button.save-info, button.change-password-btn {
+      background-color: #007bff;
+      color: #fff;
+      padding: 10px 15px;
+      border: none;
       border-radius: 4px;
-    }
-
-    small {
-      color: red;
-      font-size: 12px;
-    }
-  }
-
-  button {
-    width: 100%;
-    padding: 10px;
-    border: none;
-    background-color: #007bff;
-    color: white;
-    border-radius: 4px;
-    cursor: pointer;
-
-    &:disabled {
-      background-color: #ccc;
+      cursor: pointer;
+      width: 100%;
     }
   }
 }
