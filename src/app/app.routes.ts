@@ -6,8 +6,8 @@ import {StudentSignupComponent} from './pages/sign-up/student-signup/student-sig
 import {TeacherSignupComponent} from './pages/sign-up/teacher-signup/teacher-signup.component';
 import { StudentHomeComponent } from './pages/home/student-home/student-home.component';
 import { TeacherHomeComponent } from './pages/home/teacher-home/teacher-home.component';
-import { StudentExamComponent} from './pages/exam/student-exam/student-exam.component';
-import { DoTestComponent} from './pages/do-test/do-test.component';
+import { ExamComponent } from './pages/student/exam/exam.component';
+import { DoTestComponent} from './pages/student/do-test/do-test.component';
 
 export const routes: Routes = [
 
@@ -18,6 +18,6 @@ export const routes: Routes = [
   {path: 'sign-up/teacher', component: TeacherSignupComponent},
   {path: 'home/student', component: StudentHomeComponent},
   {path: 'home/teacher', component: TeacherHomeComponent},
-  {path: 'exam/student', component: StudentExamComponent},
+  {path: 'exam/student', component: ExamComponent},
   {path: 'do-test', component: DoTestComponent}
 ];
