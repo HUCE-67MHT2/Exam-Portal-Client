@@ -9,6 +9,9 @@ import { TeacherHomeComponent } from './pages/home/teacher-home/teacher-home.com
 import { ExamComponent } from './pages/student/exam/exam.component';
 import { DoTestComponent} from './pages/student/do-test/do-test.component';
 import { ResultsComponent } from './pages/student/results/results.component';
+import { UserFormComponent} from './shared/components/user-form/user-form.component';
+import { ExamDetailComponent} from './pages/student/exam-detail/exam-detail.component';
+
 export const routes: Routes = [
 
   {path: '', component: WelcomePageComponent},
@@ -20,5 +23,7 @@ export const routes: Routes = [
   {path: 'home/teacher', component: TeacherHomeComponent},
   {path: 'student/exam', component: ExamComponent},
   {path: 'student/do-test', component: DoTestComponent},
-  {path: 'student/results', component: ResultsComponent}
+  {path: 'student/results', component: ResultsComponent},
+  {path: 'user-form', component: UserFormComponent},
+  {path: 'student/exam-detail', component: ExamDetailComponent}
 ];
