@@ -1,1 +1,20 @@
-<p>do-test works!</p>
+<div class="answer-sheet">
+  <input type="text" [value]="subject" readonly class="subject">
+
+  <h3>Phiếu trả lời</h3>
+
+  <form (ngSubmit)="submit()">
+    <div class="grid">
+      <div *ngFor="let row of answers; let i = index" class="row">
+        <div *ngFor="let col of row; let j = index" class="cell">
+          <label *ngFor="let option of options">
+            <input type="radio" [(ngModel)]="answers[i][j]" [value]="option" name="q{{i}}{{j}}">
+            {{ option }}
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <button type="submit" class="submit-btn">Nộp bài</button>
+  </form>
+</div>
