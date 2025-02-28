@@ -8,7 +8,7 @@ import { StudentHomeComponent } from './pages/home/student-home/student-home.com
 import { TeacherHomeComponent } from './pages/home/teacher-home/teacher-home.component';
 import { ExamComponent } from './pages/student/exam/exam.component';
 import { DoTestComponent} from './pages/student/do-test/do-test.component';
-
+import { ResultsComponent } from './pages/student/results/results.component';
 export const routes: Routes = [
 
   {path: '', component: WelcomePageComponent},
@@ -18,6 +18,7 @@ export const routes: Routes = [
   {path: 'sign-up/teacher', component: TeacherSignupComponent},
   {path: 'home/student', component: StudentHomeComponent},
   {path: 'home/teacher', component: TeacherHomeComponent},
-  {path: 'exam/student', component: ExamComponent},
-  {path: 'do-test', component: DoTestComponent}
+  {path: 'student/exam', component: ExamComponent},
+  {path: 'student/do-test', component: DoTestComponent},
+  {path: 'student/results', component: ResultsComponent}
 ];
