@@ -1,20 +1,36 @@
-<div class="answer-sheet">
-  <input type="text" [value]="subject" readonly class="subject">
+<div class="container">
+  <div class="exam-file">
 
-  <h3>Phiếu trả lời</h3>
-
-  <form (ngSubmit)="submit()">
-    <div class="grid">
-      <div *ngFor="let row of answers; let i = index" class="row">
-        <div *ngFor="let col of row; let j = index" class="cell">
-          <label *ngFor="let option of options">
-            <input type="radio" [(ngModel)]="answers[i][j]" [value]="option" name="q{{i}}{{j}}">
-            {{ option }}
-          </label>
-        </div>
+  </div>
+  <div class="do-test">
+    <div class="counter-wrap">
+      <p>Thời gian còn lại</p>
+      <div class="counter">
+        <p>{{ getFormattedTime() }}</p>
       </div>
     </div>
+    <div class="answer-sheet">
+      <input type="text" [value]="subject" readonly class="subject">
 
-    <button type="submit" class="submit-btn">Nộp bài</button>
-  </form>
+      <h3>Phiếu trả lời</h3>
+
+      <div class="grid">
+        <button *ngFor="let answer of answers; let i = index"
+                (click)="selectQuestion(i)"
+                [class.selected]="selectedQuestionIndex === i"
+                [class.answered]="answers[i] !== ''">
+          {{ i + 1 }}
+        </button>
+      </div>
+
+      <input type="text"
+             [value]="selectedQuestionIndex !== null ? answers[selectedQuestionIndex] : ''"
+             (input)="updateAnswer($event)"
+             placeholder="Nhập A, B, C, D"
+             class="answer-input"
+             maxlength="1">
+
+      <button class="submit-btn" (click)="submit()">Nộp bài</button>
+    </div>
+  </div>
 </div>
