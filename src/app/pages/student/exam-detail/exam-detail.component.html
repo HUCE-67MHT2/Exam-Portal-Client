@@ -1,24 +1,24 @@
 <app-header-student></app-header-student>
-<app-search-bar>
-  Tìm kỳ thi
-</app-search-bar>
-<table>
-  <thead>
-  <tr>
-    <th>Tên bài thi</th>
-    <th>Thời gian</th>
-    <th>Ngày tạo</th>
-    <th>Trạng thái</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr *ngFor="let exam of exams">
-    <td>{{ exam.name }}</td>
-    <td>{{ exam.duration }}</td>
-    <td>{{ exam.dateCreated }}</td>
-    <td>{{ exam.status }}</td>
-  </tr>
-  </tbody>
-</table>
+    <app-search-bar>
+      Tìm kỳ thi
+    </app-search-bar>
+    <table>
+      <thead>
+      <tr>
+        <th>{{examName}} / {{examCode}}</th>
+        <th>Thời gian</th>
+        <th>Ngày bắt đầu</th>
+        <th>Trạng thái</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let exam of exams">
+        <td>{{ exam.name }}</td>
+        <td>{{ exam.duration }}</td>
+        <td>{{ exam.dateCreated }}</td>
+        <td>{{ exam.status }}</td>
+      </tr>
+      </tbody>
+    </table>
 
 

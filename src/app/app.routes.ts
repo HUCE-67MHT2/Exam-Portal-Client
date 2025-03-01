@@ -25,5 +25,7 @@ export const routes: Routes = [
   {path: 'student/do-test', component: DoTestComponent},
   {path: 'student/results', component: ResultsComponent},
   {path: 'user-form', component: UserFormComponent},
+  {path: 'student/results', component: ResultsComponent},
+  {path: 'student/exam-detail/:examCode', component: ExamDetailComponent},
   {path: 'student/exam-detail', component: ExamDetailComponent}
 ];
