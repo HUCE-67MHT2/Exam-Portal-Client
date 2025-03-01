@@ -27,8 +27,8 @@ export class ExamComponent {
     { name: 'Sử', examCode: 'PQR678', students: 30, tests: 2 },
     { name: 'Địa', examCode: 'STU901', students: 25, tests: 1 },
   ];
-  navigateToExamDetail(examCode: string) {
-    this.router.navigate(['student/exam-detail', examCode]);
-    console.log('Navigate to exam detail:', examCode);
+  navigateToExamDetail(exam: { examCode: string, name: string }) {
+    this.router.navigate(['student/exam-detail', exam.examCode], { queryParams: { name: exam.name } });
+    console.log('Navigate to exam detail:', exam.examCode, exam.name);
   }
 }
