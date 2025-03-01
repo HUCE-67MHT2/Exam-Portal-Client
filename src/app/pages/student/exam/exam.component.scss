@@ -1,0 +1,44 @@
+.exam-table {
+  width: 100%;
+  border-collapse: collapse;
+
+  .exam-table__wrap-heading,
+  .exam-table__wrap {
+    height: 50px;
+    background: #d1d1d1;
+    .exam-table__heading {
+      text-align: start;
+    }
+  }
+
+  .exam-table__first-col {
+    padding-left: 5.5%;
+    width: 50%;
+  }
+
+  .exam-table__seccond-col {
+    width: 20%;
+  }
+
+  .exam-table__last-col {
+    padding-right: 5.5%;
+  }
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 99;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .modal {
+    width: 500px;
+    height: 230px;
+  }
+}

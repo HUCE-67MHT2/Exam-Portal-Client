@@ -1,1 +1,20 @@
-<p>exam works!</p>
+<app-header></app-header>
+<app-search-bar>Tìm kỳ thi</app-search-bar>
+
+<table class="exam-table">
+  <tr class="exam-table__wrap-heading">
+    <th class="exam-table__heading exam-table__first-col">Tên kỳ thi</th>
+    <th class="exam-table__heading exam-table__seccond-col">Học sinh</th>
+    <th class="exam-table__heading exam-table__last-col">Bài thi</th>
+  </tr>
+</table>
+
+<!-- *ngIf="isOpen" -->
+<div class="modal-overlay" >
+  <div class="modal">
+    <h2>Nhập mã kỳ thi</h2>
+    <input class="exam-id__input" type="text" placeholder="VD: ABCXZY">
+    <!-- <button (click)="closeModal()">Đóng</button> -->
+  </div>
+</div>
+
