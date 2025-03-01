@@ -16,7 +16,7 @@ import {NgForOf} from "@angular/common";
 })
 export class ExamDetailComponent implements OnInit {
   examCode: string = 'Mã không xác định'; // Đặt giá trị mặc định để kiểm tra lỗi
-  examName: string = 'Tên không xác định';
+  examName: string = 'Tên không xác định'; // Đặt giá trị mặc định để kiểm tra lỗi
 
   constructor(private route: ActivatedRoute) {}
 
