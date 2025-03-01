@@ -1,1 +1,36 @@
-<p>do-test works!</p>
+<div class="container">
+  <div class="exam-file">
+
+  </div>
+  <div class="do-test">
+    <div class="counter-wrap">
+      <p>Thời gian còn lại</p>
+      <div class="counter">
+        <p>{{ getFormattedTime() }}</p>
+      </div>
+    </div>
+    <div class="answer-sheet">
+      <input type="text" [value]="subject" readonly class="subject">
+
+      <h3>Phiếu trả lời</h3>
+
+      <div class="grid">
+        <button *ngFor="let answer of answers; let i = index"
+                (click)="selectQuestion(i)"
+                [class.selected]="selectedQuestionIndex === i"
+                [class.answered]="answers[i] !== ''">
+          {{ i + 1 }}
+        </button>
+      </div>
+
+      <div class="answer-buttons" *ngIf="selectedQuestionIndex !== null">
+        <button (click)="updateAnswer('A')" [class.selected-answer]="answers[selectedQuestionIndex] === 'A'">A</button>
+        <button (click)="updateAnswer('B')" [class.selected-answer]="answers[selectedQuestionIndex] === 'B'">B</button>
+        <button (click)="updateAnswer('C')" [class.selected-answer]="answers[selectedQuestionIndex] === 'C'">C</button>
+        <button (click)="updateAnswer('D')" [class.selected-answer]="answers[selectedQuestionIndex] === 'D'">D</button>
+      </div>
+
+      <button class="submit-btn" (click)="submit()">Nộp bài</button>
+    </div>
+  </div>
+</div>

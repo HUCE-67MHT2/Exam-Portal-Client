@@ -1,20 +1,25 @@
-<app-header></app-header>
-<app-search-bar>Tìm kỳ thi</app-search-bar>
-
-<table class="exam-table">
-  <tr class="exam-table__wrap-heading">
-    <th class="exam-table__heading exam-table__first-col">Tên kỳ thi</th>
-    <th class="exam-table__heading exam-table__seccond-col">Học sinh</th>
-    <th class="exam-table__heading exam-table__last-col">Bài thi</th>
-  </tr>
-</table>
-
-<!-- *ngIf="isOpen" -->
-<div class="modal-overlay" >
-  <div class="modal">
-    <h2>Nhập mã kỳ thi</h2>
-    <input class="exam-id__input" type="text" placeholder="VD: ABCXZY">
-    <!-- <button (click)="closeModal()">Đóng</button> -->
-  </div>
+<app-header-student></app-header-student>
+<app-search-bar>
+  Tìm kỳ thi
+</app-search-bar>
+<div class="exam-table">
+  <table>
+    <thead>
+    <tr>
+      <th>Tên kỳ thi</th>
+      <th>Học sinh</th>
+      <th>Bài thi</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let exam of exams" (click)="navigateToExamDetail(exam)">
+      <td>
+        <p class="exam-name">{{ exam.name }}</p>
+        <p class="class-code">Mã lớp: {{ exam.examCode }}</p>
+      </td>
+      <td>{{ exam.students }}</td>
+      <td>{{ exam.tests }}</td>
+    </tr>
+    </tbody>
+  </table>
 </div>
-

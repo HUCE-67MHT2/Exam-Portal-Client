@@ -1,44 +1,57 @@
 .exam-table {
-  width: 100%;
-  border-collapse: collapse;
+    width: 100%;
+    overflow-x: auto;
 
-  .exam-table__wrap-heading,
-  .exam-table__wrap {
-    height: 50px;
-    background: #d1d1d1;
-    .exam-table__heading {
-      text-align: start;
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 16px;
+
+      thead {
+        background-color: #d3d3d3; // Màu nền header
+        text-align: left;
+
+        th {
+          padding: 12px;
+          font-weight: bold;
+        }
+
+        th:first-child {
+          padding-left: 60px;
+        }
+      }
+
+      tbody {
+        tr {
+          background-color: #ffffff;
+          border-bottom: 1px solid #ddd;
+
+          td {
+            padding: 12px;
+          }
+
+          // ✅ Thụt lề cột "Tên kỳ thi"
+          td:first-child {
+            padding-left: 60px;
+          }
+
+          .exam-name {
+            font-weight: bold;
+          }
+
+          .class-code {
+            font-size: 14px;
+            color: #666;
+          }
+        }
+        tr:hover {
+          background-color: #ededed;
+        }
+      }
     }
   }
 
-  .exam-table__first-col {
-    padding-left: 5.5%;
-    width: 50%;
+  // ✅ Thêm hiệu ứng hover cho các hàng trong bảng
+  .exam-table tbody tr:hover {
+    background-color: #02774b;
   }
-
-  .exam-table__seccond-col {
-    width: 20%;
-  }
-
-  .exam-table__last-col {
-    padding-right: 5.5%;
-  }
-}
-
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 99;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  .modal {
-    width: 500px;
-    height: 230px;
-  }
-}

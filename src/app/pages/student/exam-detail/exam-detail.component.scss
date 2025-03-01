@@ -1,0 +1,31 @@
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead {
+  background-color: #d3d3d3;
+}
+
+th, td {
+  padding: 12px;
+  text-align: left;
+}
+
+th:first-child, td:first-child {
+  padding-left: 60px;
+}
+
+tbody tr:hover {
+  background-color: #ededed;
+}
+/* Định nghĩa tỷ lệ cột */
+thead tr, tbody tr {
+  display: grid;
+  grid-template-columns: 2.5fr 1fr 1fr 1fr; // Cột 1 chiếm 2.5 phần, các cột khác mỗi cột 1 phần
+}
+
+tbody {
+  background-color: #ffffff;
+}
+

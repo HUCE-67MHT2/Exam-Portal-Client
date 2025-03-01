@@ -1,0 +1,124 @@
+.container {
+  display: flex;
+  height: 100vh;
+  font-family: Arial, sans-serif;
+
+  .exam-file {
+    flex: 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #e5e5e5;
+    font-size: 18px;
+    color: #333;
+  }
+
+  .do-test {
+    flex: 1;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-left: 10px;
+    border-left: 1px solid #ccc;
+
+    .counter-wrap {
+      width: 100%;
+      background: #04AA6D;
+      color: white;
+      text-align: left;
+      padding: 10px;
+      font-size: 1.6rem;
+
+      .counter {
+        font-size: 24px;
+      }
+    }
+    .answer-sheet {
+      width: 100%;
+      text-align: center;
+      margin-top: 15px;
+
+      .subject {
+        width: 90%;
+        padding: 8px;
+        text-align: center;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+
+      h3 {
+        margin-top: 15px;
+        font-size: 1.6rem;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(5, 40px);
+        gap: 10px;
+        justify-content: center;
+        margin-top: 15px;
+
+        button {
+          width: 40px;
+          height: 40px;
+          border: 1px solid #9d9d9e;
+          background: white;
+          cursor: pointer;
+          font-weight: bold;
+          transition: 0.2s;
+          border-radius: 5px;
+
+          &.selected {
+            background-color: lightblue;
+          }
+
+          &.answered {
+            font-weight: bold;
+            background-color: #9d9d9e; // Màu vàng nhẹ để đánh dấu đã trả lời
+          }
+        }
+      }
+      .answer-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 15px;
+
+        button {
+          padding: 10px 20px;
+          border: 1px solid #ccc;
+          border-radius: 5px;
+          background-color: #ffffff;
+          cursor: pointer;
+          font-size: 16px;
+          transition: background-color 0.2s;
+
+          &:hover {
+            background-color: #ddd;
+          }
+          &.selected-answer {
+            background-color: #04AA6D;
+            color: white;
+          }
+        }
+      }
+      .submit-btn {
+        background-color: #04aa6d;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+        margin-top: 15px;
+        font-size: 16px;
+        width: 90%;
+
+        &:hover {
+          background-color: #008646;
+        }
+      }
+    }
+  }
+}
+
