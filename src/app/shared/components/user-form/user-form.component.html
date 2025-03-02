@@ -1,80 +1,90 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Online Exam Portal</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 <div class="container">
   <header>
-    <div class="back-button">
-      <img src="back-arrow.png" alt="Back">
-    </div>
-    <div class="title">Online Exam Portal</div>
+    <h1>Online Exam Portal</h1>
   </header>
-  <main>
+
+  <div class="content">
     <div class="profile">
-      <img src="profile-pic.jpg" alt="Profile Picture" class="profile-pic">
-      <div class="profile-details">
-        <div class="name">Phan Văn Tỏ</div>
-        <a href="#" class="change-profile-pic">Thay đổi ảnh đại diện</a>
+      <img src="avatar.jpg" alt="mặt Tỏ" class="avatar" id="avatar-image">
+      <div class="profile-info">
+        <div class="profile-name">Phan Văn Tỏ</div>
+        <!-- Thêm input file ẩn -->
+        <input type="file" id="avatar-upload" accept="image/*" style="display: none;">
+        <a href="#" class="change-profile-pic" id="change-avatar">Thay đổi ảnh đại diện</a>
       </div>
     </div>
-    <div class="student-info">
-      <div class="student-label">Học sinh</div>
-      <div class="section-title">Thông tin cá nhân</div>
-      <div class="form-group">
-        <label for="name">Họ tên</label>
-        <input type="text" id="name" placeholder="Họ tên">
+
+    <section class="student-info">
+      <h2>Học sinh</h2>
+      <div class="personal-info">
+        <h3>Thông tin cá nhân</h3>
+        <form>
+          <label for="fullname">Họ tên</label>
+          <input type="text" id="fullname" name="fullname">
+
+          <label for="class">Lớp</label>
+          <input type="text" id="class" name="class">
+
+          <label for="school">Trường</label>
+          <input type="text" id="school" name="school">
+
+          <label for="dob">Ngày sinh</label>
+          <input type="date" id="dob" name="dob">
+
+          <button type="submit">Lưu thông tin</button>
+        </form>
       </div>
-      <div class="form-group">
-        <label for="class">Lớp</label>
-        <input type="text" id="class" placeholder="Lớp">
+
+      <div class="account-info">
+        <h3>Thông tin tài khoản</h3>
+        <form>
+          <label for="phone-email">Số điện thoại hoặc email</label>
+          <input type="text" id="phone-email" name="phone-email">
+
+          <h4>Đổi mật khẩu</h4>
+          <label for="current-password">Mật khẩu hiện tại</label>
+          <input type="password" id="current-password" name="current-password">
+
+          <label for="new-password">Mật khẩu mới</label>
+          <input type="password" id="new-password" name="new-password">
+
+          <label for="confirm-password">Xác nhận mật khẩu mới</label>
+          <input type="password" id="confirm-password" name="confirm-password">
+
+          <button type="submit">Đổi mật khẩu</button>
+        </form>
       </div>
-      <div class="form-group">
-        <label for="school">Trường</label>
-        <input type="text" id="school" placeholder="Trường">
-      </div>
-      <div class="form-group">
-        <label for="dob">Ngày sinh</label>
-        <input type="date" id="dob">
-      </div>
-      <div class="form-group">
-        <label for="province">Tỉnh</label>
-        <select id="province">
-          <option value="province1">Tỉnh 1</option>
-          <option value="province2">Tỉnh 2</option>
-          <option value="province3">Tỉnh 3</option>
-        </select>
-      </div>
-      <button class="save-info">Lưu thông tin</button>
-    </div>
-    <div class="account-info">
-      <div class="section-title">Thông tin tài khoản</div>
-      <div class="form-group">
-        <label for="email">Số điện thoại hoặc email</label>
-        <input type="email" id="email" placeholder="Số điện thoại hoặc email">
-      </div>
-    </div>
-    <div class="change-password">
-      <div class="section-title">Đổi mật khẩu</div>
-      <div class="form-group">
-        <label for="current-password">Mật khẩu hiện tại</label>
-        <input type="password" id="current-password" placeholder="Mật khẩu hiện tại">
-      </div>
-      <div class="form-group">
-        <label for="new-password">Mật khẩu mới</label>
-        <input type="password" id="new-password" placeholder="Mật khẩu mới">
-      </div>
-      <div class="form-group">
-        <label for="confirm-password">Xác nhận mật khẩu mới</label>
-        <input type="password" id="confirm-password" placeholder="Xác nhận mật khẩu mới">
-      </div>
-      <button class="change-password-btn">Đổi mật khẩu</button>
-    </div>
-  </main>
+    </section>
+  </div>
 </div>
+
+<!-- Thêm JavaScript -->
+<script>
+  document.getElementById('change-avatar').addEventListener('click', function(event) {
+    event.preventDefault(); // Ngăn chặn hành động mặc định của thẻ <a>
+    document.getElementById('avatar-upload').click(); // Kích hoạt input file
+  });
+
+  document.getElementById('avatar-upload').addEventListener('change', function(event) {
+    const file = event.target.files[0]; // Lấy file được chọn
+    if (file) {
+      const reader = new FileReader(); // Tạo đối tượng FileReader
+      reader.onload = function(e) {
+        // Cập nhật src của ảnh avatar
+        document.getElementById('avatar-image').src = e.target.result;
+      };
+      reader.readAsDataURL(file); // Đọc file dưới dạng URL
+    }
+  });
+</script>
 </body>
 </html>
