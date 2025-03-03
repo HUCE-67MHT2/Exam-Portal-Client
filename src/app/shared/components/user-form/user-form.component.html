@@ -13,78 +13,73 @@
   </header>
 
   <div class="content">
+    <!-- Phần avatar và thông tin người dùng -->
     <div class="profile">
       <img src="avatar.jpg" alt="mặt Tỏ" class="avatar" id="avatar-image">
       <div class="profile-info">
         <div class="profile-name">Phan Văn Tỏ</div>
-        <!-- Thêm input file ẩn -->
+        <!-- Input file ẩn -->
         <input type="file" id="avatar-upload" accept="image/*" style="display: none;">
+        <!-- Nút thay đổi ảnh đại diện -->
         <a href="#" class="change-profile-pic" id="change-avatar">Thay đổi ảnh đại diện</a>
       </div>
     </div>
+    <div id ="hocsinh" > <h4> Học sinh </h4> </div>
 
-    <section class="student-info">
-      <h2>Học sinh</h2>
-      <div class="personal-info">
-        <h3>Thông tin cá nhân</h3>
-        <form>
-          <label for="fullname">Họ tên</label>
-          <input type="text" id="fullname" name="fullname">
+    <!-- Phần thông tin cá nhân -->
+    <div class="personal-info-section">
+      <h2>Thông tin cá nhân</h2>
+      <form>
+        <div class="form-group">
+          <input type="text" id="fullname" name="fullname" placeholder="Họ tên">
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <input type="text" id="class" name="class" placeholder="Lớp">
+          </div>
+          <div class="form-group">
+            <input type="text" id="school" name="school" placeholder="Trường">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <input type="date" id="dob" name="dob" placeholder="Ngày sinh">
+          </div>
+          <div class="form-group">
+            <input type="text" id="province" name="province" placeholder="Tỉnh">
+          </div>
+        </div>
+        <button type="submit" class="btn">Lưu thông tin</button>
+      </form>
+    </div>
 
-          <label for="class">Lớp</label>
-          <input type="text" id="class" name="class">
-
-          <label for="school">Trường</label>
-          <input type="text" id="school" name="school">
-
-          <label for="dob">Ngày sinh</label>
-          <input type="date" id="dob" name="dob">
-
-          <button type="submit">Lưu thông tin</button>
-        </form>
-      </div>
-
+    <!-- Phần thông tin tài khoản -->
+    <div class="account-info-section">
+      <h2>Thông tin tài khoản</h2>
       <div class="account-info">
-        <h3>Thông tin tài khoản</h3>
         <form>
-          <label for="phone-email">Số điện thoại hoặc email</label>
-          <input type="text" id="phone-email" name="phone-email">
+          <div class="form-group">
+            <input type="text" id="phone-email" name="phone-email" placeholder="Số điện thoại hoặc email">
+          </div>
 
-          <h4>Đổi mật khẩu</h4>
-          <label for="current-password">Mật khẩu hiện tại</label>
-          <input type="password" id="current-password" name="current-password">
-
-          <label for="new-password">Mật khẩu mới</label>
-          <input type="password" id="new-password" name="new-password">
-
-          <label for="confirm-password">Xác nhận mật khẩu mới</label>
-          <input type="password" id="confirm-password" name="confirm-password">
-
-          <button type="submit">Đổi mật khẩu</button>
+          <!-- Phần đổi mật khẩu -->
+          <div class="change-password-section">
+            <h4>Đổi mật khẩu</h4>
+            <div class="form-group">
+              <input type="password" id="current-password" name="current-password" placeholder="Mật khẩu hiện tại">
+            </div>
+            <div class="form-group">
+              <input type="password" id="new-password" name="new-password" placeholder="Mật khẩu mới">
+            </div>
+            <div class="form-group">
+              <input type="password" id="confirm-password" name="confirm-password" placeholder="Xác nhận mật khẩu mới">
+            </div>
+            <button type="submit" class="btn btn-change-password">Đổi mật khẩu</button>
+          </div>
         </form>
       </div>
-    </section>
+    </div>
   </div>
 </div>
-
-<!-- Thêm JavaScript -->
-<script>
-  document.getElementById('change-avatar').addEventListener('click', function(event) {
-    event.preventDefault(); // Ngăn chặn hành động mặc định của thẻ <a>
-    document.getElementById('avatar-upload').click(); // Kích hoạt input file
-  });
-
-  document.getElementById('avatar-upload').addEventListener('change', function(event) {
-    const file = event.target.files[0]; // Lấy file được chọn
-    if (file) {
-      const reader = new FileReader(); // Tạo đối tượng FileReader
-      reader.onload = function(e) {
-        // Cập nhật src của ảnh avatar
-        document.getElementById('avatar-image').src = e.target.result;
-      };
-      reader.readAsDataURL(file); // Đọc file dưới dạng URL
-    }
-  });
-</script>
 </body>
 </html>
