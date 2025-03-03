@@ -32,8 +32,8 @@ export class ExamDetailComponent implements OnInit {
     });
   }
   exams = [
-    { name: 'Toán cuối kỳ', duration: '120 phút', dateCreated: '9/11/2024', status: 'Chưa làm' },
-    { name: 'Toán giữa kỳ', duration: '120 phút', dateCreated: '9/11/2024', status: 'Đang làm' },
-    { name: 'Toán 1 tiết', duration: '60 phút', dateCreated: '9/11/2024', status: 'Đã làm' }
+    { name: 'Đề 01', duration: '120 phút', dateCreated: '9/11/2024', status: 'Chưa làm' },
+    { name: 'Đề 02', duration: '120 phút', dateCreated: '9/11/2024', status: 'Đang làm' },
+    { name: 'Đề 03', duration: '120 phút', dateCreated: '9/11/2024', status: 'Đã làm' }
   ];
 }
