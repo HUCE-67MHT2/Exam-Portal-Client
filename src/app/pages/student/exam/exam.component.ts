@@ -2,10 +2,11 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { HeaderStudentComponent } from "../../../layout/header/header-student/header-student.component";
 import { SearchBarComponent } from "../../../layout/search-bar/search-bar.component";
+import { NgForOf } from '@angular/common';
 
 @Component({
   selector: 'app-exam',
-  imports: [HeaderStudentComponent, SearchBarComponent],
+  imports: [HeaderStudentComponent, SearchBarComponent, NgForOf],
   templateUrl: './exam.component.html',
   styleUrl: './exam.component.scss'
 })

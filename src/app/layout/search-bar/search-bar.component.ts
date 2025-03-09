@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter, Input } from '@angular/core';
+import { FindButtonComponent } from "../button-form/find-button/find-button.component";
 
 @Component({
   selector: 'app-search-bar',
-  imports: [],
+  imports: [FindButtonComponent],
   templateUrl: './search-bar.component.html',
   styleUrl: './search-bar.component.scss'
 })
@@ -12,4 +13,6 @@ export class SearchBarComponent {
   changeColor() {
     this.textColor = '#686868';
   }
+
 }
+
