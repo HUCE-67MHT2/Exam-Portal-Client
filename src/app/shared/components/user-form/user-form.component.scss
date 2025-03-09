@@ -1,106 +1,145 @@
 body {
-  font-family: sans-serif;
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
   margin: 0;
   padding: 0;
-  background-color: #f4f4f4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
 }
 
 .container {
-  max-width: 600px;
-  margin: 0 auto;
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 1200px;
   padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 header {
+  h1 {
+    margin: 0;
+    font-size: 24px;
+    text-align: left;
+  }
+}
+
+.content {
+  width: 50%;
+  margin: 40px auto 0;
+  text-align: left;
+}
+
+.profile {
   display: flex;
   align-items: center;
   margin-bottom: 20px;
 
-  .back-button {
-    img {
-      width: 24px;
-      height: 24px;
-      margin-right: 10px;
-    }
+  .avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+    object-fit: cover; /* Đảm bảo ảnh không bị méo */
   }
 
-  .title {
-    font-size: 1.2em;
-    font-weight: bold;
+  .profile-info {
+    .profile-name {
+      font-size: 18px;
+      margin-bottom: 5px;
+    }
+
+    .change-profile-pic {
+      color: #007bff;
+      text-decoration: none;
+      font-size: 14px;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
   }
 }
+#hocsinh h4{
+  margin-bottom: 20px;
+  color: #0aa35c;
+}
+.personal-info-section,
+.account-info-section {
+  margin-bottom: 30px;
 
-main {
-  .profile {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
+  h2 {
+    font-size: 20px;
+    margin-bottom: 15px;
+    color: #333;
+  }
 
-    .profile-pic {
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
-      margin-right: 20px;
-    }
+  .form-group {
+    margin-bottom: 15px;
 
-    .profile-details {
-      .name {
-        font-size: 1.2em;
-        font-weight: bold;
-        margin-bottom: 5px;
-      }
+    input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 14px;
+      color: #333; /* Màu chữ khi nhập */
+      background-color: #f9f9f9; /* Màu nền input */
 
-      .change-profile-pic {
-        color: #007bff;
-        text-decoration: none;
+      &::placeholder {
+        color: #999; /* Màu chữ placeholder */
       }
     }
   }
 
-  .student-info, .account-info, .change-password {
-    margin-bottom: 20px;
-
-    .student-label {
-      font-size: 1.1em;
-      font-weight: bold;
-      margin-bottom: 10px;
-    }
-
-    .section-title {
-      font-size: 1em;
-      font-weight: bold;
-      margin-bottom: 10px;
-    }
+  .form-row {
+    display: flex;
+    gap: 10px; /* Khoảng cách giữa các input */
 
     .form-group {
-      margin-bottom: 10px;
-
-      label {
-        display: block;
-        font-size: 0.9em;
-        margin-bottom: 5px;
-      }
-
-      input[type="text"], input[type="email"], input[type="password"], input[type="date"], select {
-        width: 100%;
-        padding: 8px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        box-sizing: border-box;
-      }
+      flex: 1; /* Chia đều không gian */
     }
+  }
 
-    button.save-info, button.change-password-btn {
-      background-color: #007bff;
-      color: #fff;
-      padding: 10px 15px;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      width: 100%;
+  .btn {
+    width: 100%; /* Nút dài bằng input */
+    padding: 10px;
+    background-color: #60b672;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+
+    &:hover {
+      background-color: #218838;
     }
   }
 }
+
+.change-password-section {
+  margin-top: 20px;
+
+  h4 {
+    font-size: 18px;
+    margin-bottom: 15px;
+    color: #333;
+  }
+
+  .btn-change-password {
+    width: 100%; /* Nút dài bằng input */
+    padding: 10px;
+    background-color: #989898; /* Màu xám */
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+
+    &:hover {
+      background-color: #bbb; /* Màu xám nhạt hơn khi hover */
+    }
+  }
+}
+

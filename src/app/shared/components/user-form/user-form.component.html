@@ -1,80 +1,85 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Online Exam Portal</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 <div class="container">
   <header>
-    <div class="back-button">
-      <img src="back-arrow.png" alt="Back">
-    </div>
-    <div class="title">Online Exam Portal</div>
+    <h1>Online Exam Portal</h1>
   </header>
-  <main>
+
+  <div class="content">
+    <!-- Phần avatar và thông tin người dùng -->
     <div class="profile">
-      <img src="profile-pic.jpg" alt="Profile Picture" class="profile-pic">
-      <div class="profile-details">
-        <div class="name">Phan Văn Tỏ</div>
-        <a href="#" class="change-profile-pic">Thay đổi ảnh đại diện</a>
+      <img src="avatar.jpg" alt="mặt Tỏ" class="avatar" id="avatar-image">
+      <div class="profile-info">
+        <div class="profile-name">Phan Văn Tỏ</div>
+        <!-- Input file ẩn -->
+        <input type="file" id="avatar-upload" accept="image/*" style="display: none;">
+        <!-- Nút thay đổi ảnh đại diện -->
+        <a href="#" class="change-profile-pic" id="change-avatar">Thay đổi ảnh đại diện</a>
       </div>
     </div>
-    <div class="student-info">
-      <div class="student-label">Học sinh</div>
-      <div class="section-title">Thông tin cá nhân</div>
-      <div class="form-group">
-        <label for="name">Họ tên</label>
-        <input type="text" id="name" placeholder="Họ tên">
-      </div>
-      <div class="form-group">
-        <label for="class">Lớp</label>
-        <input type="text" id="class" placeholder="Lớp">
-      </div>
-      <div class="form-group">
-        <label for="school">Trường</label>
-        <input type="text" id="school" placeholder="Trường">
-      </div>
-      <div class="form-group">
-        <label for="dob">Ngày sinh</label>
-        <input type="date" id="dob">
-      </div>
-      <div class="form-group">
-        <label for="province">Tỉnh</label>
-        <select id="province">
-          <option value="province1">Tỉnh 1</option>
-          <option value="province2">Tỉnh 2</option>
-          <option value="province3">Tỉnh 3</option>
-        </select>
-      </div>
-      <button class="save-info">Lưu thông tin</button>
+    <div id ="hocsinh" > <h4> Học sinh </h4> </div>
+
+    <!-- Phần thông tin cá nhân -->
+    <div class="personal-info-section">
+      <h2>Thông tin cá nhân</h2>
+      <form>
+        <div class="form-group">
+          <input type="text" id="fullname" name="fullname" placeholder="Họ tên">
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <input type="text" id="class" name="class" placeholder="Lớp">
+          </div>
+          <div class="form-group">
+            <input type="text" id="school" name="school" placeholder="Trường">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <input type="date" id="dob" name="dob" placeholder="Ngày sinh">
+          </div>
+          <div class="form-group">
+            <input type="text" id="province" name="province" placeholder="Tỉnh">
+          </div>
+        </div>
+        <button type="submit" class="btn">Lưu thông tin</button>
+      </form>
     </div>
-    <div class="account-info">
-      <div class="section-title">Thông tin tài khoản</div>
-      <div class="form-group">
-        <label for="email">Số điện thoại hoặc email</label>
-        <input type="email" id="email" placeholder="Số điện thoại hoặc email">
+
+    <!-- Phần thông tin tài khoản -->
+    <div class="account-info-section">
+      <h2>Thông tin tài khoản</h2>
+      <div class="account-info">
+        <form>
+          <div class="form-group">
+            <input type="text" id="phone-email" name="phone-email" placeholder="Số điện thoại hoặc email">
+          </div>
+
+          <!-- Phần đổi mật khẩu -->
+          <div class="change-password-section">
+            <h4>Đổi mật khẩu</h4>
+            <div class="form-group">
+              <input type="password" id="current-password" name="current-password" placeholder="Mật khẩu hiện tại">
+            </div>
+            <div class="form-group">
+              <input type="password" id="new-password" name="new-password" placeholder="Mật khẩu mới">
+            </div>
+            <div class="form-group">
+              <input type="password" id="confirm-password" name="confirm-password" placeholder="Xác nhận mật khẩu mới">
+            </div>
+            <button type="submit" class="btn btn-change-password">Đổi mật khẩu</button>
+          </div>
+        </form>
       </div>
     </div>
-    <div class="change-password">
-      <div class="section-title">Đổi mật khẩu</div>
-      <div class="form-group">
-        <label for="current-password">Mật khẩu hiện tại</label>
-        <input type="password" id="current-password" placeholder="Mật khẩu hiện tại">
-      </div>
-      <div class="form-group">
-        <label for="new-password">Mật khẩu mới</label>
-        <input type="password" id="new-password" placeholder="Mật khẩu mới">
-      </div>
-      <div class="form-group">
-        <label for="confirm-password">Xác nhận mật khẩu mới</label>
-        <input type="password" id="confirm-password" placeholder="Xác nhận mật khẩu mới">
-      </div>
-      <button class="change-password-btn">Đổi mật khẩu</button>
-    </div>
-  </main>
+  </div>
 </div>
 </body>
 </html>
