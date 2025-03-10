@@ -16,7 +16,7 @@ import {NgIf} from '@angular/common';
 export class SignupFormComponent {
   signupForm: FormGroup;
   @Input() link = '';
-
+  @Input() onRegister!: (student: any) => void;
   constructor(private fb: FormBuilder) {
     this.signupForm = this.fb.group({
       fullName: ['', Validators.required],
@@ -36,10 +36,22 @@ export class SignupFormComponent {
     return password === confirmPassword ? null : {mismatch: true};
   }
 
-  onSubmit() {
+  onSubmit = ( ) => {
     if (this.signupForm.valid) {
-      console.log('Form submitted:', this.signupForm.value);
-      // TODO: Gửi dữ liệu đến backend hoặc xử lý tiếp
+      const userdata = this.signupForm.value;
+      const userPayload = {
+        name: userdata.fullName,
+        className: userdata.class,
+        schoolName: userdata.school,
+        dob: userdata.dob,
+        consious: userdata.province,
+        email: userdata.contact,
+        password: userdata.password,
+        repassword: userdata.confirmPassword
+      }
+      if(this.onRegister) {
+        this.onRegister(userPayload);
+      }
     } else {
       console.log('Form không hợp lệ');
     }

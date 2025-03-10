@@ -15,6 +15,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
     @Input() link: string = '';
     @Output() registerLinkClick = new EventEmitter<void>();
     @Output() userTypeChange = new EventEmitter<void>();
+    @Input() onLogin!: (user: any) => void;
     loginForm: FormGroup;
     loginError: string | null = null;
 
@@ -25,11 +26,12 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
       });
     }
 
-    onSubmit() {
+    onSubmit = ()=> {
       if (this.loginForm.valid) {
-        const { contact, password } = this.loginForm.value;
-
-        this.authService.login({ contact, password });
+        const loginRequest = this.loginForm.value;
+        if(this.onLogin) {
+          this.onLogin({username: loginRequest.contact, password: loginRequest.password});
+        }
       }
     }
 
