@@ -1,0 +1,111 @@
+<header class="header">
+  <div class="wraper-logo">
+    <div class="logo">Online Exam Portal</div>
+    <nav class="breadcrumb">
+      <span>►</span>
+      <span>Tạo kì thi</span>
+    </nav>
+  </div>
+  <div class="return-button">
+    <button (click)="goBack()">quay lại</button>
+  </div>
+</header>
+
+<div class="container">
+
+<!--  left content -->
+<div class="left-container">
+  <div class="discard-button">
+    <button (click)="discard()">Hủy</button>
+  </div>
+  <div class="toolbar"></div>
+</div>
+
+<!--  right content -->
+<div class="right-container">
+  <div class="tab-header">
+    <button class="tab-button" [class.active]="activeTab === 'dapan'" (click)="setActiveTab('dapan')">Đáp án</button>
+    <button class="tab-button" [class.active]="activeTab === 'thongtin'" (click)="setActiveTab('thongtin')">Thông tin bài thi</button>
+  </div>
+  <div class="tab-content">
+    <div *ngIf="activeTab === 'dapan'" class="tab-pane">
+      <div class="score-summary">
+        <div class="score-item">
+          <label for="totalQuestions">Số câu</label>
+          <input
+            id="totalQuestions"
+            type="number"
+            [(ngModel)]="totalQuestions"
+            (change)="onTotalQuestionsChange()"
+          />
+        </div>
+        <div class="score-item">
+          <label for="totalScore">Tổng điểm</label>
+          <input
+            id="totalScore"
+            type="number"
+            [(ngModel)]="totalScore"
+            (change)="onTotalScoreChange()"
+          />
+        </div>
+        <button class="quick-input" (click)="openQuickInput()">Nhập nhanh</button>
+      </div>
+
+      <!-- Modal nhập nhanh -->
+      <div *ngIf="isQuickInputOpen" class="quick-input-modal">
+        <textarea [(ngModel)]="quickInputText"></textarea>
+        <button (click)="processQuickInput()">Xác nhận</button>
+      </div>
+
+      <div class="question-list">
+        <div *ngFor="let question of questions; let i = index" class="question-item">
+          <label>Câu {{ i + 1 }}</label>
+          <input type="text" [(ngModel)]="question.text" />
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="activeTab === 'thongtin'" class="tab-pane">
+      <form [formGroup]="examForm" (ngSubmit)="onSubmit()">
+        <div class="input-wrapper">
+          <label for="ten-ky-thi">Tên kỳ thi</label>
+          <input type="text" id="ten-ky-thi" formControlName="tenKyThi">
+          <div *ngIf="examForm.get('tenKyThi')?.invalid && examForm.get('tenKyThi')?.touched" class="error">
+            Tên kỳ thi không được để trống.
+          </div>
+        </div>
+
+        <div class="input-wrapper">
+          <label for="loai-ky-thi">Loại kỳ thi</label>
+          <select id="loai-ky-thi" formControlName="loaiKyThi">
+            <option value="15 phut">15 phút</option>
+            <option value="Giua ki">Giữa kì</option>
+            <option value="Cuoi ki">Cuối kì</option>
+          </select>
+          <div *ngIf="examForm.get('loaiKyThi')?.invalid && examForm.get('loaiKyThi')?.touched" class="error">
+            Vui lòng chọn loại kỳ thi.
+          </div>
+        </div>
+
+        <div class="input-wrapper">
+          <label for="ma-ky-thi">Mã kỳ thi</label>
+          <input type="text" id="ma-ky-thi" formControlName="maKyThi">
+          <div *ngIf="examForm.get('maKyThi')?.invalid && examForm.get('maKyThi')?.touched" class="error">
+            Mã kỳ thi phải có ít nhất 5 ký tự.
+          </div>
+        </div>
+
+        <div class="input-wrapper">
+          <label for="mat-khau-ky-thi">Mật khẩu kỳ thi</label>
+          <input type="password" id="mat-khau-ky-thi" formControlName="matKhauKyThi">
+          <div *ngIf="examForm.get('matKhauKyThi')?.invalid && examForm.get('matKhauKyThi')?.touched" class="error">
+            Mật khẩu phải có ít nhất 6 ký tự.
+          </div>
+        </div>
+
+        <button type="submit" [disabled]="examForm.invalid">Tạo kỳ thi</button>
+      </form>
+    </div>
+  </div>
+</div>
+</div>
