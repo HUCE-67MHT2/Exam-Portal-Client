@@ -1,9 +1,7 @@
-import { Component, Output, EventEmitter, Input } from '@angular/core';
-import { FindButtonComponent } from "../button-form/find-button/find-button.component";
+import { Component} from '@angular/core';
 
 @Component({
   selector: 'app-search-bar',
-  imports: [FindButtonComponent],
   templateUrl: './search-bar.component.html',
   styleUrl: './search-bar.component.scss'
 })

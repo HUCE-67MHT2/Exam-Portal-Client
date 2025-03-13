@@ -3,7 +3,7 @@ import {HeaderStudentComponent} from '../../../layout/header/header-student/head
 import {SearchBarComponent} from '../../../layout/search-bar/search-bar.component';
 import {NgForOf} from '@angular/common';
 import {Router} from '@angular/router';
-import {FindButtonComponent} from '../../../layout/button-form/find-button/find-button.component';
+import {CreateButtonComponent} from '../../../layout/button/create-button/create-button.component';
 
 @Component({
   selector: 'app-home-teacher',
@@ -12,7 +12,7 @@ import {FindButtonComponent} from '../../../layout/button-form/find-button/find-
     HeaderStudentComponent,
     SearchBarComponent,
     NgForOf,
-    FindButtonComponent
+    CreateButtonComponent
   ],
   templateUrl: './teacher-home.component.html',
   styleUrls: ['./teacher-home.component.scss']
