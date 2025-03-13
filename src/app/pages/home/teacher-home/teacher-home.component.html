@@ -1,2 +1,27 @@
-<app-header></app-header>
-<app-search-bar></app-search-bar>
+<app-header-student></app-header-student>
+<app-search-bar>
+  <app-find-button></app-find-button>
+</app-search-bar>
+<div class="exam-table">
+  <table>
+    <thead>
+    <tr>
+      <th>Tên kỳ thi đã tạo</th>
+      <th>Ngày tạo</th>
+      <th>Trạng thái</th>
+      <th>Số lượng đề</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let exam of exams" (click)="navigateToExamDetail(exam)">
+      <td>
+        <p class="exam-name">{{ exam.name }}</p>
+        <p class="class-code">Mã lớp: {{ exam.examCode }}</p>
+      </td>
+      <td>{{ exam.day }}</td>
+      <td>{{ exam.status }}</td>
+      <td>{{ exam.tests}}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>

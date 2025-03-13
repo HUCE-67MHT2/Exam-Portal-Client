@@ -11,6 +11,7 @@ import { DoTestComponent} from './pages/student/do-test/do-test.component';
 import { ResultsComponent } from './pages/student/results/results.component';
 import { UserFormComponent} from './shared/components/user-form/user-form.component';
 import { ExamDetailComponent} from './pages/student/exam-detail/exam-detail.component';
+import { ExamCreateTypeComponent} from './pages/teacher/exam-create-type/exam-create-type.component';
 
 export const routes: Routes = [
 
@@ -27,5 +28,6 @@ export const routes: Routes = [
   {path: 'user-form', component: UserFormComponent},
   {path: 'student/results', component: ResultsComponent},
   {path: 'student/exam-detail/:examCode', component: ExamDetailComponent},
-  {path: 'student/exam-detail', component: ExamDetailComponent}
+  {path: 'student/exam-detail', component: ExamDetailComponent},
+  {path: 'teacher/exam-create-type', component: ExamCreateTypeComponent},
 ];

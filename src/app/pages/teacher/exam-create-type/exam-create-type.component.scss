@@ -1,0 +1,38 @@
+*{
+  font-family: Arial, Helvetica, sans-serif;
+}
+.header {
+    position: fixed;
+    top: 0;
+    z-index: 99;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 80px;
+    padding: 0 30px;
+    border-bottom: solid 1px #ededed;
+    background: #ffffff;
+
+    .wraper-header {
+      display: flex;
+      align-items: center;
+      width: 100%;
+    }
+
+    .logo {
+      font-size: 2rem;
+      font-weight: bold;
+      margin-right: 20px; /* Adjust spacing between logo and breadcrumb */
+    }
+
+    .breadcrumb {
+      font-size: 1.2rem;
+      color: #555;
+
+      span {
+        margin-right: 5px;
+        font-size: 1.6rem;
+      }
+    }
+  }
