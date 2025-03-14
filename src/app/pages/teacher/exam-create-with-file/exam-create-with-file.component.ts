@@ -1,7 +1,7 @@
-import {Component} from '@angular/core';
-import {Router} from '@angular/router';
-import {NgForOf, NgIf} from '@angular/common';
-import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { NgForOf, NgIf } from '@angular/common';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-exam-create-with-file',
@@ -14,14 +14,15 @@ import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} fr
   templateUrl: './exam-create-with-file.component.html',
   styleUrl: './exam-create-with-file.component.scss'
 })
-export class ExamCreateWithFileComponent {
-  activeTab: string = 'dapan'; // Mặc định hiển thị tab "Đáp án"
-  examForm: FormGroup; // ✅ Biến chứa dữ liệu form
-  totalQuestions: number = 5;
+export class ExamCreateWithFileComponent implements OnInit {
+  activeTab: string = 'dapan'; // Default tab is "Đáp án"
+  examForm: FormGroup; // Form data
+  totalQuestions: number = 10;
   totalScore: number = 10;
   isQuickInputOpen: boolean = false;
   quickInputText: string = '';
-  questions: { text: string }[] = [];
+  answerOptions: string[] = ['A', 'B', 'C', 'D'];
+  answers: { [key: number]: string } = {}; // Store answers as {[1: "C"], [2: "B"]}
 
   constructor(private fb: FormBuilder, private router: Router) {
     this.examForm = this.fb.group({
@@ -30,30 +31,54 @@ export class ExamCreateWithFileComponent {
       maKyThi: ['', [Validators.required, Validators.minLength(5)]],
       matKhauKyThi: ['', [Validators.required, Validators.minLength(6)]]
     });
-    this.initializeQuestions();
+  }
+
+  ngOnInit() {
+    this.initializeAnswers();
+  }
+
+  private initializeAnswers() {
+    this.answers = {};
+    for (let i = 1; i <= this.totalQuestions; i++) {
+      this.answers[i] = ''; // Default to empty or set a default value like 'A'
+    }
+  }
+
+  getQuestions(): number[] {
+    return Array.from({ length: this.totalQuestions }, (_, i) => i);
+  }
+
+  onTotalQuestionsChange() {
+    const newAnswers: { [key: number]: string } = {};
+    for (let i = 1; i <= this.totalQuestions; i++) {
+      newAnswers[i] = this.answers[i] || ''; // Retain old answers if available
+    }
+    this.answers = newAnswers;
+  }
+
+  submitExam() {
+    console.log('Exam data:', this.answers);
   }
 
   onSubmit() {
     if (this.examForm.valid) {
-      console.log('Dữ liệu gửi đi:', this.examForm.value);
-      alert('Tạo kỳ thi thành công!');
+      console.log('Form data:', this.examForm.value);
+      alert('Exam created successfully!');
     } else {
-      alert('Vui lòng nhập đầy đủ thông tin.');
+      alert('Please fill in all required fields.');
     }
   }
+
   goBack() {
     this.router.navigate(['teacher/exam-create-type']);
   }
 
   discard() {
-
+    // Add discard logic here
   }
+
   setActiveTab(tab: string) {
     this.activeTab = tab;
-  }
-
-  onTotalQuestionsChange() {
-    this.initializeQuestions()
   }
 
   onTotalScoreChange() {
@@ -65,13 +90,7 @@ export class ExamCreateWithFileComponent {
   }
 
   processQuickInput() {
-    console.log('Chuỗi nhập nhanh:', this.quickInputText);
+    console.log('Quick input string:', this.quickInputText);
     this.isQuickInputOpen = false;
-  }
-
-  private initializeQuestions() {
-    this.questions = Array.from({ length: this.totalQuestions }, (_, i) => ({
-      text: `Câu ${i + 1}`,
-    }));
   }
 }
