@@ -13,6 +13,7 @@ import { UserFormComponent} from './shared/components/user-form/user-form.compon
 import { ExamDetailComponent} from './pages/student/exam-detail/exam-detail.component';
 import { ExamCreateTypeComponent} from './pages/teacher/exam-create-type/exam-create-type.component';
 import { ExamCreateWithFileComponent} from './pages/teacher/exam-create-with-file/exam-create-with-file.component';
+import { ExamCreatedDetailComponent} from './pages/teacher/exam-created-detail/exam-created-detail.component';
 
 export const routes: Routes = [
 
@@ -31,5 +32,7 @@ export const routes: Routes = [
   {path: 'student/exam-detail/:examCode', component: ExamDetailComponent},
   {path: 'student/exam-detail', component: ExamDetailComponent},
   {path: 'teacher/exam-create-type', component: ExamCreateTypeComponent},
-  {path: 'teacher/exam-create-with-file', component: ExamCreateWithFileComponent}
+  {path: 'teacher/exam-create-with-file', component: ExamCreateWithFileComponent},
+  {path: 'teacher/exam-created-detail', component: ExamCreatedDetailComponent},
+  {path: 'teacher/exam-created-detail/:examCode', component: ExamCreatedDetailComponent},
 ];

@@ -23,6 +23,7 @@ export class ExamCreateWithFileComponent implements OnInit {
   quickInputText: string = '';
   answerOptions: string[] = ['A', 'B', 'C', 'D'];
   answers: { [key: number]: string } = {}; // Store answers as {[1: "C"], [2: "B"]}
+  errorMessage: string = '';
 
   constructor(private fb: FormBuilder, private router: Router) {
     this.examForm = this.fb.group({
@@ -32,7 +33,7 @@ export class ExamCreateWithFileComponent implements OnInit {
       matKhauKyThi: ['', [Validators.required, Validators.minLength(6)]]
     });
   }
-
+  // Các hàm xử lý cho tab đáp án
   ngOnInit() {
     this.initializeAnswers();
   }
@@ -56,9 +57,39 @@ export class ExamCreateWithFileComponent implements OnInit {
     this.answers = newAnswers;
   }
 
-  submitExam() {
-    console.log('Exam data:', this.answers);
+  getQuestionScore() {
+    return (this.totalQuestions > 0 ? this.totalScore / this.totalQuestions : 0).toFixed(2);
   }
+
+  openQuickInput() {
+    this.isQuickInputOpen = true;
+  }
+
+  processQuickInput() {
+    this.errorMessage = '';
+    // Chuyển chuỗi thành chữ hoa và loại bỏ khoảng trắng
+    const input = this.quickInputText.toUpperCase().trim();
+
+    // Kiểm tra nếu chuỗi chứa ký tự không hợp lệ (không phải A, B, C, D)
+    if (!/^[ABCD]+$/.test(input)) {
+      this.errorMessage = "Chuỗi nhập vào chỉ được chứa các ký tự hoa thường A, B, C, D!";
+      return;
+    }
+
+    // Chuyển chuỗi thành object theo định dạng {1: 'A', 2: 'B', ...}
+    const newQuickAnswer: { [key: number]: string } = {};
+    for (let i = 0; i < input.length; i++) {
+      newQuickAnswer[i + 1] = input[i];
+    }
+
+    // Cập nhật `answers`
+    this.answers = newQuickAnswer;
+    console.log("Cập nhật đáp án:", this.answers);
+
+    // Đóng modal
+    this.isQuickInputOpen = false;
+  }
+
 
   onSubmit() {
     if (this.examForm.valid) {
@@ -79,18 +110,5 @@ export class ExamCreateWithFileComponent implements OnInit {
 
   setActiveTab(tab: string) {
     this.activeTab = tab;
-  }
-
-  onTotalScoreChange() {
-    console.log('Total score changed');
-  }
-
-  openQuickInput() {
-    this.isQuickInputOpen = true;
-  }
-
-  processQuickInput() {
-    console.log('Quick input string:', this.quickInputText);
-    this.isQuickInputOpen = false;
   }
 }

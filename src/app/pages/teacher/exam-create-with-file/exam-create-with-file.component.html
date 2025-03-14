@@ -45,33 +45,53 @@
                 id="totalScore"
                 type="number"
                 [(ngModel)]="totalScore"
-                (change)="onTotalScoreChange()"
               />
             </div>
           </div>
           <button class="quick-input" (click)="openQuickInput()">Nhập nhanh</button>
         </div>
 
-        <!-- Quick input modal -->
+        <!-- Nền tối khi modal mở -->
+        <div *ngIf="isQuickInputOpen" class="modal-overlay" (click)="isQuickInputOpen = false"></div>
+
+        <!-- Modal nhập nhanh -->
         <div *ngIf="isQuickInputOpen" class="quick-input-modal">
-          <textarea [(ngModel)]="quickInputText"></textarea>
-          <button (click)="processQuickInput()">Xác nhận</button>
+          <div class="modal-content">
+            <h3 class="modal-title">Nhập nhanh</h3>
+            <p class="modal-description">
+              Chuỗi đáp án viết liền không dấu (vd: ACDABCAD). Mỗi ký tự là 1 đáp án!
+            </p>
+
+            <textarea [(ngModel)]="quickInputText" class="quick-input-area" placeholder="Nhập đáp án tại đây..."></textarea>
+            <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
+            <p class="answer-count">Bạn sẽ tạo ra {{ quickInputText.length }} đáp án</p>
+
+            <div class="modal-actions">
+              <button class="cancel-btn" (click)="isQuickInputOpen = false">Hủy</button>
+              <button class="confirm-btn" (click)="processQuickInput()">Xác nhận</button>
+            </div>
+          </div>
         </div>
 
         <div class="question-list">
-          <div *ngFor="let i of getQuestions(); let index = index">
-            <div class="question-item">
-              <label>Câu {{ i + 1 }}</label>
-              <div class="answerOptions">
-                <select [(ngModel)]="answers[i + 1]">
-                  <option *ngFor="let option of answerOptions" [value]="option">{{ option }}</option>
-                </select>
-              </div>
+          <div *ngFor="let i of getQuestions(); let index = index" class="question-item">
+            <label class="question-title">Câu {{ i + 1 }}</label>
+
+            <div class="input-group">
+              <span class="input-label">Đáp án</span>
+              <select [(ngModel)]="answers[i + 1]" class="answer-select">
+                <option *ngFor="let option of answerOptions" [value]="option">{{ option }}</option>
+              </select>
+            </div>
+
+            <div class="input-group">
+              <span class="input-label">Điểm</span>
+              <input type="text" [value]="getQuestionScore()" class="score-input" disabled />
             </div>
           </div>
         </div>
       </div>
-      <button (click)="submitExam()">test console log</button>
+
 
       <div *ngIf="activeTab === 'thongtin'" class="tab-pane">
         <form [formGroup]="examForm" (ngSubmit)="onSubmit()">
