@@ -25,7 +25,7 @@ export class ExamCreateWithFileComponent implements OnInit {
   isQuickInputOpen: boolean = false;
   quickInputText: string = '';
   answerOptions: string[] = ['A', 'B', 'C', 'D'];
-  answers: { [key: number]: string } = {}; // Store answers as {[1: "C"], [2: "B"]}
+  answers: { [key: number]: string } = {};
   errorMessage: string = '';
   selectedFileUrl: SafeResourceUrl | null = null;
   @ViewChild('wordContainer') wordContainer!: ElementRef;
@@ -73,7 +73,6 @@ export class ExamCreateWithFileComponent implements OnInit {
 
         // Đảm bảo container có kích thước phù hợp
         container.style.width = "100%";
-        container.style.height = "600px";
         container.style.overflow = "auto";
 
         // @ts-ignore
@@ -94,6 +93,7 @@ export class ExamCreateWithFileComponent implements OnInit {
       newAnswers[i] = this.answers[i] || ''; // Retain old answers if available
     }
     this.answers = newAnswers;
+    console.log(this.answers);
   }
 
   getQuestionScore() {

@@ -74,7 +74,7 @@
 .left-container {
   width: 60%;
   background: #ffffff;
-  height: 60vh;
+  height: calc(100vh - 80px);
   .upload-file-container{
     width: 100%;
     display: flex;
@@ -94,13 +94,14 @@
       }
     }
   }
+
   .word-preview-container {
     width: 100%;
     height: calc(100vh - 120px);
   }
   .pdf-preview-container iframe {
     width: 100%;
-    height: calc(100vh - 120px);
+    height: calc(100vh - 130px);
     border: 1px solid #ccc;
   }
 }
