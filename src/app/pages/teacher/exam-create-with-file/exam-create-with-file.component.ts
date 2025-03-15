@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgForOf, NgIf } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import * as docx from 'docx-preview';
 
 @Component({
   selector: 'app-exam-create-with-file',
@@ -24,8 +26,10 @@ export class ExamCreateWithFileComponent implements OnInit {
   answerOptions: string[] = ['A', 'B', 'C', 'D'];
   answers: { [key: number]: string } = {}; // Store answers as {[1: "C"], [2: "B"]}
   errorMessage: string = '';
+  selectedFileUrl: SafeResourceUrl | null = null;
+  @ViewChild('wordContainer') wordContainer!: ElementRef;
 
-  constructor(private fb: FormBuilder, private router: Router) {
+  constructor(private fb: FormBuilder, private router: Router, private sanitizer: DomSanitizer) {
     this.examForm = this.fb.group({
       tenKyThi: ['', Validators.required],
       loaiKyThi: ['', Validators.required],
@@ -33,7 +37,7 @@ export class ExamCreateWithFileComponent implements OnInit {
       matKhauKyThi: ['', [Validators.required, Validators.minLength(6)]]
     });
   }
-  // Các hàm xử lý cho tab đáp án
+
   ngOnInit() {
     this.initializeAnswers();
   }
@@ -42,6 +46,39 @@ export class ExamCreateWithFileComponent implements OnInit {
     this.answers = {};
     for (let i = 1; i <= this.totalQuestions; i++) {
       this.answers[i] = ''; // Default to empty or set a default value like 'A'
+    }
+  }
+
+  uploadFile() {
+    document.getElementById('fileInput')?.click();
+  }
+
+  onFileSelected(event: any) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    // Xóa đường dẫn PDF khi chọn file Word
+    this.selectedFileUrl = null;
+
+    if (file.type === "application/pdf") {
+      const fileURL = URL.createObjectURL(file);
+      this.selectedFileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(fileURL);
+    } else if (file.type === "application/vnd.openxmlformats-officedocument.wordprocessingml.document") {
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        const arrayBuffer = e.target.result;
+        const container = this.wordContainer.nativeElement;
+        container.innerHTML = ''; // Xóa nội dung cũ
+
+        // Đảm bảo container có kích thước phù hợp
+        container.style.width = "100%";
+        container.style.height = "600px";
+        container.style.overflow = "auto";
+
+        // @ts-ignore
+        docx.renderAsync(arrayBuffer, container, null);
+      };
+      reader.readAsArrayBuffer(file);
     }
   }
 
@@ -89,7 +126,6 @@ export class ExamCreateWithFileComponent implements OnInit {
     // Đóng modal
     this.isQuickInputOpen = false;
   }
-
 
   onSubmit() {
     if (this.examForm.valid) {

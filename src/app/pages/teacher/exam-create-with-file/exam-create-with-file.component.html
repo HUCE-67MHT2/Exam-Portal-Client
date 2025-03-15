@@ -14,10 +14,19 @@
 <div class="container">
   <!-- Left content -->
   <div class="left-container">
-    <div class="discard-button">
-      <button (click)="discard()">Hủy</button>
+    <div class="upload-file-container">
+      <button class="upload-button" (click)="uploadFile()">📂 Tải lên file</button>
+      <input #fileInput id="fileInput" type="file" accept=".pdf,.doc,.docx" (change)="onFileSelected($event)" hidden />
     </div>
-    <div class="toolbar"></div>
+
+    <!-- Chỉ hiển thị PDF nếu có file PDF -->
+    <div class="pdf-preview-container" *ngIf="selectedFileUrl">
+      <iframe [src]="selectedFileUrl" ></iframe>
+    </div>
+
+    <!-- Chỉ hiển thị Word nếu không có PDF -->
+    <div class="word-preview-container" #wordContainer *ngIf="!selectedFileUrl"></div>
+
   </div>
 
   <!-- Right content -->
