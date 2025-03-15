@@ -4,6 +4,7 @@ import { NgForOf, NgIf } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import * as docx from 'docx-preview';
+import {HttpClient} from '@angular/common/http';
 
 @Component({
   selector: 'app-exam-create-with-file',
@@ -29,7 +30,7 @@ export class ExamCreateWithFileComponent implements OnInit {
   selectedFileUrl: SafeResourceUrl | null = null;
   @ViewChild('wordContainer') wordContainer!: ElementRef;
 
-  constructor(private fb: FormBuilder, private router: Router, private sanitizer: DomSanitizer) {
+  constructor(private fb: FormBuilder, private router: Router, private sanitizer: DomSanitizer, private http: HttpClient) {
     this.examForm = this.fb.group({
       tenKyThi: ['', Validators.required],
       loaiKyThi: ['', Validators.required],
@@ -82,6 +83,7 @@ export class ExamCreateWithFileComponent implements OnInit {
     }
   }
 
+
   getQuestions(): number[] {
     return Array.from({ length: this.totalQuestions }, (_, i) => i);
   }
@@ -129,8 +131,31 @@ export class ExamCreateWithFileComponent implements OnInit {
 
   onSubmit() {
     if (this.examForm.valid) {
-      console.log('Form data:', this.examForm.value);
-      alert('Exam created successfully!');
+      const formData = new FormData();
+
+      // Thêm dữ liệu form
+      Object.keys(this.examForm.value).forEach(key => {
+        formData.append(key, this.examForm.value[key]);
+      });
+
+      // Thêm file đang được mở
+      const fileInput = document.getElementById('fileInput') as HTMLInputElement;
+      if (fileInput.files && fileInput.files.length > 0) {
+        formData.append('file', fileInput.files[0]);
+      }
+
+      // Thêm dữ liệu answers và tổng điểm
+      formData.append('answers', JSON.stringify(this.answers));
+      formData.append('totalScore', this.totalScore.toString());
+
+      // Gửi yêu cầu POST đến backend
+      this.http.post('URL_CUA_BACKEND', formData).subscribe(response => {
+        console.log('Response từ backend:', response);
+        alert('Exam created successfully!');
+      }, error => {
+        console.error('Lỗi khi gửi dữ liệu:', error);
+        alert('Có lỗi xảy ra khi tạo kỳ thi.');
+      });
     } else {
       alert('Please fill in all required fields.');
     }
@@ -138,10 +163,6 @@ export class ExamCreateWithFileComponent implements OnInit {
 
   goBack() {
     this.router.navigate(['teacher/exam-create-type']);
-  }
-
-  discard() {
-    // Add discard logic here
   }
 
   setActiveTab(tab: string) {
