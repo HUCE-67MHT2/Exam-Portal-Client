@@ -73,7 +73,14 @@ export class ExamCreatedDetailComponent implements OnInit {
   ];
 
   createNewExamPaper() {
-
+    this.router.navigate(['teacher/create-new-exam-paper'], {
+      queryParams: {
+        name: this.examName,
+        type: this.examType,
+        examCode: this.examCode,
+        password: this.examPassword
+      }
+    });
   }
 
   goBack() {
