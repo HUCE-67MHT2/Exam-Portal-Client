@@ -17,6 +17,7 @@ import {NgForOf} from "@angular/common";
 export class ExamDetailComponent implements OnInit {
   examCode: string = 'Mã không xác định'; // Đặt giá trị mặc định để kiểm tra lỗi
   examName: string = 'Tên không xác định'; // Đặt giá trị mặc định để kiểm tra lỗi
+  examType: string = 'Loại không xác định'; // Đặt giá trị mặc định để kiểm tra lỗi
 
   constructor(private route: ActivatedRoute) {}
 
@@ -28,6 +29,9 @@ export class ExamDetailComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       if (params['name']) {
         this.examName = params['name'];
+      }
+      if (params['type']) {
+        this.examType = params['type'];
       }
     });
   }

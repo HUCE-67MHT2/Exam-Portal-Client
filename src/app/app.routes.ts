@@ -14,6 +14,8 @@ import { ExamDetailComponent} from './pages/student/exam-detail/exam-detail.comp
 import { ExamCreateTypeComponent} from './pages/teacher/exam-create-type/exam-create-type.component';
 import { ExamCreateWithFileComponent} from './pages/teacher/exam-create-with-file/exam-create-with-file.component';
 import { ExamCreatedDetailComponent} from './pages/teacher/exam-created-detail/exam-created-detail.component';
+import { CreateNewExamPaperComponent} from './pages/teacher/create-new-exam-paper/create-new-exam-paper.component';
+import { EditExamPaperComponent} from './pages/teacher/edit-exam-paper/edit-exam-paper.component';
 
 export const routes: Routes = [
 
@@ -35,4 +37,7 @@ export const routes: Routes = [
   {path: 'teacher/exam-create-with-file', component: ExamCreateWithFileComponent},
   {path: 'teacher/exam-created-detail', component: ExamCreatedDetailComponent},
   {path: 'teacher/exam-created-detail/:examCode', component: ExamCreatedDetailComponent},
+  {path: 'teacher/create-new-exam-paper', component: CreateNewExamPaperComponent},
+
+  {path: 'teacher/edit-exam-paper', component: EditExamPaperComponent}
 ];

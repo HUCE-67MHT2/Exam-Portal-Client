@@ -14,7 +14,7 @@
     <tbody>
     <tr *ngFor="let exam of exams" (click)="navigateToExamDetail(exam)">
       <td>
-        <p class="exam-name">{{ exam.name }}</p>
+        <p class="exam-name">{{exam.type}} - {{ exam.name }}</p>
         <p class="class-code">Mã lớp: {{ exam.examCode }}</p>
       </td>
       <td>{{ exam.students }}</td>

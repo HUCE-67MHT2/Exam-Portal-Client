@@ -1,53 +1,39 @@
-.exam-table {
-  width: 100%;
-  overflow-x: auto;
-
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 16px;
-
-    thead {
-      background-color: #d3d3d3; // Màu nền header
-      text-align: left;
-
-      th {
-        padding: 12px;
-        font-weight: bold;
-      }
-
-      th:first-child {
-        padding-left: 60px;
-      }
-    }
-
-    tbody {
-      tr {
-        background-color: #ffffff;
-        border-bottom: 1px solid #ddd;
-
-        td {
-          padding: 12px;
-        }
-
-        // ✅ Thụt lề cột "Tên kỳ thi"
-        td:first-child {
-          padding-left: 60px;
-        }
-
-        .exam-name {
-          font-weight: bold;
-        }
-
-        .class-code {
-          font-size: 14px;
-          color: #666;
-        }
-      }
-      tr:hover {
-        background-color: #ededed;
-      }
-    }
-  }
+.table-container {
+  max-height: calc(100vh - 200px); /* Độ cao tối đa của bảng, có thể chỉnh */
+  overflow-y: auto; /* Kích hoạt cuộn dọc */
+  border: 1px solid #ddd; /* Viền cho đẹp hơn */
 }
 
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 15px 10px 15px 35px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  position: sticky;
+  top: 0;
+  background: #f1f1f1; /* Giữ header nổi bật khi cuộn */
+  z-index: 10;
+}
+
+/* Định dạng hàng khi hover */
+tr:hover {
+  background-color: #f9f9f9;
+  cursor: pointer;
+}
+
+/* Định dạng thông tin kỳ thi */
+.exam-name {
+  font-weight: bold;
+}
+
+.class-code {
+  color: gray;
+  font-size: 0.9em;
+}

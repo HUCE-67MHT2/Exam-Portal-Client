@@ -1,1 +1,63 @@
-<p>exam-created-detail works!</p>
+<app-header></app-header>
+<div class="container">
+  <div class="exam-container">
+    <div class="exam-info">
+      <div class="exam-name">{{examType}} - {{ examName }}</div>
+      <div class="examCode">Mã kỳ thi: {{ examCode }}</div>
+      <div class="examPassword">
+        Mật khẩu:
+        <span [ngClass]="{ 'hidden': !showPassword }">{{ examPassword }}</span>
+        <span [ngClass]="{ 'hidden': showPassword }">********</span>
+        <i class="eye-icon" (click)="togglePasswordVisibility()">
+          {{ showPassword ? '🙈' : '👁️' }}
+        </i>
+      </div>
+    </div>
+    <div class="actions">
+    <button class="create-button" (click)="createNewExamPaper()">Tạo đề mới</button>
+    <button class="go-back-button" (click)="goBack()">Quay lại</button>
+    </div>
+  </div>
+
+  <div class="exam-created-container">
+    <table>
+      <tbody>
+      <tr>
+        <th>Mã đề</th>
+        <th>Thời gian</th>
+        <th>Ngày tạo</th>
+        <th>Trạng thái</th>
+        <th>Thao tác</th>
+      </tr>
+      <tr *ngFor="let paper of examPaper" (click)="onRowClick(paper)">
+        <td>{{ paper.id }}</td>
+        <td>{{ paper.duration }}</td>
+        <td>{{ paper.dateCreated }}</td>
+        <td>{{ paper.status }}</td>
+        <td>
+<!--          <button class="edit-button" (click)="editExamPaper()">Sửa</button>-->
+          <button class="delete-button" (click)="deleteExamPaper()">Xóa</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="exam-results-table">
+  <table>
+    <tr>
+      <th>Họ tên</th>
+      <th>MSSV</th>
+      <th>Điểm</th>
+      <th>Thời gian làm bài</th>
+    </tr>
+    <tbody>
+    <tr *ngFor="let student of studentsInExam">
+      <td>{{ student.name }}</td>
+      <td>{{ student.Code }}</td>
+      <td>{{ student.points }}</td>
+      <td>{{ student.status }}</td>
+    </tr>
+    </tbody>
+  </table>
+  </div>
+</div>

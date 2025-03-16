@@ -34,8 +34,11 @@ export class ExamCreateWithFileComponent implements OnInit {
     this.examForm = this.fb.group({
       tenKyThi: ['', Validators.required],
       loaiKyThi: ['', Validators.required],
+      maDeThi: ['', [Validators.required, Validators.minLength(5)]],
+      thoiGianLamBai: ['', Validators.required],
       maKyThi: ['', [Validators.required, Validators.minLength(5)]],
       matKhauKyThi: ['', [Validators.required, Validators.minLength(6)]]
+
     });
   }
 
@@ -93,7 +96,6 @@ export class ExamCreateWithFileComponent implements OnInit {
       newAnswers[i] = this.answers[i] || ''; // Retain old answers if available
     }
     this.answers = newAnswers;
-    console.log(this.answers);
   }
 
   getQuestionScore() {
@@ -102,6 +104,7 @@ export class ExamCreateWithFileComponent implements OnInit {
 
   openQuickInput() {
     this.isQuickInputOpen = true;
+    console.log(this.answers);
   }
 
   processQuickInput() {
@@ -149,7 +152,7 @@ export class ExamCreateWithFileComponent implements OnInit {
       formData.append('totalScore', this.totalScore.toString());
 
       // Gửi yêu cầu POST đến backend
-      this.http.post('URL_CUA_BACKEND', formData).subscribe(response => {
+      this.http.post('http://localhost:8081', formData).subscribe(response => {
         console.log('Response từ backend:', response);
         alert('Exam created successfully!');
       }, error => {
