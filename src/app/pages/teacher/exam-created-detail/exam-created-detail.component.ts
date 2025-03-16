@@ -31,11 +31,11 @@ export class ExamCreatedDetailComponent implements OnInit {
       if (params['name']) {
         this.examName = params['name'];
       }
-      if (params['password']) {
-        this.examPassword = params['password'];
-      }
       if (params['type']) {
         this.examType = params['type'];
+      }
+      if (params['password']) {
+        this.examPassword = params['password'];
       }
     });
   }
@@ -80,8 +80,18 @@ export class ExamCreatedDetailComponent implements OnInit {
     this.router.navigate(['home/teacher']);
   }
 
-  editExamPaper(examCreated: {id: string, duration: string, dateCreated: string, status: string}) {
-    this.router.navigate(['teacher/edit-exam-paper']);
+  editExamPaper(paper: { id: string, duration: string, dateCreated: string, status: string }) {
+    this.router.navigate(['teacher/edit-exam-paper', paper.id], {
+      queryParams: {
+        duration: paper.duration,
+        dateCreated: paper.dateCreated,
+        status: paper.status,
+        name: this.examName,
+        type: this.examType,
+        examCode: this.examCode,
+        password: this.examPassword
+      }
+    });
   }
 
   deleteExamPaper() {

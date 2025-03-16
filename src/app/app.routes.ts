@@ -38,6 +38,6 @@ export const routes: Routes = [
   {path: 'teacher/exam-created-detail', component: ExamCreatedDetailComponent},
   {path: 'teacher/exam-created-detail/:examCode', component: ExamCreatedDetailComponent},
   {path: 'teacher/create-new-exam-paper', component: CreateNewExamPaperComponent},
-
-  {path: 'teacher/edit-exam-paper', component: EditExamPaperComponent}
+  {path: 'teacher/edit-exam-paper', component: EditExamPaperComponent},
+  {path: 'teacher/edit-exam-paper/:id', component: EditExamPaperComponent}
 ];
