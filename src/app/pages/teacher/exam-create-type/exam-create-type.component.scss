@@ -1,28 +1,30 @@
 *{
   font-family: Arial, Helvetica, sans-serif;
 }
+// =====================
+// HEADER
+// =====================
 .header {
-    top: 0;
-    z-index: 99;
+  top: 0;
+  z-index: 99;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 80px;
+  padding: 0 30px;
+  border-bottom: solid 1px #ededed;
+  background: #ffffff;
+
+  .wraper-logo {
     display: flex;
-    justify-content: space-between;
     align-items: center;
     width: 100%;
-    height: 80px;
-    padding: 0 30px;
-    border-bottom: solid 1px #ededed;
-    background: #ffffff;
-
-    .wraper-header {
-      display: flex;
-      align-items: center;
-      width: 100%;
-    }
 
     .logo {
       font-size: 2rem;
       font-weight: bold;
-      margin-right: 20px; /* Adjust spacing between logo and breadcrumb */
+      margin-right: 20px;
     }
 
     .breadcrumb {
@@ -35,6 +37,27 @@
       }
     }
   }
+
+  .return-button {
+    width: 180px;
+
+    button {
+      background-color: #f0f5f3;
+      border: none;
+      width: 100%;
+      color: #000000;
+      font-size: 1.6rem;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+
+      &:hover {
+        background-color: #d9e2df;
+      }
+    }
+  }
+}
 .exam-create-container {
   display: flex;
   justify-content: center;

@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import { HeaderComponent } from "../../../layout/header/header.component";
-import {NgClass, NgForOf} from "@angular/common";
+import {NgClass, NgForOf, NgIf} from "@angular/common";
 
 @Component({
   selector: 'app-exam-created-detail',
   imports: [
     HeaderComponent,
     NgForOf,
-    NgClass
+    NgClass,
+    NgIf
   ],
   templateUrl: './exam-created-detail.component.html',
   styleUrl: './exam-created-detail.component.scss'

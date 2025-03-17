@@ -136,28 +136,33 @@ export class ExamCreateWithFileComponent implements OnInit {
     if (this.examForm.valid) {
       const formData = new FormData();
 
-      // Thêm dữ liệu form
+      // Add form data
       Object.keys(this.examForm.value).forEach(key => {
         formData.append(key, this.examForm.value[key]);
       });
 
-      // Thêm file đang được mở
+      // Add the selected file
       const fileInput = document.getElementById('fileInput') as HTMLInputElement;
       if (fileInput.files && fileInput.files.length > 0) {
         formData.append('file', fileInput.files[0]);
       }
 
-      // Thêm dữ liệu answers và tổng điểm
+      // Add answers and total score
       formData.append('answers', JSON.stringify(this.answers));
       formData.append('totalScore', this.totalScore.toString());
 
-      // Gửi yêu cầu POST đến backend
+      // Log FormData entries
+      formData.forEach((value, key) => {
+        console.log(`${key}: ${value}`);
+      });
+
+      // Send POST request to backend
       this.http.post('http://localhost:8081', formData).subscribe(response => {
-        console.log('Response từ backend:', response);
+        console.log('Response from backend:', response);
         alert('Exam created successfully!');
       }, error => {
-        console.error('Lỗi khi gửi dữ liệu:', error);
-        alert('Có lỗi xảy ra khi tạo kỳ thi.');
+        console.error('Error sending data:', error);
+        alert('An error occurred while creating the exam.');
       });
     } else {
       alert('Please fill in all required fields.');

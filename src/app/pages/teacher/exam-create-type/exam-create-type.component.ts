@@ -15,4 +15,8 @@ export class ExamCreateTypeComponent {
   navigateToECWF() {
     this.router.navigate(['teacher/exam-create-with-file']);
   }
+
+  goBack() {
+    this.router.navigate(['home/teacher']);
+  }
 }
