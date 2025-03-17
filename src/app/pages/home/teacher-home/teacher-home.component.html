@@ -10,15 +10,17 @@
         <th>Ngày tạo</th>
         <th>Trạng thái</th>
         <th>Số lượng đề</th>
+        <th>Dạng đề bài</th>
       </tr>
       <tr *ngFor="let exam of exams" (click)="navigateToExamDetail(exam)">
         <td>
-          <p class="exam-name">{{exam.type}} - {{ exam.name }}</p>
+          <p class="exam-name">{{ exam.name }} - {{exam.type}}</p>
           <p class="class-code">Mã lớp: {{ exam.examCode }}</p>
         </td>
         <td>{{ exam.day }}</td>
         <td>{{ exam.status }}</td>
         <td>{{ exam.tests}}</td>
+        <td>{{ exam.source}}</td>
       </tr>
       </tbody>
     </table>
