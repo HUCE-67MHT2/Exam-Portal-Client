@@ -1,20 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import { HeaderComponent } from "../../../layout/header/header.component";
+import { HeaderComponent } from "../../../../../layout/header/header.component";
 import {NgClass, NgForOf, NgIf} from "@angular/common";
 
 @Component({
-  selector: 'app-exam-created-detail',
+  selector: 'app-exam-created-with-file-detail',
   imports: [
     HeaderComponent,
     NgForOf,
     NgClass,
     NgIf
   ],
-  templateUrl: './exam-created-detail.component.html',
-  styleUrl: './exam-created-detail.component.scss'
+  templateUrl: './exam-created-with-file-detail.component.html',
+  styleUrl: './exam-created-with-file-detail.component.scss'
 })
-export class ExamCreatedDetailComponent implements OnInit {
+export class ExamCreatedWithFileDetailComponent implements OnInit {
   examCode: string = 'Mã không xác định';
   examName: string = 'Tên không xác định';
   examPassword: string = 'Mật khẩu không xác định';
@@ -65,12 +65,7 @@ export class ExamCreatedDetailComponent implements OnInit {
   ];
 
   examPaper = [
-    { "id": "Đề 01", "duration": "120 phút", "dateCreated": "9/11/2024", "status": "Đã đóng" },
-    { "id": "Đề 02", "duration": "120 phút", "dateCreated": "9/11/2024", "status": "Đã đóng" },
-    { "id": "Đề 03", "duration": "120 phút", "dateCreated": "9/11/2024", "status": "Đang mở" },
-    { "id": "Đề 04", "duration": "120 phút", "dateCreated": "9/11/2024", "status": "Đã đóng" },
-    { "id": "Đề 05", "duration": "120 phút", "dateCreated": "9/11/2024", "status": "Đã đóng" },
-    { "id": "Đề 06", "duration": "120 phút", "dateCreated": "9/11/2024", "status": "Đang mở" }
+    { "id": "Đề 01", "duration": "120 phút", "dateCreated": "9/11/2024", "status": "Đã đóng" }
   ];
 
   createNewExamPaper() {

@@ -34,7 +34,7 @@ export class TeacherHomeComponent {
 
 
   navigateToExamDetail(exam: { examCode: string, name: string, password: string, type: string }) {
-    this.router.navigate(['teacher/exam-created-detail', exam.examCode], {
+    this.router.navigate(['teacher/exam-created-with-file-detail', exam.examCode], {
       queryParams: {
         name: exam.name,
         password: exam.password,

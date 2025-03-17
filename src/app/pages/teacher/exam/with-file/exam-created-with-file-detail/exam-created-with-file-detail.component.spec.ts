@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ExamCreatedDetailComponent } from './exam-created-detail.component';
+import { ExamCreatedDetailComponent } from './exam-created-with-file-detail.component';
 
 describe('ExamCreatedDetailComponent', () => {
   let component: ExamCreatedDetailComponent;

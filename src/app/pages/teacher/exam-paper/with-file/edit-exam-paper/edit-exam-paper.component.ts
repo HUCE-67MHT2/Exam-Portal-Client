@@ -172,7 +172,7 @@ export class EditExamPaperComponent implements OnInit {
 
 
   goBack() {
-    this.router.navigate(['teacher/exam-created-detail', this.examCode], {
+    this.router.navigate(['teacher/exam-created-with-file-detail', this.examCode], {
       queryParams: {
         name: this.examName,
         type: this.examType,
