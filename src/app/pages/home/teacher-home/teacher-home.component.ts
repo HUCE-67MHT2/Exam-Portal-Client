@@ -22,14 +22,14 @@ export class TeacherHomeComponent {
   }
 
   exams = [
-    { "name": "Giải tích", "type": "Giữa kì", "examCode": "ABCXYZ", "tests": 5, "day": "2025-03-12", "status": "đang mở", "password": "A1B2C3" },
-    { "name": "Giải tích", "type": "Cuối kì", "examCode": "XYZ123", "tests": 6, "day": "2025-03-12", "status": "đã đóng", "password": "D4E5F6" },
-    { "name": "UIAUIA", "type": "Giữa kì", "examCode": "DEF456", "tests": 4, "day": "2025-03-12", "status": "đang mở", "password": "G7H8I9" },
-    { "name": "Cơ học địa chất MHT 2", "type": "Cuối kì", "examCode": "GHI789", "tests": 7, "day": "2025-03-12", "status": "đã đóng", "password": "J1K2L3" },
-    { "name": "LTUDM", "type": "15 phút", "examCode": "JKL012", "tests": 8, "day": "2025-03-12", "status": "đang mở", "password": "M4N5O6" },
-    { "name": "IOT", "type": "15 phút", "examCode": "MNO345", "tests": 3, "day": "2025-03-12", "status": "đã đóng", "password": "P7Q8R9" },
-    { "name": "UDKTM", "type": "15 phút", "examCode": "PQR678", "tests": 2, "day": "2025-03-12", "status": "đang mở", "password": "S1T2U3" },
-    { "name": "PTTKHTTT", "type": "15 phút", "examCode": "STU901", "tests": 1, "day": "2025-03-12", "status": "đã đóng", "password": "V4W5X6" }
+    { "name": "Giải tích", "type": "Giữa kì", "examCode": "ABCXYZ", "tests": 1, "day": "2025-03-12", "status": "đang mở", "password": "A1B2C3" , "source" : "File" },
+    { "name": "Giải tích", "type": "Cuối kì", "examCode": "XYZ123", "tests": 6, "day": "2025-03-12", "status": "đã đóng", "password": "D4E5F6" , "source" : "Auto-generated" },
+    { "name": "UIAUIA", "type": "Giữa kì", "examCode": "DEF456", "tests": 1, "day": "2025-03-12", "status": "đang mở", "password": "G7H8I9" , "source" : "File" },
+    { "name": "Cơ học địa chất MHT 2", "type": "Cuối kì", "examCode": "GHI789", "tests": 7, "day": "2025-03-12", "status": "đã đóng", "password": "J1K2L3" , "source": "Auto-generated" },
+    { "name": "LTUDM", "type": "15 phút", "examCode": "JKL012", "tests": 1, "day": "2025-03-12", "status": "đang mở", "password": "M4N5O6" , "source": "File" },
+    { "name": "IOT", "type": "15 phút", "examCode": "MNO345", "tests": 3, "day": "2025-03-12", "status": "đã đóng", "password": "P7Q8R9" , "source": "Auto-generated" },
+    { "name": "UDKTM", "type": "15 phút", "examCode": "PQR678", "tests": 1, "day": "2025-03-12", "status": "đang mở", "password": "S1T2U3" , "source": "File" },
+    { "name": "PTTKHTTT", "type": "15 phút", "examCode": "STU901", "tests": 1, "day": "2025-03-12", "status": "đã đóng", "password": "V4W5X6" , "source": "Auto-generated" },
   ]
 
 
