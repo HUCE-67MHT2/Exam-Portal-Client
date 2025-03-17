@@ -33,14 +33,15 @@ export class TeacherHomeComponent {
   ]
 
 
-  navigateToExamDetail(exam: { examCode: string, name: string, password: string, type: string }) {
-    this.router.navigate(['teacher/exam-created-with-file-detail', exam.examCode], {
+  navigateToExamDetail(exam: { examCode: string, name: string, password: string, type: string, source: string }) {
+    const route = exam.source === 'File' ? 'teacher/exam-created-with-file-detail' : 'teacher/exam-created-auto-detail';
+    this.router.navigate([route, exam.examCode], {
       queryParams: {
         name: exam.name,
         password: exam.password,
-        type:exam.type
+        type: exam.type
       }
     });
-    console.log('Navigate to exam detail:', exam.examCode, exam.name, exam.password);
-  };
+    console.log('Navigate to exam detail:', exam.examCode, exam.name, exam.password, exam.source);
+  }
 }

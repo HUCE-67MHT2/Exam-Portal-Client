@@ -117,7 +117,7 @@
     }
   }
   .exam-results-table {
-    max-height: 350px;
+    max-height: calc(100vh - 251px);
     overflow-y: auto;
 
     table {
