@@ -11,6 +11,14 @@
   </div>
 </header>
 
+<!-- Darkened background when loading -->
+<div *ngIf="loading" class="modal-overlay"></div>
+
+<!-- Loading indicator -->
+<div *ngIf="loading" class="loading-indicator">
+  Uploading...
+</div>
+
 <div class="container">
   <!-- Left content -->
   <div class="left-container">

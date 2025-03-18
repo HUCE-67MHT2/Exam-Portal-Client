@@ -32,6 +32,7 @@ export class ExamCreateWithFileComponent implements OnInit {
   errorMessage: string = '';
   fileRequest : any;
   selectedFileUrl: SafeResourceUrl | null = null;
+  loading: boolean = false;
   @ViewChild('wordContainer') wordContainer!: ElementRef;
 
   constructor(private fb: FormBuilder, private router: Router, private sanitizer: DomSanitizer, private http: HttpClient
@@ -140,7 +141,15 @@ export class ExamCreateWithFileComponent implements OnInit {
   }
 
   onSubmit = () => {
+    // Check if all questions have been answered
+    const allQuestionsAnswered = Object.values(this.answers).every(answer => answer !== '');
+    if (!allQuestionsAnswered) {
+      alert('Please answer all questions before submitting.');
+      return;
+    }
+
     if (this.examForm.valid) {
+      this.loading = true;
       const formData = new FormData();
 
       // Add form data
@@ -161,34 +170,41 @@ export class ExamCreateWithFileComponent implements OnInit {
 
       formData.append('answers', JSON.stringify(formattedAnswers));
       formData.append('totalScore', this.totalScore.toString());
+
       // Log FormData entries
       formData.forEach((value, key) => {
         console.log(`${key}: ${value}`);
       });
+
       const formObject: any = {};
       formData.forEach((value, key) => {
         formObject[key] = value;
       });
+
       console.log(formObject.tenKyThi,
-        formObject.loaiKyThi, formObject.maDeThi, formObject.thoiGianLamBai, formObject.maKyThi
-        , formObject.matKhauKyThi, JSON.stringify(formattedAnswers), formObject.file);
+        formObject.loaiKyThi, formObject.maDeThi, formObject.thoiGianLamBai, formObject.maKyThi,
+        formObject.matKhauKyThi, JSON.stringify(formattedAnswers), formObject.file);
+
       // Send POST request to backend
       this.createExamWithFileService.addExamWithFile(formObject.tenKyThi,
-        formObject.loaiKyThi, formObject.maDeThi, formObject.thoiGianLamBai, formObject.maKyThi
-        , formObject.matKhauKyThi, JSON.stringify(formattedAnswers), formObject.file).subscribe({
+        formObject.loaiKyThi, formObject.maDeThi, formObject.thoiGianLamBai, formObject.maKyThi,
+        formObject.matKhauKyThi, JSON.stringify(formattedAnswers), formObject.file).subscribe({
         next: (response) => {
+          this.loading = false;
           console.log('Phản hồi từ server:', response);
-          if(response.status === 200) {
-            this.toastr.success('Tạo kì thi mới thành công', 'Thành công', { timeOut: 2000 });
+          if (response.status === 200) {
+            this.toastr.success('Tạo kì thi mới thành c��ng', 'Thành công', { timeOut: 2000 });
             setTimeout(() => {
               this.router.navigate(['/home/teacher']);
             }, 2000);
           }
         },
         error: (error) => {
+          this.loading = false;
           console.error('Lỗi khi tạo kỳ thi:', error);
           this.toastr.error(error.error.message, 'Lỗi', { timeOut: 2000 });
-        }});
+        }
+      });
     } else {
       alert('Please fill in all required fields.');
     }
