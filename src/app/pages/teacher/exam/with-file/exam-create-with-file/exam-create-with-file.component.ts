@@ -25,8 +25,8 @@ import {LoadingComponent} from '../../../../../layout/loading/loading.component'
 export class ExamCreateWithFileComponent implements OnInit {
   activeTab: string = 'dapan'; // Default tab is "Đáp án"
   examForm: FormGroup; // Form data
-  totalQuestions: number = 1;
-  totalScore: number = 10;
+  totalQuestions: number = 5;
+  totalScore: number = 5;
   isQuickInputOpen: boolean = false;
   quickInputText: string = '';
   answerOptions: string[] = ['A', 'B', 'C', 'D'];
@@ -195,7 +195,7 @@ export class ExamCreateWithFileComponent implements OnInit {
           this.loading = false;
           console.log('Phản hồi từ server:', response);
           if (response.status === 200) {
-            this.toastr.success('Tạo kì thi mới thành c��ng', 'Thành công', { timeOut: 2000 });
+            this.toastr.success('Tạo kì thi mới thành công', 'Thành công', { timeOut: 2000 });
             setTimeout(() => {
               this.router.navigate(['/home/teacher']);
             }, 2000);
