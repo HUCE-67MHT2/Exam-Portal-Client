@@ -3,7 +3,7 @@
     <div class="logo">Online Exam Portal</div>
     <nav class="breadcrumb">
       <span>►</span>
-      <span>Tạo kì thi</span>
+      <span>Tạo kì thi với file</span>
     </nav>
   </div>
   <div class="return-button">
@@ -132,7 +132,7 @@
             </div>
           </div>
 
-          <div>
+          <div class = "input-wrapper">
             <label for="thoiGianLamBai">Thời gian làm bài:</label>
             <select id="thoiGianLamBai" formControlName="thoiGianLamBai">
               <option value="15">15 phút</option>
@@ -141,6 +141,9 @@
               <option value="90">90 phút</option>
               <option value="120">120 phút</option>
             </select>
+            <div *ngIf="examForm.get('thoiGianLamBai')?.invalid && examForm.get('thoiGianLamBai')?.touched" class="error">
+              Vui lòng chọn thời gian làm bài.
+            </div>
           </div>
 
           <div class="input-wrapper">
