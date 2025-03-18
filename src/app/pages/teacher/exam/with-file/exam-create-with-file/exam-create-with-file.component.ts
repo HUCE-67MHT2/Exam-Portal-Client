@@ -7,6 +7,7 @@ import * as docx from 'docx-preview';
 import {HttpClient} from '@angular/common/http';
 import {CreateExamWithFileService} from '../../../../../core/services/exam/create_exam_with_file/create-exam-with-file.service';
 import {ToastrService} from 'ngx-toastr';
+import {LoadingComponent} from '../../../../../layout/loading/loading.component';
 
 @Component({
   selector: 'app-exam-create-with-file',
@@ -14,7 +15,8 @@ import {ToastrService} from 'ngx-toastr';
     NgIf,
     ReactiveFormsModule,
     FormsModule,
-    NgForOf
+    NgForOf,
+    LoadingComponent
   ],
   templateUrl: './exam-create-with-file.component.html',
   styleUrl: './exam-create-with-file.component.scss',
@@ -23,7 +25,7 @@ import {ToastrService} from 'ngx-toastr';
 export class ExamCreateWithFileComponent implements OnInit {
   activeTab: string = 'dapan'; // Default tab is "Đáp án"
   examForm: FormGroup; // Form data
-  totalQuestions: number = 10;
+  totalQuestions: number = 1;
   totalScore: number = 10;
   isQuickInputOpen: boolean = false;
   quickInputText: string = '';
