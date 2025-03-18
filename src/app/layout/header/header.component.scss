@@ -1,5 +1,5 @@
 // Màu sắc
-$primary-color: #04AA6D; // Màu xanh lá
+$primary-color: #04aa6d; // Màu xanh lá
 $text-color: #333;
 $background-color: #fff;
 $toggle-bg: #ccc;
@@ -24,6 +24,7 @@ $toggle-checked-bg: #555;
   }
 
   .user-info {
+    cursor: pointer; // Add cursor pointer to indicate clickable area
     .user-info__wrap {
       display: flex;
       align-items: center;
@@ -46,7 +47,44 @@ $toggle-checked-bg: #555;
         height: 15px;
       }
     }
+  }
 
+  .user-info__selection {
+    display: none; // Hide by default
+    position: absolute;
+    right: 30px;
+    bottom: -80px;
+    width: 220px;
+    height: 90px;
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background: #fff;
 
+    &.visible {
+      display: block; // Show when visible class is added
+    }
+
+    .user-info__selection-wrap {
+      display: flex;
+      flex-direction: column;
+      row-gap: 20px;
+
+      .info:hover,
+      .logout:hover {
+        opacity: 0.9;
+        cursor: pointer;
+      }
+
+      .info-underline::after {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        content: "";
+        width: 100%;
+        height: 1px;
+        background: #ccc;
+      }
+    }
   }
 }
