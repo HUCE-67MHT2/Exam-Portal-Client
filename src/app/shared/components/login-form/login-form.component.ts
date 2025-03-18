@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
   import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-  import { Router, RouterLink } from '@angular/router';
+  import { RouterLink } from '@angular/router';
   import { NgIf, NgOptimizedImage } from '@angular/common';
-  import { AuthService } from '../../../core/services/auth.service';
+
 
   @Component({
     selector: 'app-login-form',
@@ -19,7 +19,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
     loginForm: FormGroup;
     loginError: string | null = null;
 
-    constructor(private fb: FormBuilder, private router: Router, private authService: AuthService) {
+    constructor(private fb: FormBuilder) {
       this.loginForm = this.fb.group({
         contact: ['', [Validators.required, Validators.email]],
         password: ['', Validators.required]
