@@ -1,23 +1,23 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { ExamCreatedDetailComponent } from './exam-created-with-file-detail.component';
+import {ExamCreatedDetailComponent} from './exam-created-with-file-detail.component';
 
 describe('ExamCreatedDetailComponent', () => {
-  let component: ExamCreatedDetailComponent;
-  let fixture: ComponentFixture<ExamCreatedDetailComponent>;
+    let component: ExamCreatedDetailComponent;
+    let fixture: ComponentFixture<ExamCreatedDetailComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [ExamCreatedDetailComponent]
-    })
-    .compileComponents();
+    beforeEach(async () => {
+        await TestBed.configureTestingModule({
+            imports: [ExamCreatedDetailComponent]
+        })
+            .compileComponents();
 
-    fixture = TestBed.createComponent(ExamCreatedDetailComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+        fixture = TestBed.createComponent(ExamCreatedDetailComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
 });

@@ -1,7 +1,7 @@
- <div class="container">
-  <form class="search-form" action="">
-    <input id="search-input" class="search-input" placeholder="Tìm kiếm..." type="text"
-    [style.color]="textColor" (input)="changeColor()"/>
+<div class="container">
+  <form action="" class="search-form">
+    <input (input)="changeColor()" [style.color]="textColor" class="search-input" id="search-input"
+           placeholder="Tìm kiếm..." type="text"/>
   </form>
   <ng-content></ng-content>
 </div>

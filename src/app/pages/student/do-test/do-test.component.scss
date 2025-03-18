@@ -34,6 +34,7 @@
         font-size: 24px;
       }
     }
+
     .answer-sheet {
       width: 100%;
       text-align: center;
@@ -79,6 +80,7 @@
           }
         }
       }
+
       .answer-buttons {
         display: flex;
         justify-content: center;
@@ -97,12 +99,14 @@
           &:hover {
             background-color: #ddd;
           }
+
           &.selected-answer {
             background-color: #04AA6D;
             color: white;
           }
         }
       }
+
       .submit-btn {
         background-color: #04aa6d;
         color: white;

@@ -20,11 +20,13 @@
   background-color: #ffffff;
   overflow: hidden;
 }
-.result-content{
+
+.result-content {
   overflow-y: auto;
   height: 100%;
   padding: 0 0 0 20px;
 }
+
 .result-header {
   background-color: #04aa6d;
   color: white;
@@ -58,6 +60,7 @@
   margin: 10px;
   border-radius: 6px;
 }
+
 .result-info {
   padding: 40px 0 20px 10px;
 
@@ -82,6 +85,7 @@
     }
   }
 }
+
 .return-button {
   text-align: center;
   padding: 25px 10px 15px 10px;

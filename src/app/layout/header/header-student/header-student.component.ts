@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {HeaderComponent} from "../header.component";
 import {RouterLink, RouterLinkActive} from "@angular/router";
 

@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import { HeaderComponent } from "../../../../../layout/header/header.component";
+import {HeaderComponent} from "../../../../../layout/header/header.component";
 import {NgClass, NgForOf, NgIf} from "@angular/common";
 
 @Component({
@@ -21,8 +21,26 @@ export class ExamCreatedWithFileDetailComponent implements OnInit {
   examType: string = 'Loại không xác định';
   examStatus: string = 'Trạng thái không xác định';
   showPassword: boolean = false;
+  studentsInExam = [
+    {"name": "Nguyễn Văn A", "Code": "SV001", "points": 10, "status": "Chưa nộp bài"},
+    {"name": "Nguyễn Văn B", "Code": "SV002", "points": 8, "status": "Đang làm"},
+    {"name": "Nguyễn Văn C", "Code": "SV003", "points": 7, "status": "Đã nộp bài"},
+    {"name": "Nguyễn Văn A", "Code": "SV001", "points": 10, "status": "Chưa nộp bài"},
+    {"name": "Nguyễn Văn B", "Code": "SV002", "points": 8, "status": "Đang làm"},
+    {"name": "Nguyễn Văn C", "Code": "SV003", "points": 7, "status": "Đã nộp bài"},
+    {"name": "Nguyễn Văn A", "Code": "SV001", "points": 10, "status": "Chưa nộp bài"},
+    {"name": "Nguyễn Văn B", "Code": "SV002", "points": 8, "status": "Đang làm"},
+    {"name": "Nguyễn Văn C", "Code": "SV003", "points": 7, "status": "Đã nộp bài"},
+    {"name": "Nguyễn Văn A", "Code": "SV001", "points": 10, "status": "Chưa nộp bài"},
+    {"name": "Nguyễn Văn B", "Code": "SV002", "points": 8, "status": "Đang làm"},
+    {"name": "Nguyễn Văn C", "Code": "SV003", "points": 7, "status": "Đã nộp bài"}
+  ];
+  examPaper = [
+    {"id": "Đề 01", "duration": "120 phút", "dateCreated": "9/11/2024",}
+  ];
 
-  constructor(private route: ActivatedRoute, private router: Router) { }
+  constructor(private route: ActivatedRoute, private router: Router) {
+  }
 
   ngOnInit() {
     const param = this.route.snapshot.paramMap.get('examCode');
@@ -53,24 +71,6 @@ export class ExamCreatedWithFileDetailComponent implements OnInit {
     console.log('Row clicked:', exam);
     // Add your logic here
   }
-  studentsInExam = [
-    { "name": "Nguyễn Văn A", "Code": "SV001", "points": 10, "status": "Chưa nộp bài" },
-    { "name": "Nguyễn Văn B", "Code": "SV002", "points": 8, "status": "Đang làm" },
-    { "name": "Nguyễn Văn C", "Code": "SV003", "points": 7, "status": "Đã nộp bài" },
-    { "name": "Nguyễn Văn A", "Code": "SV001", "points": 10, "status": "Chưa nộp bài" },
-    { "name": "Nguyễn Văn B", "Code": "SV002", "points": 8, "status": "Đang làm" },
-    { "name": "Nguyễn Văn C", "Code": "SV003", "points": 7, "status": "Đã nộp bài" },
-    { "name": "Nguyễn Văn A", "Code": "SV001", "points": 10, "status": "Chưa nộp bài" },
-    { "name": "Nguyễn Văn B", "Code": "SV002", "points": 8, "status": "Đang làm" },
-    { "name": "Nguyễn Văn C", "Code": "SV003", "points": 7, "status": "Đã nộp bài" },
-    { "name": "Nguyễn Văn A", "Code": "SV001", "points": 10, "status": "Chưa nộp bài" },
-    { "name": "Nguyễn Văn B", "Code": "SV002", "points": 8, "status": "Đang làm" },
-    { "name": "Nguyễn Văn C", "Code": "SV003", "points": 7, "status": "Đã nộp bài" }
-  ];
-
-  examPaper = [
-    { "id": "Đề 01", "duration": "120 phút", "dateCreated": "9/11/2024", }
-  ];
 
   createNewExamPaper() {
     this.router.navigate(['teacher/create-new-exam-paper'], {
@@ -87,7 +87,7 @@ export class ExamCreatedWithFileDetailComponent implements OnInit {
     this.router.navigate(['home/teacher']);
   }
 
-  editExamPaper(paper: { id: string, duration: string, dateCreated: string}) {
+  editExamPaper(paper: { id: string, duration: string, dateCreated: string }) {
     this.router.navigate(['teacher/edit-exam-paper', paper.id], {
       queryParams: {
         duration: paper.duration,

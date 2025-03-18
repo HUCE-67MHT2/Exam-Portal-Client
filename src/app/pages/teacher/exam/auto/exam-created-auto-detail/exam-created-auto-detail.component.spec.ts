@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { ExamCreatedAutoDetailComponent } from './exam-created-auto-detail.component';
+import {ExamCreatedAutoDetailComponent} from './exam-created-auto-detail.component';
 
 describe('ExamCreatedAutoDetailComponent', () => {
   let component: ExamCreatedAutoDetailComponent;
@@ -10,7 +10,7 @@ describe('ExamCreatedAutoDetailComponent', () => {
     await TestBed.configureTestingModule({
       imports: [ExamCreatedAutoDetailComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(ExamCreatedAutoDetailComponent);
     component = fixture.componentInstance;

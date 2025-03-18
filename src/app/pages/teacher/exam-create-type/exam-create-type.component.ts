@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {NgOptimizedImage} from '@angular/common';
 import {Router} from "@angular/router";
+
 @Component({
   selector: 'app-exam-create-type',
   templateUrl: './exam-create-type.component.html',
@@ -10,7 +11,8 @@ import {Router} from "@angular/router";
   styleUrl: './exam-create-type.component.scss'
 })
 export class ExamCreateTypeComponent {
-  constructor(private router: Router) {}
+  constructor(private router: Router) {
+  }
 
   navigateToECWF() {
     this.router.navigate(['teacher/exam-create-with-file']);

@@ -2,9 +2,9 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <title>Online Exam Portal</title>
-  <link rel="stylesheet" href="styles.css">
+  <link href="styles.css" rel="stylesheet">
 </head>
 <body>
 <div class="container">
@@ -15,41 +15,41 @@
   <div class="content">
     <!-- Phần avatar và thông tin người dùng -->
     <div class="profile">
-      <img src="avatar.jpg" alt="mặt Tỏ" class="avatar" id="avatar-image">
+      <img alt="mặt Tỏ" class="avatar" id="avatar-image" src="avatar.jpg">
       <div class="profile-info">
         <div class="profile-name">Phan Văn Tỏ</div>
         <!-- Input file ẩn -->
-        <input type="file" id="avatar-upload" accept="image/*" style="display: none;">
+        <input accept="image/*" id="avatar-upload" style="display: none;" type="file">
         <!-- Nút thay đổi ảnh đại diện -->
-        <a href="#" class="change-profile-pic" id="change-avatar">Thay đổi ảnh đại diện</a>
+        <a class="change-profile-pic" href="#" id="change-avatar">Thay đổi ảnh đại diện</a>
       </div>
     </div>
-    <div id ="hocsinh" > <h4> Học sinh </h4> </div>
+    <div id="hocsinh"><h4> Học sinh </h4></div>
 
     <!-- Phần thông tin cá nhân -->
     <div class="personal-info-section">
       <h2>Thông tin cá nhân</h2>
       <form>
         <div class="form-group">
-          <input type="text" id="fullname" name="fullname" placeholder="Họ tên">
+          <input id="fullname" name="fullname" placeholder="Họ tên" type="text">
         </div>
         <div class="form-row">
           <div class="form-group">
-            <input type="text" id="class" name="class" placeholder="Lớp">
+            <input id="class" name="class" placeholder="Lớp" type="text">
           </div>
           <div class="form-group">
-            <input type="text" id="school" name="school" placeholder="Trường">
+            <input id="school" name="school" placeholder="Trường" type="text">
           </div>
         </div>
         <div class="form-row">
           <div class="form-group">
-            <input type="date" id="dob" name="dob" placeholder="Ngày sinh">
+            <input id="dob" name="dob" placeholder="Ngày sinh" type="date">
           </div>
           <div class="form-group">
-            <input type="text" id="province" name="province" placeholder="Tỉnh">
+            <input id="province" name="province" placeholder="Tỉnh" type="text">
           </div>
         </div>
-        <button type="submit" class="btn">Lưu thông tin</button>
+        <button class="btn" type="submit">Lưu thông tin</button>
       </form>
     </div>
 
@@ -59,22 +59,22 @@
       <div class="account-info">
         <form>
           <div class="form-group">
-            <input type="text" id="phone-email" name="phone-email" placeholder="Số điện thoại hoặc email">
+            <input id="phone-email" name="phone-email" placeholder="Số điện thoại hoặc email" type="text">
           </div>
 
           <!-- Phần đổi mật khẩu -->
           <div class="change-password-section">
             <h4>Đổi mật khẩu</h4>
             <div class="form-group">
-              <input type="password" id="current-password" name="current-password" placeholder="Mật khẩu hiện tại">
+              <input id="current-password" name="current-password" placeholder="Mật khẩu hiện tại" type="password">
             </div>
             <div class="form-group">
-              <input type="password" id="new-password" name="new-password" placeholder="Mật khẩu mới">
+              <input id="new-password" name="new-password" placeholder="Mật khẩu mới" type="password">
             </div>
             <div class="form-group">
-              <input type="password" id="confirm-password" name="confirm-password" placeholder="Xác nhận mật khẩu mới">
+              <input id="confirm-password" name="confirm-password" placeholder="Xác nhận mật khẩu mới" type="password">
             </div>
-            <button type="submit" class="btn btn-change-password">Đổi mật khẩu</button>
+            <button class="btn btn-change-password" type="submit">Đổi mật khẩu</button>
           </div>
         </form>
       </div>

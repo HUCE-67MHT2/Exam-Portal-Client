@@ -12,14 +12,15 @@ import {ToastrService} from 'ngx-toastr';
   providers: [TeahcerService]
 })
 export class TeacherSignupComponent {
-  constructor(private router: Router, private teahcerService: TeahcerService, private toastr: ToastrService) {}
+  constructor(private router: Router, private teahcerService: TeahcerService, private toastr: ToastrService) {
+  }
 
   onRegisterTeacher = (teacher: any) => {
     this.teahcerService.registerTeacher(teacher).subscribe({
       next: (response) => {
         console.log('Phản hồi từ server:', response);
-        if(response.status === 200) {
-          this.toastr.success('Đăng ký thành công', 'Thành công', { timeOut: 2000 });
+        if (response.status === 200) {
+          this.toastr.success('Đăng ký thành công', 'Thành công', {timeOut: 2000});
 
           setTimeout(() => {
             this.router.navigate(['/login/teacher']);
@@ -28,7 +29,7 @@ export class TeacherSignupComponent {
       },
       error: (error) => {
         console.error('Lỗi khi đăng ký:', error);
-        this.toastr.error(error.error.message, 'Lỗi', { timeOut: 2000 });
+        this.toastr.error(error.error.message, 'Lỗi', {timeOut: 2000});
       }
     });
   }

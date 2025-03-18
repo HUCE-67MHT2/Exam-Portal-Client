@@ -25,7 +25,7 @@
   font-size: 1.6rem;
   font-weight: bold;
 
-  .examPassword-info{
+  .examPassword-info {
     width: 142px;
     display: flex;
     align-items: center;
@@ -40,14 +40,13 @@
   }
 
 
-
   .eye-icon svg {
     width: 100%;
     height: 100%;
   }
 }
 
-.actions{
+.actions {
   display: flex;
   gap: 20px;
 }
@@ -66,7 +65,7 @@
   background: #008646;
 }
 
-.go-back-button{
+.go-back-button {
   font-size: 1.4rem;
   background: #ffffff;
   color: #000000;
@@ -79,7 +78,8 @@
 .go-back-button:hover {
   background: #9d9d9e;
 }
-.exam-created-container{
+
+.exam-created-container {
   max-height: 180px;
   overflow-y: auto;
 
@@ -94,6 +94,7 @@
     text-align: left;
     border: none; /* Remove borders */
   }
+
   th {
     background: #E9ECEF; /* Header background */
     position: sticky;
@@ -101,6 +102,7 @@
     z-index: 10;
   }
 }
+
 .create-button {
   font-size: 1.4rem;
   background: #04AA6D;
@@ -130,6 +132,7 @@
     text-align: left;
     border: none; /* Remove borders */
   }
+
   th {
     background: #E9ECEF; /* Header background */
     position: sticky;

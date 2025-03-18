@@ -12,19 +12,21 @@ import {ToastrService} from 'ngx-toastr';
   providers: [TeacherService]
 })
 export class TeacherLoginComponent {
-  constructor(private router: Router, private teacherService: TeacherService, private toastr: ToastrService) {}
+  constructor(private router: Router, private teacherService: TeacherService, private toastr: ToastrService) {
+  }
 
 
   onUserTypeChange() {
     this.router.navigate(['/login/student'])
       .then(() => console.log('Chuyển sang đăng nhập học sinh'));
   }
+
   onLoginTeacher = (teacher: any) => {
     this.teacherService.loginTeacher(teacher).subscribe({
       next: (response) => {
         console.log('Phản hồi từ server:', response);
-        if(response.status === 200) {
-          this.toastr.success('Đăng nhập thành công', 'Thành công', { timeOut: 2000 });
+        if (response.status === 200) {
+          this.toastr.success('Đăng nhập thành công', 'Thành công', {timeOut: 2000});
           localStorage.setItem('authToken', response.body.token);
           setTimeout(() => {
             this.router.navigate(['/home/teacher']);
@@ -33,6 +35,8 @@ export class TeacherLoginComponent {
       },
       error: (error) => {
         console.error('Lỗi khi đăng nhập:', error);
-        this.toastr.error(error.error.message, 'Lỗi', { timeOut: 2000 });
-  }}); }
+        this.toastr.error(error.error.message, 'Lỗi', {timeOut: 2000});
+      }
+    });
+  }
 }
