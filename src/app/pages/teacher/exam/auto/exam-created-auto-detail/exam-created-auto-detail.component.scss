@@ -52,18 +52,18 @@
   gap: 20px;
 }
 
-.create-button {
+.edit-exam-button {
   font-size: 1.4rem;
-  background: #28a745;
+  background: #04AA6D;
   color: white;
   border: none;
   padding: 10px 20px;
-  border-radius: 5px;
   cursor: pointer;
+  border-radius: 5px;
 }
 
-.create-button:hover {
-  background: #218838;
+.edit-exam-button:hover {
+  background: #008646;
 }
 
 .go-back-button{
@@ -80,7 +80,7 @@
   background: #9d9d9e;
 }
 .exam-created-container{
-  max-height: 200px;
+  max-height: 180px;
   overflow-y: auto;
 
   table {
@@ -89,7 +89,7 @@
   }
 
   th, td {
-    width: 20%; /* Assuming 5 columns for equal width */
+    width: 25%; /* Assuming 5 columns for equal width */
     padding: 10px 10px 10px 35px;
     text-align: left;
     border: none; /* Remove borders */
@@ -100,24 +100,23 @@
     top: 0;
     z-index: 10;
   }
-  td:nth-child(1),
-  th:nth-child(1),
-  td:nth-child(2),
-  th:nth-child(2),
-  td:nth-child(3),
-  th:nth-child(3),
-  td:nth-child(4),
-  th:nth-child(4) {
-    flex: 1;
-  }
-
-  td:nth-child(5),
-  th:nth-child(5) {
-    flex: 4;
-  }
 }
+.create-button {
+  font-size: 1.4rem;
+  background: #04AA6D;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  width: 100vw;
+}
+
+.create-button:hover {
+  background: #008646;
+}
+
 .exam-results-table {
-  max-height: 350px;
+  max-height: calc(100vh - 370px);
   overflow-y: auto;
 
   table {
@@ -126,7 +125,7 @@
   }
 
   th, td {
-    width: 50px;
+    width: 25%;
     padding: 10px 10px 10px 35px;
     text-align: left;
     border: none; /* Remove borders */
@@ -140,19 +139,6 @@
 
   tr:hover {
     background-color: #f1f1f1; /* Hover effect */
-  }
-  td:nth-child(1),
-  th:nth-child(1),
-  td:nth-child(2),
-  th:nth-child(2),
-  td:nth-child(3),
-  th:nth-child(3) {
-    flex: 1;
-  }
-
-  td:nth-child(4),
-  th:nth-child(4) {
-    flex: 4;
   }
 }
 

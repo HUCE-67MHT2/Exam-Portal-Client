@@ -131,14 +131,6 @@
               Mã kỳ thi phải có ít nhất 5 ký tự.
             </div>
           </div>
-          <div class="input-wrapper">
-            <label for="trang-thai">Trạng thái</label>
-            <select id="trang-thai" formControlName="examPaperStatus">
-              <option value="Đang mở">Đang mở</option>
-              <option value="Đã đóng">Đã đóng</option>
-            </select>
-          </div>
-
           <button type="submit" [disabled]="examForm.invalid">Sửa đề thi</button>
         </form>
       </div>

@@ -5,6 +5,7 @@
       <div class="exam-name">{{examType}} - {{ examName }}</div>
       <div class="examCode">Mã kỳ thi: {{ examCode }}</div>
       <div class="source">Dạng đề thi: file có sẵn</div>
+      <div class="status">Trạng thái: {{examStatus}}</div>
       <div class="examPassword">
         <div class="examPassword-info">
           Mật khẩu:
@@ -28,7 +29,7 @@
       </div>
     </div>
     <div class="actions">
-    <button class="create-button" (click)="createNewExamPaper()">Tạo đề mới</button>
+    <button class="edit-exam-button" (click)="editExam()">Sửa thông tin kì thi</button>
     <button class="go-back-button" (click)="goBack()">Quay lại</button>
     </div>
   </div>
@@ -40,14 +41,12 @@
         <th>Mã đề</th>
         <th>Thời gian</th>
         <th>Ngày tạo</th>
-        <th>Trạng thái</th>
         <th>Thao tác</th>
       </tr>
       <tr *ngFor="let paper of examPaper" (click)="onRowClick(paper)">
         <td>{{ paper.id }}</td>
         <td>{{ paper.duration }}</td>
         <td>{{ paper.dateCreated }}</td>
-        <td>{{ paper.status }}</td>
         <td>
           <button class="edit-button" (click)="editExamPaper(paper)">Sửa</button>
           <button class="delete-button" (click)="deleteExamPaper()">Xóa</button>
@@ -55,6 +54,7 @@
       </tr>
       </tbody>
     </table>
+    <button class="create-button" (click)="createNewExamPaper()">Tạo đề mới</button>
   </div>
   <div class="exam-results-table">
   <table>

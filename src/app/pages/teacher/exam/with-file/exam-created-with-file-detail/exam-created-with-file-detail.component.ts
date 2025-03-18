@@ -19,6 +19,7 @@ export class ExamCreatedWithFileDetailComponent implements OnInit {
   examName: string = 'Tên không xác định';
   examPassword: string = 'Mật khẩu không xác định';
   examType: string = 'Loại không xác định';
+  examStatus: string = 'Trạng thái không xác định';
   showPassword: boolean = false;
 
   constructor(private route: ActivatedRoute, private router: Router) { }
@@ -34,6 +35,9 @@ export class ExamCreatedWithFileDetailComponent implements OnInit {
       }
       if (params['type']) {
         this.examType = params['type'];
+      }
+      if (params['status']) {
+        this.examStatus = params['status'];
       }
       if (params['password']) {
         this.examPassword = params['password'];
@@ -65,7 +69,7 @@ export class ExamCreatedWithFileDetailComponent implements OnInit {
   ];
 
   examPaper = [
-    { "id": "Đề 01", "duration": "120 phút", "dateCreated": "9/11/2024", "status": "Đã đóng" }
+    { "id": "Đề 01", "duration": "120 phút", "dateCreated": "9/11/2024", }
   ];
 
   createNewExamPaper() {
@@ -83,21 +87,25 @@ export class ExamCreatedWithFileDetailComponent implements OnInit {
     this.router.navigate(['home/teacher']);
   }
 
-  editExamPaper(paper: { id: string, duration: string, dateCreated: string, status: string }) {
+  editExamPaper(paper: { id: string, duration: string, dateCreated: string}) {
     this.router.navigate(['teacher/edit-exam-paper', paper.id], {
       queryParams: {
         duration: paper.duration,
         dateCreated: paper.dateCreated,
-        status: paper.status,
         name: this.examName,
         type: this.examType,
         examCode: this.examCode,
-        password: this.examPassword
+        password: this.examPassword,
+        status: this.examStatus
       }
     });
   }
 
   deleteExamPaper() {
+
+  }
+
+  editExam() {
 
   }
 }

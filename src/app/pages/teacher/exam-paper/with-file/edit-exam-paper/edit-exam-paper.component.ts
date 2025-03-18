@@ -36,17 +36,16 @@ export class EditExamPaperComponent implements OnInit {
   examPaperId: string = 'ma khong xac dinh';
   examPaperDuration: string = 'thoi gian khong xac dinh';
   examPaperDateCreated: string = 'thoi gian tao khong xac dinh';
-  examPaperStatus: string = 'trang thai khong xac dinh';
   private examName: any;
   private examType: any;
   private examPassword: any;
   private examCode: any;
+  private examStatus: any;
   constructor(private fb: FormBuilder, private router: Router, private sanitizer: DomSanitizer, private http: HttpClient,private route: ActivatedRoute) {
     this.examForm = this.fb.group({
       examPaperId: [this.examPaperId, [Validators.required, Validators.minLength(5)]],
       examPaperDuration: [this.examPaperDuration, Validators.required],
-      examPaperDateCreated: [this.examPaperDateCreated, Validators.required],
-      examPaperStatus: [this.examPaperStatus, Validators.required]
+      examPaperDateCreated: [this.examPaperDateCreated, Validators.required]
     });
     const googleDocUrl = "https://docs.google.com/document/d/1U0F2mKifiX-c4m2TmkmOyCDnlZrjSYANZjqD611z6Rw/preview";
     this.docUrl = this.sanitizer.bypassSecurityTrustResourceUrl(googleDocUrl);
@@ -64,9 +63,6 @@ export class EditExamPaperComponent implements OnInit {
       if (params['dateCreated']) {
         this.examPaperDateCreated = new Date(params['dateCreated']).toISOString().split('T')[0]; // Convert to date string
       }
-      if (params['status']) {
-        this.examPaperStatus = params['status'].trim(); // Xóa khoảng trắng thừa
-      }
       // Nhận thêm 4 tham số mới
       if (params['name']) {
         this.examName = params['name'];
@@ -80,13 +76,15 @@ export class EditExamPaperComponent implements OnInit {
       if (params['password']) {
         this.examPassword = params['password'];
       }
+      if (params['status']) {
+        this.examStatus = params['status'];
+      }
 
       // Set default values for the form controls
       this.examForm.patchValue({
         examPaperId: this.examPaperId,
         examPaperDuration: this.examPaperDuration,
-        examPaperDateCreated: this.examPaperDateCreated,
-        examPaperStatus: this.examPaperStatus
+        examPaperDateCreated: this.examPaperDateCreated
       });
     });
   }
@@ -176,7 +174,8 @@ export class EditExamPaperComponent implements OnInit {
       queryParams: {
         name: this.examName,
         type: this.examType,
-        password: this.examPassword
+        password: this.examPassword,
+        status: this.examStatus
       }
     });
   }
