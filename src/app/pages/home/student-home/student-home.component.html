@@ -1,46 +1,46 @@
 <body style="height: 3000px">
-  <app-header-student></app-header-student>
+<app-header-student></app-header-student>
 
-  <aside class="sidebar-links">
-    <div class="links-wrap">
-      <a (click)="scrollToSection('schedule')" class="link-item">Lịch thi hôm nay</a>
-      <a (click)="scrollToSection('unfished-exam')" class="link-item">Bài thi chưa làm</a>
-      <a (click)="scrollToSection('achievement')" class="link-item">Thành tích</a>
-    </div>
-  </aside>
+<aside class="sidebar-links">
+  <div class="links-wrap">
+    <a (click)="scrollToSection('schedule')" class="link-item">Lịch thi hôm nay</a>
+    <a (click)="scrollToSection('unfished-exam')" class="link-item">Bài thi chưa làm</a>
+    <a (click)="scrollToSection('achievement')" class="link-item">Thành tích</a>
+  </div>
+</aside>
 
-  <main class="main">
-    <div id="schedule" class="wrap schedule-wrap">
-      <h3 class="heading schedule__heading">Lịch thi hôm nay</h3>
-      <table class="list schedule__list">
-        <tr class="list-heading">
-          <th class="list-heading-item">Tên bài thi</th>
-          <th class="list-heading-item">Lớp</th>
-          <th class="list-heading-item">Giờ bắt đầu</th>
-        </tr>
-      </table>
-    </div>
+<main class="main">
+  <div class="wrap schedule-wrap" id="schedule">
+    <h3 class="heading schedule__heading">Lịch thi hôm nay</h3>
+    <table class="list schedule__list">
+      <tr class="list-heading">
+        <th class="list-heading-item">Tên bài thi</th>
+        <th class="list-heading-item">Lớp</th>
+        <th class="list-heading-item">Giờ bắt đầu</th>
+      </tr>
+    </table>
+  </div>
 
-    <div id="unfished-exam" class="wrap unfished-exam__wrap">
-      <h3 class="heading unfished-exam__heading">Bài thi chưa làm</h3>
-      <table class="list unfished-exam_list">
-        <tr class="list-heading">
-          <th class="list-heading-item">Tên bài thi</th>
-          <th class="list-heading-item">Lớp</th>
-          <th class="list-heading-item">Giờ kết thúc</th>
-        </tr>
-      </table>
-    </div>
+  <div class="wrap unfished-exam__wrap" id="unfished-exam">
+    <h3 class="heading unfished-exam__heading">Bài thi chưa làm</h3>
+    <table class="list unfished-exam_list">
+      <tr class="list-heading">
+        <th class="list-heading-item">Tên bài thi</th>
+        <th class="list-heading-item">Lớp</th>
+        <th class="list-heading-item">Giờ kết thúc</th>
+      </tr>
+    </table>
+  </div>
 
-    <div id="achievement" class="wrap achievement__wrap">
-      <h3 class="heading achievement__heading">Thành tích</h3>
-      <table class="list achievement__list">
-        <tr class="list-heading">
-          <th class="list-heading-item">Tên lớp thi</th>
-          <th class="list-heading-item">Giáo viên</th>
-          <th class="list-heading-item">ĐTB</th>
-        </tr>
-      </table>
-    </div>
-  </main>
+  <div class="wrap achievement__wrap" id="achievement">
+    <h3 class="heading achievement__heading">Thành tích</h3>
+    <table class="list achievement__list">
+      <tr class="list-heading">
+        <th class="list-heading-item">Tên lớp thi</th>
+        <th class="list-heading-item">Giáo viên</th>
+        <th class="list-heading-item">ĐTB</th>
+      </tr>
+    </table>
+  </div>
+</main>
 </body>

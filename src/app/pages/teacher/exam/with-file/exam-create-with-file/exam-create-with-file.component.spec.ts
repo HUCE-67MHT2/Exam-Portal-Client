@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { ExamCreateWithFileComponent } from './exam-create-with-file.component';
+import {ExamCreateWithFileComponent} from './exam-create-with-file.component';
 
 describe('ExamCreateWithFileComponent', () => {
   let component: ExamCreateWithFileComponent;
@@ -10,7 +10,7 @@ describe('ExamCreateWithFileComponent', () => {
     await TestBed.configureTestingModule({
       imports: [ExamCreateWithFileComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(ExamCreateWithFileComponent);
     component = fixture.componentInstance;

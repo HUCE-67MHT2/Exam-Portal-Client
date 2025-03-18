@@ -17,6 +17,7 @@ export class SignupFormComponent {
   signupForm: FormGroup;
   @Input() link = '';
   @Input() onRegister!: (student: any) => void;
+
   constructor(private fb: FormBuilder) {
     this.signupForm = this.fb.group({
       fullName: ['', Validators.required],
@@ -36,7 +37,7 @@ export class SignupFormComponent {
     return password === confirmPassword ? null : {mismatch: true};
   }
 
-  onSubmit = ( ) => {
+  onSubmit = () => {
     if (this.signupForm.valid) {
       const userdata = this.signupForm.value;
       const userPayload = {
@@ -49,7 +50,7 @@ export class SignupFormComponent {
         password: userdata.password,
         repassword: userdata.confirmPassword
       }
-      if(this.onRegister) {
+      if (this.onRegister) {
         this.onRegister(userPayload);
       }
     } else {
