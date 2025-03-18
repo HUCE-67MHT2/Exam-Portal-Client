@@ -29,7 +29,7 @@ export class StudentLoginComponent {
         console.log('Phản hồi từ server:', response);
         if(response.status === 200) {
           this.toastr.success('Đăng nhập thành công', 'Thành công', { timeOut: 2000 });
-
+          localStorage.setItem('authToken', response.body.token);
           setTimeout(() => {
             this.router.navigate(['/home/student']);
           }, 2000);

@@ -5,6 +5,8 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import * as docx from 'docx-preview';
 import {HttpClient} from '@angular/common/http';
+import {CreateExamWithFileService} from '../../../../../core/services/exam/create_exam_with_file/create-exam-with-file.service';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-exam-create-with-file',
@@ -15,7 +17,8 @@ import {HttpClient} from '@angular/common/http';
     NgForOf
   ],
   templateUrl: './exam-create-with-file.component.html',
-  styleUrl: './exam-create-with-file.component.scss'
+  styleUrl: './exam-create-with-file.component.scss',
+  providers: [CreateExamWithFileService]
 })
 export class ExamCreateWithFileComponent implements OnInit {
   activeTab: string = 'dapan'; // Default tab is "Đáp án"
@@ -27,10 +30,12 @@ export class ExamCreateWithFileComponent implements OnInit {
   answerOptions: string[] = ['A', 'B', 'C', 'D'];
   answers: { [key: number]: string } = {};
   errorMessage: string = '';
+  fileRequest : any;
   selectedFileUrl: SafeResourceUrl | null = null;
   @ViewChild('wordContainer') wordContainer!: ElementRef;
 
-  constructor(private fb: FormBuilder, private router: Router, private sanitizer: DomSanitizer, private http: HttpClient) {
+  constructor(private fb: FormBuilder, private router: Router, private sanitizer: DomSanitizer, private http: HttpClient
+              , private createExamWithFileService: CreateExamWithFileService, private toastr: ToastrService) {
     this.examForm = this.fb.group({
       tenKyThi: ['', Validators.required],
       loaiKyThi: ['', Validators.required],
@@ -83,6 +88,8 @@ export class ExamCreateWithFileComponent implements OnInit {
       };
       reader.readAsArrayBuffer(file);
     }
+    this.fileRequest = file;
+
   }
 
 
@@ -132,7 +139,7 @@ export class ExamCreateWithFileComponent implements OnInit {
     this.isQuickInputOpen = false;
   }
 
-  onSubmit() {
+  onSubmit = () => {
     if (this.examForm.valid) {
       const formData = new FormData();
 
@@ -147,23 +154,41 @@ export class ExamCreateWithFileComponent implements OnInit {
         formData.append('file', fileInput.files[0]);
       }
 
-      // Add answers and total score
-      formData.append('answers', JSON.stringify(this.answers));
-      formData.append('totalScore', this.totalScore.toString());
+      const formattedAnswers = Object.entries(this.answers).map(([id, select]) => ({
+        id,
+        select
+      }));
 
+      formData.append('answers', JSON.stringify(formattedAnswers));
+      formData.append('totalScore', this.totalScore.toString());
       // Log FormData entries
       formData.forEach((value, key) => {
         console.log(`${key}: ${value}`);
       });
-
-      // Send POST request to backend
-      this.http.post('http://localhost:8081', formData).subscribe(response => {
-        console.log('Response from backend:', response);
-        alert('Exam created successfully!');
-      }, error => {
-        console.error('Error sending data:', error);
-        alert('An error occurred while creating the exam.');
+      const formObject: any = {};
+      formData.forEach((value, key) => {
+        formObject[key] = value;
       });
+      console.log(formObject.tenKyThi,
+        formObject.loaiKyThi, formObject.maDeThi, formObject.thoiGianLamBai, formObject.maKyThi
+        , formObject.matKhauKyThi, JSON.stringify(formattedAnswers), formObject.file);
+      // Send POST request to backend
+      this.createExamWithFileService.addExamWithFile(formObject.tenKyThi,
+        formObject.loaiKyThi, formObject.maDeThi, formObject.thoiGianLamBai, formObject.maKyThi
+        , formObject.matKhauKyThi, JSON.stringify(formattedAnswers), formObject.file).subscribe({
+        next: (response) => {
+          console.log('Phản hồi từ server:', response);
+          if(response.status === 200) {
+            this.toastr.success('Tạo kì thi mới thành công', 'Thành công', { timeOut: 2000 });
+            setTimeout(() => {
+              this.router.navigate(['/home/teacher']);
+            }, 2000);
+          }
+        },
+        error: (error) => {
+          console.error('Lỗi khi tạo kỳ thi:', error);
+          this.toastr.error(error.error.message, 'Lỗi', { timeOut: 2000 });
+        }});
     } else {
       alert('Please fill in all required fields.');
     }
