@@ -1,5 +1,7 @@
 <app-login-form (userTypeChange)="onUserTypeChange()" [link]="'/sign-up/student'" [onLogin]="onLoginStudent">
   <div present_role>Tôi là học sinh</div>
   <div login_heading>Học sinh đăng nhập</div>
+  <app-loading *ngIf="loading" text="Login..."></app-loading>
+
 </app-login-form>
 
