@@ -29,6 +29,7 @@ export class TeacherHomeComponent implements OnInit {
   }
 
   fetchExams() {
+    // dang deo chạy
     this.examService.getExams().subscribe(
       (data: Exam[]) => {
         this.exams = data;
