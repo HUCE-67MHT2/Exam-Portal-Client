@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {HeaderComponent} from "../../../../../layout/header/header.component";
 import {NgClass, NgForOf, NgIf} from "@angular/common";
 
 @Component({
