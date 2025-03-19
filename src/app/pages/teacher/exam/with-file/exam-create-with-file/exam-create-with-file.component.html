@@ -112,56 +112,78 @@
 
             <div *ngIf="activeTab === 'thongtin'" class="tab-pane">
                 <form (ngSubmit)="onSubmit()" [formGroup]="examForm">
-                    <div class="input-wrapper">
+                    <div class="row-wrapper">
+                      <div class="input-wrapper">
                         <label for="ten-ky-thi">Tên kỳ thi</label>
                         <input formControlName="tenKyThi" id="ten-ky-thi" type="text">
                         <div *ngIf="examForm.get('tenKyThi')?.invalid && examForm.get('tenKyThi')?.touched"
                              class="error">
-                            Tên kỳ thi không được để trống.
+                          Tên kỳ thi không được để trống.
                         </div>
-                    </div>
-
-                    <div class="input-wrapper">
+                      </div>
+                      <div class="input-wrapper">
                         <label for="loai-ky-thi">Loại kỳ thi</label>
                         <select formControlName="loaiKyThi" id="loai-ky-thi">
-                            <option value="15 phut">15 phút</option>
-                            <option value="Giua ki">Giữa kì</option>
-                            <option value="Cuoi ki">Cuối kì</option>
+                          <option value="15 phut">15 phút</option>
+                          <option value="Giua ki">Giữa kì</option>
+                          <option value="Cuoi ki">Cuối kì</option>
                         </select>
                         <div *ngIf="examForm.get('loaiKyThi')?.invalid && examForm.get('loaiKyThi')?.touched"
                              class="error">
-                            Vui lòng chọn loại kỳ thi.
+                          Vui lòng chọn loại kỳ thi.
                         </div>
+                      </div>
+                    </div>
+                  <div class="row-wrapper">
+                    <div class="input-wrapper">
+                      <label for="ma-de-thi">Mã đề thi</label>
+                      <input formControlName="maDeThi" id="ma-de-thi" type="text">
+                      <div *ngIf="examForm.get('maDeThi')?.invalid && examForm.get('maDeThi')?.touched" class="error">
+                        Mã kỳ thi phải có ít nhất 5 ký tự.
+                      </div>
                     </div>
 
                     <div class="input-wrapper">
-                        <label for="ma-de-thi">Mã đề thi</label>
-                        <input formControlName="maDeThi" id="ma-de-thi" type="text">
-                        <div *ngIf="examForm.get('maDeThi')?.invalid && examForm.get('maDeThi')?.touched" class="error">
-                            Mã kỳ thi phải có ít nhất 5 ký tự.
-                        </div>
+                      <label for="thoiGianLamBai">Thời gian làm bài:</label>
+                      <select formControlName="thoiGianLamBai" id="thoiGianLamBai">
+                        <option value="15">15 phút</option>
+                        <option value="30">30 phút</option>
+                        <option value="60">60 phút</option>
+                        <option value="90">90 phút</option>
+                        <option value="120">120 phút</option>
+                      </select>
+                      <div *ngIf="examForm.get('thoiGianLamBai')?.invalid && examForm.get('thoiGianLamBai')?.touched"
+                           class="error">
+                        Vui lòng chọn thời gian làm bài.
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row-wrapper">
+                    <div class="input-wrapper">
+                      <label for="thoiGianBatDau">Thời gian bắt đầu:</label>
+                      <input formControlName="thoiGianBatDau" id="thoiGianBatDau" type="date">
+                      <div *ngIf="examForm.get('thoiGianBatDau')?.invalid && examForm.get('thoiGianBatDau')?.touched"
+                           class="error">
+                        Vui lòng chọn thời gian bắt đầu.
+                      </div>
                     </div>
 
                     <div class="input-wrapper">
-                        <label for="thoiGianLamBai">Thời gian làm bài:</label>
-                        <select formControlName="thoiGianLamBai" id="thoiGianLamBai">
-                            <option value="15">15 phút</option>
-                            <option value="30">30 phút</option>
-                            <option value="60">60 phút</option>
-                            <option value="90">90 phút</option>
-                            <option value="120">120 phút</option>
-                        </select>
-                        <div *ngIf="examForm.get('thoiGianLamBai')?.invalid && examForm.get('thoiGianLamBai')?.touched"
-                             class="error">
-                            Vui lòng chọn thời gian làm bài.
-                        </div>
+                      <label for="thoiGianKetThuc">Thời gian kết thúc:</label>
+                      <input formControlName="thoiGianKetThuc" id="thoiGianKetThuc" type="date">
+                      <div *ngIf="examForm.get('thoiGianKetThuc')?.invalid && examForm.get('thoiGianKetThuc')?.touched"
+                           class="error">
+                        Vui lòng chọn thời gian kết thúc.
+                      </div>
                     </div>
+                  </div>
 
                     <div class="input-wrapper">
                         <label for="ma-ky-thi">Mã kỳ thi</label>
                         <input formControlName="maKyThi" id="ma-ky-thi" type="text">
                         <div *ngIf="examForm.get('maKyThi')?.invalid && examForm.get('maKyThi')?.touched" class="error">
-                            Mã kỳ thi phải có ít nhất 5 ký tự.
+                          Mã kỳ thi phải có đúng 5 ký tự chữ cái hoặc số.
                         </div>
                     </div>
 

@@ -20,11 +20,11 @@ import {HeaderComponent} from '../../../layout/header/header.component';
 export class TeacherHomeComponent {
   exams = [
     {
-      "name": "Giải tích",
-      "type": "Giữa kì",
-      "examCode": "ABCXYZ",
+      "name": "Giải tích", //title
+      "type": "Giữa kì", // examtype
+      "examCode": "ABCXYZ", // id
       "tests": 1,
-      "day": "2025-03-12",
+      "day": "2025-03-12", // create at
       "status": "đang mở",
       "password": "A1B2C3",
       "source": "File"

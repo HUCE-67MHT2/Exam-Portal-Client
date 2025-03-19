@@ -1,7 +1,15 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
 import {NgForOf, NgIf} from '@angular/common';
-import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule, ValidationErrors,
+  ValidatorFn,
+  Validators
+} from '@angular/forms';
 import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
 import * as docx from 'docx-preview';
 import {HttpClient} from '@angular/common/http';
@@ -39,6 +47,8 @@ export class ExamCreateWithFileComponent implements OnInit {
     loading: boolean = false;
     @ViewChild('wordContainer') wordContainer!: ElementRef;
 
+
+
     constructor(private fb: FormBuilder, private router: Router, private sanitizer: DomSanitizer, private http: HttpClient
         , private createExamWithFileService: CreateExamWithFileService, private toastr: ToastrService) {
         this.examForm = this.fb.group({
@@ -46,10 +56,17 @@ export class ExamCreateWithFileComponent implements OnInit {
             loaiKyThi: ['', Validators.required],
             maDeThi: ['', [Validators.required, Validators.minLength(5)]],
             thoiGianLamBai: ['', Validators.required],
-            maKyThi: ['', [Validators.required, Validators.minLength(5)]],
-            matKhauKyThi: ['', [Validators.required, Validators.minLength(6)]]
-
+            maKyThi: ['', [Validators.required, this.alphanumericValidator()]],
+            matKhauKyThi: ['', [Validators.required, Validators.minLength(6)]],
+            thoiGianBatDau: ['', Validators.required],
+            thoiGianKetThuc: ['', Validators.required],
         });
+    }
+    alphanumericValidator(): ValidatorFn {
+      return (control: AbstractControl): ValidationErrors | null => {
+        const valid = /^[a-zA-Z0-9]{5}$/.test(control.value);
+        return valid ? null : { alphanumeric: true };
+      };
     }
 
     ngOnInit() {
@@ -167,6 +184,13 @@ export class ExamCreateWithFileComponent implements OnInit {
             formData.append('answers', JSON.stringify(formattedAnswers));
             formData.append('totalScore', this.totalScore.toString());
 
+            // Convert thoiGianBatDau and thoiGianKetThuc to strings
+            const thoiGianBatDau = this.examForm.get('thoiGianBatDau')?.value.toString();
+            const thoiGianKetThuc = this.examForm.get('thoiGianKetThuc')?.value.toString();
+
+            formData.append('thoiGianBatDau', thoiGianBatDau);
+            formData.append('thoiGianKetThuc', thoiGianKetThuc);
+
             // Log FormData entries
             formData.forEach((value, key) => {
                 console.log(`${key}: ${value}`);
@@ -179,12 +203,12 @@ export class ExamCreateWithFileComponent implements OnInit {
 
             console.log(formObject.tenKyThi,
                 formObject.loaiKyThi, formObject.maDeThi, formObject.thoiGianLamBai, formObject.maKyThi,
-                formObject.matKhauKyThi, JSON.stringify(formattedAnswers), formObject.file);
+                formObject.matKhauKyThi, JSON.stringify(formattedAnswers), formObject.file, formObject.thoiGianBatDau, formObject.thoiGianKetThuc);
 
             // Send POST request to backend
             this.createExamWithFileService.addExamWithFile(formObject.tenKyThi,
                 formObject.loaiKyThi, formObject.maDeThi, formObject.thoiGianLamBai, formObject.maKyThi,
-                formObject.matKhauKyThi, JSON.stringify(formattedAnswers), formObject.file).subscribe({
+                formObject.matKhauKyThi, JSON.stringify(formattedAnswers), formObject.file, formObject.thoiGianBatDau, formObject.thoiGianKetThuc).subscribe({
                 next: (response) => {
                     this.loading = false;
                     console.log('Phản hồi từ server:', response);
