@@ -16,14 +16,17 @@
   align-items: center;
   gap: 50px;
 }
+
 .columns {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  .exam-name{
+
+  .exam-name {
     font-size: 1.8rem;
   }
 }
+
 .exam-info div {
   display: flex;
   gap: 5px;

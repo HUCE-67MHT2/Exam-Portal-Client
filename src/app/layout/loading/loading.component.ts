@@ -2,7 +2,7 @@ import {Component, Input} from '@angular/core';
 
 @Component({
   selector: 'app-loading',
-    imports: [],
+  imports: [],
   templateUrl: './loading.component.html',
   styleUrl: './loading.component.scss'
 })
