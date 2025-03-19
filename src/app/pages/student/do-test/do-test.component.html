@@ -1,40 +1,40 @@
 <div class="container">
-    <div class="exam-file">
+  <div class="exam-file">
 
+  </div>
+  <div class="do-test">
+    <div class="counter-wrap">
+      <p>Thời gian còn lại</p>
+      <div class="counter">
+        <p>{{ getFormattedTime() }}</p>
+      </div>
     </div>
-    <div class="do-test">
-        <div class="counter-wrap">
-            <p>Thời gian còn lại</p>
-            <div class="counter">
-                <p>{{ getFormattedTime() }}</p>
-            </div>
-        </div>
-        <div class="answer-sheet">
-            <input [value]="subject" class="subject" readonly type="text">
+    <div class="answer-sheet">
+      <input [value]="subject" class="subject" readonly type="text">
 
-            <h3>Phiếu trả lời</h3>
+      <h3>Phiếu trả lời</h3>
 
-            <div class="grid">
-                <button (click)="selectQuestion(i)"
-                        *ngFor="let answer of answers; let i = index"
-                        [class.answered]="answers[i] !== ''"
-                        [class.selected]="selectedQuestionIndex === i">
-                    {{ i + 1 }}
-                </button>
-            </div>
+      <div class="grid">
+        <button (click)="selectQuestion(i)"
+                *ngFor="let answer of answers; let i = index"
+                [class.answered]="answers[i] !== ''"
+                [class.selected]="selectedQuestionIndex === i">
+          {{ i + 1 }}
+        </button>
+      </div>
 
-            <div *ngIf="selectedQuestionIndex !== null" class="answer-buttons">
-                <button (click)="updateAnswer('A')" [class.selected-answer]="answers[selectedQuestionIndex] === 'A'">A
-                </button>
-                <button (click)="updateAnswer('B')" [class.selected-answer]="answers[selectedQuestionIndex] === 'B'">B
-                </button>
-                <button (click)="updateAnswer('C')" [class.selected-answer]="answers[selectedQuestionIndex] === 'C'">C
-                </button>
-                <button (click)="updateAnswer('D')" [class.selected-answer]="answers[selectedQuestionIndex] === 'D'">D
-                </button>
-            </div>
+      <div *ngIf="selectedQuestionIndex !== null" class="answer-buttons">
+        <button (click)="updateAnswer('A')" [class.selected-answer]="answers[selectedQuestionIndex] === 'A'">A
+        </button>
+        <button (click)="updateAnswer('B')" [class.selected-answer]="answers[selectedQuestionIndex] === 'B'">B
+        </button>
+        <button (click)="updateAnswer('C')" [class.selected-answer]="answers[selectedQuestionIndex] === 'C'">C
+        </button>
+        <button (click)="updateAnswer('D')" [class.selected-answer]="answers[selectedQuestionIndex] === 'D'">D
+        </button>
+      </div>
 
-            <button (click)="submit()" class="submit-btn">Nộp bài</button>
-        </div>
+      <button (click)="submit()" class="submit-btn">Nộp bài</button>
     </div>
+  </div>
 </div>

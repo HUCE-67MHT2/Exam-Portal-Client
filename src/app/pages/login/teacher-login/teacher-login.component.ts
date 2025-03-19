@@ -15,6 +15,7 @@ import {NgIf} from '@angular/common';
 })
 export class TeacherLoginComponent {
   loading: boolean = false;
+
   constructor(private router: Router, private teacherService: TeacherService, private toastr: ToastrService) {
   }
 
