@@ -17,6 +17,7 @@ import {NgIf} from '@angular/common';
 export class StudentLoginComponent {
   loginForm: FormGroup | any;
   loading: boolean = false;
+
   constructor(private router: Router, private studentService: StudentService, private toastr: ToastrService) {
   }
 
