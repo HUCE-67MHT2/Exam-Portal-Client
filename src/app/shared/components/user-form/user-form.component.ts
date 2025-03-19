@@ -1,10 +1,14 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {NgOptimizedImage} from '@angular/common';
 
 @Component({
-    selector: 'app-user-form',
-    templateUrl: './user-form.component.html',
-    styleUrls: ['./user-form.component.scss']
+  selector: 'app-user-form',
+  templateUrl: './user-form.component.html',
+  imports: [
+    NgOptimizedImage
+  ],
+  styleUrls: ['./user-form.component.scss']
 })
 export class UserFormComponent implements OnInit {
     userForm!: FormGroup;
