@@ -1,12 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {HeaderComponent} from "../../../../../layout/header/header.component";
 import {NgClass, NgForOf, NgIf} from "@angular/common";
 
 @Component({
   selector: 'app-exam-created-with-file-detail',
   imports: [
-    HeaderComponent,
     NgForOf,
     NgClass,
     NgIf
@@ -21,6 +19,7 @@ export class ExamCreatedWithFileDetailComponent implements OnInit {
   examType: string = 'Loại không xác định';
   examStatus: string = 'Trạng thái không xác định';
   showPassword: boolean = false;
+  editExamPaperStatus: boolean = false;
   studentsInExam = [
     {"name": "Nguyễn Văn A", "Code": "SV001", "points": 10, "status": "Chưa nộp bài"},
     {"name": "Nguyễn Văn B", "Code": "SV002", "points": 8, "status": "Đang làm"},
@@ -72,17 +71,6 @@ export class ExamCreatedWithFileDetailComponent implements OnInit {
     // Add your logic here
   }
 
-  createNewExamPaper() {
-    this.router.navigate(['teacher/create-new-exam-paper'], {
-      queryParams: {
-        name: this.examName,
-        type: this.examType,
-        examCode: this.examCode,
-        password: this.examPassword
-      }
-    });
-  }
-
   goBack() {
     this.router.navigate(['home/teacher']);
   }
@@ -106,6 +94,6 @@ export class ExamCreatedWithFileDetailComponent implements OnInit {
   }
 
   editExam() {
-
+    this.editExamPaperStatus = !this.editExamPaperStatus;
   }
 }

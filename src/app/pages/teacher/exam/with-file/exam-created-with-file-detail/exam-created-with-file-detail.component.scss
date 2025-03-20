@@ -1,5 +1,4 @@
 .container {
-  margin-top: 80px;
   font-family: Arial, sans-serif;
 }
 
@@ -18,18 +17,28 @@
   gap: 50px;
 }
 
+.columns {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  .exam-name {
+    font-size: 1.8rem;
+  }
+}
+
 .exam-info div {
   display: flex;
-  align-items: center;
   gap: 5px;
-  font-size: 1.6rem;
   font-weight: bold;
+
 
   .examPassword-info {
     width: 142px;
     display: flex;
     align-items: center;
   }
+
 
   .eye-icon {
     cursor: pointer;
@@ -118,7 +127,7 @@
 }
 
 .exam-results-table {
-  max-height: calc(100vh - 280px);
+  max-height: calc(100vh - 180px);
   overflow-y: auto;
 
   table {

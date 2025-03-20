@@ -1,182 +1,204 @@
 <header class="header">
-    <div class="wraper-logo">
-        <div class="logo">Online Exam Portal</div>
-        <nav class="breadcrumb">
-            <span>►</span>
-            <span>Tạo kì thi với file</span>
-        </nav>
-    </div>
-    <div class="return-button">
-        <button (click)="goBack()">quay lại</button>
-    </div>
+  <div class="wraper-logo">
+    <div class="logo">Online Exam Portal</div>
+    <nav class="breadcrumb">
+      <span>►</span>
+      <span>Tạo kì thi với file</span>
+    </nav>
+  </div>
+  <div class="return-button">
+    <button (click)="goBack()">quay lại</button>
+  </div>
 </header>
 
 <app-loading *ngIf="loading" text="🌟Creating exam..."></app-loading>
 
 
 <div class="container">
-    <!-- Left content -->
-    <div class="left-container">
-        <div class="upload-file-container">
-            <button (click)="uploadFile()" class="upload-button">📂 Tải lên file</button>
-            <input #fileInput (change)="onFileSelected($event)" accept=".pdf,.doc,.docx" hidden id="fileInput"
-                   type="file"/>
-        </div>
-
-        <!-- Chỉ hiển thị PDF nếu có file PDF -->
-        <div *ngIf="selectedFileUrl" class="pdf-preview-container">
-            <iframe [src]="selectedFileUrl"></iframe>
-        </div>
-
-        <!-- Chỉ hiển thị Word nếu không có PDF -->
-        <div #wordContainer *ngIf="!selectedFileUrl" class="word-preview-container"></div>
-
+  <!-- Left content -->
+  <div class="left-container">
+    <div class="upload-file-container">
+      <button (click)="uploadFile()" class="upload-button">📂 Tải lên file</button>
+      <input #fileInput (change)="onFileSelected($event)" accept=".pdf,.doc,.docx" hidden id="fileInput"
+             type="file"/>
     </div>
 
-    <!-- Right content -->
-    <div class="right-container">
-        <div class="tab-header">
-            <button (click)="setActiveTab('dapan')" [class.active]="activeTab === 'dapan'" class="tab-button">Đáp án
-            </button>
-            <button (click)="setActiveTab('thongtin')" [class.active]="activeTab === 'thongtin'" class="tab-button">
-                Thông tin bài thi
-            </button>
-        </div>
-        <div class="tab-content">
-            <div *ngIf="activeTab === 'dapan'" class="tab-pane">
-                <div class="score-summary">
-                    <div class="score-item-wrappper">
-                        <div class="score-item">
-                            <label for="totalQuestions">Số câu</label>
-                            <input
-                                    (change)="onTotalQuestionsChange()"
-                                    [(ngModel)]="totalQuestions"
-                                    id="totalQuestions"
-                                    type="number"
-                            />
-                        </div>
-                        <div class="score-item">
-                            <label for="totalScore">Tổng điểm</label>
-                            <input
-                                    [(ngModel)]="totalScore"
-                                    id="totalScore"
-                                    type="number"
-                            />
-                        </div>
-                    </div>
-                    <button (click)="openQuickInput()" class="quick-input">Nhập nhanh</button>
-                </div>
-
-                <!-- Nền tối khi modal mở -->
-                <div (click)="isQuickInputOpen = false" *ngIf="isQuickInputOpen" class="modal-overlay"></div>
-
-                <!-- Modal nhập nhanh -->
-                <div *ngIf="isQuickInputOpen" class="quick-input-modal">
-                    <div class="modal-content">
-                        <h3 class="modal-title">Nhập nhanh</h3>
-                        <p class="modal-description">
-                            Chuỗi đáp án viết liền không dấu (vd: ACDABCAD). Mỗi ký tự là 1 đáp án!
-                        </p>
-
-                        <textarea [(ngModel)]="quickInputText" class="quick-input-area"
-                                  placeholder="Nhập đáp án tại đây..."></textarea>
-                        <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
-                        <p class="answer-count">Bạn sẽ tạo ra {{ quickInputText.length }} đáp án</p>
-
-                        <div class="modal-actions">
-                            <button (click)="isQuickInputOpen = false" class="cancel-btn">Hủy</button>
-                            <button (click)="processQuickInput()" class="confirm-btn">Xác nhận</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="question-list">
-                    <div *ngFor="let i of getQuestions(); let index = index" class="question-item">
-                        <label class="question-title">Câu {{ i + 1 }}</label>
-
-                        <div class="input-group">
-                            <span class="input-label">Đáp án</span>
-                            <select [(ngModel)]="answers[i + 1]" class="answer-select">
-                                <option *ngFor="let option of answerOptions" [value]="option">{{ option }}</option>
-                            </select>
-                        </div>
-
-                        <div class="input-group">
-                            <span class="input-label">Điểm</span>
-                            <input [value]="getQuestionScore()" class="score-input" disabled type="text"/>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-            <div *ngIf="activeTab === 'thongtin'" class="tab-pane">
-                <form (ngSubmit)="onSubmit()" [formGroup]="examForm">
-                    <div class="input-wrapper">
-                        <label for="ten-ky-thi">Tên kỳ thi</label>
-                        <input formControlName="tenKyThi" id="ten-ky-thi" type="text">
-                        <div *ngIf="examForm.get('tenKyThi')?.invalid && examForm.get('tenKyThi')?.touched"
-                             class="error">
-                            Tên kỳ thi không được để trống.
-                        </div>
-                    </div>
-
-                    <div class="input-wrapper">
-                        <label for="loai-ky-thi">Loại kỳ thi</label>
-                        <select formControlName="loaiKyThi" id="loai-ky-thi">
-                            <option value="15 phut">15 phút</option>
-                            <option value="Giua ki">Giữa kì</option>
-                            <option value="Cuoi ki">Cuối kì</option>
-                        </select>
-                        <div *ngIf="examForm.get('loaiKyThi')?.invalid && examForm.get('loaiKyThi')?.touched"
-                             class="error">
-                            Vui lòng chọn loại kỳ thi.
-                        </div>
-                    </div>
-
-                    <div class="input-wrapper">
-                        <label for="ma-de-thi">Mã đề thi</label>
-                        <input formControlName="maDeThi" id="ma-de-thi" type="text">
-                        <div *ngIf="examForm.get('maDeThi')?.invalid && examForm.get('maDeThi')?.touched" class="error">
-                            Mã kỳ thi phải có ít nhất 5 ký tự.
-                        </div>
-                    </div>
-
-                    <div class="input-wrapper">
-                        <label for="thoiGianLamBai">Thời gian làm bài:</label>
-                        <select formControlName="thoiGianLamBai" id="thoiGianLamBai">
-                            <option value="15">15 phút</option>
-                            <option value="30">30 phút</option>
-                            <option value="60">60 phút</option>
-                            <option value="90">90 phút</option>
-                            <option value="120">120 phút</option>
-                        </select>
-                        <div *ngIf="examForm.get('thoiGianLamBai')?.invalid && examForm.get('thoiGianLamBai')?.touched"
-                             class="error">
-                            Vui lòng chọn thời gian làm bài.
-                        </div>
-                    </div>
-
-                    <div class="input-wrapper">
-                        <label for="ma-ky-thi">Mã kỳ thi</label>
-                        <input formControlName="maKyThi" id="ma-ky-thi" type="text">
-                        <div *ngIf="examForm.get('maKyThi')?.invalid && examForm.get('maKyThi')?.touched" class="error">
-                            Mã kỳ thi phải có ít nhất 5 ký tự.
-                        </div>
-                    </div>
-
-                    <div class="input-wrapper">
-                        <label for="mat-khau-ky-thi">Mật khẩu kỳ thi</label>
-                        <input formControlName="matKhauKyThi" id="mat-khau-ky-thi" type="password">
-                        <div *ngIf="examForm.get('matKhauKyThi')?.invalid && examForm.get('matKhauKyThi')?.touched"
-                             class="error">
-                            Mật khẩu phải có ít nhất 6 ký tự.
-                        </div>
-                    </div>
-
-                    <button [disabled]="examForm.invalid" type="submit">Tạo kỳ thi</button>
-                </form>
-            </div>
-        </div>
+    <!-- Chỉ hiển thị PDF nếu có file PDF -->
+    <div *ngIf="selectedFileUrl" class="pdf-preview-container">
+      <iframe [src]="selectedFileUrl"></iframe>
     </div>
+
+    <!-- Chỉ hiển thị Word nếu không có PDF -->
+    <div #wordContainer *ngIf="!selectedFileUrl" class="word-preview-container"></div>
+
+  </div>
+
+  <!-- Right content -->
+  <div class="right-container">
+    <div class="tab-header">
+      <button (click)="setActiveTab('dapan')" [class.active]="activeTab === 'dapan'" class="tab-button">Đáp án
+      </button>
+      <button (click)="setActiveTab('thongtin')" [class.active]="activeTab === 'thongtin'" class="tab-button">
+        Thông tin bài thi
+      </button>
+    </div>
+    <div class="tab-content">
+      <div *ngIf="activeTab === 'dapan'" class="tab-pane">
+        <div class="score-summary">
+          <div class="score-item-wrappper">
+            <div class="score-item">
+              <label for="totalQuestions">Số câu</label>
+              <input
+                (change)="onTotalQuestionsChange()"
+                [(ngModel)]="totalQuestions"
+                id="totalQuestions"
+                type="number"
+              />
+            </div>
+            <div class="score-item">
+              <label for="totalScore">Tổng điểm</label>
+              <input
+                [(ngModel)]="totalScore"
+                id="totalScore"
+                type="number"
+              />
+            </div>
+          </div>
+          <button (click)="openQuickInput()" class="quick-input">Nhập nhanh</button>
+        </div>
+
+        <!-- Nền tối khi modal mở -->
+        <div (click)="isQuickInputOpen = false" *ngIf="isQuickInputOpen" class="modal-overlay"></div>
+
+        <!-- Modal nhập nhanh -->
+        <div *ngIf="isQuickInputOpen" class="quick-input-modal">
+          <div class="modal-content">
+            <h3 class="modal-title">Nhập nhanh</h3>
+            <p class="modal-description">
+              Chuỗi đáp án viết liền không dấu (vd: ACDABCAD). Mỗi ký tự là 1 đáp án!
+            </p>
+
+            <textarea [(ngModel)]="quickInputText" class="quick-input-area"
+                      placeholder="Nhập đáp án tại đây..."></textarea>
+            <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
+            <p class="answer-count">Bạn sẽ tạo ra {{ quickInputText.length }} đáp án</p>
+
+            <div class="modal-actions">
+              <button (click)="isQuickInputOpen = false" class="cancel-btn">Hủy</button>
+              <button (click)="processQuickInput()" class="confirm-btn">Xác nhận</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="question-list">
+          <div *ngFor="let i of getQuestions(); let index = index" class="question-item">
+            <label class="question-title">Câu {{ i + 1 }}</label>
+
+            <div class="input-group">
+              <span class="input-label">Đáp án</span>
+              <select [(ngModel)]="answers[i + 1]" class="answer-select">
+                <option *ngFor="let option of answerOptions" [value]="option">{{ option }}</option>
+              </select>
+            </div>
+
+            <div class="input-group">
+              <span class="input-label">Điểm</span>
+              <input [value]="getQuestionScore()" class="score-input" disabled type="text"/>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div *ngIf="activeTab === 'thongtin'" class="tab-pane">
+        <form (ngSubmit)="onSubmit()" [formGroup]="examForm">
+          <div class="row-wrapper">
+            <div class="input-wrapper">
+              <label for="ten-ky-thi">Tên kỳ thi</label>
+              <input formControlName="tenKyThi" id="ten-ky-thi" type="text">
+              <div *ngIf="examForm.get('tenKyThi')?.invalid && examForm.get('tenKyThi')?.touched"
+                   class="error">
+                Tên kỳ thi không được để trống.
+              </div>
+            </div>
+            <div class="input-wrapper">
+              <label for="loai-ky-thi">Loại kỳ thi</label>
+              <select formControlName="loaiKyThi" id="loai-ky-thi">
+                <option value="15 phut">15 phút</option>
+                <option value="Giua ki">Giữa kì</option>
+                <option value="Cuoi ki">Cuối kì</option>
+              </select>
+              <div *ngIf="examForm.get('loaiKyThi')?.invalid && examForm.get('loaiKyThi')?.touched"
+                   class="error">
+                Vui lòng chọn loại kỳ thi.
+              </div>
+            </div>
+          </div>
+          <div class="row-wrapper">
+            <div class="input-wrapper">
+              <label for="ma-de-thi">Mã đề thi</label>
+              <input formControlName="maDeThi" id="ma-de-thi" type="text">
+              <div *ngIf="examForm.get('maDeThi')?.invalid && examForm.get('maDeThi')?.touched" class="error">
+                Mã kỳ thi phải có ít nhất 5 ký tự.
+              </div>
+            </div>
+
+            <div class="input-wrapper">
+              <label for="thoiGianLamBai">Thời gian làm bài:</label>
+              <select formControlName="thoiGianLamBai" id="thoiGianLamBai">
+                <option value="15">15 phút</option>
+                <option value="30">30 phút</option>
+                <option value="60">60 phút</option>
+                <option value="90">90 phút</option>
+                <option value="120">120 phút</option>
+              </select>
+              <div *ngIf="examForm.get('thoiGianLamBai')?.invalid && examForm.get('thoiGianLamBai')?.touched"
+                   class="error">
+                Vui lòng chọn thời gian làm bài.
+              </div>
+            </div>
+          </div>
+
+          <div class="row-wrapper">
+            <div class="input-wrapper">
+              <label for="thoiGianBatDau">Thời gian bắt đầu:</label>
+              <input formControlName="thoiGianBatDau" id="thoiGianBatDau" type="date">
+              <div *ngIf="examForm.get('thoiGianBatDau')?.invalid && examForm.get('thoiGianBatDau')?.touched"
+                   class="error">
+                Vui lòng chọn thời gian bắt đầu.
+              </div>
+            </div>
+
+            <div class="input-wrapper">
+              <label for="thoiGianKetThuc">Thời gian kết thúc:</label>
+              <input formControlName="thoiGianKetThuc" id="thoiGianKetThuc" type="date">
+              <div *ngIf="examForm.get('thoiGianKetThuc')?.invalid && examForm.get('thoiGianKetThuc')?.touched"
+                   class="error">
+                Vui lòng chọn thời gian kết thúc.
+              </div>
+            </div>
+          </div>
+
+          <div class="input-wrapper">
+            <label for="ma-ky-thi">Mã kỳ thi</label>
+            <input formControlName="maKyThi" id="ma-ky-thi" type="text">
+            <div *ngIf="examForm.get('maKyThi')?.invalid && examForm.get('maKyThi')?.touched" class="error">
+              Mã kỳ thi phải có đúng 5 ký tự chữ cái hoặc số.
+            </div>
+          </div>
+
+          <div class="input-wrapper">
+            <label for="mat-khau-ky-thi">Mật khẩu kỳ thi</label>
+            <input formControlName="matKhauKyThi" id="mat-khau-ky-thi" type="password">
+            <div *ngIf="examForm.get('matKhauKyThi')?.invalid && examForm.get('matKhauKyThi')?.touched"
+                 class="error">
+              Mật khẩu phải có ít nhất 6 ký tự.
+            </div>
+          </div>
+
+          <button [disabled]="examForm.invalid" type="submit">Tạo kỳ thi</button>
+        </form>
+      </div>
+    </div>
+  </div>
 </div>

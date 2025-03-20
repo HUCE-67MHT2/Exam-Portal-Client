@@ -1,4 +1,4 @@
-<header class="header" (document:click)="onDocumentClick($event)">
+<header (document:click)="onDocumentClick($event)" class="header">
   <!-- Logo -->
   <div class="logo">Online Exam Portal</div>
 
@@ -6,18 +6,18 @@
   <ng-content></ng-content>
 
   <!-- User Dropdown -->
-  <div class="user-info" (click)="toggleUserInfoSelection($event)">
+  <div (click)="toggleUserInfoSelection($event)" class="user-info">
     <div class="user-info__wrap">
-      <figure class="avatar"><img alt="" src="" /></figure>
+      <figure class="avatar"><img alt="" src=""/></figure>
       <p class="user-name">Name</p>
-      <img alt="" class="drop-down-arrow" src="/icon/drop-down-arrow.svg" />
+      <img alt="" class="drop-down-arrow" src="/icon/drop-down-arrow.svg"/>
     </div>
   </div>
 
   <!-- Dropdown selection -->
   <div
-    class="user-info__selection"
     [class.visible]="isUserInfoSelectionVisible"
+    class="user-info__selection"
   >
     <div class="user-info__selection-wrap">
       <div class="info info-underline">Thông tin cá nhân</div>
