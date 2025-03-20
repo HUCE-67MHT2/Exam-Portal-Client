@@ -1,22 +1,44 @@
-<app-header-student></app-header-student>
-<app-search-bar>
-    Tìm kỳ thi
-</app-search-bar>
-<table>
-    <thead>
-    <tr>
-        <th>{{ examType }} - {{ examName }} / {{ examCode }}</th>
-        <th>Thời gian</th>
-        <th>Ngày bắt đầu</th>
-        <th>Trạng thái</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let exam of exams">
-        <td>{{ exam.name }}</td>
-        <td>{{ exam.duration }}</td>
-        <td>{{ exam.dateCreated }}</td>
-        <td>{{ exam.status }}</td>
-    </tr>
-    </tbody>
-</table>
+<div class="main-container" (click)="closePasswordModal($event)">
+  <app-header-student></app-header-student>
+  <app-search-bar><app-find-button>Tìm bài thi</app-find-button></app-search-bar>
+  <main class="exam-detail__wrap" (click)="closePasswordModal($event)">
+    <table>
+      <thead>
+        <tr>
+          <th>{{ examType }} - {{ examName }} / {{ examCode }}</th>
+          <th>Thời gian</th>
+          <th>Ngày bắt đầu</th>
+          <th>Trạng thái</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="let exam of exams"
+          (click)="toggleUserInfoSelection($event)"
+        >
+          <td>{{ exam.name }}</td>
+          <td>{{ exam.duration }}</td>
+          <td>{{ exam.dateCreated }}</td>
+          <td>{{ exam.status }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="password-form" #passwordForm [class.visible]="isPassword">
+      <div class="container">
+        <h2>Nhập password bài thi</h2>
+        <div class="input-container">
+          <input
+            *ngFor="let input of inputs; let i = index"
+            #inputBox
+            type="text"
+            maxlength="1"
+            class="input-box"
+            (input)="onInput(i, $event)"
+            (keydown)="onKeyDown(i, $event)"
+          />
+        </div>
+      </div>
+    </div>
+  </main>
+</div>

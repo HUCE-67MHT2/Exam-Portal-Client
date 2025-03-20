@@ -3,6 +3,7 @@ import {HeaderStudentComponent} from '../../../layout/header/header-student/head
 import {SearchBarComponent} from '../../../layout/search-bar/search-bar.component';
 import {NgForOf} from '@angular/common';
 import {Router} from '@angular/router';
+import { FindButtonComponent } from "../../../layout/button/find-button/find-button.component";
 
 @Component({
   selector: 'app-exam',
@@ -10,8 +11,9 @@ import {Router} from '@angular/router';
   imports: [
     HeaderStudentComponent,
     SearchBarComponent,
-    NgForOf
-  ],
+    NgForOf,
+    FindButtonComponent
+],
   templateUrl: './exam.component.html',
   styleUrls: ['./exam.component.scss']
 })
