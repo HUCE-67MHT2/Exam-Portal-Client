@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Exam } from '../../../core/models/exam.model';
 import { GetExamsByTeacherService } from '../../../core/services/exam/get_exams_by_teacher/get_exams_by_teacher.service';
-import {CreateButtonComponent} from '../../../layout/button/create-button/create-button.component';
-import {SearchBarComponent} from '../../../layout/search-bar/search-bar.component';
-import {HeaderComponent} from '../../../layout/header/header.component';
-import {NgForOf} from '@angular/common';
+import { CreateButtonComponent } from '../../../layout/button/create-button/create-button.component';
+import { SearchBarComponent } from '../../../layout/search-bar/search-bar.component';
+import { HeaderComponent } from '../../../layout/header/header.component';
+import { NgForOf, DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-home-teacher',
@@ -15,34 +15,39 @@ import {NgForOf} from '@angular/common';
     CreateButtonComponent,
     SearchBarComponent,
     HeaderComponent,
-    NgForOf
+    NgForOf,
   ],
-  styleUrls: ['./teacher-home.component.scss']
+  styleUrls: ['./teacher-home.component.scss'],
+  providers: [DatePipe]
 })
 export class TeacherHomeComponent implements OnInit {
   exams: Exam[] = [];
 
-  constructor(private router: Router, private examService: GetExamsByTeacherService) {}
+  constructor(private router: Router, private examService: GetExamsByTeacherService, private datePipe: DatePipe) {}
 
   ngOnInit(): void {
     this.fetchExams();
   }
 
-  fetchExams() {
-    // dang deo chạy
-    this.examService.getExams().subscribe(
-      (data: Exam[]) => {
-        this.exams = data;
+  fetchExams = () => {
+    this.examService.getExams().subscribe({
+      next: (data: Exam[]) => {
+        this.exams = data.map(exam => ({
+          ...exam,
+          examCreatedDate: this.datePipe.transform(exam.examCreatedDate, 'HH:mm dd-MM-yyyy') || ''
+        }));
+        console.log(this.exams);
       },
-      (error) => {
+      error: (error) => {
         console.error('Error fetching exams:', error);
         alert('Không thể lấy danh sách kỳ thi. Vui lòng thử lại sau.');
       }
-    );
-  }
+    });
+  };
 
   navigateToExamDetail(exam: Exam) {
-    const route = exam.examType === 'File' ? 'teacher/exam-created-with-file-detail' : 'teacher/exam-created-auto-detail';
+    const route = exam.examSourceType === 'File' ? 'teacher/exam-created-with-file-detail' : 'teacher/exam-created-auto-detail';
+    console.log(exam.examType)
     this.router.navigate([route, exam.examId], {
       queryParams: {
         status: exam.examStatus,

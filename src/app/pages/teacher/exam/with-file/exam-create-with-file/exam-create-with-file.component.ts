@@ -56,17 +56,17 @@ export class ExamCreateWithFileComponent implements OnInit {
       loaiKyThi: ['', Validators.required],
       maDeThi: ['', [Validators.required, Validators.minLength(5)]],
       thoiGianLamBai: ['', Validators.required],
-      maKyThi: ['', [Validators.required, this.alphanumericValidator()]],
-      matKhauKyThi: ['', [Validators.required, Validators.minLength(6)]],
+      maKyThi: ['', [Validators.required, this.numericValidator()]], // Apply custom validator here
+      matKhauKyThi: ['', [Validators.required, Validators.minLength(6)]], // Exactly 6 characters
       thoiGianBatDau: ['', Validators.required],
       thoiGianKetThuc: ['', Validators.required],
     });
   }
 
-  alphanumericValidator(): ValidatorFn {
+  numericValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
-      const valid = /^[a-zA-Z0-9]{5}$/.test(control.value);
-      return valid ? null : {alphanumeric: true};
+      const valid = /^\d{5}$/.test(control.value);
+      return valid ? null : { numeric: true };
     };
   }
 

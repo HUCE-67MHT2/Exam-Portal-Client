@@ -181,18 +181,18 @@
 
           <div class="input-wrapper">
             <label for="ma-ky-thi">Mã kỳ thi</label>
-            <input formControlName="maKyThi" id="ma-ky-thi" type="text">
+            <input formControlName="maKyThi" id="ma-ky-thi" type="text" maxlength="5">
             <div *ngIf="examForm.get('maKyThi')?.invalid && examForm.get('maKyThi')?.touched" class="error">
-              Mã kỳ thi phải có đúng 5 ký tự chữ cái hoặc số.
+              Mã kỳ thi phải có đúng 5 ký tự số.
             </div>
           </div>
 
           <div class="input-wrapper">
             <label for="mat-khau-ky-thi">Mật khẩu kỳ thi</label>
-            <input formControlName="matKhauKyThi" id="mat-khau-ky-thi" type="password">
+            <input formControlName="matKhauKyThi" id="mat-khau-ky-thi" type="password" maxlength="6">
             <div *ngIf="examForm.get('matKhauKyThi')?.invalid && examForm.get('matKhauKyThi')?.touched"
                  class="error">
-              Mật khẩu phải có ít nhất 6 ký tự.
+              Mật khẩu phải là 6 ký tự.
             </div>
           </div>
 

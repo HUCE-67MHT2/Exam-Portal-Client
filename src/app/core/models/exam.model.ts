@@ -6,6 +6,6 @@ export interface Exam {
   examCreatedDate: string; // Ngày tạo kỳ thi (ISO 8601 string)
   examStatus: string;      // Trạng thái kỳ thi ("chưa mở", "đang mở", "đã đóng")
   examDuration: number;    // Thời gian làm bài (phút)
-  examSourceType: string   // Nguồn tạo kỳ thi (File, Auto)
+  examSourceType: string;   // Nguồn tạo kỳ thi (File, Auto)
 }
 
