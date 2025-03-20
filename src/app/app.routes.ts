@@ -12,11 +12,19 @@ import {ResultsComponent} from './pages/student/results/results.component';
 import {UserFormComponent} from './shared/components/user-form/user-form.component';
 import {ExamDetailComponent} from './pages/student/exam-detail/exam-detail.component';
 import {ExamCreateTypeComponent} from './pages/teacher/exam-create-type/exam-create-type.component';
-import {ExamCreateWithFileComponent} from './pages/teacher/exam/with-file/exam-create-with-file/exam-create-with-file.component';
-import {ExamCreatedWithFileDetailComponent} from './pages/teacher/exam/with-file/exam-created-with-file-detail/exam-created-with-file-detail.component';
-import {CreateNewExamPaperComponent} from './pages/teacher/exam-paper/with-file/create-new-exam-paper/create-new-exam-paper.component';
+import {
+  ExamCreateWithFileComponent
+} from './pages/teacher/exam/with-file/exam-create-with-file/exam-create-with-file.component';
+import {
+  ExamCreatedWithFileDetailComponent
+} from './pages/teacher/exam/with-file/exam-created-with-file-detail/exam-created-with-file-detail.component';
+import {
+  CreateNewExamPaperComponent
+} from './pages/teacher/exam-paper/with-file/create-new-exam-paper/create-new-exam-paper.component';
 import {EditExamPaperComponent} from './pages/teacher/exam-paper/with-file/edit-exam-paper/edit-exam-paper.component';
-import {ExamCreatedAutoDetailComponent} from './pages/teacher/exam/auto/exam-created-auto-detail/exam-created-auto-detail.component';
+import {
+  ExamCreatedAutoDetailComponent
+} from './pages/teacher/exam/auto/exam-created-auto-detail/exam-created-auto-detail.component';
 
 export const routes: Routes = [
 

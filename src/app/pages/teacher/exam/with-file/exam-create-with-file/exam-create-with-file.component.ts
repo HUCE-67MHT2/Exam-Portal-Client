@@ -66,7 +66,7 @@ export class ExamCreateWithFileComponent implements OnInit {
   numericValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       const valid = /^\d{5}$/.test(control.value);
-      return valid ? null : { numeric: true };
+      return valid ? null : {numeric: true};
     };
   }
 

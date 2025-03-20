@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
-import { Exam } from '../../../models/exam.model';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
+import {Observable, throwError} from 'rxjs';
+import {catchError} from 'rxjs/operators';
+import {Exam} from '../../../models/exam.model';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +10,8 @@ import { Exam } from '../../../models/exam.model';
 export class GetExamsByTeacherService {
   private apiUrl = 'http://localhost:8081/api/exam/get/list/exams'; // Ensure this matches your backend endpoint
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+  }
 
   getExams(): Observable<Exam[]> {
     const token = localStorage.getItem('authToken'); // Adjust this to where you store the token
@@ -18,7 +19,7 @@ export class GetExamsByTeacherService {
       return throwError('No token found');
     }
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.get<Exam[]>(this.apiUrl, { headers }).pipe(
+    return this.http.get<Exam[]>(this.apiUrl, {headers}).pipe(
       catchError(this.handleError)
     );
   }

@@ -3,7 +3,7 @@ import {HeaderStudentComponent} from '../../../layout/header/header-student/head
 import {SearchBarComponent} from '../../../layout/search-bar/search-bar.component';
 import {NgForOf} from '@angular/common';
 import {Router} from '@angular/router';
-import { FindButtonComponent } from "../../../layout/button/find-button/find-button.component";
+import {FindButtonComponent} from "../../../layout/button/find-button/find-button.component";
 
 @Component({
   selector: 'app-exam',
@@ -13,7 +13,7 @@ import { FindButtonComponent } from "../../../layout/button/find-button/find-but
     SearchBarComponent,
     NgForOf,
     FindButtonComponent
-],
+  ],
   templateUrl: './exam.component.html',
   styleUrls: ['./exam.component.scss']
 })

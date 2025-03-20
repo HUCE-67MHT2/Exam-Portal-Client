@@ -1,16 +1,9 @@
-import {
-  Component,
-  OnInit,
-  ViewChildren,
-  QueryList,
-  ElementRef,
-  ViewChild,
-} from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
-import { HeaderStudentComponent } from "../../../layout/header/header-student/header-student.component";
-import { SearchBarComponent } from "../../../layout/search-bar/search-bar.component";
-import { NgForOf } from "@angular/common";
-import { FindButtonComponent } from "../../../layout/button/find-button/find-button.component";
+import {Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren,} from "@angular/core";
+import {ActivatedRoute} from "@angular/router";
+import {HeaderStudentComponent} from "../../../layout/header/header-student/header-student.component";
+import {SearchBarComponent} from "../../../layout/search-bar/search-bar.component";
+import {NgForOf} from "@angular/common";
+import {FindButtonComponent} from "../../../layout/button/find-button/find-button.component";
 
 @Component({
   selector: "app-exam-detail",
@@ -54,8 +47,13 @@ export class ExamDetailComponent implements OnInit {
       status: "Đã làm",
     },
   ];
+  @ViewChildren("inputBox") inputBoxes!: QueryList<ElementRef>;
+  @ViewChild("passwordForm") passwordForm!: ElementRef;
+  inputs = new Array(6).fill(""); // Giả sử có 5 ô input
+  isPassword = false;
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(private route: ActivatedRoute) {
+  }
 
   ngOnInit() {
     const param = this.route.snapshot.paramMap.get("examCode");
@@ -71,9 +69,6 @@ export class ExamDetailComponent implements OnInit {
       }
     });
   }
-  @ViewChildren("inputBox") inputBoxes!: QueryList<ElementRef>;
-  @ViewChild("passwordForm") passwordForm!: ElementRef;
-  inputs = new Array(6).fill(""); // Giả sử có 5 ô input
 
   ngAfterViewInit() {
     this.inputBoxes.first?.nativeElement.focus(); // Tự động focus vào ô đầu tiên
@@ -113,8 +108,6 @@ export class ExamDetailComponent implements OnInit {
       .join("");
     console.log("Password nhập vào:", password);
   }
-
-  isPassword = false;
 
   toggleUserInfoSelection(event: Event) {
     event.stopPropagation();
