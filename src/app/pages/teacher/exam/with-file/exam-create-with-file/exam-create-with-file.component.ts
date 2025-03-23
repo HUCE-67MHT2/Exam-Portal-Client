@@ -2,13 +2,10 @@ import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
 import { Router } from "@angular/router";
 import { NgForOf, NgIf } from "@angular/common";
 import {
-  AbstractControl,
   FormBuilder,
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
-  ValidationErrors,
-  ValidatorFn,
   Validators,
 } from "@angular/forms";
 import { DomSanitizer, SafeResourceUrl } from "@angular/platform-browser";
@@ -49,22 +46,10 @@ export class ExamCreateWithFileComponent implements OnInit {
     private toastr: ToastrService
   ) {
     this.examForm = this.fb.group({
-      tenKyThi: ["", Validators.required],
-      loaiKyThi: ["", Validators.required],
-      maDeThi: ["", [Validators.required, Validators.minLength(5)]],
-      thoiGianLamBai: ["", Validators.required],
-      maKyThi: ["", [Validators.required, this.numericValidator()]], // Apply custom validator here
-      matKhauKyThi: ["", [Validators.required, Validators.minLength(6)]], // Exactly 6 characters
-      thoiGianBatDau: ["", Validators.required],
-      thoiGianKetThuc: ["", Validators.required],
+      exam_name: ["", [Validators.required,]],
+      exam_description: ["", Validators.required],
+      exam_duration: ["", Validators.required],
     });
-  }
-
-  numericValidator(): ValidatorFn {
-    return (control: AbstractControl): ValidationErrors | null => {
-      const valid = /^\d{5}$/.test(control.value);
-      return valid ? null : { numeric: true };
-    };
   }
 
   ngOnInit() {
@@ -177,9 +162,7 @@ export class ExamCreateWithFileComponent implements OnInit {
       });
 
       // Add the selected file
-      const fileInput = document.getElementById(
-        "fileInput"
-      ) as HTMLInputElement;
+      const fileInput = document.getElementById("fileInput") as HTMLInputElement;
       if (fileInput.files && fileInput.files.length > 0) {
         formData.append("file", fileInput.files[0]);
       }
@@ -194,69 +177,31 @@ export class ExamCreateWithFileComponent implements OnInit {
       formData.append("answers", JSON.stringify(formattedAnswers));
       formData.append("totalScore", this.totalScore.toString());
 
-      // Convert thoiGianBatDau and thoiGianKetThuc to strings
-      const thoiGianBatDau = this.examForm.get("thoiGianBatDau")?.value;
-      const thoiGianKetThuc = this.examForm.get("thoiGianKetThuc")?.value;
-
-      formData.append("thoiGianBatDau", thoiGianBatDau);
-      formData.append("thoiGianKetThuc", thoiGianKetThuc);
-
       // Log FormData entries
       formData.forEach((value, key) => {
         console.log(`${key}: ${value}`);
       });
 
-      const formObject: any = {};
-      formData.forEach((value, key) => {
-        formObject[key] = value;
-      });
-
-      console.log(
-        formObject.tenKyThi,
-        formObject.loaiKyThi,
-        formObject.maDeThi,
-        formObject.thoiGianLamBai,
-        formObject.maKyThi,
-        formObject.matKhauKyThi,
-        JSON.stringify(formattedAnswers),
-        formObject.file,
-        formObject.thoiGianBatDau,
-        formObject.thoiGianKetThuc
-      );
-
       // Send POST request to backend
-      this.createExamWithFileService
-        .addExamWithFile(
-          formObject.tenKyThi,
-          formObject.loaiKyThi,
-          formObject.maDeThi,
-          formObject.thoiGianLamBai,
-          formObject.maKyThi,
-          formObject.matKhauKyThi,
-          JSON.stringify(formattedAnswers),
-          formObject.file,
-          formObject.thoiGianBatDau,
-          formObject.thoiGianKetThuc
-        )
-        .subscribe({
-          next: (response) => {
-            this.loading = false;
-            console.log("Phản hồi từ server:", response);
-            if (response.status === 200) {
-              this.toastr.success("Tạo kì thi mới thành công", "Thành công", {
-                timeOut: 2000,
-              });
-              setTimeout(() => {
-                this.router.navigate(["/home/teacher"]);
-              }, 2000);
-            }
-          },
-          error: (error) => {
-            this.loading = false;
-            console.error("Lỗi khi tạo kỳ thi:", error);
-            this.toastr.error(error.error.message, "Lỗi", { timeOut: 2000 });
-          },
-        });
+      this.createExamWithFileService.addExamWithFile(formData).subscribe({
+        next: (response) => {
+          this.loading = false;
+          console.log("Phản hồi từ server:", response);
+          if (response.status === 200) {
+            this.toastr.success("Tạo kì thi mới thành công", "Thành công", {
+              timeOut: 2000,
+            });
+            setTimeout(() => {
+              this.router.navigate(["/home/teacher"]);
+            }, 2000);
+          }
+        },
+        error: (error) => {
+          this.loading = false;
+          console.error("Lỗi khi tạo kỳ thi:", error);
+          this.toastr.error(error.error.message, "Lỗi", { timeOut: 2000 });
+        },
+      });
     } else {
       alert("Please fill in all required fields.");
     }
