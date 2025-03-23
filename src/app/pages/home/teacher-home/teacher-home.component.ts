@@ -35,7 +35,7 @@ export class TeacherHomeComponent implements OnInit {
       next: (data: Exam[]) => {
         this.exams = data.map(exam => ({
           ...exam,
-          examCreatedDate: this.datePipe.transform(exam.examCreatedDate, 'HH:mm dd-MM-yyyy') || ''
+
         }));
         console.log(this.exams);
       },
@@ -47,14 +47,10 @@ export class TeacherHomeComponent implements OnInit {
   };
 
   navigateToExamDetail(exam: Exam) {
-    const route = exam.examSourceType === 'File' ? 'teacher/exam-created-with-file-detail' : 'teacher/exam-created-auto-detail';
-    console.log(exam.examType)
-    this.router.navigate([route, exam.examId], {
+    const route = exam.type === 'File' ? 'teacher/exam-created-with-file-detail' : 'teacher/exam-created-auto-detail';
+    this.router.navigate([route], {
       queryParams: {
-        status: exam.examStatus,
-        name: exam.examName,
-        password: exam.examPassword,
-        type: exam.examType
+        code: exam.code
       }
     });
   }

@@ -18,7 +18,6 @@ export class CreateExamWithFileService {
     loaiDeThi: string,
     maDeThi: string,
     thoiGianLamBai: number,
-    maKyThi: string,
     matKhauKyThi: string,
     answers: any,
     file: File,
@@ -37,7 +36,6 @@ export class CreateExamWithFileService {
     formData.append('loaiDeThi', loaiDeThi);
     formData.append('maDeThi', maDeThi);
     formData.append('thoiGianLamBai', thoiGianLamBai.toString());
-    formData.append('maKyThi', maKyThi);
     formData.append('matKhauKyThi', matKhauKyThi);
     formData.append('file', file);
     formData.append('answer', answers);

@@ -13,12 +13,12 @@
     </tr>
     <tr (click)="navigateToExamDetail(exam)" *ngFor="let exam of exams">
       <td>
-        <p class="exam-name">{{ exam.examName }} - {{ exam.examType }}</p>
-        <p class="class-code">Mã lớp: {{ exam.examId }}</p>
+        <p class="exam-name">{{ exam.name }} - {{ exam.description }}</p>
+        <p class="class-code">Mã lớp: {{ exam.code }}</p>
       </td>
-      <td>{{ exam.examCreatedDate }}</td>
-      <td>{{ exam.examStatus }}</td>
-      <td>{{ exam.examSourceType }}</td>
+      <td>{{ exam.createDate }}</td>
+      <td>{{ exam.status }}</td>
+      <td>{{ exam.type }}</td>
     </tr>
     </tbody>
   </table>
