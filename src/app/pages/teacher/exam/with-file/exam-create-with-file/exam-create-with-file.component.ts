@@ -1,6 +1,6 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {Router} from '@angular/router';
-import {NgForOf, NgIf} from '@angular/common';
+import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
+import { Router } from "@angular/router";
+import { NgForOf, NgIf } from "@angular/common";
 import {
   AbstractControl,
   FormBuilder,
@@ -9,64 +9,61 @@ import {
   ReactiveFormsModule,
   ValidationErrors,
   ValidatorFn,
-  Validators
-} from '@angular/forms';
-import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
-import * as docx from 'docx-preview';
-import {HttpClient} from '@angular/common/http';
-import {
-  CreateExamWithFileService
-} from '../../../../../core/services/exam/create_exam_with_file/create-exam-with-file.service';
-import {ToastrService} from 'ngx-toastr';
-import {LoadingComponent} from '../../../../../layout/loading/loading.component';
+  Validators,
+} from "@angular/forms";
+import { DomSanitizer, SafeResourceUrl } from "@angular/platform-browser";
+import * as docx from "docx-preview";
+import { HttpClient } from "@angular/common/http";
+import { CreateExamWithFileService } from "../../../../../core/services/exam/create_exam_with_file/create-exam-with-file.service";
+import { ToastrService } from "ngx-toastr";
+import { LoadingComponent } from "../../../../../layout/loading/loading.component";
 
 @Component({
-  selector: 'app-exam-create-with-file',
-  imports: [
-    NgIf,
-    ReactiveFormsModule,
-    FormsModule,
-    NgForOf,
-    LoadingComponent
-  ],
-  templateUrl: './exam-create-with-file.component.html',
-  styleUrl: './exam-create-with-file.component.scss',
-  providers: [CreateExamWithFileService]
+  selector: "app-exam-create-with-file",
+  imports: [NgIf, ReactiveFormsModule, FormsModule, NgForOf, LoadingComponent],
+  templateUrl: "./exam-create-with-file.component.html",
+  styleUrl: "./exam-create-with-file.component.scss",
+  providers: [CreateExamWithFileService],
 })
 export class ExamCreateWithFileComponent implements OnInit {
-  activeTab: string = 'dapan'; // Default tab is "Đáp án"
+  activeTab: string = "dapan"; // Default tab is "Đáp án"
   examForm: FormGroup; // Form data
   totalQuestions: number = 5;
   totalScore: number = 5;
   isQuickInputOpen: boolean = false;
-  quickInputText: string = '';
-  answerOptions: string[] = ['A', 'B', 'C', 'D'];
+  quickInputText: string = "";
+  answerOptions: string[] = ["A", "B", "C", "D"];
   answers: { [key: number]: string } = {};
-  errorMessage: string = '';
+  errorMessage: string = "";
   fileRequest: any;
   selectedFileUrl: SafeResourceUrl | null = null;
   loading: boolean = false;
-  @ViewChild('wordContainer') wordContainer!: ElementRef;
+  @ViewChild("wordContainer") wordContainer!: ElementRef;
 
-
-  constructor(private fb: FormBuilder, private router: Router, private sanitizer: DomSanitizer, private http: HttpClient
-    , private createExamWithFileService: CreateExamWithFileService, private toastr: ToastrService) {
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private sanitizer: DomSanitizer,
+    private http: HttpClient,
+    private createExamWithFileService: CreateExamWithFileService,
+    private toastr: ToastrService
+  ) {
     this.examForm = this.fb.group({
-      tenKyThi: ['', Validators.required],
-      loaiKyThi: ['', Validators.required],
-      maDeThi: ['', [Validators.required, Validators.minLength(5)]],
-      thoiGianLamBai: ['', Validators.required],
-      maKyThi: ['', [Validators.required, this.numericValidator()]], // Apply custom validator here
-      matKhauKyThi: ['', [Validators.required, Validators.minLength(6)]], // Exactly 6 characters
-      thoiGianBatDau: ['', Validators.required],
-      thoiGianKetThuc: ['', Validators.required],
+      tenKyThi: ["", Validators.required],
+      loaiKyThi: ["", Validators.required],
+      maDeThi: ["", [Validators.required, Validators.minLength(5)]],
+      thoiGianLamBai: ["", Validators.required],
+      maKyThi: ["", [Validators.required, this.numericValidator()]], // Apply custom validator here
+      matKhauKyThi: ["", [Validators.required, Validators.minLength(6)]], // Exactly 6 characters
+      thoiGianBatDau: ["", Validators.required],
+      thoiGianKetThuc: ["", Validators.required],
     });
   }
 
   numericValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       const valid = /^\d{5}$/.test(control.value);
-      return valid ? null : {numeric: true};
+      return valid ? null : { numeric: true };
     };
   }
 
@@ -75,7 +72,7 @@ export class ExamCreateWithFileComponent implements OnInit {
   }
 
   uploadFile() {
-    document.getElementById('fileInput')?.click();
+    document.getElementById("fileInput")?.click();
   }
 
   onFileSelected(event: any) {
@@ -87,13 +84,17 @@ export class ExamCreateWithFileComponent implements OnInit {
 
     if (file.type === "application/pdf") {
       const fileURL = URL.createObjectURL(file);
-      this.selectedFileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(fileURL);
-    } else if (file.type === "application/vnd.openxmlformats-officedocument.wordprocessingml.document") {
+      this.selectedFileUrl =
+        this.sanitizer.bypassSecurityTrustResourceUrl(fileURL);
+    } else if (
+      file.type ===
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+    ) {
       const reader = new FileReader();
       reader.onload = (e: any) => {
         const arrayBuffer = e.target.result;
         const container = this.wordContainer.nativeElement;
-        container.innerHTML = ''; // Xóa nội dung cũ
+        container.innerHTML = ""; // Xóa nội dung cũ
 
         // Đảm bảo container có kích thước phù hợp
         container.style.width = "100%";
@@ -105,23 +106,24 @@ export class ExamCreateWithFileComponent implements OnInit {
       reader.readAsArrayBuffer(file);
     }
     this.fileRequest = file;
-
   }
 
   getQuestions(): number[] {
-    return Array.from({length: this.totalQuestions}, (_, i) => i);
+    return Array.from({ length: this.totalQuestions }, (_, i) => i);
   }
 
   onTotalQuestionsChange() {
     const newAnswers: { [key: number]: string } = {};
     for (let i = 1; i <= this.totalQuestions; i++) {
-      newAnswers[i] = this.answers[i] || ''; // Retain old answers if available
+      newAnswers[i] = this.answers[i] || ""; // Retain old answers if available
     }
     this.answers = newAnswers;
   }
 
   getQuestionScore() {
-    return (this.totalQuestions > 0 ? this.totalScore / this.totalQuestions : 0).toFixed(2);
+    return (
+      this.totalQuestions > 0 ? this.totalScore / this.totalQuestions : 0
+    ).toFixed(2);
   }
 
   openQuickInput() {
@@ -130,13 +132,14 @@ export class ExamCreateWithFileComponent implements OnInit {
   }
 
   processQuickInput() {
-    this.errorMessage = '';
+    this.errorMessage = "";
     // Chuyển chuỗi thành chữ hoa và loại bỏ khoảng trắng
     const input = this.quickInputText.toUpperCase().trim();
 
     // Kiểm tra nếu chuỗi chứa ký tự không hợp lệ (không phải A, B, C, D)
     if (!/^[ABCD]+$/.test(input)) {
-      this.errorMessage = "Chuỗi nhập vào chỉ được chứa các ký tự hoa thường A, B, C, D!";
+      this.errorMessage =
+        "Chuỗi nhập vào chỉ được chứa các ký tự hoa thường A, B, C, D!";
       return;
     }
 
@@ -156,9 +159,11 @@ export class ExamCreateWithFileComponent implements OnInit {
 
   onSubmit = () => {
     // Check if all questions have been answered
-    const allQuestionsAnswered = Object.values(this.answers).every(answer => answer !== '');
+    const allQuestionsAnswered = Object.values(this.answers).every(
+      (answer) => answer !== ""
+    );
     if (!allQuestionsAnswered) {
-      alert('Please answer all questions before submitting.');
+      alert("Please answer all questions before submitting.");
       return;
     }
 
@@ -167,30 +172,34 @@ export class ExamCreateWithFileComponent implements OnInit {
       const formData = new FormData();
 
       // Add form data
-      Object.keys(this.examForm.value).forEach(key => {
+      Object.keys(this.examForm.value).forEach((key) => {
         formData.append(key, this.examForm.value[key]);
       });
 
       // Add the selected file
-      const fileInput = document.getElementById('fileInput') as HTMLInputElement;
+      const fileInput = document.getElementById(
+        "fileInput"
+      ) as HTMLInputElement;
       if (fileInput.files && fileInput.files.length > 0) {
-        formData.append('file', fileInput.files[0]);
+        formData.append("file", fileInput.files[0]);
       }
 
-      const formattedAnswers = Object.entries(this.answers).map(([id, select]) => ({
-        id,
-        select
-      }));
+      const formattedAnswers = Object.entries(this.answers).map(
+        ([id, select]) => ({
+          id,
+          select,
+        })
+      );
 
-      formData.append('answers', JSON.stringify(formattedAnswers));
-      formData.append('totalScore', this.totalScore.toString());
+      formData.append("answers", JSON.stringify(formattedAnswers));
+      formData.append("totalScore", this.totalScore.toString());
 
       // Convert thoiGianBatDau and thoiGianKetThuc to strings
-      const thoiGianBatDau = this.examForm.get('thoiGianBatDau')?.value.toString();
-      const thoiGianKetThuc = this.examForm.get('thoiGianKetThuc')?.value.toString();
+      const thoiGianBatDau = this.examForm.get("thoiGianBatDau")?.value;
+      const thoiGianKetThuc = this.examForm.get("thoiGianKetThuc")?.value;
 
-      formData.append('thoiGianBatDau', thoiGianBatDau);
-      formData.append('thoiGianKetThuc', thoiGianKetThuc);
+      formData.append("thoiGianBatDau", thoiGianBatDau);
+      formData.append("thoiGianKetThuc", thoiGianKetThuc);
 
       // Log FormData entries
       formData.forEach((value, key) => {
@@ -202,37 +211,59 @@ export class ExamCreateWithFileComponent implements OnInit {
         formObject[key] = value;
       });
 
-      console.log(formObject.tenKyThi,
-        formObject.loaiKyThi, formObject.maDeThi, formObject.thoiGianLamBai, formObject.maKyThi,
-        formObject.matKhauKyThi, JSON.stringify(formattedAnswers), formObject.file, formObject.thoiGianBatDau, formObject.thoiGianKetThuc);
+      console.log(
+        formObject.tenKyThi,
+        formObject.loaiKyThi,
+        formObject.maDeThi,
+        formObject.thoiGianLamBai,
+        formObject.maKyThi,
+        formObject.matKhauKyThi,
+        JSON.stringify(formattedAnswers),
+        formObject.file,
+        formObject.thoiGianBatDau,
+        formObject.thoiGianKetThuc
+      );
 
       // Send POST request to backend
-      this.createExamWithFileService.addExamWithFile(formObject.tenKyThi,
-        formObject.loaiKyThi, formObject.maDeThi, formObject.thoiGianLamBai, formObject.maKyThi,
-        formObject.matKhauKyThi, JSON.stringify(formattedAnswers), formObject.file, formObject.thoiGianBatDau, formObject.thoiGianKetThuc).subscribe({
-        next: (response) => {
-          this.loading = false;
-          console.log('Phản hồi từ server:', response);
-          if (response.status === 200) {
-            this.toastr.success('Tạo kì thi mới thành công', 'Thành công', {timeOut: 2000});
-            setTimeout(() => {
-              this.router.navigate(['/home/teacher']);
-            }, 2000);
-          }
-        },
-        error: (error) => {
-          this.loading = false;
-          console.error('Lỗi khi tạo kỳ thi:', error);
-          this.toastr.error(error.error.message, 'Lỗi', {timeOut: 2000});
-        }
-      });
+      this.createExamWithFileService
+        .addExamWithFile(
+          formObject.tenKyThi,
+          formObject.loaiKyThi,
+          formObject.maDeThi,
+          formObject.thoiGianLamBai,
+          formObject.maKyThi,
+          formObject.matKhauKyThi,
+          JSON.stringify(formattedAnswers),
+          formObject.file,
+          formObject.thoiGianBatDau,
+          formObject.thoiGianKetThuc
+        )
+        .subscribe({
+          next: (response) => {
+            this.loading = false;
+            console.log("Phản hồi từ server:", response);
+            if (response.status === 200) {
+              this.toastr.success("Tạo kì thi mới thành công", "Thành công", {
+                timeOut: 2000,
+              });
+              setTimeout(() => {
+                this.router.navigate(["/home/teacher"]);
+              }, 2000);
+            }
+          },
+          error: (error) => {
+            this.loading = false;
+            console.error("Lỗi khi tạo kỳ thi:", error);
+            this.toastr.error(error.error.message, "Lỗi", { timeOut: 2000 });
+          },
+        });
     } else {
-      alert('Please fill in all required fields.');
+      alert("Please fill in all required fields.");
     }
-  }
+  };
 
   goBack() {
-    this.router.navigate(['teacher/exam-create-type']);
+    this.router.navigate(["teacher/exam-create-type"]);
   }
 
   setActiveTab(tab: string) {
@@ -242,7 +273,7 @@ export class ExamCreateWithFileComponent implements OnInit {
   private initializeAnswers() {
     this.answers = {};
     for (let i = 1; i <= this.totalQuestions; i++) {
-      this.answers[i] = ''; // Default to empty or set a default value like 'A'
+      this.answers[i] = ""; // Default to empty or set a default value like 'A'
     }
   }
 }

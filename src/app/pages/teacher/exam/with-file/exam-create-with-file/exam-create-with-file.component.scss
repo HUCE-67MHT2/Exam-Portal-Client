@@ -267,7 +267,8 @@
     width: 100%;
     margin-top: 15px;
 
-    .cancel-btn, .confirm-btn {
+    .cancel-btn,
+    .confirm-btn {
       padding: 8px 16px;
       border: none;
       border-radius: 5px;
@@ -397,6 +398,14 @@ form {
 // FORM VALIDATION ERROR
 .input-wrapper {
   position: relative;
+  display: flex;
+  flex-direction: column;
+
+  input[type="date"],
+  input[type="time"],
+  input[type="datetime-local"] {
+    margin-bottom: 8px;
+  }
 
   .error {
     position: absolute;
@@ -415,5 +424,16 @@ form {
   .input-wrapper {
     width: 50%;
 
+    label {
+      margin-bottom: 5px;
+    }
   }
+}
+
+.exam-info {
+  margin-bottom: 15px;
+}
+
+.exam-info:nth-of-type(2) {
+  margin-top: 15px;
 }
