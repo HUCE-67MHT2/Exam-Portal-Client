@@ -35,7 +35,7 @@ export class TeacherHomeComponent implements OnInit {
       next: (data: Exam[]) => {
         this.exams = data.map(exam => ({
           ...exam,
-
+          createDate: this.datePipe.transform(exam.createDate, 'HH:mm dd-MM-yyyy') || ''
         }));
         console.log(this.exams);
       },
