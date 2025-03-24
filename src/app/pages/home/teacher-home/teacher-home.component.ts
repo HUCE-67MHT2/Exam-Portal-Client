@@ -45,7 +45,7 @@ import {Component, OnInit} from '@angular/core';
         });
       };
 
-      navigateToExamDetail(exam: Exam) {
+      navigateToExamPeriodDetail(exam: Exam) {
         const route = exam.type === 'File' ? 'teacher/exam-created-with-file-detail' : 'teacher/exam-created-auto-detail';
         console.log(exam.type);
         this.router.navigate([route, exam.id]);

@@ -4,17 +4,17 @@ import {HeaderComponent} from '../../../../layout/header/header.component';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-create-exam-period',
-  templateUrl: './create-exam-period.component.html',
+  selector: 'app-create-exam-session',
+  templateUrl: './create-exam-session.component.html',
   imports: [
     ReactiveFormsModule,
     HeaderComponent,
     CommonModule,
   ],
-  styleUrls: ['./create-exam-period.component.scss'],
+  styleUrls: ['./create-exam-session.component.scss'],
 
 })
-export class CreateExamPeriodComponent {
+export class CreateExamSessionComponent {
   examForm: FormGroup;
 
   constructor(private fb: FormBuilder) {
