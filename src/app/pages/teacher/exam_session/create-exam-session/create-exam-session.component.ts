@@ -1,37 +1,58 @@
 import { Component } from '@angular/core';
-import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {HeaderComponent} from '../../../../layout/header/header.component';
-import { CommonModule } from '@angular/common';
+  import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+  import { DatePipe, CommonModule } from '@angular/common';
+  import { HeaderComponent } from '../../../../layout/header/header.component';
+  import { NgOptimizedImage } from '@angular/common';
 
-@Component({
-  selector: 'app-create-exam-session',
-  templateUrl: './create-exam-session.component.html',
-  imports: [
-    ReactiveFormsModule,
-    HeaderComponent,
-    CommonModule,
-  ],
-  styleUrls: ['./create-exam-session.component.scss'],
+  @Component({
+    selector: 'app-create-exam-session',
+    templateUrl: './create-exam-session.component.html',
+    styleUrls: ['./create-exam-session.component.scss'],
+    providers: [DatePipe],
+    imports: [
+      ReactiveFormsModule,
+      HeaderComponent,
+      CommonModule,
+      NgOptimizedImage,
+    ],
+  })
+  export class CreateExamSessionComponent {
+    examForm: FormGroup;
 
-})
-export class CreateExamSessionComponent {
-  examForm: FormGroup;
+    constructor(private fb: FormBuilder, private datePipe: DatePipe) {
+      this.examForm = this.fb.group({
+        exam_sessions_name: ['', Validators.required], // Tên kỳ thi
+        exam_sessions_description: '',
+        exam_sessions_password: ['', [Validators.required, Validators.minLength(6)]], // Mật khẩu kỳ thi
+        exam_sessions_start_date: ['', Validators.required], // Thời gian bắt đầu
+        exam_sessions_end_date: ['', Validators.required], // Thời gian kết thúc
+      });
+    }
 
-  constructor(private fb: FormBuilder) {
-    this.examForm = this.fb.group({
-      tenKyThi: ['', Validators.required],
-      loaiKyThi: ['', Validators.required],
-      matKhauKyThi: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(6)]],
-      thoiGianBatDau: ['', Validators.required],
-      thoiGianKetThuc: ['', Validators.required],
-      maKyThi: ['', [Validators.required, Validators.pattern('^[0-9]{5}$')]],
-      thoiGianLamBai: ['', Validators.required]
-    });
-  }
+    onSubmit() {
+      console.log('Form status:', this.examForm.status);
 
-  onSubmit() {
-    if (this.examForm.valid) {
-      console.log('Dữ liệu kỳ thi:', this.examForm.value);
+      if (this.examForm.valid) {
+        const formData = {
+          ...this.examForm.value,
+          exam_sessions_start_date: this.datePipe.transform(
+            this.examForm.value.exam_sessions_start_date,
+            'dd/MM/yyyy HH:mm'
+          ),
+          exam_sessions_end_date: this.datePipe.transform(
+            this.examForm.value.exam_sessions_end_date,
+            'dd/MM/yyyy HH:mm'
+          )
+        };
+        console.log('Dữ liệu kỳ thi:', formData);
+        // Gọi API hoặc xử lý dữ liệu ở đây
+      } else {
+        console.log('Form invalid - Lỗi chi tiết:', this.examForm.errors);
+        this.examForm.markAllAsTouched();
+      }
+    }
+
+    goBack() {
+      console.log('Go to Exam');
     }
   }
-}
