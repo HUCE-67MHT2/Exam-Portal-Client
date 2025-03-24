@@ -24,6 +24,7 @@ import {
   ExamCreatedAutoDetailComponent
 } from './pages/teacher/exam/auto/exam-created-auto-detail/exam-created-auto-detail.component';
 import {CreateExamSessionComponent} from './pages/teacher/exam_session/create-exam-session/create-exam-session.component';
+import { ExamSessionDashboardComponent } from './pages/teacher/exam_session/exam-session-dashboard/exam-session-dashboard.component';
 
 export const routes: Routes = [
 
@@ -50,4 +51,5 @@ export const routes: Routes = [
   {path: 'teacher/edit-exam-paper/:id', component: EditExamPaperComponent},
   {path: 'teacher/exam-created-auto-detail/:examCode', component: ExamCreatedAutoDetailComponent},
   {path: 'teacher/create-exam-session', component: CreateExamSessionComponent},
+  {path: 'teacher/exam-session-dashboard', component: ExamSessionDashboardComponent}
 ];
