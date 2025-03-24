@@ -12,6 +12,6 @@ export class CreateButtonComponent {
   }
 
   navigateToCreateExam() {
-    this.router.navigate(['teacher/exam-create-type']);
+    this.router.navigate(['teacher/create-exam-session']);
   }
 }

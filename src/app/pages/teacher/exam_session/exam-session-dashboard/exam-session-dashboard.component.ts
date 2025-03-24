@@ -38,7 +38,7 @@ export class ExamSessionDashboardComponent implements OnInit {
   }
 
   goBack() {
-
+    this.router.navigate(['/home/teacher']);
   }
 
   clickActive(event: Event, tab: string) {

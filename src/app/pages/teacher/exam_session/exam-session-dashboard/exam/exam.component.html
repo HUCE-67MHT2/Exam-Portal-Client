@@ -14,7 +14,7 @@
       <thead>
       <tr>
         <th>Tên mã đề</th>
-        <th>Trạng thái</th>
+        <th>Thời lượng</th>
         <th>Dạng đề</th>
         <th>Ngày tạo</th>
         <th></th>
@@ -23,12 +23,12 @@
       <tbody>
       <tr *ngFor="let exam of filteredExams">
         <td>
-          <p class="exam-name">{{ exam.name }} - {{ exam.description }}</p>
-          <p class="class-code">Mã lớp: {{ exam.code }}</p>
+          <p class="exam-name">{{ exam_session_name }} - {{ exam.description }}</p>
+          <p class="class-code">Mã lớp: {{ exam_session_code }}</p>
         </td>
-        <td>{{ exam.status }}</td>
+        <td>{{ exam.duration }}</td>
         <td>{{ exam.type }}</td>
-        <td>{{ exam.createDate }}</td>
+        <td>{{ exam.create_date }}</td>
         <td>
           <button>sửa</button>
           <button>xóa</button>

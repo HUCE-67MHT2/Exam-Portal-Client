@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
   import { DatePipe, CommonModule } from '@angular/common';
   import { HeaderComponent } from '../../../../layout/header/header.component';
   import { NgOptimizedImage } from '@angular/common';
+import {Router} from '@angular/router';
 
   @Component({
     selector: 'app-create-exam-session',
@@ -19,7 +20,7 @@ import { Component } from '@angular/core';
   export class CreateExamSessionComponent {
     examForm: FormGroup;
 
-    constructor(private fb: FormBuilder, private datePipe: DatePipe) {
+    constructor(private fb: FormBuilder, private datePipe: DatePipe, private router: Router) {
       this.examForm = this.fb.group({
         exam_sessions_name: ['', Validators.required], // Tên kỳ thi
         exam_sessions_description: '',
@@ -53,6 +54,7 @@ import { Component } from '@angular/core';
     }
 
     goBack() {
+      this.router.navigate(['home/teacher']);
       console.log('Go to Exam');
     }
   }
