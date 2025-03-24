@@ -145,27 +145,28 @@ export class ExamComponent implements OnInit {
   @Input() exam_session_name!: string;
   @Input() exam_session_code!: string;
 
+
   ngOnInit(): void {
     console.log("Initial Exam List:", this.examList);
     this.filteredExams = [...this.examList]; // Đảm bảo hiển thị ban đầu
-    console.log("Exam Session Name:", this.exam_session_name);
-    console.log("Exam Session Code:", this.exam_session_code);
+
   }
 
   filterExam() {
-    console.log("Search Term:", this.searchTerm);
+    console.log("Exam Session Name:", this.exam_session_name);
+    console.log("Exam Session Code:", this.exam_session_code);
 
     const normalizedSearchTerm = this.removeVietnameseTones(this.searchTerm.toLowerCase());
-    console.log("Normalized Search Term:", normalizedSearchTerm); // Kiểm tra giá trị đã chuẩn hóa
+
 
     this.filteredExams = this.examList.filter(exam => {
       const normalizedExamName = this.removeVietnameseTones(exam.name.toLowerCase());
-      console.log("Checking Exam:", exam.name, "=>", normalizedExamName);
+
 
       return normalizedExamName.includes(normalizedSearchTerm);
     });
 
-    console.log("Filtered Exams:", this.filteredExams);
+
   }
   removeVietnameseTones(str: string): string {
     return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
