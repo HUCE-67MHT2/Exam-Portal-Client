@@ -22,7 +22,11 @@
         <a class="change-profile-pic" href="#" id="change-avatar">Thay đổi ảnh đại diện</a>
       </div>
     </div>
-    <div id="hocsinh"><h4> Học sinh </h4></div>
+    <div id="hocsinh">
+      <h4>
+        <ng-content select="[role]"></ng-content>
+      </h4>
+    </div>
 
     <!-- Phần thông tin cá nhân -->
     <div class="personal-info-section">

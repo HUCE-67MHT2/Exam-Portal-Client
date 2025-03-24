@@ -1,11 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {NgOptimizedImage} from '@angular/common';
+import {NgIf, NgOptimizedImage} from '@angular/common';
 
 @Component({
   selector: 'app-user-form',
   templateUrl: './user-form.component.html',
   imports: [
+    NgIf,
     NgOptimizedImage
   ],
   styleUrls: ['./user-form.component.scss']
