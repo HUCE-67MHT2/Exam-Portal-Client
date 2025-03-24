@@ -1,15 +1,18 @@
 import { Component } from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {HeaderComponent} from '../../../../layout/header/header.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-create-exam-period',
   templateUrl: './create-exam-period.component.html',
   imports: [
     ReactiveFormsModule,
-    HeaderComponent
+    HeaderComponent,
+    CommonModule,
   ],
-  styleUrls: ['./create-exam-period.component.scss']
+  styleUrls: ['./create-exam-period.component.scss'],
+
 })
 export class CreateExamPeriodComponent {
   examForm: FormGroup;

@@ -1,11 +1,36 @@
 .container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin-top: 80px;
+}
+
+.exam-period-info {
+  display: flex;
+  justify-content: space-between;
+  column-gap: 20px;
+  width: 70%;
+  margin-top: 60px;
+  // padding: 20px;
+  border: 1px solid #dcdcdc;
+  border-radius: 5px;
+}
+
+.image-wrap {
+  width: 50%;
+  // background: var(--primary-color);
+  border-radius: 5px 0 0 5px;
+  img {
+    width: 520px;
+    height: 100%;
+    object-fit: cover;
+  }
 }
 
 form {
   display: flex;
   flex-direction: column;
-  padding: 20px;
+  padding: 40px 30px 40px 10px;
 
   label {
     font-weight: bold;
@@ -20,10 +45,10 @@ form {
     width: 100%;
   }
 
-  button {
+  .submit {
     margin-top: 20px;
     padding: 15px;
-    background: #04aa6d;
+    background: var(--primary-color);
     color: white;
     border: none;
     cursor: pointer;
@@ -77,4 +102,19 @@ form {
 
 .exam-info:nth-of-type(2) {
   margin-top: 15px;
+}
+
+.back {
+  width: 100%;
+  margin-top: 20px;
+  padding: 15px;
+  border: none;
+  outline: none;
+  border-radius: 5px;
+  background: #ededed;
+}
+
+.back:hover {
+  opacity: 0.9;
+  cursor: pointer;
 }
