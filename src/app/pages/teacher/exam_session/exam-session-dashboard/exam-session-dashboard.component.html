@@ -1,4 +1,4 @@
-<body style="height: 10000px">
+<body>
   <header class="header">
     <div class="wraper-logo">
       <div class="logo">Online Exam Portal</div>
@@ -29,9 +29,7 @@
   <main>
     <app-home *ngIf="activeTab === 'home'"></app-home>
     <app-student-list *ngIf="activeTab === 'student-list'"></app-student-list>
-    <app-exam *ngIf="activeTab === 'exam'"></app-exam>
-    <app-question-bank
-      *ngIf="activeTab === 'question-bank'"
-    ></app-question-bank>
+    <app-exam [exam_session_name]="exam_session_name" [exam_session_code]="exam_session_code" *ngIf="activeTab === 'exam'"></app-exam>
+    <app-question-bank *ngIf="activeTab === 'question-bank'"></app-question-bank>
   </main>
 </body>

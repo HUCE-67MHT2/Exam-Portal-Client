@@ -1,1 +1,42 @@
-<p>exam works!</p>
+<div class="search-bar">
+  <div class="search">
+    <img ngSrc="/icon/find_icon.svg" alt="search icon" class="search-icon" height="16" width="16">
+    <input type="text" [(ngModel)]="searchTerm" (keyup.enter)="filterExam()" (input)="filterExam()" placeholder="Nhập tên đề thi">
+    <div class="create-button">
+      <button (click)="navigateToCreatExam()" >tạo kỳ thi</button>
+    </div>
+  </div>
+</div>
+
+
+<div class="table-wrapper">
+  <div class="table-container">
+    <table>
+      <thead>
+      <tr>
+        <th>Tên mã đề</th>
+        <th>Trạng thái</th>
+        <th>Dạng đề</th>
+        <th>Ngày tạo</th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let exam of filteredExams">
+        <td>
+          <p class="exam-name">{{ exam.name }} - {{ exam.description }}</p>
+          <p class="class-code">Mã lớp: {{ exam.code }}</p>
+        </td>
+        <td>{{ exam.status }}</td>
+        <td>{{ exam.type }}</td>
+        <td>{{ exam.createDate }}</td>
+        <td>
+          <button>sửa</button>
+          <button>xóa</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+

@@ -11,5 +11,6 @@ export interface Exam {
   startDate: string;        // Ngày bắt đầu kỳ thi (ISO 8601 string)
   endDate: string;          // Ngày kết thúc kỳ thi (ISO 8601 string)
   status: string;           // Trạng thái kỳ thi (xử lý bên server)
+  code: string;             // Mã kỳ thi
 }
 

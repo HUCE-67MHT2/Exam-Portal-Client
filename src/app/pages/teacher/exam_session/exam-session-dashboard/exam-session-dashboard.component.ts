@@ -1,6 +1,5 @@
-import { Component, ElementRef } from "@angular/core";
-import { HeaderComponent } from "../../../../layout/header/header.component";
-import { Router } from "@angular/router";
+import { Component, ElementRef, OnInit } from "@angular/core";
+import { Router, ActivatedRoute } from "@angular/router";
 import { HomeComponent } from "./home/home.component";
 import { StudentListComponent } from "./student-list/student-list.component";
 import { ExamComponent } from "./exam/exam.component";
@@ -12,7 +11,6 @@ import { CommonModule } from "@angular/common";
   standalone: true,
   imports: [
     CommonModule,
-    HeaderComponent,
     HomeComponent,
     StudentListComponent,
     ExamComponent,
@@ -21,13 +19,22 @@ import { CommonModule } from "@angular/common";
   templateUrl: "./exam-session-dashboard.component.html",
   styleUrl: "./exam-session-dashboard.component.scss",
 })
-export class ExamSessionDashboardComponent {
+export class ExamSessionDashboardComponent implements OnInit {
+  exam_session_name: string = "Kỳ thi Toán học 2025";
+  exam_session_code: string = "MATH2025HK1";
   activeTab: string = "home";
 
-  constructor(private router: Router, private el: ElementRef) {}
+  constructor(private router: Router, private route: ActivatedRoute, private el: ElementRef) {}
+
+  ngOnInit(): void {
+    this.route.queryParams.subscribe(params => {
+      this.exam_session_name = params['name'];
+      this.exam_session_code = params['code'];
+    });
+  }
 
   goBack() {
-    this.router.navigate(["home/teacher"]);
+
   }
 
   clickActive(event: Event, tab: string) {
