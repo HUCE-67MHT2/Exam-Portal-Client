@@ -15,7 +15,8 @@
   form {
     display: flex;
     flex-direction: column;
-    padding: 20px 30px 40px 10px;
+    padding: 10px 0 60px 0;
+    border-bottom: 1px solid #ccc;
 
     label {
       font-weight: bold;
