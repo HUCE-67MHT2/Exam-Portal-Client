@@ -13,7 +13,7 @@ import {NgClass, NgForOf, NgIf} from "@angular/common";
   styleUrl: './exam-created-with-file-detail.component.scss'
 })
 export class ExamCreatedWithFileDetailComponent implements OnInit {
-  examCode: string = 'Mã không xác định';
+  examID: string = 'Mã không xác định';
   examName: string = 'Tên không xác định';
   examPassword: string = 'Mật khẩu không xác định';
   examType: string = 'Loại không xác định';
@@ -42,9 +42,9 @@ export class ExamCreatedWithFileDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    const param = this.route.snapshot.paramMap.get('examCode');
+    const param = this.route.snapshot.paramMap.get('examID');
     if (param) {
-      this.examCode = param;
+      this.examID = param;
     }
     this.route.queryParams.subscribe(params => {
       if (params['name']) {
@@ -82,7 +82,7 @@ export class ExamCreatedWithFileDetailComponent implements OnInit {
         dateCreated: paper.dateCreated,
         name: this.examName,
         type: this.examType,
-        examCode: this.examCode,
+        examCode: this.examID,
         password: this.examPassword,
         status: this.examStatus
       }

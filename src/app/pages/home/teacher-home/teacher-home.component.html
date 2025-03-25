@@ -8,19 +8,21 @@
     <tr>
       <th>Tên kỳ thi đã tạo</th>
       <th>Ngày tạo</th>
+      <th>Ngày mở</th>
+      <th>Ngày đóng</th>
       <th>Trạng thái</th>
-      <th>Số lượng đề</th>
       <th>Dạng đề bài</th>
     </tr>
-    <tr (click)="navigateToExamDetail(exam)" *ngFor="let exam of exams">
+    <tr (click)="navigateExamSessionDashBoard()" *ngFor="let examSession of examSessionList">
       <td>
-        <p class="exam-name">{{ exam.name }} - {{ exam.type }}</p>
-        <p class="class-code">Mã lớp: {{ exam.examCode }}</p>
+        <p class="exam-name">{{ examSession.name }} - {{ examSession.description }}</p>
+        <p class="class-code">Mã lớp: {{ examSession.code }}</p>
       </td>
-      <td>{{ exam.day }}</td>
-      <td>{{ exam.status }}</td>
-      <td>{{ exam.tests }}</td>
-      <td>{{ exam.source }}</td>
+      <td>{{ examSession.createDate | date: 'dd-MM-yyyy HH:mm:ss' }}</td>
+      <td>{{ examSession.startDate | date: 'dd-MM-yyyy HH:mm:ss' }}</td>
+      <td>{{ examSession.endDate | date: 'dd-MM-yyyy HH:mm:ss' }}</td>
+      <td>{{ examSession.status }}</td>
+      <td>{{ examSession.type }}</td>
     </tr>
     </tbody>
   </table>

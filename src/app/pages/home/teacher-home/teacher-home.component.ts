@@ -1,126 +1,55 @@
-import {Component} from '@angular/core';
-import {SearchBarComponent} from '../../../layout/search-bar/search-bar.component';
-import {NgForOf} from '@angular/common';
+import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {CreateButtonComponent} from '../../../layout/button/create-button/create-button.component';
+import {SearchBarComponent} from '../../../layout/search-bar/search-bar.component';
 import {HeaderComponent} from '../../../layout/header/header.component';
+import {DatePipe, NgForOf} from '@angular/common';
+import {ExamSession} from '../../../core/models/examSession.model';
+import {ExamSessionService} from '../../../core/services/exam/exam_session/exam-session.service';
 
 @Component({
   selector: 'app-home-teacher',
   standalone: true,
-  imports: [
-    SearchBarComponent,
-    NgForOf,
-    CreateButtonComponent,
-    HeaderComponent
-  ],
   templateUrl: './teacher-home.component.html',
-  styleUrls: ['./teacher-home.component.scss']
+  imports: [
+    CreateButtonComponent,
+    SearchBarComponent,
+    HeaderComponent,
+    NgForOf,
+    DatePipe
+  ],
+  styleUrls: ['./teacher-home.component.scss'],
+  providers: [DatePipe,ExamSessionService]
 })
-export class TeacherHomeComponent {
-  exams = [
-    {
-      "name": "Giải tích", //title
-      "type": "Giữa kì", // examtype
-      "examCode": "ABCXYZ", // id
-      "tests": 1,
-      "day": "2025-03-12", // create at
-      "status": "đang mở",
-      "password": "A1B2C3",
-      "source": "File"
-    },
-    {
-      "name": "Giải tích",
-      "type": "Cuối kì",
-      "examCode": "XYZ123",
-      "tests": 6,
-      "day": "2025-03-12",
-      "status": "đã đóng",
-      "password": "D4E5F6",
-      "source": "Auto-generated"
-    },
-    {
-      "name": "UIAUIA",
-      "type": "Giữa kì",
-      "examCode": "DEF456",
-      "tests": 1,
-      "day": "2025-03-12",
-      "status": "đang mở",
-      "password": "G7H8I9",
-      "source": "File"
-    },
-    {
-      "name": "Cơ học địa chất MHT 2",
-      "type": "Cuối kì",
-      "examCode": "GHI789",
-      "tests": 7,
-      "day": "2025-03-12",
-      "status": "đã đóng",
-      "password": "J1K2L3",
-      "source": "Auto-generated"
-    },
-    {
-      "name": "LTUDM",
-      "type": "15 phút",
-      "examCode": "JKL012",
-      "tests": 1,
-      "day": "2025-03-12",
-      "status": "đang mở",
-      "password": "M4N5O6",
-      "source": "File"
-    },
-    {
-      "name": "IOT",
-      "type": "15 phút",
-      "examCode": "MNO345",
-      "tests": 3,
-      "day": "2025-03-12",
-      "status": "đã đóng",
-      "password": "P7Q8R9",
-      "source": "Auto-generated"
-    },
-    {
-      "name": "UDKTM",
-      "type": "15 phút",
-      "examCode": "PQR678",
-      "tests": 1,
-      "day": "2025-03-12",
-      "status": "đang mở",
-      "password": "S1T2U3",
-      "source": "File"
-    },
-    {
-      "name": "PTTKHTTT",
-      "type": "15 phút",
-      "examCode": "STU901",
-      "tests": 1,
-      "day": "2025-03-12",
-      "status": "đã đóng",
-      "password": "V4W5X6",
-      "source": "Auto-generated"
-    },
-  ]
+export class TeacherHomeComponent implements OnInit {
+  examSessionList: ExamSession[] = [];
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private examSessionService: ExamSessionService, private datePipe: DatePipe) {
   }
+  loadExamSession = () => {
+    this.examSessionService.getExamSession().subscribe({
+      next: (response) => {
+        console.log('Phản hồi từ server:', response.body);
+        if (response.status === 200) {
+        this.examSessionList = response.body.examPeriods;
+        }
+      },
+      error: (error) => {
+        console.error('Lỗi khi lấy dữ liệu:', error);
 
-  navigateToExamDetail(exam: {
-    examCode: string,
-    name: string,
-    password: string,
-    type: string,
-    source: string,
-    status: string
-  }) {
-    const route = exam.source === 'File' ? 'teacher/exam-created-with-file-detail' : 'teacher/exam-created-auto-detail';
-    this.router.navigate([route, exam.examCode], {
-      queryParams: {
-        status: exam.status,
-        name: exam.name,
-        password: exam.password,
-        type: exam.type
       }
     });
-    console.log('Navigate to exam detail:', exam.examCode, exam.name, exam.password, exam.source);
+
+  };
+
+  ngOnInit(): void {
+    this.loadExamSession();
+
+  }
+
+
+
+  navigateExamSessionDashBoard() {
+    this.router.navigate(['teacher/exam-session-dashboard']);
   }
 }

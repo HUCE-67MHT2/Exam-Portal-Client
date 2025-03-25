@@ -24,6 +24,7 @@ header {
     font-size: 24px;
     text-align: left;
   }
+
   .svg-icon {
     cursor: pointer; // Con trỏ chuột thành hình bàn tay khi di chuột qua
     fill: rgb(96, 182, 114);
@@ -31,6 +32,7 @@ header {
     margin-top: 30px;
     margin-left: 50px;
   }
+
   .svg-icon:hover {
     fill: rgb(18, 132, 69); /* Màu tối hơn khi di chuột qua */
   }
