@@ -23,8 +23,7 @@
       <tbody>
       <tr *ngFor="let exam of filteredExams">
         <td>
-          <p class="exam-name">{{ exam_session_name }} - {{ exam.description }}</p>
-          <p class="class-code">Mã lớp: {{ exam_session_code }}</p>
+          <p class="exam-name">{{ exam.name }} - {{ exam.description }}</p>
         </td>
         <td>{{ exam.duration }}</td>
         <td>{{ exam.type }}</td>
