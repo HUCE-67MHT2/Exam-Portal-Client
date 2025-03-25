@@ -22,7 +22,7 @@ import { CommonModule } from "@angular/common";
 export class ExamSessionDashboardComponent implements OnInit {
 
   activeTab: string = "home";
-  // 2 biến này sẽ được lấy ra khi navigate từ trang khác
+  // 2 biến này lấy từ params trên trang home teacher
   exam_session_name = "Kỳ thi Toán học 2025";
   exam_session_code = "MATH2025HK1";
 
