@@ -74,19 +74,18 @@ li {
     .option {
       width: 100%;
       padding: 15px 0 15px 20px;
-      border-bottom: 3px solid #fff;
       cursor: pointer;
       transition: background 0.3s, border-bottom 0.3s;
     }
 
     .option:hover {
-      border-bottom: 3px solid #ccc;
-      background: #ccc;
+      background: var(--primary-color);
     }
   }
 
   .active {
-    background: #ccc;
+    color: #fff;
+    background: var(--primary-color);
     transition: background 0.3s;
   }
 }

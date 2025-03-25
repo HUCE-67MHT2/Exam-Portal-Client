@@ -1,11 +1,73 @@
-import { Component } from '@angular/core';
+import { DatePipe, CommonModule } from "@angular/common";
+import { Component } from "@angular/core";
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from "@angular/forms";
+import { ExamSessionService } from "../../../../../core/services/exam/exam_session/exam-session.service";
+import { Router } from "@angular/router";
+import { ToastrService } from "ngx-toastr";
 
 @Component({
-  selector: 'app-home',
-  imports: [],
-  templateUrl: './home.component.html',
-  styleUrl: './home.component.scss'
+  selector: "app-home",
+  imports: [ReactiveFormsModule, CommonModule],
+  providers: [DatePipe],
+  templateUrl: "./home.component.html",
+  styleUrl: "./home.component.scss",
 })
 export class HomeComponent {
+  examForm: FormGroup;
 
+  constructor(
+    private fb: FormBuilder,
+    private datePipe: DatePipe,
+    private router: Router,
+    private examSessionService: ExamSessionService,
+    private toastr: ToastrService
+  ) {
+    this.examForm = this.fb.group({
+      exam_sessions_name: ["", Validators.required], // Tên kỳ thi
+      exam_sessions_description: "",
+      exam_sessions_password: [
+        "",
+        [Validators.required, Validators.minLength(6)],
+      ], // Mật khẩu kỳ thi
+      exam_sessions_start_date: ["", Validators.required], // Thời gian bắt đầu
+      exam_sessions_end_date: ["", Validators.required], // Thời gian kết thúc
+    });
+  }
+
+  onSubmit() {
+    console.log("Form status:", this.examForm.status);
+
+    if (this.examForm.valid) {
+      const formData = {
+        ...this.examForm.value,
+        exam_sessions_start_date: new Date(
+          this.examForm.value.exam_sessions_start_date
+        ).toISOString(),
+        exam_sessions_end_date: new Date(
+          this.examForm.value.exam_sessions_end_date
+        ).toISOString(),
+      };
+      console.log("Dữ liệu kỳ thi:", formData);
+      this.examSessionService.createNewExamSession(formData).subscribe({
+        next: (response) => {
+          console.log("Phản hồi từ server:", response);
+          if (response.status === 200) {
+            this.toastr.success("Tạo kỳ thi thành công", "Thành công", {
+              timeOut: 2000,
+            });
+            setTimeout(() => {
+              this.router.navigate(["home/teacher"]);
+            }, 1000);
+          }
+        },
+        error: (error) => {
+          console.error("Lỗi khi tạo kỳ thi:", error);
+          this.toastr.error("Tạo kỳ thi thất bại", "Lỗi", { timeOut: 2000 });
+        },
+      });
+    } else {
+      console.log("Form invalid - Lỗi chi tiết:", this.examForm.errors);
+      this.examForm.markAllAsTouched();
+    }
+  }
 }
