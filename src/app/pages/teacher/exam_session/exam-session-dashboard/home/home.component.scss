@@ -4,7 +4,7 @@
   background: #fff;
 
   .form-wrap {
-    padding: 10px 40px 0 40px;
+    padding: 20px 40px 0 40px;
   }
 
   .exam-info {
@@ -15,8 +15,8 @@
   form {
     display: flex;
     flex-direction: column;
-    padding: 10px 0 60px 0;
-    border-bottom: 1px solid #ccc;
+    padding: 10px 0 50px 0;
+    // border-bottom: 1px solid #ccc;
 
     label {
       font-weight: bold;
@@ -90,5 +90,44 @@
 
   .exam-info {
     margin-bottom: 15px;
+  }
+
+  .border {
+    height: 1px;
+    width: 100%;
+    background: linear-gradient(
+      90deg,
+      #fff 0%,
+      #dddcdc 51.09%,
+      rgba(212, 212, 212, 0) 99.68%
+    );
+  }
+
+  .participating-student-list {
+    .participating-student__heading {
+      margin-top: 20px;
+    }
+
+    table {
+      width: 100%;
+      text-align: left;
+    }
+
+    table, th, td {
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 10px;
+    }
+
+    th {
+      color: #fff;
+      background-color: var(--primary-color);
+    }
+
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
   }
 }
