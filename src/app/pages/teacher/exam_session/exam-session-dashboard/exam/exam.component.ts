@@ -21,9 +21,9 @@ export class ExamComponent implements OnInit {
     {
       id: 1,
       exam_session_id: 101,
-      name: "Kỳ thi Toán học 2025",
-      description: "Kỳ thi học kỳ môn Toán lớp 12",
-      type: "Học kỳ",
+      name: "Toán",
+      description: "Học kỳ",
+      type: "upload-file",
       duration: 90,
       subject: "Toán",
       fileUrl: "https://drive.google.com/example/math_exam.pdf",
@@ -32,9 +32,9 @@ export class ExamComponent implements OnInit {
     {
       id: 2,
       exam_session_id: 102,
-      name: "Kỳ thi Tiếng Anh 2025",
-      description: "Bài kiểm tra giữa kỳ môn Tiếng Anh",
-      type: "Giữa kỳ",
+      name: "Tiếng Anh",
+      description: "Giữa kỳ",
+      type: "auto-generate",
       duration: 60,
       subject: "Tiếng Anh",
       fileUrl: "",
@@ -43,9 +43,9 @@ export class ExamComponent implements OnInit {
     {
       id: 3,
       exam_session_id: 103,
-      name: "Kỳ thi Vật Lý 2025",
-      description: "Kỳ thi cuối kỳ môn Vật Lý lớp 11",
-      type: "Cuối kỳ",
+      name: "Vật Lý",
+      description: "Cuối kỳ",
+      type: "upload-file",
       duration: 75,
       subject: "Vật Lý",
       fileUrl: "https://drive.google.com/example/physics_exam.pdf",
@@ -54,9 +54,9 @@ export class ExamComponent implements OnInit {
     {
       id: 4,
       exam_session_id: 104,
-      name: "Kỳ thi Hóa Học 2025",
-      description: "Kỳ thi cuối kỳ môn Hóa lớp 12",
-      type: "Cuối kỳ",
+      name: "Hóa Học",
+      description: "Cuối kỳ",
+      type: "upload-file",
       duration: 90,
       subject: "Hóa Học",
       fileUrl: "https://drive.google.com/example/chem_exam.pdf",
@@ -65,9 +65,9 @@ export class ExamComponent implements OnInit {
     {
       id: 5,
       exam_session_id: 105,
-      name: "Kỳ thi Sinh Học 2025",
-      description: "Bài kiểm tra giữa kỳ môn Sinh Học",
-      type: "Giữa kỳ",
+      name: "Sinh Học",
+      description: "Giữa kỳ",
+      type: "auto-generate",
       duration: 60,
       subject: "Sinh Học",
       fileUrl: "",
@@ -76,9 +76,9 @@ export class ExamComponent implements OnInit {
     {
       id: 6,
       exam_session_id: 106,
-      name: "Kỳ thi Lịch Sử 2025",
-      description: "Kỳ thi cuối kỳ môn Lịch Sử lớp 12",
-      type: "Cuối kỳ",
+      name: "Lịch Sử",
+      description: "Cuối kỳ",
+      type: "upload-file",
       duration: 75,
       subject: "Lịch Sử",
       fileUrl: "https://drive.google.com/example/history_exam.pdf",
@@ -87,9 +87,9 @@ export class ExamComponent implements OnInit {
     {
       id: 7,
       exam_session_id: 107,
-      name: "Kỳ thi Địa Lý 2025",
-      description: "Bài kiểm tra giữa kỳ môn Địa Lý",
-      type: "Giữa kỳ",
+      name: "Địa Lý",
+      description: "Giữa kỳ",
+      type: "auto-generate",
       duration: 60,
       subject: "Địa Lý",
       fileUrl: "",
@@ -98,15 +98,16 @@ export class ExamComponent implements OnInit {
     {
       id: 8,
       exam_session_id: 108,
-      name: "Kỳ thi Tin Học 2025",
-      description: "Kỳ thi học kỳ môn Tin Học lớp 11",
-      type: "Học kỳ",
+      name: "Lập Trình",
+      description: "Học kỳ",
+      type: "upload-file",
       duration: 90,
       subject: "Tin Học",
       fileUrl: "https://drive.google.com/example/it_exam.pdf",
       create_date: "17:00 05-03-2025",
     }
   ];
+
 
 
   filteredExams: Exam[] = [];
