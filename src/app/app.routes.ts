@@ -15,6 +15,7 @@ import {ExamCreateTypeComponent} from './pages/teacher/exam-create-type/exam-cre
 import {ExamCreateWithFileComponent} from './pages/teacher/exam/with-file/exam-create-with-file/exam-create-with-file.component';
 import {CreateExamSessionComponent} from './pages/teacher/exam_session/create-exam-session/create-exam-session.component';
 import { ExamSessionDashboardComponent } from './pages/teacher/exam_session/exam-session-dashboard/exam-session-dashboard.component';
+import {CreateAutoGenerateComponent} from './pages/teacher/exam/auto-generate/create-auto-generate/create-auto-generate.component'
 
 export const routes: Routes = [
 
@@ -35,5 +36,6 @@ export const routes: Routes = [
   {path: 'teacher/exam-create-type', component: ExamCreateTypeComponent},
   {path: 'teacher/exam-create-with-file', component: ExamCreateWithFileComponent},
   {path: 'teacher/create-exam-session', component: CreateExamSessionComponent},
-  {path: 'teacher/exam-session-dashboard', component: ExamSessionDashboardComponent}
+  {path: 'teacher/exam-session-dashboard', component: ExamSessionDashboardComponent},
+  {path: 'teacher/exam-create-auto-generate', component: CreateAutoGenerateComponent},
 ];

@@ -27,6 +27,10 @@ export class ExamCreateTypeComponent implements OnInit {
     this.router.navigate(['teacher/exam-create-with-file']);
   }
 
+  navigateToAutoGenerate() {
+    this.router.navigate(['teacher/exam-create-auto-generate'])
+  }
+
   goBack() {
     this.router.navigate(['/teacher/exam-session-dashboard'], { queryParams: { name: this.exam_session_name, code: this.exam_session_code } });
   }
