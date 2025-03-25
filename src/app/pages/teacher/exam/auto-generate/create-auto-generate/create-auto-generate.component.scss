@@ -14,8 +14,12 @@
   }
 
   .tab-wrap {
-    margin-top: 80px;
+    position: fixed;
+    top: 0;
+    left: 0;
     display: flex;
+    margin-top: 80px;
+    width: 100%;  
 
     .tab {
       width: 50%;
