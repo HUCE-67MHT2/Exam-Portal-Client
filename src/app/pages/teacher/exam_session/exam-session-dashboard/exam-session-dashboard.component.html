@@ -17,8 +17,8 @@
       <li class="option active" (click)="clickActive($event, 'home')">
         Thông tin chung
       </li>
-      <li class="option" (click)="clickActive($event, 'student-list')">
-        Thống kê sinh viên
+      <li class="option" (click)="clickActive($event, 'student-list-point')">
+        Thống kê điểm
       </li>
       <li class="option" (click)="clickActive($event, 'exam')">Đề thi</li>
       <li class="option" (click)="clickActive($event, 'question-bank')">
@@ -28,7 +28,7 @@
   </div>
   <main>
     <app-home *ngIf="activeTab === 'home'"></app-home>
-    <app-student-list *ngIf="activeTab === 'student-list'"></app-student-list>
+    <app-student-list-point *ngIf="activeTab === 'student-list-point'"></app-student-list-point>
     <app-exam [exam_session_name] = "exam_session_name" [exam_session_code] = "exam_session_code" *ngIf="activeTab === 'exam'"></app-exam>
     <app-question-bank *ngIf="activeTab === 'question-bank'"></app-question-bank>
   </main>

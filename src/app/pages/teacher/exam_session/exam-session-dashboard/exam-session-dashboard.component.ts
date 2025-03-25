@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit } from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
 import { HomeComponent } from "./home/home.component";
-import { StudentListComponent } from "./student-list/student-list.component";
+import { StudentListPointComponent } from "./student-list-point/student-list-point.component";
 import { ExamComponent } from "./exam/exam.component";
 import { QuestionBankComponent } from "./question-bank/question-bank.component";
 import { CommonModule } from "@angular/common";
@@ -12,7 +12,7 @@ import { CommonModule } from "@angular/common";
   imports: [
     CommonModule,
     HomeComponent,
-    StudentListComponent,
+    StudentListPointComponent,
     ExamComponent,
     QuestionBankComponent,
   ],

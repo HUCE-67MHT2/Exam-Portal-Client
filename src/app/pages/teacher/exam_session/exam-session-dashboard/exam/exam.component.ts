@@ -123,20 +123,11 @@ export class ExamComponent implements OnInit {
   }
 
   filterExam() {
-    console.log("Exam Session Name:", this.exam_session_name);
-    console.log("Exam Session Code:", this.exam_session_code);
-
     const normalizedSearchTerm = this.removeVietnameseTones(this.searchTerm.toLowerCase());
-
-
     this.filteredExams = this.examList.filter(exam => {
       const normalizedExamName = this.removeVietnameseTones(exam.name.toLowerCase());
-
-
       return normalizedExamName.includes(normalizedSearchTerm);
     });
-
-
   }
   removeVietnameseTones(str: string): string {
     return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
