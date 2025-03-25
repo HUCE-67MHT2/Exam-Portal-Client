@@ -24,14 +24,14 @@ import {ExamSessionService} from '../../../core/services/exam/exam_session/exam-
 export class TeacherHomeComponent implements OnInit {
   examSessionList: ExamSession[] = [];
 
-  constructor(private router: Router, private examSessionService: ExamSessionService, private datePipe: DatePipe) {
+  constructor(private router: Router, private examSessionService: ExamSessionService) {
   }
   loadExamSession = () => {
     this.examSessionService.getExamSession().subscribe({
       next: (response) => {
         console.log('Phản hồi từ server:', response.body);
         if (response.status === 200) {
-        this.examSessionList = response.body.examPeriods;
+        this.examSessionList = response.body.examSessions;
         }
       },
       error: (error) => {
