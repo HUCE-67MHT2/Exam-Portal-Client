@@ -1,13 +1,59 @@
-import {Component, HostListener} from "@angular/core";
-
+import { Component, OnInit, HostListener } from "@angular/core";
+import { Router } from "@angular/router";
+import { UserService } from "../../core/services/user/user.service";
+import { CommonModule } from "@angular/common";
+import {NgIf } from "@angular/common";
+import {User} from '../../core/models/User.model';
 @Component({
   selector: "app-header",
   templateUrl: "./header.component.html",
   styleUrls: ["./header.component.scss"],
   standalone: true,
+  imports: [CommonModule, NgIf],
+  providers: [UserService],
 })
-export class HeaderComponent {
+
+export class HeaderComponent implements OnInit {
+
   isUserInfoSelectionVisible = false;
+  UserInfoObject = {
+    id: undefined,
+    username: undefined,
+    password: undefined,
+    enabled: undefined,
+    fullName: undefined,
+    gender: undefined ,
+    birthday: undefined ,
+    address: undefined,
+    email: undefined,
+    telephone: undefined ,
+    avatarUrl: undefined ,
+    school: undefined,
+    className: undefined,
+    status: undefined ,
+    createdAt: undefined ,
+    updatedAt: undefined ,
+  };
+  constructor(private router: Router, private userService: UserService) {}
+
+  ngOnInit() {
+    this.getUser();
+  }
+
+  getUser = ()=> {
+    this.userService.getUserinfo().subscribe({
+      next: (response) => {
+        console.log(response);
+        let jsonObject = JSON.parse(response);
+        this.UserInfoObject = jsonObject;
+        console.log(this.UserInfoObject.className);
+
+      },
+      error: (error) => {
+        console.error("Lỗi khi lấy dữ liệu:", error);
+      },
+    });
+  }
 
   toggleUserInfoSelection(event: Event) {
     event.stopPropagation();
@@ -17,5 +63,9 @@ export class HeaderComponent {
   @HostListener("document:click", ["$event"])
   onDocumentClick(event: Event) {
     this.isUserInfoSelectionVisible = false;
+  }
+  Logout = () => {
+    localStorage.clear();
+    this.router.navigate([""]);
   }
 }
