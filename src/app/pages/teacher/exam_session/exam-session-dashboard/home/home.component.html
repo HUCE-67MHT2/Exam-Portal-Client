@@ -2,8 +2,8 @@
   <div class="form-wrap">
     <form (ngSubmit)="onSubmit()" [formGroup]="examForm">
       <h2 class="exam-info">
-        <span>Kỳ thi: </span>
-        <span>Code: </span>
+        <span>Mã kỳ thi: </span>
+        <span *ngIf="examSession">{{ examSession.code }}</span>
       </h2>
 
       <div class="row-wrapper">
@@ -41,7 +41,8 @@
           formControlName="exam_sessions_password"
           id="exam_sessions_password"
           maxlength="6"
-          type="password"
+          type="text"
+
         />
         <div
           *ngIf="

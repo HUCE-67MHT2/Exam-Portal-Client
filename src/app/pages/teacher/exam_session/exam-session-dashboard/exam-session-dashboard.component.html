@@ -27,7 +27,7 @@
     </ul>
   </div>
   <main>
-    <app-home *ngIf="activeTab === 'home'"></app-home>
+    <app-home [exam_session_id] = "exam_session_id" *ngIf="activeTab === 'home'"></app-home>
     <app-student-list-point *ngIf="activeTab === 'student-list-point'"></app-student-list-point>
     <app-exam [exam_session_id] = "exam_session_id" *ngIf="activeTab === 'exam'"></app-exam>
     <app-question-bank *ngIf="activeTab === 'question-bank'"></app-question-bank>

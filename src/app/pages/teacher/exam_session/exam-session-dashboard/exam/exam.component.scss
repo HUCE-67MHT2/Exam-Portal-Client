@@ -3,7 +3,7 @@ $secondary-color: #02774b;
 $light-gray: #f5f5f5;
 $hover-bg: #f1faff;
 .container{
-  position: relative;
+  overflow-y: hidden;
 }
 .search-bar {
   display: flex;
@@ -74,16 +74,25 @@ $hover-bg: #f1faff;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
+.table-wrapper {
+  padding-top: 55px;
+}
+
 table {
+  position: relative;
+  padding-top: 100px;
   width: 100%;
   border-collapse: collapse;
   border-radius: 8px;
   overflow: hidden;
 }
 
-thead {
-  position: sticky;
+.table-heading {
+  position: fixed;
   top: 0;
+  left: 15%;
+  width: 100%;
+  margin-top: 158px;
   background: $secondary-color;
   color: #fff;
   font-weight: bold;
@@ -93,6 +102,10 @@ th, td {
   padding: 14px;
   text-align: left;
   border-bottom: 1px solid #ddd;
+}
+
+tbody {
+
 }
 
 tbody tr {
