@@ -1,18 +1,21 @@
 import { Injectable } from '@angular/core';
-import { HttpClient} from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
+// Giữ nguyên các import khác nếu có
 
 @Injectable({
   providedIn: 'root'
 })
 export class CreateExamWithFileService {
-  private baseURL = 'http://localhost:8081/api/exam/add/exam/with/file'; // Cập nhật URL API của bạn
+  // URL endpoint backend (không thay đổi)
+  private baseURL = 'http://localhost:8081/api/exam/add/exam/with/file';
 
   constructor(private http: HttpClient) {}
 
-  // Hàm để gửi yêu cầu POST với file và dữ liệu
-  addExamWithFile(formData: FormData, id : number): Observable<any> {
-    // Gửi POST request với form data
-    return this.http.post(`${this.baseURL}/${id}`, formData, { observe: 'response' });
+  uploadExamWithFile(formData: FormData): Observable<HttpResponse<any>> {
+    // Không set header Content-Type, để browser tự thiết lập boundary cho multipart/form-data
+    return this.http.post<HttpResponse<any>>(this.baseURL, formData, {
+      observe: 'response'
+    });
   }
 }
