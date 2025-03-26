@@ -189,7 +189,7 @@ export class ExamCreateWithFileComponent implements OnInit {
       });
 
       // Send POST request to backend
-      this.createExamWithFileService.addExamWithFile(formData).subscribe({
+      this.createExamWithFileService.addExamWithFile(formData, this.exam_session_id).subscribe({
         next: (response) => {
           this.loading = false;
           console.log("Phản hồi từ server:", response);
