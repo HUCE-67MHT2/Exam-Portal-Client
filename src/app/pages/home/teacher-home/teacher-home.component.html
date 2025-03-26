@@ -11,7 +11,6 @@
       <th>Ngày mở</th>
       <th>Ngày đóng</th>
       <th>Trạng thái</th>
-      <th>Dạng đề bài</th>
     </tr>
     <tr *ngFor="let examSession of examSessionList" (click)="navigateExamSessionDashBoard(examSession.id)">
       <td>
@@ -22,7 +21,6 @@
       <td>{{ examSession.startDate | date: 'dd-MM-yyyy HH:mm:ss' }}</td>
       <td>{{ examSession.endDate | date: 'dd-MM-yyyy HH:mm:ss' }}</td>
       <td>{{ examSession.status }}</td>
-      <td>{{ examSession.type }}</td>
     </tr>
     </tbody>
   </table>

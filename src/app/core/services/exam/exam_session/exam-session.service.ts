@@ -19,4 +19,9 @@ export class ExamSessionService {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     return this.http.post(`${this.baseUrl}/add/exam-session`, examSession, { headers, observe: 'response' });
   }
+  getExamSessionInfoById(id: number): Observable<any> {
+    const token = localStorage.getItem('authToken');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get<any>(`${this.baseUrl}/get/exam-session-info/${id}`, { headers, observe: 'response' });
+  }
 }

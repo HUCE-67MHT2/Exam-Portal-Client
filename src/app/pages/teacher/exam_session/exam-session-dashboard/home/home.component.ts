@@ -1,9 +1,10 @@
 import { DatePipe, CommonModule } from "@angular/common";
-import { Component } from "@angular/core";
+import {Component, Input, OnInit} from "@angular/core";
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from "@angular/forms";
 import { ExamSessionService } from "../../../../../core/services/exam/exam_session/exam-session.service";
 import { Router } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
+import {ExamSession} from '../../../../../core/models/examSession.model';
 
 @Component({
   selector: "app-home",
@@ -12,12 +13,12 @@ import { ToastrService } from "ngx-toastr";
   templateUrl: "./home.component.html",
   styleUrl: "./home.component.scss",
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
   examForm: FormGroup;
 
   constructor(
     private fb: FormBuilder,
-    private datePipe: DatePipe,
+    private datePipe: DatePipe, // ✅ Đảm bảo đã inject DatePipe
     private router: Router,
     private examSessionService: ExamSessionService,
     private toastr: ToastrService
@@ -33,6 +34,37 @@ export class HomeComponent {
       exam_sessions_end_date: ["", Validators.required], // Thời gian kết thúc
     });
   }
+
+  @Input() exam_session_id!: number;
+  examSession!: ExamSession;
+  ngOnInit(): void {
+    if (this.exam_session_id) {
+      this.getExamSessionById(this.exam_session_id);
+    }
+  }
+
+  getExamSessionById(sessionId: number): void {
+    this.examSessionService.getExamSessionInfoById(sessionId).subscribe({
+      next: (response) => {
+        console.log(response);
+        this.examSession = response.body;
+        console.log('Exam Session:', this.examSession);
+
+        // Gán dữ liệu từ ExamSession vào FormGroup
+        this.examForm.patchValue({
+          exam_sessions_name: this.examSession.name,
+          exam_sessions_description: this.examSession.description,
+          exam_sessions_password: this.examSession.password,
+          exam_sessions_start_date: this.datePipe.transform(this.examSession.startDate, 'yyyy-MM-ddTHH:mm'),
+          exam_sessions_end_date: this.datePipe.transform(this.examSession.endDate, 'yyyy-MM-ddTHH:mm'),
+        });
+      },
+      error: (err) => {
+        console.error('Error fetching exam session:', err);
+      },
+    });
+  }
+
 
   onSubmit() {
     console.log("Form status:", this.examForm.status);
@@ -70,4 +102,6 @@ export class HomeComponent {
       this.examForm.markAllAsTouched();
     }
   }
+
+
 }
