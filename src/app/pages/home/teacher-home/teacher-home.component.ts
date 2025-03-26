@@ -5,7 +5,7 @@ import {SearchBarComponent} from '../../../layout/search-bar/search-bar.componen
 import {HeaderComponent} from '../../../layout/header/header.component';
 import {DatePipe, NgForOf} from '@angular/common';
 import {ExamSession} from '../../../core/models/examSession.model';
-import {ExamSessionService} from '../../../core/services/exam/exam_session/exam-session.service';
+import {ExamSessionService} from '../../../core/services/exam_session/exam-session.service';
 
 @Component({
   selector: 'app-home-teacher',

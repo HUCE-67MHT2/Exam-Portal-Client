@@ -47,7 +47,10 @@ export class ExamCreateWithFileComponent implements OnInit {
     this.examForm = this.fb.group({
       exam_name: ['', Validators.required],
       exam_duration: ['', Validators.required],
-      exam_description: ['']
+      exam_description: [''],
+      exam_subject: ['', Validators.required],
+      exam_start_date: ['', Validators.required],
+      exam_end_date: ['', Validators.required],
       // Nếu có thêm control nào khác cần dùng cho onSubmit, bổ sung tại đây
     });
   }
@@ -146,6 +149,20 @@ export class ExamCreateWithFileComponent implements OnInit {
     this.isQuickInputOpen = false;
   }
 
+  private formatDateTime(dateTimeLocal: string): string {
+    if (!dateTimeLocal) return '';
+
+    const date = new Date(dateTimeLocal);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const seconds = "00"; // Mặc định giây = 00
+
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+  }
+
   onSubmit = () => {
     const fileInput = document.getElementById("fileInput") as HTMLInputElement;
     if (fileInput.files && fileInput.files.length > 0) {
@@ -162,6 +179,10 @@ export class ExamCreateWithFileComponent implements OnInit {
     const examNameValue = this.examForm.get('exam_name')?.value;
     const examDurationValue = this.examForm.get('exam_duration')?.value;
     const examDescriptionValue = this.examForm.get('exam_description')?.value;
+    const examSubjectValue = this.examForm.get('exam_subject')?.value;
+
+    const examStartDateValue = this.formatDateTime(this.examForm.get('exam_start_date')?.value);
+    const examEndDateValue = this.formatDateTime(this.examForm.get('exam_end_date')?.value);
 
     const formData = new FormData();
     formData.append('examSessionId', this.exam_session_id);
@@ -169,9 +190,9 @@ export class ExamCreateWithFileComponent implements OnInit {
     formData.append('duration', examDurationValue);
     formData.append('description', examDescriptionValue);
     formData.append('file', this.selectedFile, this.selectedFile.name);
-    formData.append('subject', "Toán");
-    formData.append('startDate', "2025-04-04 00:00:00");
-    formData.append('endDate', "2025-05-04 00:00:00");
+    formData.append('subject', examSubjectValue);
+    formData.append('startDate', examStartDateValue);
+    formData.append('endDate', examEndDateValue);
 
     this.examService.uploadExamWithFile(formData).subscribe({
       next: () => {
@@ -192,10 +213,7 @@ export class ExamCreateWithFileComponent implements OnInit {
     this.router.navigate(["teacher/exam-create-type"], {queryParams: {id: this.exam_session_id}});
   }
 
-  setActiveTab(tab
-               :
-               string
-  ) {
+  setActiveTab(tab: string) {
     this.activeTab = tab;
   }
 

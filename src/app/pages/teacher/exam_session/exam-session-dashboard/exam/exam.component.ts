@@ -59,9 +59,11 @@ export class ExamComponent implements OnInit {
     const normalizedSearchTerm = this.removeVietnameseTones(this.searchTerm.toLowerCase());
     this.filteredExams = this.examList.filter(exam => {
       const normalizedExamName = this.removeVietnameseTones(exam.name.toLowerCase());
-      return normalizedExamName.includes(normalizedSearchTerm);
+      const normalizedExamDescription = this.removeVietnameseTones(exam.description.toLowerCase());
+      return normalizedExamName.includes(normalizedSearchTerm) || normalizedExamDescription.includes(normalizedSearchTerm);
     });
   }
+
 
   removeVietnameseTones(str: string): string {
     return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");

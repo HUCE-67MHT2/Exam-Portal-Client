@@ -160,14 +160,8 @@
             <!-- Input tên bài thi -->
             <div class="input-wrapper">
               <label for="exam_name">Tên đề thi</label>
-              <input
-                formControlName="exam_name"
-                id="exam_name"
-              />
-              <div
-                *ngIf="examForm.get('exam_name')?.invalid && examForm.get('exam_name')?.touched"
-                class="error"
-              >
+              <input formControlName="exam_name" id="exam_name"/>
+              <div *ngIf="examForm.get('exam_name')?.invalid && examForm.get('exam_name')?.touched" class="error">
                 Tên đề không được để trống.
               </div>
             </div>
@@ -190,11 +184,43 @@
               </div>
             </div>
           </div>
-          <div class="input-wrapper">
-            <label for="exam_description">Lưu ý</label>
-            <input formControlName="exam_description" id="exam_description">
+          <div class="row-wrapper">
+            <div class="input-wrapper">
+              <label for="exam_description">Lưu ý</label>
+              <input formControlName="exam_description" id="exam_description">
+            </div>
 
+            <div class="input-wrapper">
+              <label for="exam_subject">Môn thi</label>
+              <input formControlName="exam_subject" id="exam_subject">
+              <div *ngIf="examForm.get('exam_subject')?.invalid && examForm.get('exam_subject')?.touched" class="error">
+                Tên môn học không được để trống.
+              </div>
+            </div>
           </div>
+
+          <div class="row-wrapper">
+            <div class="input-wrapper">
+              <label for="exam_start_date">Thời gian bắt đầu:</label>
+              <input formControlName="exam_start_date" id="exam_start_date" type="datetime-local"/>
+              <div
+                *ngIf="examForm.get('exam_start_date')?.invalid && examForm.get('exam_start_date')?.touched"
+                class="error">
+                Vui lòng chọn thời gian bắt đầu.
+              </div>
+            </div>
+
+            <div class="input-wrapper">
+              <label for="exam_end_date">Thời gian kết thúc:</label>
+              <input formControlName="exam_end_date" id="exam_end_date" type="datetime-local"/>
+              <div
+                *ngIf="examForm.get('exam_end_date')?.invalid && examForm.get('exam_end_date')?.touched"
+                class="error">
+                Vui lòng chọn thời gian kết thúc.
+              </div>
+            </div>
+          </div>
+
 
           <button [disabled]="examForm.invalid" type="submit">Tạo kỳ thi</button>
         </form>

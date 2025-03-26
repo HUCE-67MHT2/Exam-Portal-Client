@@ -1,7 +1,7 @@
 import {CommonModule, DatePipe} from "@angular/common";
 import {Component, Input, OnInit} from "@angular/core";
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
-import {ExamSessionService} from "../../../../../core/services/exam/exam_session/exam-session.service";
+import {ExamSessionService} from "../../../../../core/services/exam_session/exam-session.service";
 import {Router} from "@angular/router";
 import {ToastrService} from "ngx-toastr";
 import {ExamSession} from '../../../../../core/models/examSession.model';
