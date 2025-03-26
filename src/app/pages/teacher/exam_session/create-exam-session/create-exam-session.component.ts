@@ -1,11 +1,10 @@
-import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { DatePipe, CommonModule } from '@angular/common';
-import { HeaderComponent } from '../../../../layout/header/header.component';
-import { NgOptimizedImage } from '@angular/common';
-import { Router } from '@angular/router';
-import { ExamSessionService } from '../../../../core/services/exam/exam_session/exam-session.service';
-import { ToastrService } from 'ngx-toastr';
+import {Component} from '@angular/core';
+import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {CommonModule, DatePipe, NgOptimizedImage} from '@angular/common';
+import {HeaderComponent} from '../../../../layout/header/header.component';
+import {Router} from '@angular/router';
+import {ExamSessionService} from '../../../../core/services/exam/exam_session/exam-session.service';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-create-exam-session',
@@ -52,14 +51,16 @@ export class CreateExamSessionComponent {
         next: (response) => {
           console.log('Phản hồi từ server:', response);
           if (response.status === 200) {
-            this.toastr.success('Tạo kỳ thi thành công', 'Thành công', { timeOut: 2000 });
-            setTimeout(() => {this.router.navigate(['home/teacher']);}, 1000);
+            this.toastr.success('Tạo kỳ thi thành công', 'Thành công', {timeOut: 2000});
+            setTimeout(() => {
+              this.router.navigate(['home/teacher']);
+            }, 1000);
 
           }
         },
         error: (error) => {
           console.error('Lỗi khi tạo kỳ thi:', error);
-          this.toastr.error('Tạo kỳ thi thất bại', 'Lỗi', { timeOut: 2000 });
+          this.toastr.error('Tạo kỳ thi thất bại', 'Lỗi', {timeOut: 2000});
         }
       });
     } else {

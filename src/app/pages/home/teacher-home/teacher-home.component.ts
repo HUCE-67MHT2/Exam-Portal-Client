@@ -19,19 +19,20 @@ import {ExamSessionService} from '../../../core/services/exam/exam_session/exam-
     DatePipe
   ],
   styleUrls: ['./teacher-home.component.scss'],
-  providers: [DatePipe,ExamSessionService]
+  providers: [DatePipe, ExamSessionService]
 })
 export class TeacherHomeComponent implements OnInit {
   examSessionList: ExamSession[] = [];
 
   constructor(private router: Router, private examSessionService: ExamSessionService) {
   }
+
   loadExamSession = () => {
     this.examSessionService.getExamSession().subscribe({
       next: (response) => {
         console.log('Phản hồi từ server:', response.body);
         if (response.status === 200) {
-        this.examSessionList = response.body.examSessions;
+          this.examSessionList = response.body.examSessions;
         }
       },
       error: (error) => {
@@ -47,7 +48,7 @@ export class TeacherHomeComponent implements OnInit {
 
   }
 
-  navigateExamSessionDashBoard(id : number) {
-    this.router.navigate(['teacher/exam-session-dashboard'], { queryParams: { id } });
+  navigateExamSessionDashBoard(id: number) {
+    this.router.navigate(['teacher/exam-session-dashboard'], {queryParams: {id}});
   }
 }

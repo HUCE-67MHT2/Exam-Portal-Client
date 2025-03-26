@@ -1,19 +1,13 @@
-import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
+import {Component, ElementRef, OnInit, ViewChild} from "@angular/core";
 import {ActivatedRoute, Router} from "@angular/router";
-import { NgForOf, NgIf } from "@angular/common";
-import {
-  FormBuilder,
-  FormGroup,
-  FormsModule,
-  ReactiveFormsModule,
-  Validators,
-} from "@angular/forms";
-import { DomSanitizer, SafeResourceUrl } from "@angular/platform-browser";
+import {NgForOf, NgIf} from "@angular/common";
+import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators,} from "@angular/forms";
 import * as docx from "docx-preview";
-import { HttpClient } from "@angular/common/http";
-import { CreateExamWithFileService } from "../../../../../core/services/exam/create_exam_with_file/create-exam-with-file.service";
-import { ToastrService } from "ngx-toastr";
-import { LoadingComponent } from "../../../../../layout/loading/loading.component";
+import {
+  CreateExamWithFileService
+} from "../../../../../core/services/exam/create_exam_with_file/create-exam-with-file.service";
+import {LoadingComponent} from "../../../../../layout/loading/loading.component";
+import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
 
 @Component({
   selector: "app-exam-create-with-file",
@@ -23,36 +17,40 @@ import { LoadingComponent } from "../../../../../layout/loading/loading.componen
   providers: [CreateExamWithFileService],
 })
 export class ExamCreateWithFileComponent implements OnInit {
-  activeTab: string = "dapan"; // Default tab is "Đáp án"
-  examForm: FormGroup; // Form data
+  examForm: FormGroup;
+  selectedFile: File | null = null;
+  selectedFileUrl: SafeResourceUrl | null = null;
+  uploadMessage: string = '';
+  loading: boolean = false;
+
+  // Các biến cho tab, modal, đáp án (không thay đổi)
+  activeTab: string = 'dapan';
   totalQuestions: number = 5;
-  totalScore: number = 5;
+  totalScore: number = 10;
   isQuickInputOpen: boolean = false;
   quickInputText: string = "";
-  answerOptions: string[] = ["A", "B", "C", "D"];
-  answers: { [key: number]: string } = {};
   errorMessage: string = "";
-  fileRequest: any;
-  selectedFileUrl: SafeResourceUrl | null = null;
-  loading: boolean = false;
+  answers: { [key: number]: string } = {};
+  answerOptions: string[] = ["A", "B", "C", "D"];
   @ViewChild("wordContainer") wordContainer!: ElementRef;
+  fileRequest: any;
+  exam_session_id: any;
 
   constructor(
     private fb: FormBuilder,
-    private router: Router,
     private sanitizer: DomSanitizer,
-    private http: HttpClient,
-    private createExamWithFileService: CreateExamWithFileService,
-    private toastr: ToastrService,
+    private examService: CreateExamWithFileService,
+    private router: Router,
     private route: ActivatedRoute
   ) {
+    // Khởi tạo form với các control cần thiết cho onSubmit()
     this.examForm = this.fb.group({
-      exam_name: ["", [Validators.required,]],
-      exam_description: ["", Validators.required],
-      exam_duration: ["", Validators.required],
+      exam_name: ['', Validators.required],
+      exam_duration: ['', Validators.required],
+      exam_description: ['']
+      // Nếu có thêm control nào khác cần dùng cho onSubmit, bổ sung tại đây
     });
   }
-  exam_session_id: any;
 
   ngOnInit() {
     this.initializeAnswers();
@@ -100,7 +98,7 @@ export class ExamCreateWithFileComponent implements OnInit {
   }
 
   getQuestions(): number[] {
-    return Array.from({ length: this.totalQuestions }, (_, i) => i);
+    return Array.from({length: this.totalQuestions}, (_, i) => i);
   }
 
   onTotalQuestionsChange() {
@@ -149,75 +147,55 @@ export class ExamCreateWithFileComponent implements OnInit {
   }
 
   onSubmit = () => {
-    // Check if all questions have been answered
-    const allQuestionsAnswered = Object.values(this.answers).every(
-      (answer) => answer !== ""
-    );
-    if (!allQuestionsAnswered) {
-      alert("Please answer all questions before submitting.");
+    const fileInput = document.getElementById("fileInput") as HTMLInputElement;
+    if (fileInput.files && fileInput.files.length > 0) {
+      this.selectedFile = fileInput.files[0];
+    }
+    // Kiểm tra xem form có hợp lệ và file đã được chọn chưa
+    if (this.examForm.invalid || !this.selectedFile) {
+      this.uploadMessage = 'Vui lòng điền đầy đủ thông tin và chọn file';
+      console.log('Form không hợp lệ hoặc chưa chọn file');
       return;
     }
+    this.loading = true;
 
-    if (this.examForm.valid) {
-      this.loading = true;
-      const formData = new FormData();
+    const examNameValue = this.examForm.get('exam_name')?.value;
+    const examDurationValue = this.examForm.get('exam_duration')?.value;
+    const examDescriptionValue = this.examForm.get('exam_description')?.value;
 
-      // Add form data
-      Object.keys(this.examForm.value).forEach((key) => {
-        formData.append(key, this.examForm.value[key]);
-      });
+    const formData = new FormData();
+    formData.append('examSessionId', this.exam_session_id);
+    formData.append('name', examNameValue);
+    formData.append('duration', examDurationValue);
+    formData.append('description', examDescriptionValue);
+    formData.append('file', this.selectedFile, this.selectedFile.name);
+    formData.append('subject', "Toán");
+    formData.append('startDate', "2025-04-04 00:00:00");
+    formData.append('endDate', "2025-05-04 00:00:00");
 
-      // Add the selected file
-      const fileInput = document.getElementById("fileInput") as HTMLInputElement;
-      if (fileInput.files && fileInput.files.length > 0) {
-        formData.append("file", fileInput.files[0]);
+    this.examService.uploadExamWithFile(formData).subscribe({
+      next: () => {
+        this.uploadMessage = 'Tạo kỳ thi thành công!';
+        this.loading = false;
+        this.router.navigate(["teacher/exam-session-dashboard"], {queryParams: {id: this.exam_session_id}});
+      },
+      error: (err) => {
+        console.error(err);
+        this.uploadMessage = 'Upload thất bại!';
+        this.loading = false;
       }
-
-      const formattedAnswers = Object.entries(this.answers).map(
-        ([id, select]) => ({
-          id,
-          select,
-        })
-      );
-
-      formData.append("answers", JSON.stringify(formattedAnswers));
-      formData.append("totalScore", this.totalScore.toString());
-
-      // Log FormData entries
-      formData.forEach((value, key) => {
-        console.log(`${key}: ${value}`);
-      });
-
-      // Send POST request to backend
-      this.createExamWithFileService.addExamWithFile(formData, this.exam_session_id).subscribe({
-        next: (response) => {
-          this.loading = false;
-          console.log("Phản hồi từ server:", response);
-          if (response.status === 200) {
-            this.toastr.success("Tạo kì thi mới thành công", "Thành công", {
-              timeOut: 2000,
-            });
-            setTimeout(() => {
-              this.router.navigate(["/home/teacher"]);
-            }, 2000);
-          }
-        },
-        error: (error) => {
-          this.loading = false;
-          console.error("Lỗi khi tạo kỳ thi:", error);
-          this.toastr.error(error.error.message, "Lỗi", { timeOut: 2000 });
-        },
-      });
-    } else {
-      alert("Please fill in all required fields.");
-    }
-  };
+    });
+  }
+  ;
 
   goBack() {
-    this.router.navigate(["teacher/exam-create-type"], { queryParams: { id: this.exam_session_id } });
+    this.router.navigate(["teacher/exam-create-type"], {queryParams: {id: this.exam_session_id}});
   }
 
-  setActiveTab(tab: string) {
+  setActiveTab(tab
+               :
+               string
+  ) {
     this.activeTab = tab;
   }
 

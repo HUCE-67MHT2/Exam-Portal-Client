@@ -1,10 +1,10 @@
-import { Component, ElementRef, OnInit } from "@angular/core";
-import { Router, ActivatedRoute } from "@angular/router";
-import { HomeComponent } from "./home/home.component";
-import { StudentListPointComponent } from "./student-list-point/student-list-point.component";
-import { ExamComponent } from "./exam/exam.component";
-import { QuestionBankComponent } from "./question-bank/question-bank.component";
-import { CommonModule } from "@angular/common";
+import {Component, ElementRef, OnInit} from "@angular/core";
+import {ActivatedRoute, Router} from "@angular/router";
+import {HomeComponent} from "./home/home.component";
+import {StudentListPointComponent} from "./student-list-point/student-list-point.component";
+import {ExamComponent} from "./exam/exam.component";
+import {QuestionBankComponent} from "./question-bank/question-bank.component";
+import {CommonModule} from "@angular/common";
 
 @Component({
   selector: "app-exam-session-dashboard",
@@ -22,9 +22,10 @@ import { CommonModule } from "@angular/common";
 export class ExamSessionDashboardComponent implements OnInit {
   activeTab: string = "home";
   // 2 biến này lấy từ params trên trang home teacher
-  exam_session_id : number = 0;
-  constructor(private router: Router, private route: ActivatedRoute, private el: ElementRef) {}
+  exam_session_id: number = 0;
 
+  constructor(private router: Router, private route: ActivatedRoute, private el: ElementRef) {
+  }
 
 
   ngOnInit(): void {

@@ -13,7 +13,8 @@ import {ActivatedRoute, Router} from "@angular/router";
 export class ExamCreateTypeComponent implements OnInit {
   exam_session_id = 0;
 
-  constructor(private route: ActivatedRoute,private router: Router) {}
+  constructor(private route: ActivatedRoute, private router: Router) {
+  }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
@@ -22,7 +23,7 @@ export class ExamCreateTypeComponent implements OnInit {
   }
 
   navigateToECWF() {
-    this.router.navigate(['teacher/exam-create-with-file'], { queryParams: { id: this.exam_session_id } });
+    this.router.navigate(['teacher/exam-create-with-file'], {queryParams: {id: this.exam_session_id}});
   }
 
   navigateToAutoGenerate() {
@@ -30,6 +31,6 @@ export class ExamCreateTypeComponent implements OnInit {
   }
 
   goBack() {
-    this.router.navigate(['/teacher/exam-session-dashboard'], { queryParams: { id: this.exam_session_id } });
+    this.router.navigate(['/teacher/exam-session-dashboard'], {queryParams: {id: this.exam_session_id}});
   }
 }

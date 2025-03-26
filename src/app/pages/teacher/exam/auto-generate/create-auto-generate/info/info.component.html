@@ -4,14 +4,14 @@
       <h2 class="form-heading">Thông tin bài thi</h2>
 
       <div class="input-wrap">
-        <label for="exam-name" class="form-desc">Tên bài thi</label>
-        <input id="exam-name" type="text" />
+        <label class="form-desc" for="exam-name">Tên bài thi</label>
+        <input id="exam-name" type="text"/>
       </div>
 
       <div class="exam-type">
         <p class="form-desc">Loại bài thi</p>
-        <div class="list-wrap" (click)="toggleExamTypeList()">
-          <ul id="examTypeList" class="exam-type-list active">
+        <div (click)="toggleExamTypeList()" class="list-wrap">
+          <ul class="exam-type-list active" id="examTypeList">
             <li class="type">15 phút</li>
             <li class="type">45 phút</li>
             <li class="type">60 phút</li>
@@ -21,8 +21,8 @@
       </div>
 
       <div class="input-wrap">
-        <label for="exam-password" class="form-desc">Mật khẩu bài thi</label>
-        <input id="exam-password" type="password" />
+        <label class="form-desc" for="exam-password">Mật khẩu bài thi</label>
+        <input id="exam-password" type="password"/>
       </div>
 
       <button class="submit">Tạo bài thi</button>

@@ -1,9 +1,8 @@
-import { Component, OnInit, HostListener } from "@angular/core";
-import { Router } from "@angular/router";
-import { UserService } from "../../core/services/user/user.service";
-import { CommonModule } from "@angular/common";
-import {NgIf } from "@angular/common";
-import {User} from '../../core/models/User.model';
+import {Component, HostListener, OnInit} from "@angular/core";
+import {Router} from "@angular/router";
+import {UserService} from "../../core/services/user/user.service";
+import {CommonModule, NgIf} from "@angular/common";
+
 @Component({
   selector: "app-header",
   templateUrl: "./header.component.html",
@@ -22,25 +21,27 @@ export class HeaderComponent implements OnInit {
     password: undefined,
     enabled: undefined,
     fullName: undefined,
-    gender: undefined ,
-    birthday: undefined ,
+    gender: undefined,
+    birthday: undefined,
     address: undefined,
     email: undefined,
-    telephone: undefined ,
-    avatarUrl: undefined ,
+    telephone: undefined,
+    avatarUrl: undefined,
     school: undefined,
     className: undefined,
-    status: undefined ,
-    createdAt: undefined ,
-    updatedAt: undefined ,
+    status: undefined,
+    createdAt: undefined,
+    updatedAt: undefined,
   };
-  constructor(private router: Router, private userService: UserService) {}
+
+  constructor(private router: Router, private userService: UserService) {
+  }
 
   ngOnInit() {
     this.getUser();
   }
 
-  getUser = ()=> {
+  getUser = () => {
     this.userService.getUserinfo().subscribe({
       next: (response) => {
         console.log(response);
@@ -64,6 +65,7 @@ export class HeaderComponent implements OnInit {
   onDocumentClick(event: Event) {
     this.isUserInfoSelectionVisible = false;
   }
+
   Logout = () => {
     localStorage.clear();
     this.router.navigate([""]);

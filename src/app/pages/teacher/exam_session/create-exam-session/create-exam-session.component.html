@@ -2,7 +2,7 @@
 <div class="container">
   <div class="exam-period-info">
     <figure class="image-wrap">
-      <img ngSrc="/images/create-exam-info-img.png" alt="" height="1333" width="2000">
+      <img alt="" height="1333" ngSrc="/images/create-exam-info-img.png" width="2000">
     </figure>
 
     <div class="form-wrap">
@@ -12,7 +12,7 @@
         <div class="row-wrapper">
           <div class="input-wrapper">
             <label for="exam_sessions_name">Tên kỳ thi</label>
-            <input formControlName="exam_sessions_name" id="exam_sessions_name" type="text" />
+            <input formControlName="exam_sessions_name" id="exam_sessions_name" type="text"/>
             <div
               *ngIf="examForm.get('exam_sessions_name')?.invalid && examForm.get('exam_sessions_name')?.touched"
               class="error">
@@ -22,13 +22,13 @@
 
           <div class="input-wrapper">
             <label for="exam_sessions_description">Thông tin bổ sung</label>
-            <input formControlName="exam_sessions_description" id="exam_sessions_description" type="text" />
+            <input formControlName="exam_sessions_description" id="exam_sessions_description" type="text"/>
           </div>
         </div>
 
         <div class="input-wrapper">
           <label for="exam_sessions_password">Mật khẩu kỳ thi</label>
-          <input formControlName="exam_sessions_password" id="exam_sessions_password" maxlength="6" type="password" />
+          <input formControlName="exam_sessions_password" id="exam_sessions_password" maxlength="6" type="password"/>
           <div
             *ngIf="examForm.get('exam_sessions_password')?.invalid && examForm.get('exam_sessions_password')?.touched"
             class="error">
@@ -39,7 +39,7 @@
         <div class="row-wrapper">
           <div class="input-wrapper">
             <label for="exam_sessions_start_date">Thời gian bắt đầu:</label>
-            <input formControlName="exam_sessions_start_date" id="exam_sessions_start_date" type="datetime-local" />
+            <input formControlName="exam_sessions_start_date" id="exam_sessions_start_date" type="datetime-local"/>
             <div
               *ngIf="examForm.get('exam_sessions_start_date')?.invalid && examForm.get('exam_sessions_start_date')?.touched"
               class="error">
@@ -49,7 +49,7 @@
 
           <div class="input-wrapper">
             <label for="exam_sessions_end_date">Thời gian kết thúc:</label>
-            <input formControlName="exam_sessions_end_date" id="exam_sessions_end_date" type="datetime-local" />
+            <input formControlName="exam_sessions_end_date" id="exam_sessions_end_date" type="datetime-local"/>
             <div
               *ngIf="examForm.get('exam_sessions_end_date')?.invalid && examForm.get('exam_sessions_end_date')?.touched"
               class="error">
@@ -59,7 +59,7 @@
         </div>
 
         <button [disabled]="examForm.invalid" type="submit">Tạo kỳ thi</button>
-        <button class="back" type="button" (click)="goBack()">Quay lại</button>
+        <button (click)="goBack()" class="back" type="button">Quay lại</button>
       </form>
     </div>
   </div>

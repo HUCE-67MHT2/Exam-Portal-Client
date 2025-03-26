@@ -10,16 +10,16 @@
 
   <div class="tab-wrap">
     <div
-      class="tab"
-      [class.active]="activeTab === 'left'"
       (click)="setActiveTab('left')"
+      [class.active]="activeTab === 'left'"
+      class="tab"
     >
       <p class="tab-desc">Thông tin câu hỏi</p>
     </div>
     <div
-      class="tab"
-      [class.active]="activeTab === 'right'"
       (click)="setActiveTab('right')"
+      [class.active]="activeTab === 'right'"
+      class="tab"
     >
       <p class="desc">Thông tin bài thi</p>
     </div>

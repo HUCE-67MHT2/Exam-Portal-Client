@@ -1,9 +1,9 @@
-import { DatePipe, CommonModule } from "@angular/common";
+import {CommonModule, DatePipe} from "@angular/common";
 import {Component, Input, OnInit} from "@angular/core";
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from "@angular/forms";
-import { ExamSessionService } from "../../../../../core/services/exam/exam_session/exam-session.service";
-import { Router } from "@angular/router";
-import { ToastrService } from "ngx-toastr";
+import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
+import {ExamSessionService} from "../../../../../core/services/exam/exam_session/exam-session.service";
+import {Router} from "@angular/router";
+import {ToastrService} from "ngx-toastr";
 import {ExamSession} from '../../../../../core/models/examSession.model';
 
 @Component({
@@ -15,6 +15,8 @@ import {ExamSession} from '../../../../../core/models/examSession.model';
 })
 export class HomeComponent implements OnInit {
   examForm: FormGroup;
+  @Input() exam_session_id!: number;
+  examSession!: ExamSession;
 
   constructor(
     private fb: FormBuilder,
@@ -35,8 +37,6 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  @Input() exam_session_id!: number;
-  examSession!: ExamSession;
   ngOnInit(): void {
     if (this.exam_session_id) {
       this.getExamSessionById(this.exam_session_id);
@@ -94,7 +94,7 @@ export class HomeComponent implements OnInit {
         },
         error: (error) => {
           console.error("Lỗi khi tạo kỳ thi:", error);
-          this.toastr.error("Tạo kỳ thi thất bại", "Lỗi", { timeOut: 2000 });
+          this.toastr.error("Tạo kỳ thi thất bại", "Lỗi", {timeOut: 2000});
         },
       });
     } else {

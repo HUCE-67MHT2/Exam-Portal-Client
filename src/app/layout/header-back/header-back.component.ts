@@ -1,11 +1,5 @@
-import {
-  Component,
-  ElementRef,
-  Input,
-  Output,
-  EventEmitter,
-} from "@angular/core";
-import { Router, ActivatedRoute } from "@angular/router";
+import {Component, ElementRef, EventEmitter, Input, Output,} from "@angular/core";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: "app-header-back",
@@ -21,7 +15,8 @@ export class HeaderBackComponent {
     private router: Router,
     private route: ActivatedRoute,
     private el: ElementRef
-  ) {}
+  ) {
+  }
 
   goBack() {
     this.backClicked.emit();
