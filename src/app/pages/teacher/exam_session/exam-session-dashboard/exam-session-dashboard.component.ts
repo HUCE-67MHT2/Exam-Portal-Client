@@ -20,21 +20,19 @@ import { CommonModule } from "@angular/common";
   styleUrl: "./exam-session-dashboard.component.scss",
 })
 export class ExamSessionDashboardComponent implements OnInit {
-
   activeTab: string = "home";
   // 2 biến này lấy từ params trên trang home teacher
-  exam_session_name = "Kỳ thi Toán học 2025";
-  exam_session_code = "MATH2025HK1";
-
-
-
+  exam_session_id : number = 0;
   constructor(private router: Router, private route: ActivatedRoute, private el: ElementRef) {}
 
+
+
   ngOnInit(): void {
-    // this.route.queryParams.subscribe(params => {
-    //   this.exam_session_name = params['name'];
-    //   this.exam_session_code = params['code'];
-    // });
+    this.route.queryParams.subscribe(params => {
+      this.exam_session_id = params['id'];
+    });
+
+
   }
 
   goBack() {

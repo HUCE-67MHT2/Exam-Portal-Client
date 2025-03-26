@@ -28,7 +28,7 @@
         </td>
         <td>{{ exam.duration }}</td>
         <td>{{ exam.type }}</td>
-        <td>{{ exam.create_date }}</td>
+        <td>{{ exam.createDate | date:'dd/MM/yyyy' }}</td>
         <td>
           <button>sửa</button>
           <button>xóa</button>

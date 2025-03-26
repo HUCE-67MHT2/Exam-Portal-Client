@@ -47,9 +47,7 @@ export class TeacherHomeComponent implements OnInit {
 
   }
 
-
-
-  navigateExamSessionDashBoard() {
-    this.router.navigate(['teacher/exam-session-dashboard']);
+  navigateExamSessionDashBoard(id : number) {
+    this.router.navigate(['teacher/exam-session-dashboard'], { queryParams: { id } });
   }
 }

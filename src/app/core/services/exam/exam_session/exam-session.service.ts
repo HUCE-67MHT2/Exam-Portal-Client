@@ -12,11 +12,11 @@ export class ExamSessionService {
   getExamSession(): Observable<any> {
     const token = localStorage.getItem('authToken');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.get<any>(`${this.baseUrl}/get/all/exam-period`, { headers, observe: 'response' });
+    return this.http.get<any>(`${this.baseUrl}/get/all/exam-session`, { headers, observe: 'response' });
   }
   createNewExamSession(examSession: any): Observable<any> {
     const token = localStorage.getItem('authToken');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.post(`${this.baseUrl}/add/exam-period`, examSession, { headers, observe: 'response' });
+    return this.http.post(`${this.baseUrl}/add/exam-session`, examSession, { headers, observe: 'response' });
   }
 }
