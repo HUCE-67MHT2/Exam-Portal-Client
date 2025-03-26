@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Exam } from '../../../../../core/models/exam.model';
 import { FormsModule } from '@angular/forms';
 import { NgForOf, NgOptimizedImage } from '@angular/common';
-import { Router } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import { GetExamsBySessionIDService} from '../../../../../core/services/exam/get_exams_by_exam_session_id/get_exams_by_exam_session_id.service';
 import {DatePipe} from '@angular/common';
 @Component({
@@ -19,7 +19,8 @@ import {DatePipe} from '@angular/common';
 export class ExamComponent implements OnInit {
   constructor(
     private router: Router,
-    private examService: GetExamsBySessionIDService
+    private examService: GetExamsBySessionIDService,
+    private route: ActivatedRoute,
   ) {}
 
   examList: Exam[] = [];
@@ -29,6 +30,9 @@ export class ExamComponent implements OnInit {
 
   ngOnInit(): void {
     console.log(this.exam_session_id);
+    this.route.queryParams.subscribe(params => {
+      this.exam_session_id = params['id'];
+    });
     this.getExams();
   }
 

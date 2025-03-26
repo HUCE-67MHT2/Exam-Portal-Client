@@ -30,6 +30,6 @@ export class ExamCreateTypeComponent implements OnInit {
   }
 
   goBack() {
-    this.router.navigate(['/teacher/exam-session-dashboard'], { queryParams: { name: this.exam_session_id } });
+    this.router.navigate(['/teacher/exam-session-dashboard'], { queryParams: { id: this.exam_session_id } });
   }
 }

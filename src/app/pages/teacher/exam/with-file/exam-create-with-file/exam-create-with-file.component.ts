@@ -214,7 +214,7 @@ export class ExamCreateWithFileComponent implements OnInit {
   };
 
   goBack() {
-    this.router.navigate(["teacher/exam-create-type"]);
+    this.router.navigate(["teacher/exam-create-type"], { queryParams: { id: this.exam_session_id } });
   }
 
   setActiveTab(tab: string) {
