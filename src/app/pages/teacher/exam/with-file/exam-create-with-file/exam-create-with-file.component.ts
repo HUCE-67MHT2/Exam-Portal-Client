@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
-import { Router } from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import { NgForOf, NgIf } from "@angular/common";
 import {
   FormBuilder,
@@ -43,7 +43,8 @@ export class ExamCreateWithFileComponent implements OnInit {
     private sanitizer: DomSanitizer,
     private http: HttpClient,
     private createExamWithFileService: CreateExamWithFileService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private route: ActivatedRoute
   ) {
     this.examForm = this.fb.group({
       exam_name: ["", [Validators.required,]],
@@ -51,9 +52,14 @@ export class ExamCreateWithFileComponent implements OnInit {
       exam_duration: ["", Validators.required],
     });
   }
+  exam_session_id: any;
 
   ngOnInit() {
     this.initializeAnswers();
+    this.route.queryParams.subscribe(params => {
+      this.exam_session_id = params['id'];
+    });
+    console.log(this.exam_session_id);
   }
 
   uploadFile() {

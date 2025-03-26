@@ -11,20 +11,18 @@ import {ActivatedRoute, Router} from "@angular/router";
   styleUrl: './exam-create-type.component.scss'
 })
 export class ExamCreateTypeComponent implements OnInit {
-  exam_session_name = 'khong xac dinh';
-  exam_session_code = 'khong xac dinh';
+  exam_session_id = 0;
 
   constructor(private route: ActivatedRoute,private router: Router) {}
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
-      this.exam_session_name = params['name'];
-      this.exam_session_code = params['code'];
+      this.exam_session_id = params['id'];
     });
   }
 
   navigateToECWF() {
-    this.router.navigate(['teacher/exam-create-with-file']);
+    this.router.navigate(['teacher/exam-create-with-file'], { queryParams: { id: this.exam_session_id } });
   }
 
   navigateToAutoGenerate() {
@@ -32,6 +30,6 @@ export class ExamCreateTypeComponent implements OnInit {
   }
 
   goBack() {
-    this.router.navigate(['/teacher/exam-session-dashboard'], { queryParams: { name: this.exam_session_name, code: this.exam_session_code } });
+    this.router.navigate(['/teacher/exam-session-dashboard'], { queryParams: { name: this.exam_session_id } });
   }
 }
