@@ -34,6 +34,7 @@ export class ExamCreateWithFileComponent implements OnInit {
   answerOptions: string[] = ["A", "B", "C", "D"];
   @ViewChild("wordContainer") wordContainer!: ElementRef;
   fileRequest: any;
+  exam_session_id: any;
 
   constructor(
     private fb: FormBuilder,
@@ -50,8 +51,6 @@ export class ExamCreateWithFileComponent implements OnInit {
       // Nếu có thêm control nào khác cần dùng cho onSubmit, bổ sung tại đây
     });
   }
-
-  exam_session_id: any;
 
   ngOnInit() {
     this.initializeAnswers();

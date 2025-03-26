@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { CreateExamSessionComponent } from './create-exam-session.component';
+import {CreateExamSessionComponent} from './create-exam-session.component';
 
 describe('CreateExamPeriodComponent', () => {
   let component: CreateExamSessionComponent;
@@ -10,7 +10,7 @@ describe('CreateExamPeriodComponent', () => {
     await TestBed.configureTestingModule({
       imports: [CreateExamSessionComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(CreateExamSessionComponent);
     component = fixture.componentInstance;

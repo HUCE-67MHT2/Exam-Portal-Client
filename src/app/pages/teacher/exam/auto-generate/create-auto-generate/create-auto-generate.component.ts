@@ -1,8 +1,8 @@
-import { Component } from "@angular/core";
-import { HeaderBackComponent } from "../../../../../layout/header-back/header-back.component";
-import { QuestionComponent } from "./question/question.component";
-import { InfoComponent } from "./info/info.component";
-import { CommonModule } from "@angular/common";
+import {Component} from "@angular/core";
+import {HeaderBackComponent} from "../../../../../layout/header-back/header-back.component";
+import {QuestionComponent} from "./question/question.component";
+import {InfoComponent} from "./info/info.component";
+import {CommonModule} from "@angular/common";
 
 @Component({
   selector: "app-create-auto-generate",

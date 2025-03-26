@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { SearchBarComponent } from "../../../../../layout/search-bar/search-bar.component";
+import {Component} from '@angular/core';
+import {SearchBarComponent} from "../../../../../layout/search-bar/search-bar.component";
 
 @Component({
   selector: 'app-student-list-point',

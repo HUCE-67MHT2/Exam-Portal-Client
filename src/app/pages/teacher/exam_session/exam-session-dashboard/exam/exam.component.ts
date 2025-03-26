@@ -1,10 +1,12 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Exam } from '../../../../../core/models/exam.model';
-import { FormsModule } from '@angular/forms';
-import { NgForOf, NgOptimizedImage } from '@angular/common';
+import {Component, Input, OnInit} from '@angular/core';
+import {Exam} from '../../../../../core/models/exam.model';
+import {FormsModule} from '@angular/forms';
+import {DatePipe, NgForOf, NgOptimizedImage} from '@angular/common';
 import {ActivatedRoute, Router} from '@angular/router';
-import { GetExamsBySessionIDService} from '../../../../../core/services/exam/get_exams_by_exam_session_id/get_exams_by_exam_session_id.service';
-import {DatePipe} from '@angular/common';
+import {
+  GetExamsBySessionIDService
+} from '../../../../../core/services/exam/get_exams_by_exam_session_id/get_exams_by_exam_session_id.service';
+
 @Component({
   selector: 'app-exam',
   templateUrl: './exam.component.html',
@@ -17,16 +19,17 @@ import {DatePipe} from '@angular/common';
   styleUrl: './exam.component.scss'
 })
 export class ExamComponent implements OnInit {
-  constructor(
-    private router: Router,
-    private examService: GetExamsBySessionIDService,
-    private route: ActivatedRoute,
-  ) {}
-
   examList: Exam[] = [];
   filteredExams: Exam[] = [];
   searchTerm: string = '';
   @Input() exam_session_id!: number;
+
+  constructor(
+    private router: Router,
+    private examService: GetExamsBySessionIDService,
+    private route: ActivatedRoute,
+  ) {
+  }
 
   ngOnInit(): void {
     console.log(this.exam_session_id);
@@ -40,7 +43,7 @@ export class ExamComponent implements OnInit {
     this.examService.getExams(this.exam_session_id).subscribe({
       next: (response) => {
         console.log(response);
-        if(response.status === 200) {
+        if (response.status === 200) {
           this.examList = response.body.exams;
         }
         this.filteredExams = [...this.examList];
@@ -65,7 +68,7 @@ export class ExamComponent implements OnInit {
   }
 
   navigateToCreatExam() {
-    this.router.navigate(['/teacher/exam-create-type'], { queryParams: { id: this.exam_session_id } });
+    this.router.navigate(['/teacher/exam-create-type'], {queryParams: {id: this.exam_session_id}});
     console.log(this.exam_session_id);
   }
 }

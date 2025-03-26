@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { CreateAutoGenerateComponent } from './create-auto-generate.component';
+import {CreateAutoGenerateComponent} from './create-auto-generate.component';
 
 describe('CreateAutoGenerateComponent', () => {
   let component: CreateAutoGenerateComponent;
@@ -10,7 +10,7 @@ describe('CreateAutoGenerateComponent', () => {
     await TestBed.configureTestingModule({
       imports: [CreateAutoGenerateComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(CreateAutoGenerateComponent);
     component = fixture.componentInstance;
