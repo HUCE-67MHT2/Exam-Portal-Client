@@ -3,7 +3,7 @@ import {Router} from '@angular/router';
 import {LoginFormComponent} from '../../../shared/components/login-form/login-form.component';
 import {TeacherService} from '../../../core/services/login/teacher.service';
 import {ToastrService} from 'ngx-toastr';
-import {LoadingComponent} from '../../../layout/loading/loading.component';
+import {LoadingComponent} from '../../../layout/loadings/loading/loading.component';
 import {NgIf} from '@angular/common';
 
 @Component({

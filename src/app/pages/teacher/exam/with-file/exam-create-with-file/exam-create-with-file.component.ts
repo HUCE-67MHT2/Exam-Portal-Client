@@ -6,7 +6,7 @@ import * as docx from "docx-preview";
 import {
   CreateExamWithFileService
 } from "../../../../../core/services/exam/create_exam_with_file/create-exam-with-file.service";
-import {LoadingComponent} from "../../../../../layout/loading/loading.component";
+import {LoadingComponent} from "../../../../../layout/loadings/loading/loading.component";
 import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
 
 @Component({

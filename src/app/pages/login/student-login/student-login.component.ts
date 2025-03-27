@@ -4,7 +4,7 @@ import {LoginFormComponent} from '../../../shared/components/login-form/login-fo
 import {FormGroup} from '@angular/forms';
 import {StudentService} from '../../../core/services/login/student.service';
 import {ToastrService} from 'ngx-toastr';
-import {LoadingComponent} from '../../../layout/loading/loading.component';
+import {LoadingComponent} from '../../../layout/loadings/loading/loading.component';
 import {NgIf} from '@angular/common';
 
 @Component({

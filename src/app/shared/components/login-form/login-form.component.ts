@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {RouterLink} from '@angular/router';
 import {NgIf, NgOptimizedImage} from '@angular/common';
-import {LoadingComponent} from '../../../layout/loading/loading.component';
+import {LoadingComponent} from '../../../layout/loadings/loading/loading.component';
 
 
 @Component({
