@@ -1,7 +1,7 @@
-<!-- src/app/pages/login/teacher-login/teacher-login.component.html -->
-<app-login-form (userTypeChange)="onUserTypeChange()" [link]="'/sign-up/teacher'" [onLogin]="onLoginTeacher">
+<app-login-form (userTypeChange)="onUserTypeChange()" [link]="'/sign-up/teacher'"
+                [onLogin]="onLoginTeacher" (loadingChange)="onLoadingChange($event)">
   <div present_role>Tôi là giáo viên</div>
   <div login_heading>Giáo viên đăng nhập</div>
-  <app-loading *ngIf="loading" text="Login..."></app-loading>
 </app-login-form>
 
+<app-loading *ngIf="loading"></app-loading> <!-- Hiển thị khi loading = true -->
