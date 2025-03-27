@@ -93,7 +93,7 @@
         </div>
       </div>
 
-      <button [disabled]="examForm.invalid" type="submit">
+      <button [disabled]="examForm.invalid" type="button" (click)="openConfirmModal()">
         Cập nhật thông tin kỳ thi
       </button>
     </form>
@@ -124,6 +124,16 @@
             <td>Nguyễn Văn B</td>
           </tr>
         </table>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="showConfirmModal" class="modal-overlay">
+    <div class="modal">
+      <h3>Xác nhận cập nhật</h3>
+      <p>Bạn có chắc chắn muốn cập nhật thông tin kỳ thi không?</p>
+      <div class="modal-actions">
+        <button (click)="confirmUpdate()" class="confirm-btn">Xác nhận</button>
+        <button (click)="cancelUpdate()" class="cancel-btn">Hủy</button>
       </div>
     </div>
   </div>

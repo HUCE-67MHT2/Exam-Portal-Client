@@ -17,6 +17,7 @@ export class HomeComponent implements OnInit {
   examForm: FormGroup;
   @Input() exam_session_id!: number;
   examSession!: ExamSession;
+  showConfirmModal= false;
 
   constructor(
     private fb: FormBuilder,
@@ -72,36 +73,48 @@ export class HomeComponent implements OnInit {
     if (this.examForm.valid) {
       const formData = {
         ...this.examForm.value,
-        exam_sessions_start_date: new Date(
-          this.examForm.value.exam_sessions_start_date
-        ).toISOString(),
-        exam_sessions_end_date: new Date(
-          this.examForm.value.exam_sessions_end_date
-        ).toISOString(),
+        exam_sessions_start_date: new Date(this.examForm.value.exam_sessions_start_date).toISOString(),
+        exam_sessions_end_date: new Date(this.examForm.value.exam_sessions_end_date).toISOString()
       };
-      console.log("Dữ liệu kỳ thi:", formData);
-      this.examSessionService.createNewExamSession(formData).subscribe({
-        next: (response) => {
-          console.log("Phản hồi từ server:", response);
-          if (response.status === 200) {
-            this.toastr.success("Tạo kỳ thi thành công", "Thành công", {
-              timeOut: 2000,
-            });
-            setTimeout(() => {
-              this.router.navigate(["home/teacher"]);
-            }, 1000);
-          }
-        },
-        error: (error) => {
-          console.error("Lỗi khi tạo kỳ thi:", error);
-          this.toastr.error("Tạo kỳ thi thất bại", "Lỗi", {timeOut: 2000});
-        },
-      });
+
+      console.log("Dữ liệu kỳ thi gửi đi:", formData);
+
+      this.examSessionService
+        .updateExamSessionInfoById(this.examSession.id, formData)
+        .subscribe({
+          next: (response) => {
+            console.log("Phản hồi từ server:", response);
+            if (response.status === 200) {
+              this.toastr.success("Cập nhật kỳ thi thành công", "Thành công", {
+                timeOut: 2000,
+              });
+              setTimeout(() => {
+                this.router.navigate(["teacher/exam-session-dashboard"]);
+              }, 1000);
+            }
+          },
+          error: (error) => {
+            console.error("Lỗi khi cập nhật kỳ thi:", error);
+            this.toastr.error("Cập nhật kỳ thi thất bại", "Lỗi", { timeOut: 2000 });
+          },
+        });
     } else {
       console.log("Form invalid - Lỗi chi tiết:", this.examForm.errors);
       this.examForm.markAllAsTouched();
     }
+
   }
 
+  openConfirmModal() {
+    this.showConfirmModal = true;
+  }
 
+  confirmUpdate() {
+    this.showConfirmModal = false;
+    this.onSubmit(); // Gọi phương thức cập nhật kỳ thi
+  }
+
+  cancelUpdate() {
+    this.showConfirmModal = false;
+  }
 }
