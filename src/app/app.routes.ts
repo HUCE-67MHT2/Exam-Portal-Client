@@ -24,6 +24,7 @@ import {
 import {
   CreateAutoGenerateComponent
 } from './pages/teacher/exam/auto-generate/create-auto-generate/create-auto-generate.component'
+import {LoadingComponent} from './layout/loading/loading.component';
 
 export const routes: Routes = [
 
@@ -46,4 +47,5 @@ export const routes: Routes = [
   {path: 'teacher/create-exam-session', component: CreateExamSessionComponent},
   {path: 'teacher/exam-session-dashboard', component: ExamSessionDashboardComponent},
   {path: 'teacher/exam-create-auto-generate', component: CreateAutoGenerateComponent},
+  {path: 'loading', component: LoadingComponent}
 ];
