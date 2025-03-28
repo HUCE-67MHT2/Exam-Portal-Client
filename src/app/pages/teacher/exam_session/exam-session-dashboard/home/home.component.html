@@ -100,30 +100,33 @@
   </div>
   <div class="border"></div>
   <div class="participating-student-list">
-    <div class="form-wrap">
-      <h2 class="exam-info participating-student__heading">
-        Học sinh tham gia
-      </h2>
-      <div class="table-wrap">
-        <table class="table">
-          <tr>
-            <th>Mssv</th>
-            <th>Lớp</th>
-            <th>Tên</th>
-          </tr>
+    <div class="participating-student-list">
+      <div class="form-wrap">
+        <h2 class="exam-info participating-student__heading">
+          Học sinh tham gia
+        </h2>
+        <div class="table-wrap">
+          <table class="table">
+            <thead>
+            <tr>
+              <th>MSSV</th>
+              <th>Lớp</th>
+              <th>Tên</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let student of StudentInExamSessionEnrollmentsList">
+              <td>{{ student.student_id }}</td>
+              <td>{{ student.class_name }}</td>
+              <td>{{ student.student_name }}</td>
+            </tr>
+            </tbody>
+          </table>
 
-          <tr>
-            <td>012345</td>
-            <td>67MHT2</td>
-            <td>Nguyễn Văn A</td>
-          </tr>
-
-          <tr>
-            <td>012367</td>
-            <td>67MHT2</td>
-            <td>Nguyễn Văn B</td>
-          </tr>
-        </table>
+          <div *ngIf="StudentInExamSessionEnrollmentsList.length === 0" class="no-students">
+            Không có học sinh nào tham gia.
+          </div>
+        </div>
       </div>
     </div>
   </div>

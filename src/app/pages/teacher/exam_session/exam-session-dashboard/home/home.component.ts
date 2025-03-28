@@ -2,9 +2,11 @@ import {CommonModule, DatePipe} from "@angular/common";
 import {Component, Input, OnInit} from "@angular/core";
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {ExamSessionService} from "../../../../../core/services/exam_session/exam-session.service";
+import { ExamSessionEnrollmentService } from '../../../../../core/services/exam-session-enrollments/exam-session-enrollment.service';
 import {Router} from "@angular/router";
 import {ToastrService} from "ngx-toastr";
 import {ExamSession} from '../../../../../core/models/examSession.model';
+import {StudentInExamSessionEnrollments} from '../../../../../core/models/examSessionEnrollments.model'
 
 @Component({
   selector: "app-home",
@@ -17,6 +19,7 @@ export class HomeComponent implements OnInit {
   examForm: FormGroup;
   @Input() exam_session_id!: number;
   examSession!: ExamSession;
+  StudentInExamSessionEnrollmentsList: StudentInExamSessionEnrollments[]=[];
   showConfirmModal= false;
 
   constructor(
@@ -24,7 +27,8 @@ export class HomeComponent implements OnInit {
     private datePipe: DatePipe, // ✅ Đảm bảo đã inject DatePipe
     private router: Router,
     private examSessionService: ExamSessionService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private examSessionEnrollmentService: ExamSessionEnrollmentService,
   ) {
     this.examForm = this.fb.group({
       exam_sessions_name: ["", Validators.required], // Tên kỳ thi
@@ -42,6 +46,25 @@ export class HomeComponent implements OnInit {
     if (this.exam_session_id) {
       this.getExamSessionById(this.exam_session_id);
     }
+    this.LoadStudentInExamSession()
+  }
+
+  LoadStudentInExamSession() {
+    if (!this.exam_session_id) {
+      console.error("Không có exam_session_id để tải danh sách sinh viên");
+      return;
+    }
+
+    this.examSessionEnrollmentService.getExamSessionEnrollmentsById(this.exam_session_id)
+      .subscribe({
+        next: (response) => {
+          this.StudentInExamSessionEnrollmentsList = response.body;
+        },
+        error: (err) => {
+          console.error("Lỗi khi tải danh sách sinh viên:", err);
+          this.StudentInExamSessionEnrollmentsList = [];
+        }
+      });
   }
 
   getExamSessionById(sessionId: number): void {
