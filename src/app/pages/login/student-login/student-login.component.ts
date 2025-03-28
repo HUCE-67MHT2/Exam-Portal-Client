@@ -4,7 +4,7 @@ import {LoginFormComponent} from '../../../shared/components/login-form/login-fo
 import {FormGroup} from '@angular/forms';
 import {StudentService} from '../../../core/services/login/student.service';
 import {ToastrService} from 'ngx-toastr';
-import {LoadingComponent} from '../../../layout/loading/loading.component';
+import {LoadingComponent} from '../../../layout/loadings/loading/loading.component';
 import {NgIf} from '@angular/common';
 
 @Component({
@@ -27,22 +27,24 @@ export class StudentLoginComponent {
       .then(() => console.log('Chuyển sang đăng nhập giáo viên'));
   }
 
+  onLoadingChange(isLoading: boolean) {
+    this.loading = isLoading;
+  }
+
   onLoginStudent = (student: any) => {
-    this.loading = true;
     this.studentService.loginStudent(student).subscribe({
       next: (response) => {
-        this.loading = false;
         console.log('Phản hồi từ server:', response);
         if (response.status === 200) {
           this.toastr.success('Đăng nhập thành công', 'Thành công', {timeOut: 2000});
           localStorage.setItem('authToken', response.body.token);
           setTimeout(() => {
+            this.loading = false;
             this.router.navigate(['/home/student']);
           }, 2000);
         }
       },
       error: (error) => {
-        this.loading = false;
         console.error('Lỗi khi đăng nhập:', error);
         this.toastr.error(error.error.message, 'Lỗi', {timeOut: 2000});
       }

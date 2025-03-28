@@ -14,12 +14,11 @@ import {ExamDetailComponent} from './pages/student/exam-detail/exam-detail.compo
 import {ExamCreateTypeComponent} from './pages/teacher/exam-create-type/exam-create-type.component';
 import {ExamCreateWithFileComponent} from './pages/teacher/exam/with-file/exam-create-with-file/exam-create-with-file.component';
 import {
-  ExamCreatedWithFileDetailComponent
-} from './pages/teacher/exam/with-file/exam-created-with-file-detail/exam-created-with-file-detail.component';
+  ExamCreateWithFileComponent
+} from './pages/teacher/exam/with-file/exam-create-with-file/exam-create-with-file.component';
 import {
-  CreateNewExamPaperComponent
-} from './pages/teacher/exam-paper/with-file/create-new-exam-paper/create-new-exam-paper.component';
-import {EditExamPaperComponent} from './pages/teacher/exam-paper/with-file/edit-exam-paper/edit-exam-paper.component';
+  CreateExamSessionComponent
+} from './pages/teacher/exam_session/create-exam-session/create-exam-session.component';
 import {
   ExamCreatedAutoDetailComponent
 } from './pages/teacher/exam/auto/exam-created-auto-detail/exam-created-auto-detail.component';
@@ -27,6 +26,13 @@ import {StudentUserComponent} from './pages/user/student-user/student-user.compo
 import {TeacherUserComponent} from './pages/user/teacher-user/teacher-user.component';
 import {CreateExamSessionComponent} from './pages/teacher/exam_session/create-exam-session/create-exam-session.component';
 import { ExamSessionDashboardComponent } from './pages/teacher/exam_session/exam-session-dashboard/exam-session-dashboard.component';
+  ExamSessionDashboardComponent
+} from './pages/teacher/exam_session/exam-session-dashboard/exam-session-dashboard.component';
+import {
+  CreateAutoGenerateComponent
+} from './pages/teacher/exam/auto-generate/create-auto-generate/create-auto-generate.component'
+import {LoadingComponent} from './layout/loadings/loading/loading.component';
+import {LoadingLineComponent} from './layout/loadings/loading-line/loading-line.component';
 
 export const routes: Routes = [
 
@@ -54,5 +60,8 @@ export const routes: Routes = [
   {path: 'teacher/edit-exam-paper/:id', component: EditExamPaperComponent},
   {path: 'teacher/exam-created-auto-detail/:examCode', component: ExamCreatedAutoDetailComponent},
   {path: 'teacher/create-exam-session', component: CreateExamSessionComponent},
-  {path: 'teacher/exam-session-dashboard', component: ExamSessionDashboardComponent}
+  {path: 'teacher/exam-session-dashboard', component: ExamSessionDashboardComponent},
+  {path: 'teacher/exam-create-auto-generate', component: CreateAutoGenerateComponent},
+  {path: 'loading', component: LoadingComponent},
+  {path: 'loading-line', component: LoadingLineComponent}
 ];

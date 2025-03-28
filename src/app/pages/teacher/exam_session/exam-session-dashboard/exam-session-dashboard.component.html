@@ -1,35 +1,35 @@
 <body>
-  <header class="header">
-    <div class="wraper-logo">
-      <div class="logo">Online Exam Portal</div>
-      <nav class="breadcrumb">
-        <span>►</span>
-        <span>Kì thi</span>
-      </nav>
-    </div>
-    <div class="return-button">
-      <button (click)="goBack()">Quay lại</button>
-    </div>
-  </header>
-
-  <div class="sidebar">
-    <ul class="navigate-option">
-      <li class="option active" (click)="clickActive($event, 'home')">
-        Thông tin chung
-      </li>
-      <li class="option" (click)="clickActive($event, 'student-list')">
-        Thống kê sinh viên
-      </li>
-      <li class="option" (click)="clickActive($event, 'exam')">Đề thi</li>
-      <li class="option" (click)="clickActive($event, 'question-bank')">
-        Kho câu hỏi
-      </li>
-    </ul>
+<header class="header">
+  <div class="wraper-logo">
+    <div class="logo">Online Exam Portal</div>
+    <nav class="breadcrumb">
+      <span>►</span>
+      <span>Kì thi</span>
+    </nav>
   </div>
-  <main>
-    <app-home *ngIf="activeTab === 'home'"></app-home>
-    <app-student-list *ngIf="activeTab === 'student-list'"></app-student-list>
-    <app-exam [exam_session_name] = "exam_session_name" [exam_session_code] = "exam_session_code" *ngIf="activeTab === 'exam'"></app-exam>
-    <app-question-bank *ngIf="activeTab === 'question-bank'"></app-question-bank>
-  </main>
+  <div class="return-button">
+    <button (click)="goBack()">Quay lại</button>
+  </div>
+</header>
+
+<div class="sidebar">
+  <ul class="navigate-option">
+    <li (click)="clickActive($event, 'home')" class="option active">
+      Thông tin chung
+    </li>
+    <li (click)="clickActive($event, 'student-list-point')" class="option">
+      Thống kê điểm
+    </li>
+    <li (click)="clickActive($event, 'exam')" class="option">Đề thi</li>
+    <li (click)="clickActive($event, 'question-bank')" class="option">
+      Kho câu hỏi
+    </li>
+  </ul>
+</div>
+<main>
+  <app-home *ngIf="activeTab === 'home'" [exam_session_id]="exam_session_id"></app-home>
+  <app-student-list-point *ngIf="activeTab === 'student-list-point'"></app-student-list-point>
+  <app-exam *ngIf="activeTab === 'exam'" [exam_session_id]="exam_session_id"></app-exam>
+  <app-question-bank *ngIf="activeTab === 'question-bank'"></app-question-bank>
+</main>
 </body>

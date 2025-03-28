@@ -1,22 +1,23 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpResponse} from '@angular/common/http';
+import {Observable} from 'rxjs';
+
+// Giữ nguyên các import khác nếu có
 
 @Injectable({
   providedIn: 'root'
 })
 export class CreateExamWithFileService {
-  private baseURL = 'http://localhost:8081/api/exam/add/exam/with/file'; // Cập nhật URL API của bạn
+  // URL endpoint backend (không thay đổi)
+  private baseURL = 'http://localhost:8081/api/exam/add/exam/with/file';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+  }
 
-  // Hàm để gửi yêu cầu POST với file và dữ liệu
-  addExamWithFile(formData: FormData): Observable<any> {
-    // Lấy token từ LocalStorage (hoặc từ nơi bạn lưu trữ token)
-    const token = localStorage.getItem('authToken');
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-
-    // Gửi POST request với form data
-    return this.http.post(this.baseURL, formData, { headers, observe: 'response' });
+  uploadExamWithFile(formData: FormData): Observable<HttpResponse<any>> {
+    // Không set header Content-Type, để browser tự thiết lập boundary cho multipart/form-data
+    return this.http.post<HttpResponse<any>>(this.baseURL, formData, {
+      observe: 'response'
+    });
   }
 }

@@ -3,7 +3,7 @@ import {Router} from '@angular/router';
 import {LoginFormComponent} from '../../../shared/components/login-form/login-form.component';
 import {TeacherService} from '../../../core/services/login/teacher.service';
 import {ToastrService} from 'ngx-toastr';
-import {LoadingComponent} from '../../../layout/loading/loading.component';
+import {LoadingComponent} from '../../../layout/loadings/loading/loading.component';
 import {NgIf} from '@angular/common';
 
 @Component({
@@ -14,7 +14,6 @@ import {NgIf} from '@angular/common';
   providers: [TeacherService]
 })
 export class TeacherLoginComponent {
-  loading: boolean = false;
 
   constructor(private router: Router, private teacherService: TeacherService, private toastr: ToastrService) {
   }
@@ -25,25 +24,31 @@ export class TeacherLoginComponent {
       .then(() => console.log('Chuyển sang đăng nhập học sinh'));
   }
 
+  loading: boolean = false; // Thêm biến loading
+
+  onLoadingChange(isLoading: boolean) {
+    this.loading = isLoading;
+  }
+
   onLoginTeacher = (teacher: any) => {
-    this.loading = true;
     this.teacherService.loginTeacher(teacher).subscribe({
       next: (response) => {
-        this.loading = false;
         console.log('Phản hồi từ server:', response);
         if (response.status === 200) {
-          this.toastr.success('Đăng nhập thành công', 'Thành công', {timeOut: 2000});
+          this.toastr.success('Đăng nhập thành công', 'Thành công', { timeOut: 2000 });
           localStorage.setItem('authToken', response.body.token);
           setTimeout(() => {
+            this.loading = false; // Tắt loading khi điều hướng xong
             this.router.navigate(['/home/teacher']);
           }, 2000);
         }
       },
       error: (error) => {
-        this.loading = false;
         console.error('Lỗi khi đăng nhập:', error);
-        this.toastr.error(error.error.message, 'Lỗi', {timeOut: 2000});
+        this.toastr.error(error.error.message, 'Lỗi', { timeOut: 2000 });
+        this.loading = false; // Tắt loading khi có lỗi
       }
     });
   }
+
 }

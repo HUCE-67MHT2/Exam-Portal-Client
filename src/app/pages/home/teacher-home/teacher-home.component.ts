@@ -5,7 +5,7 @@ import {SearchBarComponent} from '../../../layout/search-bar/search-bar.componen
 import {HeaderComponent} from '../../../layout/header/header.component';
 import {DatePipe, NgForOf} from '@angular/common';
 import {ExamSession} from '../../../core/models/examSession.model';
-import {ExamSessionService} from '../../../core/services/exam/exam_session/exam-session.service';
+import {ExamSessionService} from '../../../core/services/exam_session/exam-session.service';
 
 @Component({
   selector: 'app-home-teacher',
@@ -19,19 +19,20 @@ import {ExamSessionService} from '../../../core/services/exam/exam_session/exam-
     DatePipe
   ],
   styleUrls: ['./teacher-home.component.scss'],
-  providers: [DatePipe,ExamSessionService]
+  providers: [DatePipe, ExamSessionService]
 })
 export class TeacherHomeComponent implements OnInit {
   examSessionList: ExamSession[] = [];
 
-  constructor(private router: Router, private examSessionService: ExamSessionService, private datePipe: DatePipe) {
+  constructor(private router: Router, private examSessionService: ExamSessionService) {
   }
+
   loadExamSession = () => {
     this.examSessionService.getExamSession().subscribe({
       next: (response) => {
         console.log('Phản hồi từ server:', response.body);
         if (response.status === 200) {
-        this.examSessionList = response.body.examPeriods;
+          this.examSessionList = response.body.examSessions;
         }
       },
       error: (error) => {
@@ -47,9 +48,7 @@ export class TeacherHomeComponent implements OnInit {
 
   }
 
-
-
-  navigateExamSessionDashBoard() {
-    this.router.navigate(['teacher/exam-session-dashboard']);
+  navigateExamSessionDashBoard(id: number) {
+    this.router.navigate(['teacher/exam-session-dashboard'], {queryParams: {id}});
   }
 }

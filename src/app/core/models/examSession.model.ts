@@ -8,6 +8,5 @@ export interface ExamSession {
   createDate: Date; // Ngày giờ tạo
   code: string; // Mã kỳ thi
   password: string; // Mật khẩu
-  type: string; // Loại kỳ thi
   status: string; // Trạng thái
 }

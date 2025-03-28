@@ -1,0 +1,105 @@
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(135deg, #00a19c, #006149, #00532a, #007143, #04aa6d);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.loading-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.spinner-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.spinner {
+  width: 120px;
+  height: 120px;
+  border: 8px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: spin 1s cubic-bezier(0.42, 0, 0.58, 1) infinite;
+}
+
+.spinner-2 {
+  position: absolute;
+  width: 150px;
+  height: 150px;
+  border: 6px solid rgba(255, 255, 255, 0.2);
+  border-top-color: #00ffea;
+  border-radius: 50%;
+  animation: spin-reverse 1.5s cubic-bezier(0.42, 0, 0.58, 1) infinite;
+}
+
+.loading-text {
+  font-size: 28px;
+  font-weight: bold;
+  color: white;
+  text-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+  animation: pulse 1.5s infinite;
+}
+
+.static-cat {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  background: url('/icon/typing cat.gif') no-repeat center;
+  background-size: cover;
+  border-radius: 50%;
+  overflow: hidden;
+  z-index: 1;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spin-reverse {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(-360deg);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+  100% {
+    opacity: 1;
+  }
+}

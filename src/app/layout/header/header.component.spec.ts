@@ -22,7 +22,6 @@ describe('HeaderComponent', () => {
 
   it('should navigate to student signup on register click', () => {
     spyOn(component['router'], 'navigate');
-    component.onRegister();
     expect(component['router'].navigate).toHaveBeenCalledWith(['/sign_up/student']);
   });
 });

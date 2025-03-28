@@ -1,41 +1,45 @@
-<div class="search-bar">
-  <div class="search">
-    <img ngSrc="/icon/find_icon.svg" alt="search icon" class="search-icon" height="16" width="16">
-    <input type="text" [(ngModel)]="searchTerm" (keyup.enter)="filterExam()" (input)="filterExam()" placeholder="Nhập tên đề thi">
-    <div class="create-button">
-      <button (click)="navigateToCreatExam()" >tạo kỳ thi</button>
+<div class="container">
+  <div class="search-bar">
+    <div class="search">
+      <img alt="search icon" class="search-icon" height="16" ngSrc="/icon/find_icon.svg" width="16">
+      <input (input)="filterExam()" (keyup.enter)="filterExam()" [(ngModel)]="searchTerm" placeholder="Nhập tên đề thi"
+             type="text">
+      <div class="create-button">
+        <button (click)="navigateToCreatExam()">Tạo đề mới</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="table-wrapper">
+    <div class="table-container">
+      <table>
+        <thead class="table-heading">
+        <tr>
+          <th>Tên mã đề</th>
+          <th>Thời lượng</th>
+          <th>Dạng đề</th>
+          <th>Ngày tạo</th>
+          <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let exam of filteredExams">
+          <td>
+            <p class="exam-name">{{ exam.name }} - {{ exam.description }}</p>
+          </td>
+          <td>{{ exam.duration }}</td>
+          <td>{{ exam.type }}</td>
+          <td>{{ exam.createDate | date:'dd/MM/yyyy' }}</td>
+          <td>
+            <button>sửa</button>
+            <button>xóa</button>
+          </td>
+        </tr>
+        <tr>
+
+        </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>
-
-<div class="table-wrapper">
-  <div class="table-container">
-    <table>
-      <thead>
-      <tr>
-        <th>Tên mã đề</th>
-        <th>Thời lượng</th>
-        <th>Dạng đề</th>
-        <th>Ngày tạo</th>
-        <th></th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let exam of filteredExams">
-        <td>
-          <p class="exam-name">{{ exam_session_name }} - {{ exam.description }}</p>
-          <p class="class-code">Mã lớp: {{ exam_session_code }}</p>
-        </td>
-        <td>{{ exam.duration }}</td>
-        <td>{{ exam.type }}</td>
-        <td>{{ exam.create_date }}</td>
-        <td>
-          <button>sửa</button>
-          <button>xóa</button>
-        </td>
-      </tr>
-      </tbody>
-    </table>
-  </div>
-</div>
-

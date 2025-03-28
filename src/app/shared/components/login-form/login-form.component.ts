@@ -2,6 +2,7 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {RouterLink} from '@angular/router';
 import {NgIf, NgOptimizedImage} from '@angular/common';
+import {LoadingComponent} from '../../../layout/loadings/loading/loading.component';
 
 
 @Component({
@@ -9,7 +10,7 @@ import {NgIf, NgOptimizedImage} from '@angular/common';
   templateUrl: './login-form.component.html',
   styleUrls: ['./login-form.component.scss'],
   standalone: true,
-  imports: [ReactiveFormsModule, RouterLink, NgOptimizedImage, NgIf]
+  imports: [ReactiveFormsModule, RouterLink, NgOptimizedImage, NgIf, LoadingComponent]
 })
 export class LoginFormComponent {
   @Input() link: string = '';
@@ -18,6 +19,9 @@ export class LoginFormComponent {
   @Input() onLogin!: (user: any) => void;
   loginForm: FormGroup;
   loginError: string | null = null;
+  loading: boolean = false;
+  @Output() loadingChange = new EventEmitter<boolean>();
+
 
   constructor(private fb: FormBuilder) {
     this.loginForm = this.fb.group({
@@ -28,9 +32,17 @@ export class LoginFormComponent {
 
   onSubmit = () => {
     if (this.loginForm.valid) {
+      this.loadingChange.emit(true); // Bật loading trước khi gửi request
+
       const loginRequest = this.loginForm.value;
       if (this.onLogin) {
-        this.onLogin({username: loginRequest.contact, password: loginRequest.password});
+        this.onLogin({
+          username: loginRequest.contact,
+          password: loginRequest.password,
+          callback: (success: boolean) => {
+            this.loadingChange.emit(false); // Tắt loading khi có phản hồi
+          }
+        });
       }
     }
   }

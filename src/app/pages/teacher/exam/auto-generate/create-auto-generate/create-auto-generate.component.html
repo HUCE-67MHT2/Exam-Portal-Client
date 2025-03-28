@@ -1,0 +1,32 @@
+<div class="container">
+  <app-header-back [backRoute]="'/teacher/exam-create-type'">
+    <div class="breadcrumb">
+      <span>►</span>
+      <span>Kỳ thi: </span>
+      <span>►</span>
+      <span>Tạo đề thi tự động</span>
+    </div>
+  </app-header-back>
+
+  <div class="tab-wrap">
+    <div
+      (click)="setActiveTab('left')"
+      [class.active]="activeTab === 'left'"
+      class="tab"
+    >
+      <p class="tab-desc">Thông tin câu hỏi</p>
+    </div>
+    <div
+      (click)="setActiveTab('right')"
+      [class.active]="activeTab === 'right'"
+      class="tab"
+    >
+      <p class="desc">Thông tin bài thi</p>
+    </div>
+  </div>
+
+  <main class="main">
+    <app-question *ngIf="activeTab === 'left'"></app-question>
+    <app-info *ngIf="activeTab === 'right'"></app-info>
+  </main>
+</div>

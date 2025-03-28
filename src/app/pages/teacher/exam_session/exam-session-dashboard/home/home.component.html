@@ -1,1 +1,140 @@
-<h1>Hello</h1>
+<div class="container">
+  <div class="form-wrap">
+    <form (ngSubmit)="onSubmit()" [formGroup]="examForm">
+      <h2 class="exam-info">
+        <span>Mã kỳ thi: </span>
+        <span *ngIf="examSession">{{ examSession.code }}</span>
+      </h2>
+
+      <div class="row-wrapper">
+        <div class="input-wrapper">
+          <label for="exam_sessions_name">Tên kỳ thi</label>
+          <input
+            formControlName="exam_sessions_name"
+            id="exam_sessions_name"
+            type="text"
+          />
+          <div
+            *ngIf="
+              examForm.get('exam_sessions_name')?.invalid &&
+              examForm.get('exam_sessions_name')?.touched
+            "
+            class="error"
+          >
+            Tên kỳ thi không được để trống.
+          </div>
+        </div>
+
+        <div class="input-wrapper">
+          <label for="exam_sessions_description">Thông tin bổ sung</label>
+          <input
+            formControlName="exam_sessions_description"
+            id="exam_sessions_description"
+            type="text"
+          />
+        </div>
+      </div>
+
+      <div class="input-wrapper">
+        <label for="exam_sessions_password">Mật khẩu kỳ thi</label>
+        <input
+          formControlName="exam_sessions_password"
+          id="exam_sessions_password"
+          maxlength="6"
+          type="text"
+
+        />
+        <div
+          *ngIf="
+            examForm.get('exam_sessions_password')?.invalid &&
+            examForm.get('exam_sessions_password')?.touched
+          "
+          class="error"
+        >
+          Mật khẩu phải là 6 ký tự.
+        </div>
+      </div>
+
+      <div class="row-wrapper">
+        <div class="input-wrapper">
+          <label for="exam_sessions_start_date">Thời gian bắt đầu:</label>
+          <input
+            formControlName="exam_sessions_start_date"
+            id="exam_sessions_start_date"
+            type="datetime-local"
+          />
+          <div
+            *ngIf="
+              examForm.get('exam_sessions_start_date')?.invalid &&
+              examForm.get('exam_sessions_start_date')?.touched
+            "
+            class="error"
+          >
+            Vui lòng chọn thời gian bắt đầu.
+          </div>
+        </div>
+
+        <div class="input-wrapper">
+          <label for="exam_sessions_end_date">Thời gian kết thúc:</label>
+          <input
+            formControlName="exam_sessions_end_date"
+            id="exam_sessions_end_date"
+            type="datetime-local"
+          />
+          <div
+            *ngIf="
+              examForm.get('exam_sessions_end_date')?.invalid &&
+              examForm.get('exam_sessions_end_date')?.touched
+            "
+            class="error"
+          >
+            Vui lòng chọn thời gian kết thúc.
+          </div>
+        </div>
+      </div>
+
+      <button [disabled]="examForm.invalid" type="button" (click)="openConfirmModal()">
+        Cập nhật thông tin kỳ thi
+      </button>
+    </form>
+  </div>
+  <div class="border"></div>
+  <div class="participating-student-list">
+    <div class="form-wrap">
+      <h2 class="exam-info participating-student__heading">
+        Học sinh tham gia
+      </h2>
+      <div class="table-wrap">
+        <table class="table">
+          <tr>
+            <th>Mssv</th>
+            <th>Lớp</th>
+            <th>Tên</th>
+          </tr>
+
+          <tr>
+            <td>012345</td>
+            <td>67MHT2</td>
+            <td>Nguyễn Văn A</td>
+          </tr>
+
+          <tr>
+            <td>012367</td>
+            <td>67MHT2</td>
+            <td>Nguyễn Văn B</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="showConfirmModal" class="modal-overlay">
+    <div class="modal">
+      <h3>Xác nhận cập nhật</h3>
+      <p>Bạn có chắc chắn muốn cập nhật thông tin kỳ thi không?</p>
+      <div class="modal-actions">
+        <button (click)="confirmUpdate()" class="confirm-btn">Xác nhận</button>
+        <button (click)="cancelUpdate()" class="cancel-btn">Hủy</button>
+      </div>
+    </div>
+  </div>
+</div>
