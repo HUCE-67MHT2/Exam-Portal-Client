@@ -1,6 +1,6 @@
-import {CommonModule, DatePipe} from "@angular/common";
+import {CommonModule, DatePipe, NgOptimizedImage} from "@angular/common";
 import {Component, Input, OnInit} from "@angular/core";
-import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
+import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {ExamSessionService} from "../../../../../core/services/exam_session/exam-session.service";
 import { ExamSessionEnrollmentService } from '../../../../../core/services/exam-session-enrollments/exam-session-enrollment.service';
 import {Router} from "@angular/router";
@@ -10,7 +10,7 @@ import {StudentInExamSessionEnrollments} from '../../../../../core/models/examSe
 
 @Component({
   selector: "app-home",
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, NgOptimizedImage, FormsModule],
   providers: [DatePipe],
   templateUrl: "./home.component.html",
   styleUrl: "./home.component.scss",
@@ -21,6 +21,7 @@ export class HomeComponent implements OnInit {
   examSession!: ExamSession;
   StudentInExamSessionEnrollmentsList: StudentInExamSessionEnrollments[]=[];
   showConfirmModal= false;
+  searchTerm:any;
 
   constructor(
     private fb: FormBuilder,
@@ -139,5 +140,15 @@ export class HomeComponent implements OnInit {
 
   cancelUpdate() {
     this.showConfirmModal = false;
+  }
+
+  filterStudentWithId() {
+    if (!this.searchTerm) {
+      this.LoadStudentInExamSession();
+      return;
+    }
+    this.StudentInExamSessionEnrollmentsList = this.StudentInExamSessionEnrollmentsList.filter(student =>
+      student.student_id.toString().includes(this.searchTerm.toString())
+    );
   }
 }

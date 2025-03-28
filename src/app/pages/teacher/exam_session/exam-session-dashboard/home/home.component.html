@@ -99,12 +99,18 @@
     </form>
   </div>
   <div class="border"></div>
+
   <div class="participating-student-list">
     <div class="participating-student-list">
       <div class="form-wrap">
         <h2 class="exam-info participating-student__heading">
           Học sinh tham gia
         </h2>
+        <div class="search">
+          <img alt="search icon" class="search-icon" height="16" ngSrc="/icon/find_icon.svg" width="16">
+          <input (input)="filterStudentWithId()" (keyup.enter)="filterStudentWithId()" [(ngModel)]="searchTerm" placeholder="Nhập mssv"
+                 type="text">
+        </div>
         <div class="table-wrap">
           <table class="table">
             <thead>
