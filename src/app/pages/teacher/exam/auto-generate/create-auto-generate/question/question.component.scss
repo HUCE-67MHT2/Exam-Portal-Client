@@ -6,6 +6,9 @@ li {
   width: 1140px;
   max-width: calc(100% - 48px);
   margin: 0 auto;
+  display: flex; // Changed from flex to block for better layout
+  align-items: center;
+  gap: 50px;
 }
 
 .question-input-number {
@@ -31,6 +34,21 @@ li {
       border-radius: 3px;
     }
   }
+}
+
+.generate-button {
+  padding: 10px 30px;
+  border-radius: 5px;
+  text-align: center;
+  color: #fff;
+  background: var(--primary-color);
+  outline: none;
+  border: none;
+}
+
+.generate-button:hover {
+  opacity: 0.9;
+  cursor: pointer;
 }
 
 .question-list-wrap {
