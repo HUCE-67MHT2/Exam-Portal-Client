@@ -1,29 +1,28 @@
 <main class="container">
-  <app-search-bar></app-search-bar>
+  <div class="search-bar-wrap">
+    <app-search-bar></app-search-bar>
+  </div>
+
   <div class="table-wrap">
     <table class="table">
+      <thead>
       <tr class="table__heading-wrap">
         <th class="table__heading">Họ tên</th>
         <th class="table__heading">MSSV</th>
-        <th class="table__heading">Mã đề</th>
+        <th class="table__heading">Mã đề</th>
         <th class="table__heading">Điểm</th>
-        <th class="table__heading">Thời gian làm bài</th>
+        <th class="table__heading">Thời gian nộp bài</th>
       </tr>
-      <tr class="table__content-wrap">
-        <td class="table__content">Nguyễn Văn A</td>
-        <td class="table__content">12345</td>
-        <td class="table__content">Đề db</td>
-        <td class="table__content">10</td>
-        <td class="table__content">40 phút</td>
+      </thead>
+      <tbody>
+      <tr *ngFor="let student of StudentResultInfo" class="table__content-wrap">
+        <td class="table__content">{{ student.student_name }}</td>
+        <td class="table__content">{{ student.student_number }}</td>
+        <td class="table__content">{{ student.exam_name }}</td>
+        <td class="table__content">{{ student.total_score }}</td>
+        <td class="table__content">{{ student.submit_time | date:'mm:HH dd-MM-yyyy' }}</td>
       </tr>
-
-      <tr class="table__content-wrap">
-        <td class="table__content">Nguyễn Văn B</td>
-        <td class="table__content">98765</td>
-        <td class="table__content">Đề db</td>
-        <td class="table__content">9</td>
-        <td class="table__content">40 phút</td>
-      </tr>
+      </tbody>
     </table>
   </div>
 </main>

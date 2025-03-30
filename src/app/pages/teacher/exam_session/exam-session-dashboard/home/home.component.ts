@@ -148,7 +148,7 @@ export class HomeComponent implements OnInit {
       return;
     }
     this.StudentInExamSessionEnrollmentsList = this.StudentInExamSessionEnrollmentsList.filter(student =>
-      student.student_id.toString().includes(this.searchTerm.toString())
+      student.student_number.toString().includes(this.searchTerm.toString())
     );
   }
 }
