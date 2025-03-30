@@ -1,21 +1,25 @@
-import {Component, ElementRef, OnInit, ViewChild} from "@angular/core";
-import {ActivatedRoute, Router} from "@angular/router";
-import {NgForOf, NgIf} from "@angular/common";
-import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators,} from "@angular/forms";
-import * as docx from "docx-preview";
-import {CreateExamWithFileService} from "../../../../../core/services/exam/create_exam_with_file/create-exam-with-file.service";
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {LoadingComponent} from "../../../../../layout/loadings/loading/loading.component";
+import {NgForOf, NgIf} from "@angular/common";
 import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
-import {ExamQuestionAnswerService} from '../../../../../core/services/question-answer/uploadExamQuestionAnswer';
+import {CreateExamWithFileService} from '../../../../../core/services/exam/create_exam_with_file/create-exam-with-file.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import * as docx from 'docx-preview';
 
 @Component({
-  selector: "app-exam-create-with-file",
-  imports: [NgIf, ReactiveFormsModule, FormsModule, NgForOf, LoadingComponent],
-  templateUrl: "./exam-create-with-file.component.html",
-  styleUrl: "./exam-create-with-file.component.scss",
-  providers: [CreateExamWithFileService],
+  selector: 'app-edit-exam-with-file',
+    imports: [
+        FormsModule,
+        LoadingComponent,
+        NgForOf,
+        NgIf,
+        ReactiveFormsModule
+    ],
+  templateUrl: './edit-exam-with-file.component.html',
+  styleUrl: './edit-exam-with-file.component.scss'
 })
-export class ExamCreateWithFileComponent implements OnInit {
+export class EditExamWithFileComponent implements OnInit {
   examForm: FormGroup;
   selectedFile: File | null = null;
   selectedFileUrl: SafeResourceUrl | null = null;
@@ -33,13 +37,13 @@ export class ExamCreateWithFileComponent implements OnInit {
   answerOptions: string[] = ["A", "B", "C", "D"];
   @ViewChild("wordContainer") wordContainer!: ElementRef;
   fileRequest: any;
+  exam_id: any;
   exam_session_id: any;
 
   constructor(
     private fb: FormBuilder,
     private sanitizer: DomSanitizer,
     private examService: CreateExamWithFileService,
-    private examQuestionAnswerService: ExamQuestionAnswerService,
     private router: Router,
     private route: ActivatedRoute
   ) {
@@ -58,9 +62,12 @@ export class ExamCreateWithFileComponent implements OnInit {
   ngOnInit() {
     this.initializeAnswers();
     this.route.queryParams.subscribe(params => {
-      this.exam_session_id = params['id'];
+      this.exam_id = params['exam_id'];
+      this.exam_session_id = params['exam_session_id'];
     });
-    console.log(this.exam_session_id);
+
+    console.log("Exam ID:", this.exam_id);
+    console.log("Exam Session ID:", this.exam_session_id);
   }
 
   uploadFile() {
@@ -163,62 +170,54 @@ export class ExamCreateWithFileComponent implements OnInit {
     return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
   }
 
-  onSubmit() {
-    const fileInput = document.getElementById("fileInput") as HTMLInputElement;
-    if (fileInput.files && fileInput.files.length > 0) {
-      this.selectedFile = fileInput.files[0];
-    }
-
-    if (this.examForm.invalid || !this.selectedFile) {
-      this.uploadMessage = 'Vui lòng điền đầy đủ thông tin và chọn file';
-      console.log('Form không hợp lệ hoặc chưa chọn file');
-      return;
-    }
-    this.loading = true;
-
-    const formData = new FormData();
-    formData.append('examSessionId', this.exam_session_id);
-    formData.append('name', this.examForm.get('exam_name')?.value);
-    formData.append('duration', this.examForm.get('exam_duration')?.value);
-    formData.append('description', this.examForm.get('exam_description')?.value);
-    formData.append('file', this.selectedFile, this.selectedFile.name);
-    formData.append('subject', this.examForm.get('exam_subject')?.value);
-    formData.append('startDate', this.formatDateTime(this.examForm.get('exam_start_date')?.value));
-    formData.append('endDate', this.formatDateTime(this.examForm.get('exam_end_date')?.value));
-
-    this.examService.uploadExamWithFile(formData).subscribe({
-      next: (response) => {
-        console.log('Response từ backend:', response);
-        if (response.examId) {
-          console.log('Exam ID nhận được:', response.examId);
-          this.uploadMessage = `Tạo kỳ thi thành công! Exam ID: ${response.examId}`;
-
-          // Sau khi tạo đề thi thành công, gửi đáp án lên backend
-          this.examQuestionAnswerService.uploadQuestionAnswers(response.examId, this.answers).subscribe({
-            next: () => {
-              console.log("Đáp án đã được lưu thành công.");
-              this.router.navigate(["teacher/exam-session-dashboard"], { queryParams: { id: this.exam_session_id } });
-            },
-            error: (err) => {
-              console.error("Lỗi khi lưu đáp án:", err);
-            }
-          });
-        } else {
-          this.uploadMessage = 'Tạo kỳ thi thành công nhưng không nhận được Exam ID!';
-        }
-        this.loading = false;
-      },
-      error: (err) => {
-        console.error('Lỗi khi tạo kỳ thi:', err);
-        this.uploadMessage = 'Upload thất bại!';
-        this.loading = false;
-      }
-    });
+  onSubmit = () => {
+    // const fileInput = document.getElementById("fileInput") as HTMLInputElement;
+    // if (fileInput.files && fileInput.files.length > 0) {
+    //   this.selectedFile = fileInput.files[0];
+    // }
+    // // Kiểm tra xem form có hợp lệ và file đã được chọn chưa
+    // if (this.examForm.invalid || !this.selectedFile) {
+    //   this.uploadMessage = 'Vui lòng điền đầy đủ thông tin và chọn file';
+    //   console.log('Form không hợp lệ hoặc chưa chọn file');
+    //   return;
+    // }
+    // this.loading = true;
+    //
+    // const examNameValue = this.examForm.get('exam_name')?.value;
+    // const examDurationValue = this.examForm.get('exam_duration')?.value;
+    // const examDescriptionValue = this.examForm.get('exam_description')?.value;
+    // const examSubjectValue = this.examForm.get('exam_subject')?.value;
+    //
+    // const examStartDateValue = this.formatDateTime(this.examForm.get('exam_start_date')?.value);
+    // const examEndDateValue = this.formatDateTime(this.examForm.get('exam_end_date')?.value);
+    //
+    // const formData = new FormData();
+    // formData.append('examSessionId', this.exam_id);
+    // formData.append('name', examNameValue);
+    // formData.append('duration', examDurationValue);
+    // formData.append('description', examDescriptionValue);
+    // formData.append('file', this.selectedFile, this.selectedFile.name);
+    // formData.append('subject', examSubjectValue);
+    // formData.append('startDate', examStartDateValue);
+    // formData.append('endDate', examEndDateValue);
+    //
+    // this.examService.uploadExamWithFile(formData).subscribe({
+    //   next: () => {
+    //     this.uploadMessage = 'Tạo kỳ thi thành công!';
+    //     this.loading = false;
+    //     this.router.navigate(["teacher/exam-session-dashboard"], {queryParams: {id: this.exam_id}});
+    //   },
+    //   error: (err) => {
+    //     console.error(err);
+    //     this.uploadMessage = 'Upload thất bại!';
+    //     this.loading = false;
+    //   }
+    // });
   }
   ;
 
   goBack() {
-    this.router.navigate(["teacher/exam-create-type"], {queryParams: {id: this.exam_session_id}});
+    this.router.navigate(["teacher/exam-session-dashboard"], {queryParams: {id: this.exam_session_id}});
   }
 
   setActiveTab(tab: string) {

@@ -47,7 +47,10 @@ export class ExamComponent implements OnInit {
           this.examList = response.body.exams;
         }
         this.filteredExams = [...this.examList];
-        console.log("Fetched Exam List:", this.examList);
+
+        // Kiểm tra dữ liệu đã lấy về
+        console.log("Exam List:", this.examList);
+        console.log("Filtered Exam List:", this.filteredExams);
       },
       error: (error) => {
         console.error("Error fetching exams:", error);
@@ -72,5 +75,9 @@ export class ExamComponent implements OnInit {
   navigateToCreatExam() {
     this.router.navigate(['/teacher/exam-create-type'], {queryParams: {id: this.exam_session_id}});
     console.log(this.exam_session_id);
+  }
+
+  editExam(exam_id: number, exam_session_id: number) {
+    this.router.navigate(['/teacher/edit-exam-with-file'], {queryParams: {exam_id: exam_id, exam_session_id: exam_session_id}});
   }
 }
