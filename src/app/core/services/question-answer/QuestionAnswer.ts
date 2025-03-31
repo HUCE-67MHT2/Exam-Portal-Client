@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
-export class ExamQuestionAnswerService {
+export class QuestionAnswerService {
   private baseUrl = 'http://localhost:8081/api/question-answer';
 
   constructor(private http: HttpClient) {}
@@ -17,5 +17,9 @@ export class ExamQuestionAnswerService {
       answers,
     };
     return this.http.post(`${this.baseUrl}/upload`, payload);
+  }
+
+  getUploadQuestionAnswers(examId: number): Observable<any> {
+    return this.http.get(`${this.baseUrl}/upload`, { params: { examId: examId} });
   }
 }

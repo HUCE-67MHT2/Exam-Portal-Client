@@ -3,17 +3,17 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {NgForOf, NgIf} from "@angular/common";
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators,} from "@angular/forms";
 import * as docx from "docx-preview";
-import {CreateExamWithFileService} from "../../../../../core/services/exam/create_exam_with_file/create-exam-with-file.service";
+import {ExamService} from '../../../../../core/services/exam/exam.service';
 import {LoadingComponent} from "../../../../../layout/loadings/loading/loading.component";
 import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
-import {ExamQuestionAnswerService} from '../../../../../core/services/question-answer/uploadExamQuestionAnswer';
+import {QuestionAnswerService} from '../../../../../core/services/question-answer/QuestionAnswer';
 
 @Component({
   selector: "app-exam-create-with-file",
   imports: [NgIf, ReactiveFormsModule, FormsModule, NgForOf, LoadingComponent],
   templateUrl: "./exam-create-with-file.component.html",
   styleUrl: "./exam-create-with-file.component.scss",
-  providers: [CreateExamWithFileService],
+  providers: [ExamService],
 })
 export class ExamCreateWithFileComponent implements OnInit {
   examForm: FormGroup;
@@ -38,8 +38,8 @@ export class ExamCreateWithFileComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private sanitizer: DomSanitizer,
-    private examService: CreateExamWithFileService,
-    private examQuestionAnswerService: ExamQuestionAnswerService,
+    private examService: ExamService,
+    private examQuestionAnswerService: QuestionAnswerService,
     private router: Router,
     private route: ActivatedRoute
   ) {

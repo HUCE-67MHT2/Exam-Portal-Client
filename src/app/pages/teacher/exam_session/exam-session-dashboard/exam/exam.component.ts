@@ -3,9 +3,7 @@ import {Exam} from '../../../../../core/models/exam.model';
 import {FormsModule} from '@angular/forms';
 import {DatePipe, NgForOf, NgOptimizedImage} from '@angular/common';
 import {ActivatedRoute, Router} from '@angular/router';
-import {
-  GetExamsBySessionIDService
-} from '../../../../../core/services/exam/get_exams_by_exam_session_id/get_exams_by_exam_session_id.service';
+import {ExamService} from '../../../../../core/services/exam/exam.service';
 
 @Component({
   selector: 'app-exam',
@@ -26,7 +24,7 @@ export class ExamComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private examService: GetExamsBySessionIDService,
+    private examService: ExamService,
     private route: ActivatedRoute,
   ) {
   }

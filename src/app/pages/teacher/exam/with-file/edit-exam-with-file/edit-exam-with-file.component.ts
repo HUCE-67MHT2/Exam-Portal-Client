@@ -2,33 +2,37 @@ import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {LoadingComponent} from "../../../../../layout/loadings/loading/loading.component";
 import {NgForOf, NgIf} from "@angular/common";
-import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
-import {CreateExamWithFileService} from '../../../../../core/services/exam/create_exam_with_file/create-exam-with-file.service';
+import {DomSanitizer} from '@angular/platform-browser';
 import {ActivatedRoute, Router} from '@angular/router';
 import * as docx from 'docx-preview';
+import {ExamService} from '../../../../../core/services/exam/exam.service';
+import {QuestionAnswerService} from '../../../../../core/services/question-answer/QuestionAnswer';
+import {NgxDocViewerModule} from 'ngx-doc-viewer';
 
 @Component({
   selector: 'app-edit-exam-with-file',
-    imports: [
-        FormsModule,
-        LoadingComponent,
-        NgForOf,
-        NgIf,
-        ReactiveFormsModule
-    ],
+  imports: [
+    FormsModule,
+    LoadingComponent,
+    NgForOf,
+    NgIf,
+    ReactiveFormsModule,
+    NgxDocViewerModule
+  ],
   templateUrl: './edit-exam-with-file.component.html',
   styleUrl: './edit-exam-with-file.component.scss'
 })
 export class EditExamWithFileComponent implements OnInit {
   examForm: FormGroup;
   selectedFile: File | null = null;
-  selectedFileUrl: SafeResourceUrl | null = null;
+  selectedFileUrl: string = '';
+  uploadFileUrl = "";
   uploadMessage: string = '';
   loading: boolean = false;
 
   // Các biến cho tab, modal, đáp án (không thay đổi)
   activeTab: string = 'dapan';
-  totalQuestions: number = 5;
+  totalQuestions: number = 10;
   totalScore: number = 10;
   isQuickInputOpen: boolean = false;
   quickInputText: string = "";
@@ -43,7 +47,8 @@ export class EditExamWithFileComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private sanitizer: DomSanitizer,
-    private examService: CreateExamWithFileService,
+    private examService: ExamService,
+    private examQuestionAnswerService: QuestionAnswerService,
     private router: Router,
     private route: ActivatedRoute
   ) {
@@ -65,10 +70,61 @@ export class EditExamWithFileComponent implements OnInit {
       this.exam_id = params['exam_id'];
       this.exam_session_id = params['exam_session_id'];
     });
-
-    console.log("Exam ID:", this.exam_id);
-    console.log("Exam Session ID:", this.exam_session_id);
+    this.getExamById()
+    this.getUploadExamQuestionAnswers()
   }
+
+  getExamById = () => {
+    this.examService.getExamById(this.exam_id).subscribe(
+      (response) => {
+        console.log(response);
+        this.examForm.patchValue({
+          exam_name: response.name,
+          exam_duration: response.duration,
+          exam_description: response.description,
+          exam_subject: response.subject,
+          exam_start_date: this.formatDateTime(response.startDate),
+          exam_end_date: this.formatDateTime(response.endDate),
+        });
+
+        // Xử lý đường dẫn Google Drive để lấy link xem trực tiếp
+        if (response.fileUrl) {
+          this.uploadFileUrl = response.fileUrl;
+          console.log("Đường dẫn Google Drive:", this.uploadFileUrl);
+        }
+      },
+      (error) => {
+        console.error("Lỗi khi tải thông tin bài thi:", error);
+      }
+    );
+  };
+
+  // Chuyển đổi uploadFileUrl thành link xem trực tiếp
+  get fileUrl(): string {
+    if (!this.uploadFileUrl) return '';
+
+    const match = this.uploadFileUrl.match(/\/d\/(.*?)\//);
+    return match ? `https://drive.google.com/file/d/${match[1]}/preview` : '';
+  }
+
+  getUploadExamQuestionAnswers = () => {
+    this.examQuestionAnswerService.getUploadQuestionAnswers(this.exam_id).subscribe(
+      (response) => {
+        this.totalQuestions = response.length / 4;
+
+        // Xử lý để lấy đáp án đúng
+        this.answers = response.reduce((acc: { [key: number]: string }, item: { correct: boolean; questionNo: number; answerText: string }) => {
+          if (item.correct) {
+            acc[item.questionNo] = item.answerText;
+          }
+          return acc;
+        }, {});
+      },
+      (error) => {
+        console.error("Lỗi khi tải đáp án:", error);
+      }
+    );
+  };
 
   uploadFile() {
     document.getElementById("fileInput")?.click();
@@ -78,25 +134,22 @@ export class EditExamWithFileComponent implements OnInit {
     const file = event.target.files[0];
     if (!file) return;
 
-    // Xóa đường dẫn PDF khi chọn file Word
-    this.selectedFileUrl = null;
+    // Clear the backend file URL when a new file is selected
+    this.uploadFileUrl = '';
 
     if (file.type === "application/pdf") {
       const fileURL = URL.createObjectURL(file);
-      this.selectedFileUrl =
-        this.sanitizer.bypassSecurityTrustResourceUrl(fileURL);
-    } else if (
-      file.type ===
-      "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-    ) {
+      this.selectedFileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(fileURL) as string;
+    } else if (file.type === "application/vnd.openxmlformats-officedocument.wordprocessingml.document") {
       const reader = new FileReader();
       reader.onload = (e: any) => {
         const arrayBuffer = e.target.result;
         const container = this.wordContainer.nativeElement;
-        container.innerHTML = ""; // Xóa nội dung cũ
+        container.innerHTML = ""; // Clear old content
 
-        // Đảm bảo container có kích thước phù hợp
+        // Ensure container has appropriate size
         container.style.width = "100%";
+        container.style.height = "570px";
         container.style.overflow = "auto";
 
         // @ts-ignore
@@ -108,7 +161,7 @@ export class EditExamWithFileComponent implements OnInit {
   }
 
   getQuestions(): number[] {
-    return Array.from({length: this.totalQuestions}, (_, i) => i);
+    return Array.from({ length: this.totalQuestions }, (_, i) => i);
   }
 
   onTotalQuestionsChange() {
@@ -171,53 +224,10 @@ export class EditExamWithFileComponent implements OnInit {
   }
 
   onSubmit = () => {
-    // const fileInput = document.getElementById("fileInput") as HTMLInputElement;
-    // if (fileInput.files && fileInput.files.length > 0) {
-    //   this.selectedFile = fileInput.files[0];
-    // }
-    // // Kiểm tra xem form có hợp lệ và file đã được chọn chưa
-    // if (this.examForm.invalid || !this.selectedFile) {
-    //   this.uploadMessage = 'Vui lòng điền đầy đủ thông tin và chọn file';
-    //   console.log('Form không hợp lệ hoặc chưa chọn file');
-    //   return;
-    // }
-    // this.loading = true;
-    //
-    // const examNameValue = this.examForm.get('exam_name')?.value;
-    // const examDurationValue = this.examForm.get('exam_duration')?.value;
-    // const examDescriptionValue = this.examForm.get('exam_description')?.value;
-    // const examSubjectValue = this.examForm.get('exam_subject')?.value;
-    //
-    // const examStartDateValue = this.formatDateTime(this.examForm.get('exam_start_date')?.value);
-    // const examEndDateValue = this.formatDateTime(this.examForm.get('exam_end_date')?.value);
-    //
-    // const formData = new FormData();
-    // formData.append('examSessionId', this.exam_id);
-    // formData.append('name', examNameValue);
-    // formData.append('duration', examDurationValue);
-    // formData.append('description', examDescriptionValue);
-    // formData.append('file', this.selectedFile, this.selectedFile.name);
-    // formData.append('subject', examSubjectValue);
-    // formData.append('startDate', examStartDateValue);
-    // formData.append('endDate', examEndDateValue);
-    //
-    // this.examService.uploadExamWithFile(formData).subscribe({
-    //   next: () => {
-    //     this.uploadMessage = 'Tạo kỳ thi thành công!';
-    //     this.loading = false;
-    //     this.router.navigate(["teacher/exam-session-dashboard"], {queryParams: {id: this.exam_id}});
-    //   },
-    //   error: (err) => {
-    //     console.error(err);
-    //     this.uploadMessage = 'Upload thất bại!';
-    //     this.loading = false;
-    //   }
-    // });
-  }
-  ;
+  };
 
   goBack() {
-    this.router.navigate(["teacher/exam-session-dashboard"], {queryParams: {id: this.exam_session_id}});
+    this.router.navigate(["teacher/exam-session-dashboard"], { queryParams: { id: this.exam_session_id } });
   }
 
   setActiveTab(tab: string) {
