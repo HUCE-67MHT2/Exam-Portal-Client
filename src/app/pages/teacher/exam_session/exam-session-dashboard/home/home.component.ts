@@ -2,7 +2,7 @@ import {CommonModule, DatePipe, NgOptimizedImage} from "@angular/common";
 import {Component, Input, OnInit} from "@angular/core";
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {ExamSessionService} from "../../../../../core/services/exam_session/exam-session.service";
-import { ExamSessionEnrollmentService } from '../../../../../core/services/exam-session-enrollments/exam-session-enrollment.service';
+import {ExamSessionEnrollmentService} from '../../../../../core/services/exam-session-enrollments/exam-session-enrollment.service';
 import {Router} from "@angular/router";
 import {ToastrService} from "ngx-toastr";
 import {ExamSession} from '../../../../../core/models/examSession.model';
@@ -148,7 +148,7 @@ export class HomeComponent implements OnInit {
       return;
     }
     this.StudentInExamSessionEnrollmentsList = this.StudentInExamSessionEnrollmentsList.filter(student =>
-      student.student_id.toString().includes(this.searchTerm.toString())
+      student.student_number.toString().includes(this.searchTerm.toString())
     );
   }
 }

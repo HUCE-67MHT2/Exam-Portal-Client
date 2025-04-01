@@ -3,9 +3,7 @@ import {Exam} from '../../../../../core/models/exam.model';
 import {FormsModule} from '@angular/forms';
 import {DatePipe, NgForOf, NgOptimizedImage} from '@angular/common';
 import {ActivatedRoute, Router} from '@angular/router';
-import {
-  GetExamsBySessionIDService
-} from '../../../../../core/services/exam/get_exams_by_exam_session_id/get_exams_by_exam_session_id.service';
+import {ExamService} from '../../../../../core/services/exam/exam.service';
 
 @Component({
   selector: 'app-exam',
@@ -26,7 +24,7 @@ export class ExamComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private examService: GetExamsBySessionIDService,
+    private examService: ExamService,
     private route: ActivatedRoute,
   ) {
   }
@@ -47,7 +45,10 @@ export class ExamComponent implements OnInit {
           this.examList = response.body.exams;
         }
         this.filteredExams = [...this.examList];
-        console.log("Fetched Exam List:", this.examList);
+
+        // Kiểm tra dữ liệu đã lấy về
+        console.log("Exam List:", this.examList);
+        console.log("Filtered Exam List:", this.filteredExams);
       },
       error: (error) => {
         console.error("Error fetching exams:", error);
@@ -72,5 +73,9 @@ export class ExamComponent implements OnInit {
   navigateToCreatExam() {
     this.router.navigate(['/teacher/exam-create-type'], {queryParams: {id: this.exam_session_id}});
     console.log(this.exam_session_id);
+  }
+
+  editExam(exam_id: number, exam_session_id: number) {
+    this.router.navigate(['/teacher/edit-exam-with-file'], {queryParams: {exam_id: exam_id, exam_session_id: exam_session_id}});
   }
 }

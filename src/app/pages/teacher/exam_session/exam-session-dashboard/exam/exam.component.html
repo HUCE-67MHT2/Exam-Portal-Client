@@ -31,7 +31,7 @@
           <td>{{ exam.type }}</td>
           <td>{{ exam.createDate | date:'dd/MM/yyyy' }}</td>
           <td>
-            <button>sửa</button>
+            <button (click)="editExam(exam.id, this.exam_session_id)">Sửa</button>
             <button>xóa</button>
           </td>
         </tr>

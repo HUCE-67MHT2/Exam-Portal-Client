@@ -13,26 +13,12 @@ import {UserFormComponent} from './shared/components/user-form/user-form.compone
 import {ExamDetailComponent} from './pages/student/exam-detail/exam-detail.component';
 import {ExamCreateTypeComponent} from './pages/teacher/exam-create-type/exam-create-type.component';
 import {ExamCreateWithFileComponent} from './pages/teacher/exam/with-file/exam-create-with-file/exam-create-with-file.component';
-import {
-  ExamCreateWithFileComponent
-} from './pages/teacher/exam/with-file/exam-create-with-file/exam-create-with-file.component';
-import {
-  CreateExamSessionComponent
-} from './pages/teacher/exam_session/create-exam-session/create-exam-session.component';
-import {
-  ExamCreatedAutoDetailComponent
-} from './pages/teacher/exam/auto/exam-created-auto-detail/exam-created-auto-detail.component';
-import {StudentUserComponent} from './pages/user/student-user/student-user.component';
-import {TeacherUserComponent} from './pages/user/teacher-user/teacher-user.component';
 import {CreateExamSessionComponent} from './pages/teacher/exam_session/create-exam-session/create-exam-session.component';
-import { ExamSessionDashboardComponent } from './pages/teacher/exam_session/exam-session-dashboard/exam-session-dashboard.component';
-  ExamSessionDashboardComponent
-} from './pages/teacher/exam_session/exam-session-dashboard/exam-session-dashboard.component';
-import {
-  CreateAutoGenerateComponent
-} from './pages/teacher/exam/auto-generate/create-auto-generate/create-auto-generate.component'
+import {ExamSessionDashboardComponent} from './pages/teacher/exam_session/exam-session-dashboard/exam-session-dashboard.component';
+import {CreateAutoGenerateComponent} from './pages/teacher/exam/auto-generate/create-auto-generate/create-auto-generate.component'
 import {LoadingComponent} from './layout/loadings/loading/loading.component';
 import {LoadingLineComponent} from './layout/loadings/loading-line/loading-line.component';
+import {EditExamWithFileComponent} from './pages/teacher/exam/with-file/edit-exam-with-file/edit-exam-with-file.component';
 
 export const routes: Routes = [
 
@@ -46,22 +32,17 @@ export const routes: Routes = [
   {path: 'student/exam', component: ExamComponent},
   {path: 'student/do-test', component: DoTestComponent},
   {path: 'student/results', component: ResultsComponent},
-  {path: 'user/student', component: StudentUserComponent},
-  {path: 'user/teacher', component: TeacherUserComponent},
+  {path: 'user-form', component: UserFormComponent},
   {path: 'student/results', component: ResultsComponent},
   {path: 'student/exam-detail/:examCode', component: ExamDetailComponent},
   {path: 'student/exam-detail', component: ExamDetailComponent},
   {path: 'teacher/exam-create-type', component: ExamCreateTypeComponent},
   {path: 'teacher/exam-create-with-file', component: ExamCreateWithFileComponent},
-  {path: 'teacher/exam-created-with-file-detail', component: ExamCreatedWithFileDetailComponent},
-  {path: 'teacher/exam-created-with-file-detail/:examID', component: ExamCreatedWithFileDetailComponent},
-  {path: 'teacher/create-new-exam-paper', component: CreateNewExamPaperComponent},
-  {path: 'teacher/edit-exam-paper', component: EditExamPaperComponent},
-  {path: 'teacher/edit-exam-paper/:id', component: EditExamPaperComponent},
-  {path: 'teacher/exam-created-auto-detail/:examCode', component: ExamCreatedAutoDetailComponent},
   {path: 'teacher/create-exam-session', component: CreateExamSessionComponent},
   {path: 'teacher/exam-session-dashboard', component: ExamSessionDashboardComponent},
   {path: 'teacher/exam-create-auto-generate', component: CreateAutoGenerateComponent},
   {path: 'loading', component: LoadingComponent},
-  {path: 'loading-line', component: LoadingLineComponent}
+  {path: 'loading-line', component: LoadingLineComponent},
+  {path: 'teacher/edit-exam-with-file', component: EditExamWithFileComponent},
+
 ];

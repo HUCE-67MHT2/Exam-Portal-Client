@@ -1,0 +1,439 @@
+// =====================
+// RESET CSS
+// =====================
+* {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+// =====================
+// HEADER
+// =====================
+.header {
+  top: 0;
+  z-index: 99;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 80px;
+  padding: 0 30px;
+  border-bottom: solid 1px #ededed;
+  background: #ffffff;
+
+  .wraper-logo {
+    display: flex;
+    align-items: center;
+    width: 100%;
+
+    .logo {
+      font-size: 2rem;
+      font-weight: bold;
+      margin-right: 20px;
+    }
+
+    .breadcrumb {
+      font-size: 1.2rem;
+      color: #555;
+
+      span {
+        margin-right: 5px;
+        font-size: 1.6rem;
+      }
+    }
+  }
+
+  .return-button {
+    width: 180px;
+
+    button {
+      background-color: #f0f5f3;
+      border: none;
+      width: 100%;
+      color: #000000;
+      font-size: 1.6rem;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+
+      &:hover {
+        background-color: #d9e2df;
+      }
+    }
+  }
+}
+
+.loading-indicator {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.5rem;
+  color: #000000;
+  z-index: 1001; // Ensure it is above the overlay
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); // Dark background with 50% opacity
+  z-index: 1000; // Ensure it is below the loading indicator
+}
+
+// =====================
+// LAYOUT CONTAINER
+// =====================
+.container {
+  display: flex;
+  height: calc(100vh - 80px);
+}
+
+.left-container {
+  width: 60%;
+  background: #ffffff;
+  height: calc(100vh - 80px);
+
+  .upload-file-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+    .upload-button {
+      font-size: 1.6rem;
+      width: 100%;
+      height: 40px;
+      background: #04aa6d;
+      color: #ffffff;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.3s ease-in-out;
+
+      &:hover {
+        background: #02774b;
+      }
+    }
+  }
+
+  .word-preview-container {
+    width: 100%;
+    height: calc(100vh - 120px);
+  }
+
+  .pdf-preview-container iframe {
+    width: 100%;
+    height: calc(100vh - 130px);
+    border: 1px solid #ccc;
+  }
+}
+
+.right-container {
+  width: 40%;
+}
+
+// =====================
+// TAB HEADER
+// =====================
+.tab-header {
+  display: flex;
+  justify-content: center;
+
+  .tab-button {
+    flex: 1;
+    height: 40px;
+    border: none;
+    background: #ededed;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.3s;
+
+    &.active {
+      color: #ffffff;
+      background: #04aa6d;
+    }
+  }
+}
+
+// =====================
+// Tab Answer
+// =====================
+.score-summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #00834e;
+  color: white;
+  padding: 15px 20px 15px 20px;
+
+  .score-item-wrappper {
+    display: flex;
+    justify-content: space-between;
+
+    .score-item {
+      display: flex;
+      margin-left: 10px;
+      gap: 5px;
+      justify-content: space-between;
+      align-items: center;
+
+      input {
+        width: 60px;
+        text-align: center;
+        font-size: 1.6rem;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+      }
+    }
+  }
+
+  .quick-input {
+    background-color: #02a678;
+    border: none;
+    padding: 10px 15px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: 0.3s;
+
+    &:hover {
+      background-color: #028f68;
+    }
+  }
+}
+
+//=================
+//QUICK INPUT MODAL
+//=================
+.quick-input-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 20px;
+  width: 400px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  z-index: 1001; // Đặt cao hơn overlay
+
+  .modal-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .modal-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+
+  .modal-description {
+    font-size: 14px;
+    color: #555;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+
+  .quick-input-area {
+    width: 100%;
+    height: 80px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+    resize: none;
+  }
+
+  .error-message {
+    font-size: 1.2rem;
+    color: red;
+  }
+
+  .answer-count {
+    font-size: 12px;
+    color: #888;
+    margin-top: 5px;
+  }
+
+  .modal-actions {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 15px;
+
+    .cancel-btn,
+    .confirm-btn {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 5px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .cancel-btn {
+      background: #f3f3f3;
+      color: #333;
+    }
+
+    .confirm-btn {
+      background: #04aa6d;
+      color: white;
+    }
+
+    .cancel-btn:hover {
+      background: #e0e0e0;
+    }
+
+    .confirm-btn:hover {
+      background: #02774b;
+    }
+  }
+}
+
+// Thêm lớp overlay (nền mờ)
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); // Màu tối có độ trong suốt 50%
+  z-index: 1000; // Đặt thấp hơn modal
+}
+
+// =====================
+// QUESTION LIST
+// =====================
+.question-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); // 3 câu mỗi hàng
+  gap: 15px;
+  padding: 10px;
+  max-height: 70vh;
+  overflow-y: auto;
+
+  .question-item {
+    background: #f1f1f1;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; // Căn chỉnh khoảng cách hợp lý
+    align-items: stretch;
+    width: 100%;
+
+    .question-title {
+      margin-bottom: 10px;
+      font-size: 1.6rem;
+      font-weight: bold;
+    }
+
+    .input-group {
+      display: flex;
+      align-items: center;
+      justify-content: space-between; // Đẩy input về bên phải
+      width: 100%;
+      margin-bottom: 8px;
+
+      .answer-select,
+      .score-input {
+        width: 60px; // Độ rộng hợp lý để input không quá dài
+        padding: 5px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        text-align: left; // Căn phải giống trong ảnh
+      }
+
+      .score-input {
+        background: #e9ecef;
+      }
+    }
+  }
+}
+
+// =====================
+// Tab infomation
+// =====================
+form {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+
+  label {
+    font-weight: bold;
+  }
+
+  input,
+  select {
+    padding: 10px;
+    margin-bottom: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+  }
+
+  button {
+    margin-top: 20px;
+    padding: 15px;
+    background: #04aa6d;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: 0.3s;
+
+    &:hover {
+      background: #038658;
+    }
+  }
+}
+
+// FORM VALIDATION ERROR
+.input-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+
+  input[type="date"],
+  input[type="time"],
+  input[type="datetime-local"] {
+    margin-bottom: 8px;
+  }
+
+  .error {
+    position: absolute;
+    bottom: 8px;
+    background: #ffffff;
+    left: 0;
+    color: red;
+    font-size: 10px;
+  }
+}
+
+.row-wrapper {
+  display: flex;
+  gap: 20px;
+
+  .input-wrapper {
+    width: 50%;
+
+    label {
+      margin-bottom: 5px;
+    }
+  }
+}
+
+.exam-info {
+  margin-bottom: 15px;
+}
+
+.exam-info:nth-of-type(2) {
+  margin-top: 15px;
+}

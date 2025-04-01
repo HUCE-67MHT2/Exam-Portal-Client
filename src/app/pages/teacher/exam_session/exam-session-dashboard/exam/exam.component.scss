@@ -2,6 +2,7 @@ $primary-color: #04aa6d;
 $secondary-color: #02774b;
 $light-gray: #f5f5f5;
 $hover-bg: #f1faff;
+
 .container {
   position: relative;
 
@@ -69,11 +70,10 @@ $hover-bg: #f1faff;
 
   .table-container {
     position: relative;
-    top: 80px;
-    height: 100%; // Adjust height to fit within the main element
+    height: calc(100vh - 160px); // Điều chỉnh chiều cao để tránh bị che hàng cuối
     background: #ffffff;
-    overflow-y: auto; // Enable vertical scrolling
-    padding: 15px 15px 15px 15px;
+    overflow-y: auto;
+    padding: 15px 15px 30px 15px;
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   }
@@ -81,32 +81,36 @@ $hover-bg: #f1faff;
   table {
     width: 100%;
     border-collapse: collapse;
-    border-radius: 8px;
-    overflow: hidden;
   }
 
   thead {
-    position: sticky; // Changed from fixed to sticky for better alignment
-    top: 0; // Adjusted to align with the table
+    position: sticky;
+    top: 0;
     background: $secondary-color;
     color: #fff;
     font-weight: bold;
-
-    tr {
-      display: table-row; // Changed to table-row for proper alignment
-      width: 100%; // Ensure it spans the full width of the table
-    }
 
     th {
       padding: 14px;
       text-align: left;
       border-bottom: 1px solid #ddd;
-      width: auto; // Ensure it adjusts to the content
     }
   }
 
-  th,
-  td {
+  tbody {
+    display: block;
+    max-height: calc(100vh - 240px); // Đảm bảo phần tbody không bị cắt
+    overflow-y: auto;
+    width: 100%;
+  }
+
+  tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+  }
+
+  th, td {
     padding: 14px;
     text-align: left;
     border-bottom: 1px solid #ddd;

@@ -1,0 +1,237 @@
+<header class="header">
+  <div class="wraper-logo">
+    <div class="logo">Online Exam Portal</div>
+    <nav class="breadcrumb">
+      <span>►</span>
+      <span>Chỉnh sửa đề thi</span>
+    </nav>
+  </div>
+  <div class="return-button">
+    <button (click)="goBack()">quay lại</button>
+  </div>
+</header>
+
+<app-loading *ngIf="loading" text="🌟Creating exam..."></app-loading>
+
+<div class="container">
+  <!-- Left content -->
+  <div class="left-container">
+    <div class="upload-file-container">
+      <button (click)="uploadFile()" class="upload-button">
+        📂 Tải lại file
+      </button>
+      <input
+        #fileInput
+        (change)="onFileSelected($event)"
+        accept=".pdf,.doc,.docx"
+        hidden
+        id="fileInput"
+        type="file"
+      />
+    </div>
+
+    <ngx-doc-viewer *ngIf="selectedFileUrl && selectedFileUrl.includes('blob:')"
+                    [url]="selectedFileUrl"
+                    viewer="url"
+                    style="width:100%; height:570px;">
+    </ngx-doc-viewer>
+
+    <ngx-doc-viewer *ngIf="fileUrl && !selectedFileUrl"
+                    [url]="fileUrl"
+                    viewer="url"
+                    style="width:100%; height:570px;">
+    </ngx-doc-viewer>
+
+    <!-- Only display Word if no PDF is selected -->
+    <div
+      #wordContainer
+      *ngIf="!selectedFileUrl || !selectedFileUrl.includes('blob:')"
+      class="word-preview-container"
+      style="width:100%; height:570px; overflow:auto;">
+    </div>
+  </div>
+
+  <!-- Right content -->
+  <div class="right-container">
+    <div class="tab-header">
+      <button
+        (click)="setActiveTab('dapan')"
+        [class.active]="activeTab === 'dapan'"
+        class="tab-button"
+      >
+        Đáp án
+      </button>
+      <button
+        (click)="setActiveTab('thongtin')"
+        [class.active]="activeTab === 'thongtin'"
+        class="tab-button"
+      >
+        Thông tin bài thi
+      </button>
+    </div>
+    <div class="tab-content">
+      <!-- Đáp án -->
+      <div *ngIf="activeTab === 'dapan'" class="tab-pane">
+        <div class="score-summary">
+          <div class="score-item-wrappper">
+            <div class="score-item">
+              <label for="totalQuestions">Số câu</label>
+              <input
+                (change)="onTotalQuestionsChange()"
+                [(ngModel)]="totalQuestions"
+                id="totalQuestions"
+                type="number"
+              />
+            </div>
+            <div class="score-item">
+              <label for="totalScore">Tổng điểm</label>
+              <input [(ngModel)]="totalScore" id="totalScore" type="number"/>
+            </div>
+          </div>
+          <button (click)="openQuickInput()" class="quick-input">
+            Nhập nhanh
+          </button>
+        </div>
+
+        <!-- Nền tối khi modal mở -->
+        <div
+          (click)="isQuickInputOpen = false"
+          *ngIf="isQuickInputOpen"
+          class="modal-overlay"
+        ></div>
+
+        <!-- Modal nhập nhanh -->
+        <div *ngIf="isQuickInputOpen" class="quick-input-modal">
+          <div class="modal-content">
+            <h3 class="modal-title">Nhập nhanh</h3>
+            <p class="modal-description">
+              Chuỗi đáp án viết liền không dấu (vd: ACDABCAD). Mỗi ký tự là 1
+              đáp án!
+            </p>
+
+            <textarea
+              [(ngModel)]="quickInputText"
+              class="quick-input-area"
+              placeholder="Nhập đáp án tại đây..."
+            ></textarea>
+            <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
+            <p class="answer-count">
+              Bạn sẽ tạo ra {{ quickInputText.length }} đáp án
+            </p>
+
+            <div class="modal-actions">
+              <button (click)="isQuickInputOpen = false" class="cancel-btn">
+                Hủy
+              </button>
+              <button (click)="processQuickInput()" class="confirm-btn">
+                Xác nhận
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="question-list">
+          <div
+            *ngFor="let i of getQuestions(); let index = index"
+            class="question-item"
+          >
+            <label class="question-title">Câu {{ i + 1 }}</label>
+
+            <div class="input-group">
+              <span class="input-label">Đáp án</span>
+              <select [(ngModel)]="answers[i + 1]" class="answer-select">
+                <option *ngFor="let option of answerOptions" [value]="option">
+                  {{ option }}
+                </option>
+              </select>
+            </div>
+
+            <div class="input-group">
+              <span class="input-label">Điểm</span>
+              <input
+                [value]="getQuestionScore()"
+                class="score-input"
+                disabled
+                type="text"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Thông tin kỳ thi -->
+      <div *ngIf="activeTab === 'thongtin'" class="tab-pane">
+        <form (ngSubmit)="onSubmit()" [formGroup]="examForm">
+          <h2 class="exam-info">Thông tin bài thi</h2>
+
+          <div class="row-wrapper">
+            <!-- Input tên bài thi -->
+            <div class="input-wrapper">
+              <label for="exam_name">Tên đề thi</label>
+              <input formControlName="exam_name" id="exam_name"/>
+              <div *ngIf="examForm.get('exam_name')?.invalid && examForm.get('exam_name')?.touched" class="error">
+                Tên đề không được để trống.
+              </div>
+            </div>
+
+            <!-- Select thời gian làm bài -->
+            <div class="input-wrapper">
+              <label for="exam_duration">Thời gian làm bài:</label>
+              <select formControlName="exam_duration" id="exam_duration">
+                <option value="15">15 phút</option>
+                <option value="30">30 phút</option>
+                <option value="60">60 phút</option>
+                <option value="90">90 phút</option>
+                <option value="120">120 phút</option>
+              </select>
+              <div
+                *ngIf="examForm.get('exam_duration')?.invalid && examForm.get('exam_duration')?.touched"
+                class="error"
+              >
+                Vui lòng chọn thời gian làm bài.
+              </div>
+            </div>
+          </div>
+          <div class="row-wrapper">
+            <div class="input-wrapper">
+              <label for="exam_description">Lưu ý</label>
+              <input formControlName="exam_description" id="exam_description">
+            </div>
+
+            <div class="input-wrapper">
+              <label for="exam_subject">Môn thi</label>
+              <input formControlName="exam_subject" id="exam_subject">
+              <div *ngIf="examForm.get('exam_subject')?.invalid && examForm.get('exam_subject')?.touched" class="error">
+                Tên môn học không được để trống.
+              </div>
+            </div>
+          </div>
+
+          <div class="row-wrapper">
+            <div class="input-wrapper">
+              <label for="exam_start_date">Thời gian bắt đầu:</label>
+              <input formControlName="exam_start_date" id="exam_start_date" type="datetime-local"/>
+              <div
+                *ngIf="examForm.get('exam_start_date')?.invalid && examForm.get('exam_start_date')?.touched"
+                class="error">
+                Vui lòng chọn thời gian bắt đầu.
+              </div>
+            </div>
+
+            <div class="input-wrapper">
+              <label for="exam_end_date">Thời gian kết thúc:</label>
+              <input formControlName="exam_end_date" id="exam_end_date" type="datetime-local"/>
+              <div
+                *ngIf="examForm.get('exam_end_date')?.invalid && examForm.get('exam_end_date')?.touched"
+                class="error">
+                Vui lòng chọn thời gian kết thúc.
+              </div>
+            </div>
+          </div>
+
+          <button [disabled]="examForm.invalid" type="submit">Tạo kỳ thi</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

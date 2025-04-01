@@ -1,12 +1,43 @@
-import {Component} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {SearchBarComponent} from "../../../../../layout/search-bar/search-bar.component";
-
+import {GetExamResultBySessionIdServiceService} from '../../../../../core/services/exam-result/get-exam-result-by-sessionId.service'
+import {StudentResultInfo} from '../../../../../core/models/StudentResultInfo.model';
+import {DatePipe, NgForOf} from '@angular/common';
 @Component({
   selector: 'app-student-list-point',
-  imports: [SearchBarComponent],
+  imports: [SearchBarComponent, DatePipe, NgForOf],
   templateUrl: './student-list-point.component.html',
   styleUrl: './student-list-point.component.scss'
 })
-export class StudentListPointComponent {
+export class StudentListPointComponent implements OnInit {
+  constructor(
+    private examResultService : GetExamResultBySessionIdServiceService
+  ) {
+  }
+  @Input() exam_session_id!: number;
+  StudentResultInfo: StudentResultInfo[] = [];
+
+  ngOnInit(): void {
+    if (this.exam_session_id) {
+      this.GetStudentResultInfo();
+    } else {
+      console.error('Hiện tại chưa có kết quả của sinh viên nào');
+    }
+  }
+  GetStudentResultInfo=()=> {
+    this.examResultService.getExamResultById(this.exam_session_id).subscribe(
+      (response) => {
+        if (response.status === 200) {
+          this.StudentResultInfo = response.body;
+          console.log(this.StudentResultInfo);
+        } else {
+          console.error('Error fetching student result info:', response.status);
+        }
+      },
+      (error) => {
+        console.error('Error fetching student result info:', error);
+      }
+    );
+  }
 
 }

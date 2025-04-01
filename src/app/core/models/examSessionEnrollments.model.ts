@@ -1,5 +1,5 @@
 export interface StudentInExamSessionEnrollments {
-  student_id: number;
+  student_number: number;
   class_name: string;
   student_name: string;
 }
