@@ -1,12 +1,18 @@
-import {Component, ElementRef, OnInit, ViewChild} from "@angular/core";
-import {ActivatedRoute, Router} from "@angular/router";
-import {NgForOf, NgIf} from "@angular/common";
-import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators,} from "@angular/forms";
+import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
+import { ActivatedRoute, Router } from "@angular/router";
+import { NgForOf, NgIf } from "@angular/common";
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from "@angular/forms";
 import * as docx from "docx-preview";
-import {ExamService} from '../../../../../core/services/exam/exam.service';
-import {LoadingComponent} from "../../../../../layout/loadings/loading/loading.component";
-import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
-import {QuestionAnswerService} from '../../../../../core/services/question-answer/QuestionAnswer.service';
+import { ExamService } from "../../../../../core/services/exam/exam.service";
+import { LoadingComponent } from "../../../../../layout/loadings/loading/loading.component";
+import { DomSanitizer, SafeResourceUrl } from "@angular/platform-browser";
+import { QuestionAnswerService } from "../../../../../core/services/question-answer/QuestionAnswer.service";
 
 @Component({
   selector: "app-exam-create-with-file",
@@ -19,11 +25,11 @@ export class ExamCreateWithFileComponent implements OnInit {
   examForm: FormGroup;
   selectedFile: File | null = null;
   selectedFileUrl: SafeResourceUrl | null = null;
-  uploadMessage: string = '';
+  uploadMessage: string = "";
   loading: boolean = false;
 
   // Các biến cho tab, modal, đáp án (không thay đổi)
-  activeTab: string = 'dapan';
+  activeTab: string = "dapan";
   totalQuestions: number = 5;
   totalScore: number = 10;
   isQuickInputOpen: boolean = false;
@@ -45,20 +51,20 @@ export class ExamCreateWithFileComponent implements OnInit {
   ) {
     // Khởi tạo form với các control cần thiết cho onSubmit()
     this.examForm = this.fb.group({
-      exam_name: ['', Validators.required],
-      exam_duration: ['', Validators.required],
-      exam_description: [''],
-      exam_subject: ['', Validators.required],
-      exam_start_date: ['', Validators.required],
-      exam_end_date: ['', Validators.required],
+      exam_name: ["", Validators.required],
+      exam_duration: ["", Validators.required],
+      exam_description: [""],
+      exam_subject: ["", Validators.required],
+      exam_start_date: ["", Validators.required],
+      exam_end_date: ["", Validators.required],
       // Nếu có thêm control nào khác cần dùng cho onSubmit, bổ sung tại đây
     });
   }
 
   ngOnInit() {
     this.initializeAnswers();
-    this.route.queryParams.subscribe(params => {
-      this.exam_session_id = params['id'];
+    this.route.queryParams.subscribe((params) => {
+      this.exam_session_id = params["id"];
     });
     console.log(this.exam_session_id);
   }
@@ -101,7 +107,7 @@ export class ExamCreateWithFileComponent implements OnInit {
   }
 
   getQuestions(): number[] {
-    return Array.from({length: this.totalQuestions}, (_, i) => i);
+    return Array.from({ length: this.totalQuestions }, (_, i) => i);
   }
 
   onTotalQuestionsChange() {
@@ -150,14 +156,14 @@ export class ExamCreateWithFileComponent implements OnInit {
   }
 
   private formatDateTime(dateTimeLocal: string): string {
-    if (!dateTimeLocal) return '';
+    if (!dateTimeLocal) return "";
 
     const date = new Date(dateTimeLocal);
     const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    const hours = String(date.getHours()).padStart(2, '0');
-    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    const hours = String(date.getHours()).padStart(2, "0");
+    const minutes = String(date.getMinutes()).padStart(2, "0");
     const seconds = "00"; // Mặc định giây = 00
 
     return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
@@ -170,54 +176,69 @@ export class ExamCreateWithFileComponent implements OnInit {
     }
 
     if (this.examForm.invalid || !this.selectedFile) {
-      this.uploadMessage = 'Vui lòng điền đầy đủ thông tin và chọn file';
-      console.log('Form không hợp lệ hoặc chưa chọn file');
+      this.uploadMessage = "Vui lòng điền đầy đủ thông tin và chọn file";
+      console.log("Form không hợp lệ hoặc chưa chọn file");
       return;
     }
     this.loading = true;
 
     const formData = new FormData();
-    formData.append('examSessionId', this.exam_session_id);
-    formData.append('name', this.examForm.get('exam_name')?.value);
-    formData.append('duration', this.examForm.get('exam_duration')?.value);
-    formData.append('description', this.examForm.get('exam_description')?.value);
-    formData.append('file', this.selectedFile, this.selectedFile.name);
-    formData.append('subject', this.examForm.get('exam_subject')?.value);
-    formData.append('startDate', this.formatDateTime(this.examForm.get('exam_start_date')?.value));
-    formData.append('endDate', this.formatDateTime(this.examForm.get('exam_end_date')?.value));
+    formData.append("examSessionId", this.exam_session_id);
+    formData.append("name", this.examForm.get("exam_name")?.value);
+    formData.append("duration", this.examForm.get("exam_duration")?.value);
+    formData.append(
+      "description",
+      this.examForm.get("exam_description")?.value
+    );
+    formData.append("file", this.selectedFile, this.selectedFile.name);
+    formData.append("subject", this.examForm.get("exam_subject")?.value);
+    formData.append(
+      "startDate",
+      this.formatDateTime(this.examForm.get("exam_start_date")?.value)
+    );
+    formData.append(
+      "endDate",
+      this.formatDateTime(this.examForm.get("exam_end_date")?.value)
+    );
 
     this.examService.uploadExamWithFile(formData).subscribe({
       next: (response) => {
-        console.log('Response từ backend:', response);
+        console.log("Response từ backend:", response);
         if (response.examId) {
-          console.log('Exam ID nhận được:', response.examId);
+          console.log("Exam ID nhận được:", response.examId);
           this.uploadMessage = `Tạo kỳ thi thành công! Exam ID: ${response.examId}`;
 
           // Sau khi tạo đề thi thành công, gửi đáp án lên backend
-          this.examQuestionAnswerService.uploadQuestionAnswers(response.examId, this.answers).subscribe({
-            next: () => {
-              console.log("Đáp án đã được lưu thành công.");
-              this.router.navigate(["teacher/exam-session-dashboard"], { queryParams: { id: this.exam_session_id } });
-            },
-            error: (err) => {
-              console.error("Lỗi khi lưu đáp án:", err);
-            }
-          });
+          this.examQuestionAnswerService
+            .uploadQuestionAnswers(response.examId, this.answers)
+            .subscribe({
+              next: () => {
+                console.log("Đáp án đã được lưu thành công.");
+                this.router.navigate(["teacher/exam-session-dashboard"], {
+                  queryParams: { id: this.exam_session_id },
+                });
+              },
+              error: (err) => {
+                console.error("Lỗi khi lưu đáp án:", err);
+              },
+            });
         } else {
-          this.uploadMessage = 'Tạo kỳ thi thành công nhưng không nhận được Exam ID!';
+          this.uploadMessage =
+            "Tạo kỳ thi thành công nhưng không nhận được Exam ID!";
         }
         this.loading = false;
       },
       error: (err) => {
-        console.error('Lỗi khi tạo kỳ thi:', err);
-        this.uploadMessage = 'Upload thất bại!';
+        console.error("Lỗi khi tạo kỳ thi:", err);
+        this.uploadMessage = "Upload thất bại!";
         this.loading = false;
-      }
+      },
     });
-  };
-
+  }
   goBack() {
-    this.router.navigate(["teacher/exam-create-type"], {queryParams: {id: this.exam_session_id}});
+    this.router.navigate(["teacher/exam-create-type"], {
+      queryParams: { id: this.exam_session_id },
+    });
   }
 
   setActiveTab(tab: string) {

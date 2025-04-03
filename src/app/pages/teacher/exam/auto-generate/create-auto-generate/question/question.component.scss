@@ -79,32 +79,18 @@ li {
       }
     }
 
-    .correct-answer,
-    .other-answer {
-      font-weight: 600;
-      margin-bottom: 5px;
+    .answer-input {
+      width: 100%;
+      outline: none;
+      margin-bottom: 8px;
+      padding: 8px 20px;
+      border: 2px solid #ccc;
+      border-radius: 3px;
     }
 
     .correct-answer {
+      margin-bottom: 10px;
       color: rgb(33, 128, 33);
-    }
-
-    .other-answer {
-      color: rgb(255, 96, 96);
-    }
-
-    .answer {
-      margin-bottom: 8px;
-      padding: 8px 20px;
-      width: 100%;
-      border: 2px solid #ccc;
-      border-radius: 3px;
-
-      .answer-input {
-        width: 100%;
-        border: none;
-        outline: none;
-      }
     }
 
     .correct {
