@@ -6,7 +6,7 @@ import * as docx from "docx-preview";
 import {ExamService} from '../../../../../core/services/exam/exam.service';
 import {LoadingComponent} from "../../../../../layout/loadings/loading/loading.component";
 import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
-import {QuestionAnswerService} from '../../../../../core/services/question-answer/QuestionAnswer';
+import {QuestionAnswerService} from '../../../../../core/services/question-answer/QuestionAnswer.service';
 
 @Component({
   selector: "app-exam-create-with-file",
@@ -214,8 +214,7 @@ export class ExamCreateWithFileComponent implements OnInit {
         this.loading = false;
       }
     });
-  }
-  ;
+  };
 
   goBack() {
     this.router.navigate(["teacher/exam-create-type"], {queryParams: {id: this.exam_session_id}});

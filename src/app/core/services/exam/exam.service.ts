@@ -22,4 +22,8 @@ export class ExamService {
     return this.http.get<any>(`${this.baseUrl}/get/exam/${id}`);
   }
 
+  // Cập nhật bài thi (có thể có file hoặc không)
+  updateExam(id: number, data: any): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/update/exam/${id}`, data);
+  }
 }
