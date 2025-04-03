@@ -5,24 +5,35 @@
 
       <div class="input-wrap">
         <label class="form-desc" for="exam-name">Tên bài thi</label>
-        <input id="exam-name" type="text"/>
+        <input
+          id="exam-name"
+          type="text"
+          [(ngModel)]="examName"
+          name="examName"
+        />
       </div>
 
       <div class="exam-type">
         <p class="form-desc">Loại bài thi</p>
         <div (click)="toggleExamTypeList()" class="list-wrap">
+          {{ selectedExamType || "Chọn loại bài thi" }}
           <ul class="exam-type-list active" id="examTypeList">
-            <li class="type">15 phút</li>
-            <li class="type">45 phút</li>
-            <li class="type">60 phút</li>
-            <li class="type">90 phút</li>
+            <li class="type" (click)="selectExamType('15 phút')">15 phút</li>
+            <li class="type" (click)="selectExamType('45 phút')">45 phút</li>
+            <li class="type" (click)="selectExamType('60 phút')">60 phút</li>
+            <li class="type" (click)="selectExamType('90 phút')">90 phút</li>
           </ul>
         </div>
       </div>
 
       <div class="input-wrap">
         <label class="form-desc" for="exam-password">Mật khẩu bài thi</label>
-        <input id="exam-password" type="password"/>
+        <input
+          id="exam-password"
+          type="password"
+          [(ngModel)]="examPassword"
+          name="examPassword"
+        />
       </div>
 
       <button class="submit">Tạo bài thi</button>

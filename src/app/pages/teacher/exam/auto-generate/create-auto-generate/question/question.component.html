@@ -28,36 +28,39 @@
             class="question-name-input"
             placeholder="Type something..."
             type="text"
+            [(ngModel)]="questions[i].text"
+            (ngModelChange)="saveState()"
           />
         </div>
         <p class="correct-answer">Đáp án đúng</p>
-        <div class="answer correct">
+        <div class="input-wrap">
           <input
-            class="answer-input"
-            placeholder="Type something..."
+            class="answer-input correct"
+            placeholder="Nhập câu trả lời 1"
             type="text"
+            [(ngModel)]="questions[i].answers['1']"
+            (ngModelChange)="saveState()"
           />
-        </div>
-        <p class="other-answer">Đáp án còn lại</p>
-        <div class="answer">
           <input
             class="answer-input"
-            placeholder="Type something..."
+            placeholder="Nhập câu trả lời 2"
             type="text"
+            [(ngModel)]="questions[i].answers['2']"
+            (ngModelChange)="saveState()"
           />
-        </div>
-        <div class="answer">
           <input
             class="answer-input"
-            placeholder="Type something..."
+            placeholder="Nhập câu trả lời 3"
             type="text"
+            [(ngModel)]="questions[i].answers['3']"
+            (ngModelChange)="saveState()"
           />
-        </div>
-        <div class="answer">
           <input
             class="answer-input"
-            placeholder="Type something..."
+            placeholder="Nhập câu trả lời 4"
             type="text"
+            [(ngModel)]="questions[i].answers['4']"
+            (ngModelChange)="saveState()"
           />
         </div>
       </li>
