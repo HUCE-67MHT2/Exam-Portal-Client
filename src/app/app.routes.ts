@@ -19,6 +19,8 @@ import {CreateAutoGenerateComponent} from './pages/teacher/exam/auto-generate/cr
 import {LoadingComponent} from './layout/loadings/loading/loading.component';
 import {LoadingLineComponent} from './layout/loadings/loading-line/loading-line.component';
 import {EditExamWithFileComponent} from './pages/teacher/exam/with-file/edit-exam-with-file/edit-exam-with-file.component';
+import {TeacherUserComponent} from './pages/user/teacher-user/teacher-user.component';
+import {StudentUserComponent} from './pages/user/student-user/student-user.component';
 
 export const routes: Routes = [
 
@@ -33,6 +35,8 @@ export const routes: Routes = [
   {path: 'student/do-test', component: DoTestComponent},
   {path: 'student/results', component: ResultsComponent},
   {path: 'user-form', component: UserFormComponent},
+  {path: 'user/student', component: StudentUserComponent},
+  {path: 'user/teacher', component: TeacherUserComponent},
   {path: 'student/results', component: ResultsComponent},
   {path: 'student/exam-detail/:examCode', component: ExamDetailComponent},
   {path: 'student/exam-detail', component: ExamDetailComponent},
