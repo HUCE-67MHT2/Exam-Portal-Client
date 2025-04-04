@@ -44,8 +44,11 @@ li {
         margin-bottom: 10px;
 
         .list-wrap {
+          display: flex;
+          align-items: center;
           position: relative;
           height: 35px;
+          padding-left: 20px;
           border: 1px solid #ccc;
           border-radius: 5px;
 
