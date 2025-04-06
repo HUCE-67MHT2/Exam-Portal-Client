@@ -10,9 +10,10 @@ export class ExamSessionEnrollmentService {
 
   constructor(private http: HttpClient) {
   }
-    getExamSessionEnrollmentsById(id: number) {
-      const token = localStorage.getItem('authToken');
-      const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-      return this.http.get<any>(`${this.baseUrl}/get/list/student/in/sessionId/${id}`, {headers, observe: 'response'});
-    }
+
+  getExamSessionEnrollmentsById(id: number) {
+    const token = localStorage.getItem('authToken');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get<any>(`${this.baseUrl}/get/list/student/in/sessionId/${id}`, {headers, observe: 'response'});
+  }
 }

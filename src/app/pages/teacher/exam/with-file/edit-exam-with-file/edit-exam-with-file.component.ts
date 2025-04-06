@@ -1,19 +1,13 @@
-import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
-import {
-  FormBuilder,
-  FormGroup,
-  FormsModule,
-  ReactiveFormsModule,
-  Validators,
-} from "@angular/forms";
-import { LoadingComponent } from "../../../../../layout/loadings/loading/loading.component";
-import { NgForOf, NgIf } from "@angular/common";
-import { DomSanitizer } from "@angular/platform-browser";
-import { ActivatedRoute, Router } from "@angular/router";
+import {Component, ElementRef, OnInit, ViewChild} from "@angular/core";
+import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators,} from "@angular/forms";
+import {LoadingComponent} from "../../../../../layout/loadings/loading/loading.component";
+import {NgForOf, NgIf} from "@angular/common";
+import {DomSanitizer} from "@angular/platform-browser";
+import {ActivatedRoute, Router} from "@angular/router";
 import * as docx from "docx-preview";
-import { ExamService } from "../../../../../core/services/exam/exam.service";
-import { QuestionAnswerService } from "../../../../../core/services/question-answer/QuestionAnswer.service";
-import { NgxDocViewerModule } from "ngx-doc-viewer";
+import {ExamService} from "../../../../../core/services/exam/exam.service";
+import {QuestionAnswerService} from "../../../../../core/services/question-answer/QuestionAnswer.service";
+import {NgxDocViewerModule} from "ngx-doc-viewer";
 
 @Component({
   selector: "app-edit-exam-with-file",
@@ -70,6 +64,14 @@ export class EditExamWithFileComponent implements OnInit {
     });
   }
 
+  // Chuyển đổi uploadFileUrl thành link xem trực tiếp
+  get fileUrl(): string {
+    if (!this.uploadFileUrl) return "";
+
+    const match = this.uploadFileUrl.match(/\/d\/(.*?)\//);
+    return match ? `https://drive.google.com/file/d/${match[1]}/preview` : "";
+  }
+
   ngOnInit() {
     this.initializeAnswers();
     this.route.queryParams.subscribe((params) => {
@@ -104,14 +106,6 @@ export class EditExamWithFileComponent implements OnInit {
       }
     );
   };
-
-  // Chuyển đổi uploadFileUrl thành link xem trực tiếp
-  get fileUrl(): string {
-    if (!this.uploadFileUrl) return "";
-
-    const match = this.uploadFileUrl.match(/\/d\/(.*?)\//);
-    return match ? `https://drive.google.com/file/d/${match[1]}/preview` : "";
-  }
 
   getUploadExamQuestionAnswers = () => {
     this.examQuestionAnswerService
@@ -180,7 +174,7 @@ export class EditExamWithFileComponent implements OnInit {
   }
 
   getQuestions(): number[] {
-    return Array.from({ length: this.totalQuestions }, (_, i) => i);
+    return Array.from({length: this.totalQuestions}, (_, i) => i);
   }
 
   onTotalQuestionsChange() {
@@ -228,6 +222,19 @@ export class EditExamWithFileComponent implements OnInit {
     this.isQuickInputOpen = false;
   }
 
+  onSubmit = () => {
+  };
+
+  goBack() {
+    this.router.navigate(["teacher/exam-session-dashboard"], {
+      queryParams: {id: this.exam_session_id},
+    });
+  }
+
+  setActiveTab(tab: string) {
+    this.activeTab = tab;
+  }
+
   private formatDateTime(dateTimeLocal: string): string {
     if (!dateTimeLocal) return "";
 
@@ -240,18 +247,6 @@ export class EditExamWithFileComponent implements OnInit {
     const seconds = "00"; // Mặc định giây = 00
 
     return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-  }
-
-  onSubmit = () => {};
-
-  goBack() {
-    this.router.navigate(["teacher/exam-session-dashboard"], {
-      queryParams: { id: this.exam_session_id },
-    });
-  }
-
-  setActiveTab(tab: string) {
-    this.activeTab = tab;
   }
 
   private initializeAnswers() {

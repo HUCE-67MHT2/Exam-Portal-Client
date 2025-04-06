@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { LoadingLineComponent } from './loading-line.component';
+import {LoadingLineComponent} from './loading-line.component';
 
 describe('LoadingLineComponent', () => {
   let component: LoadingLineComponent;
@@ -10,7 +10,7 @@ describe('LoadingLineComponent', () => {
     await TestBed.configureTestingModule({
       imports: [LoadingLineComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(LoadingLineComponent);
     component = fixture.componentInstance;

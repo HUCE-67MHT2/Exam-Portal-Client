@@ -3,16 +3,16 @@
     <div class="number-input-wrap">
       <label for="question-number">Số câu</label>
       <input
+        (change)="onQuestionNumberChange($event)"
+        [(ngModel)]="questionNumber"
         class="number-input"
         id="question-number"
         type="number"
-        [(ngModel)]="questionNumber"
-        (change)="onQuestionNumberChange($event)"
       />
       <label for="grade">Số điểm</label>
-      <input class="number-input" id="grade" type="number" />
+      <input class="number-input" id="grade" type="number"/>
     </div>
-    <button class="generate-button" (click)="generateQuestions()">
+    <button (click)="generateQuestions()" class="generate-button">
       Tạo câu hỏi
     </button>
   </div>
@@ -25,42 +25,42 @@
         <div class="question-name">
           <p class="question-name-number">Câu {{ i + 1 }}:</p>
           <input
+            (ngModelChange)="saveState()"
+            [(ngModel)]="questions[i].text"
             class="question-name-input"
             placeholder="Type something..."
             type="text"
-            [(ngModel)]="questions[i].text"
-            (ngModelChange)="saveState()"
           />
         </div>
         <p class="correct-answer">Đáp án đúng</p>
         <div class="input-wrap">
           <input
+            (ngModelChange)="saveState()"
+            [(ngModel)]="questions[i].answers['1']"
             class="answer-input correct"
             placeholder="Nhập câu trả lời 1"
             type="text"
-            [(ngModel)]="questions[i].answers['1']"
-            (ngModelChange)="saveState()"
           />
           <input
+            (ngModelChange)="saveState()"
+            [(ngModel)]="questions[i].answers['2']"
             class="answer-input"
             placeholder="Nhập câu trả lời 2"
             type="text"
-            [(ngModel)]="questions[i].answers['2']"
-            (ngModelChange)="saveState()"
           />
           <input
+            (ngModelChange)="saveState()"
+            [(ngModel)]="questions[i].answers['3']"
             class="answer-input"
             placeholder="Nhập câu trả lời 3"
             type="text"
-            [(ngModel)]="questions[i].answers['3']"
-            (ngModelChange)="saveState()"
           />
           <input
+            (ngModelChange)="saveState()"
+            [(ngModel)]="questions[i].answers['4']"
             class="answer-input"
             placeholder="Nhập câu trả lời 4"
             type="text"
-            [(ngModel)]="questions[i].answers['4']"
-            (ngModelChange)="saveState()"
           />
         </div>
       </li>
