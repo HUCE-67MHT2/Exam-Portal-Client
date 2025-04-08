@@ -1,18 +1,36 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, input, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {NgOptimizedImage} from '@angular/common';
+import {Input} from '@angular/core';
 
 @Component({
   selector: 'app-user-form',
   templateUrl: './user-form.component.html',
   imports: [
-    NgOptimizedImage
+
   ],
   styleUrls: ['./user-form.component.scss']
 })
 export class UserFormComponent implements OnInit {
   userForm!: FormGroup;
-
+@Input() onGetInfo!: () => void;
+@Input() UserInfo!: {user : {
+    id: undefined,
+    username: undefined,
+    password: undefined,
+    enabled: undefined,
+    fullName: undefined,
+    gender: undefined,
+    birthday: undefined,
+    address: undefined,
+    email: undefined,
+    telephone: undefined,
+    avatarUrl: undefined,
+    school: undefined,
+    className: undefined,
+    status: undefined,
+    createdAt: undefined,
+    updatedAt: undefined,}};
   constructor() {
   }
 
