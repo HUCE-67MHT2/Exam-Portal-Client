@@ -1,18 +1,12 @@
-import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
-import { ActivatedRoute, Router } from "@angular/router";
-import { NgForOf, NgIf } from "@angular/common";
-import {
-  FormBuilder,
-  FormGroup,
-  FormsModule,
-  ReactiveFormsModule,
-  Validators,
-} from "@angular/forms";
+import {Component, ElementRef, OnInit, ViewChild} from "@angular/core";
+import {ActivatedRoute, Router} from "@angular/router";
+import {NgForOf, NgIf} from "@angular/common";
+import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators,} from "@angular/forms";
 import * as docx from "docx-preview";
-import { ExamService } from "../../../../../core/services/exam/exam.service";
-import { LoadingComponent } from "../../../../../layout/loadings/loading/loading.component";
-import { DomSanitizer, SafeResourceUrl } from "@angular/platform-browser";
-import { QuestionAnswerService } from "../../../../../core/services/question-answer/QuestionAnswer.service";
+import {ExamService} from "../../../../../core/services/exam/exam.service";
+import {LoadingComponent} from "../../../../../layout/loadings/loading/loading.component";
+import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
+import {QuestionAnswerService} from "../../../../../core/services/question-answer/QuestionAnswer.service";
 
 @Component({
   selector: "app-exam-create-with-file",
@@ -107,7 +101,7 @@ export class ExamCreateWithFileComponent implements OnInit {
   }
 
   getQuestions(): number[] {
-    return Array.from({ length: this.totalQuestions }, (_, i) => i);
+    return Array.from({length: this.totalQuestions}, (_, i) => i);
   }
 
   onTotalQuestionsChange() {
@@ -153,20 +147,6 @@ export class ExamCreateWithFileComponent implements OnInit {
 
     // Đóng modal
     this.isQuickInputOpen = false;
-  }
-
-  private formatDateTime(dateTimeLocal: string): string {
-    if (!dateTimeLocal) return "";
-
-    const date = new Date(dateTimeLocal);
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, "0");
-    const day = String(date.getDate()).padStart(2, "0");
-    const hours = String(date.getHours()).padStart(2, "0");
-    const minutes = String(date.getMinutes()).padStart(2, "0");
-    const seconds = "00"; // Mặc định giây = 00
-
-    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
   }
 
   onSubmit() {
@@ -215,7 +195,7 @@ export class ExamCreateWithFileComponent implements OnInit {
               next: () => {
                 console.log("Đáp án đã được lưu thành công.");
                 this.router.navigate(["teacher/exam-session-dashboard"], {
-                  queryParams: { id: this.exam_session_id },
+                  queryParams: {id: this.exam_session_id},
                 });
               },
               error: (err) => {
@@ -235,14 +215,29 @@ export class ExamCreateWithFileComponent implements OnInit {
       },
     });
   }
+
   goBack() {
     this.router.navigate(["teacher/exam-create-type"], {
-      queryParams: { id: this.exam_session_id },
+      queryParams: {id: this.exam_session_id},
     });
   }
 
   setActiveTab(tab: string) {
     this.activeTab = tab;
+  }
+
+  private formatDateTime(dateTimeLocal: string): string {
+    if (!dateTimeLocal) return "";
+
+    const date = new Date(dateTimeLocal);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    const hours = String(date.getHours()).padStart(2, "0");
+    const minutes = String(date.getMinutes()).padStart(2, "0");
+    const seconds = "00"; // Mặc định giây = 00
+
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
   }
 
   private initializeAnswers() {

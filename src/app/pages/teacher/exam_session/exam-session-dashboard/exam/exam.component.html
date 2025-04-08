@@ -2,7 +2,8 @@
   <div class="search-bar">
     <div class="search">
       <img alt="search icon" class="search-icon" height="16" ngSrc="/icon/find_icon.svg" width="16">
-      <input (input)="filterExam()" (keyup.enter)="filterExam()" [(ngModel)]="searchTerm" placeholder="Nhập tên đề thi"
+      <input (input)="filterExam()" (keyup.enter)="filterExam()" [(ngModel)]="searchTerm"
+             placeholder="Nhập tên đề thi"
              type="text">
       <div class="create-button">
         <button (click)="navigateToCreatExam()">Tạo đề mới</button>

@@ -1,8 +1,11 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {SearchBarComponent} from "../../../../../layout/search-bar/search-bar.component";
-import {GetExamResultBySessionIdServiceService} from '../../../../../core/services/exam-result/get-exam-result-by-sessionId.service'
+import {
+  GetExamResultBySessionIdServiceService
+} from '../../../../../core/services/exam-result/get-exam-result-by-sessionId.service'
 import {StudentResultInfo} from '../../../../../core/models/StudentResultInfo.model';
 import {DatePipe, NgForOf} from '@angular/common';
+
 @Component({
   selector: 'app-student-list-point',
   imports: [SearchBarComponent, DatePipe, NgForOf],
@@ -10,12 +13,13 @@ import {DatePipe, NgForOf} from '@angular/common';
   styleUrl: './student-list-point.component.scss'
 })
 export class StudentListPointComponent implements OnInit {
-  constructor(
-    private examResultService : GetExamResultBySessionIdServiceService
-  ) {
-  }
   @Input() exam_session_id!: number;
   StudentResultInfo: StudentResultInfo[] = [];
+
+  constructor(
+    private examResultService: GetExamResultBySessionIdServiceService
+  ) {
+  }
 
   ngOnInit(): void {
     if (this.exam_session_id) {
@@ -24,7 +28,8 @@ export class StudentListPointComponent implements OnInit {
       console.error('Hiện tại chưa có kết quả của sinh viên nào');
     }
   }
-  GetStudentResultInfo=()=> {
+
+  GetStudentResultInfo = () => {
     this.examResultService.getExamResultById(this.exam_session_id).subscribe(
       (response) => {
         if (response.status === 200) {

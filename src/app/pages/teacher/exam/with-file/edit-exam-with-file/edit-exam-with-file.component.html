@@ -32,14 +32,14 @@
 
     <ngx-doc-viewer *ngIf="selectedFileUrl && selectedFileUrl.includes('blob:')"
                     [url]="selectedFileUrl"
-                    viewer="url"
-                    style="width:100%; height:570px;">
+                    style="width:100%; height:570px;"
+                    viewer="url">
     </ngx-doc-viewer>
 
     <ngx-doc-viewer *ngIf="fileUrl && !selectedFileUrl"
                     [url]="fileUrl"
-                    viewer="url"
-                    style="width:100%; height:570px;">
+                    style="width:100%; height:570px;"
+                    viewer="url">
     </ngx-doc-viewer>
 
     <!-- Only display Word if no PDF is selected -->

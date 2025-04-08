@@ -1,4 +1,3 @@
-
 export interface StudentResultInfo {
   student_name: string;
   student_number: number;

@@ -93,7 +93,7 @@
         </div>
       </div>
 
-      <button [disabled]="examForm.invalid" type="button" (click)="openConfirmModal()">
+      <button (click)="openConfirmModal()" [disabled]="examForm.invalid" type="button">
         Cập nhật thông tin kỳ thi
       </button>
     </form>
@@ -108,7 +108,8 @@
         </h2>
         <div class="search">
           <img alt="search icon" class="search-icon" height="16" ngSrc="/icon/find_icon.svg" width="16">
-          <input (input)="filterStudentWithId()" (keyup.enter)="filterStudentWithId()" [(ngModel)]="searchTerm" placeholder="Nhập mssv"
+          <input (input)="filterStudentWithId()" (keyup.enter)="filterStudentWithId()" [(ngModel)]="searchTerm"
+                 placeholder="Nhập mssv"
                  type="text">
         </div>
         <div class="table-wrap">

@@ -15,16 +15,15 @@ import {NgIf} from '@angular/common';
 })
 export class TeacherLoginComponent {
 
+  loading: boolean = false; // Thêm biến loading
+
   constructor(private router: Router, private teacherService: TeacherService, private toastr: ToastrService) {
   }
-
 
   onUserTypeChange() {
     this.router.navigate(['/login/student'])
       .then(() => console.log('Chuyển sang đăng nhập học sinh'));
   }
-
-  loading: boolean = false; // Thêm biến loading
 
   onLoadingChange(isLoading: boolean) {
     this.loading = isLoading;
@@ -35,7 +34,7 @@ export class TeacherLoginComponent {
       next: (response) => {
         console.log('Phản hồi từ server:', response);
         if (response.status === 200) {
-          this.toastr.success('Đăng nhập thành công', 'Thành công', { timeOut: 2000 });
+          this.toastr.success('Đăng nhập thành công', 'Thành công', {timeOut: 2000});
           localStorage.setItem('authToken', response.body.token);
           setTimeout(() => {
             this.loading = false; // Tắt loading khi điều hướng xong
@@ -45,7 +44,7 @@ export class TeacherLoginComponent {
       },
       error: (error) => {
         console.error('Lỗi khi đăng nhập:', error);
-        this.toastr.error(error.error.message, 'Lỗi', { timeOut: 2000 });
+        this.toastr.error(error.error.message, 'Lỗi', {timeOut: 2000});
         this.loading = false; // Tắt loading khi có lỗi
       }
     });

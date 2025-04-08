@@ -1,5 +1,5 @@
-<app-login-form (userTypeChange)="onUserTypeChange()" [link]="'/sign-up/teacher'"
-                [onLogin]="onLoginTeacher" (loadingChange)="onLoadingChange($event)">
+<app-login-form (loadingChange)="onLoadingChange($event)" (userTypeChange)="onUserTypeChange()"
+                [link]="'/sign-up/teacher'" [onLogin]="onLoginTeacher">
   <div present_role>Tôi là giáo viên</div>
   <div login_heading>Giáo viên đăng nhập</div>
 </app-login-form>
