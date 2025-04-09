@@ -48,12 +48,12 @@ export class TeacherHomeComponent implements OnInit {
 
   }
 
-  navigateExamSessionDashBoard(id: number, name: string, description: string) {
+  navigateExamSessionDashBoard(exam_session_id: number, exam_session_name: string, exam_session_description: string) {
     this.router.navigate(['teacher/exam-session-dashboard'], {
       queryParams: {
-        id,
-        name,
-        description
+        exam_session_id,
+        exam_session_name,
+        exam_session_description
       }
     });
   }

@@ -24,7 +24,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let exam of filteredExams" (click)="editExam(exam.id, this.exam_session_id)">
+        <tr *ngFor="let exam of filteredExams" (click)="editExam(exam.id, exam.name ,this.exam_session_id)">
           <td>
             <p class="exam-name">{{ exam.name }} - {{ exam.description }}</p>
           </td>

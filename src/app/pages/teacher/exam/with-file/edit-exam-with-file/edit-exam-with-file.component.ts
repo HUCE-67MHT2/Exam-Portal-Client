@@ -52,6 +52,9 @@ export class EditExamWithFileComponent implements OnInit {
   // các biến để xác định đề thi
   exam_id: any;
   exam_session_id: any;
+  exam_session_name: any;
+  exam_session_description: any;
+  exam_name: any;
 
   constructor(
     private fb: FormBuilder,
@@ -77,7 +80,10 @@ export class EditExamWithFileComponent implements OnInit {
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
       this.exam_id = params['exam_id'];
+      this.exam_name = params['exam_name'];
       this.exam_session_id = params['exam_session_id'];
+      this.exam_session_name = params['exam_session_name'];
+      this.exam_session_description = params['exam_session_description'];
     });
     this.getExamById()
     this.getUploadExamQuestionAnswers()
@@ -300,7 +306,12 @@ export class EditExamWithFileComponent implements OnInit {
         }
         this.toastr.success('Cập nhập đề thi thành công', 'Thành công', {timeOut: 2000});
         this.loading = false;
-        this.router.navigate(["teacher/exam-session-dashboard"], { queryParams: { id: this.exam_session_id } });
+        this.router.navigate(["teacher/exam-session-dashboard"], {
+          queryParams: {
+            exam_session_id: this.exam_session_id,
+            exam_session_name: this.exam_session_name,
+            exam_session_description: this.exam_session_description
+          } });
       },
       (error) => {
         console.error("Lỗi khi cập nhật bài thi:", error);
@@ -311,6 +322,11 @@ export class EditExamWithFileComponent implements OnInit {
 
   goBack() {
     // @ts-ignore
-    this.router.navigate(["teacher/exam-session-dashboard"], { queryParams: { id: this.exam_session_id } });
+    this.router.navigate(["teacher/exam-session-dashboard"], {
+      queryParams: {
+        exam_session_id: this.exam_session_id,
+        exam_session_name: this.exam_session_name,
+        exam_session_description: this.exam_session_description
+      } });
   }
 }

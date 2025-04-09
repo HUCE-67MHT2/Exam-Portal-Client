@@ -23,8 +23,8 @@ export class ExamSessionDashboardComponent implements OnInit {
   activeTab: string = "home";
 
   exam_session_id: number = 0;
-  exam_name = "";
-  exam_description = "";
+  exam_session_name = "";
+  exam_session_description = "";
 
   constructor(private router: Router, private route: ActivatedRoute, private el: ElementRef) {
   }
@@ -32,11 +32,9 @@ export class ExamSessionDashboardComponent implements OnInit {
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
-      this.exam_session_id = params['id'];
-      this.exam_name = params['name'];
-      this.exam_description = params['description'];
-
-      // Sử dụng name và description nếu cần
+      this.exam_session_id = params['exam_session_id'];
+      this.exam_session_name = params['exam_session_name'];
+      this.exam_session_description = params['exam_session_description'];
     });
   }
 

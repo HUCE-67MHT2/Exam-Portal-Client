@@ -35,6 +35,8 @@ export class ExamCreateWithFileComponent implements OnInit {
   @ViewChild("wordContainer") wordContainer!: ElementRef;
   fileRequest: any;
   exam_session_id: any;
+  exam_session_name: any;
+  exam_session_description: any;
 
   constructor(
     private fb: FormBuilder,
@@ -60,7 +62,9 @@ export class ExamCreateWithFileComponent implements OnInit {
   ngOnInit() {
     this.initializeAnswers();
     this.route.queryParams.subscribe((params) => {
-      this.exam_session_id = params["id"];
+      this.exam_session_id = params["exam_session_id"];
+      this.exam_session_name = params["exam_session_name"];
+      this.exam_session_description = params["exam_session_description"];
     });
     console.log(this.exam_session_id);
   }
@@ -188,7 +192,11 @@ export class ExamCreateWithFileComponent implements OnInit {
               next: () => {
                 this.toastr.success('Cập nhập đề thi thành công', 'Thành công', {timeOut: 2000});
                 this.router.navigate(["teacher/exam-session-dashboard"], {
-                  queryParams: {id: this.exam_session_id},
+                  queryParams: {
+                    exam_session_id: this.exam_session_id,
+                    exam_session_name: this.exam_session_name,
+                    exam_session_description: this.exam_session_description
+                  },
                 });
               },
               error: (err) => {
@@ -211,7 +219,11 @@ export class ExamCreateWithFileComponent implements OnInit {
 
   goBack() {
     this.router.navigate(["teacher/exam-create-type"], {
-      queryParams: {id: this.exam_session_id},
+      queryParams: {
+        exam_session_id: this.exam_session_id,
+        exam_session_name: this.exam_session_name,
+        exam_session_description: this.exam_session_description
+      },
     });
   }
 

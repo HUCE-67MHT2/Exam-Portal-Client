@@ -20,10 +20,13 @@ import {StudentInExamSessionEnrollments} from '../../../../../core/models/examSe
 export class HomeComponent implements OnInit {
   examForm: FormGroup;
   @Input() exam_session_id!: number;
+  @Input() exam_session_name!: string;
+  @Input() exam_session_description!: string;
   examSession!: ExamSession;
   StudentInExamSessionEnrollmentsList: StudentInExamSessionEnrollments[] = [];
   showConfirmModal = false;
   searchTerm: any;
+
 
   constructor(
     private fb: FormBuilder,
@@ -115,7 +118,10 @@ export class HomeComponent implements OnInit {
                 timeOut: 2000,
               });
               setTimeout(() => {
-                this.router.navigate(["teacher/exam-session-dashboard"], { queryParams: { id: this.exam_session_id } });
+                this.router.navigate(["teacher/exam-session-dashboard"], {
+                  queryParams: {
+                    id: this.exam_session_id
+                  } });
               }, 1000);
             }
           },
