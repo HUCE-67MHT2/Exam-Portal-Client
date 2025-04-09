@@ -1,18 +1,18 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {LoadingLineComponent} from './loading-line.component';
+import {TeacherUserComponent} from './teacher-user.component';
 
-describe('LoadingLineComponent', () => {
-  let component: LoadingLineComponent;
-  let fixture: ComponentFixture<LoadingLineComponent>;
+describe('TeacherUserComponent', () => {
+  let component: TeacherUserComponent;
+  let fixture: ComponentFixture<TeacherUserComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [LoadingLineComponent]
+      imports: [TeacherUserComponent]
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(LoadingLineComponent);
+    fixture = TestBed.createComponent(TeacherUserComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

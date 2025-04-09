@@ -1,6 +1,6 @@
-import { Component, OnInit } from "@angular/core";
-import { FormsModule } from "@angular/forms";
-import { CommonModule } from "@angular/common";
+import {Component, OnInit} from "@angular/core";
+import {FormsModule} from "@angular/forms";
+import {CommonModule} from "@angular/common";
 
 @Component({
   selector: "app-question",
@@ -11,8 +11,8 @@ import { CommonModule } from "@angular/common";
 export class QuestionComponent implements OnInit {
   questions: any[] = []; // Array to hold the questions
   questionNumber: number = 0; // Number of questions to generate
-  private saveTimeout: any; // Timeout for debouncing saveState
   input: any;
+  private saveTimeout: any; // Timeout for debouncing saveState
 
   ngOnInit(): void {
     const savedQuestions = localStorage.getItem("questions");

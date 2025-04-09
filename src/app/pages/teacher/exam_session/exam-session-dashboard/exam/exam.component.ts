@@ -76,6 +76,11 @@ export class ExamComponent implements OnInit {
   }
 
   editExam(exam_id: number, exam_session_id: number) {
-    this.router.navigate(['/teacher/edit-exam-with-file'], {queryParams: {exam_id: exam_id, exam_session_id: exam_session_id}});
+    this.router.navigate(['/teacher/edit-exam-with-file'], {
+      queryParams: {
+        exam_id: exam_id,
+        exam_session_id: exam_session_id
+      }
+    });
   }
 }

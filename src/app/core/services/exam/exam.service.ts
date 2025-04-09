@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -8,14 +8,15 @@ import { Observable } from 'rxjs';
 export class ExamService {
   private baseUrl = 'http://localhost:8081/api/exam';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+  }
 
   uploadExamWithFile(formData: FormData): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/add/exam/with/file`, formData);
   }
 
   getExams(id: number): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}/get/list/exams/by/sessionId/${id}`, { observe: 'response' });
+    return this.http.get<any>(`${this.baseUrl}/get/list/exams/by/sessionId/${id}`, {observe: 'response'});
   }
 
   getExamById(id: number): Observable<any> {

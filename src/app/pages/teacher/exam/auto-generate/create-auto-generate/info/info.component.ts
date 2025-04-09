@@ -1,10 +1,10 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import {Component, OnDestroy, OnInit} from "@angular/core";
 
-import { FormsModule } from '@angular/forms';
+import {FormsModule} from '@angular/forms';
 
 @Component({
   selector: "app-info",
-  imports: [FormsModule ],
+  imports: [FormsModule],
   templateUrl: "./info.component.html",
   styleUrls: ["./info.component.scss"],
 })

@@ -105,6 +105,7 @@
         rgba(212, 212, 212, 0) 99.68%
     );
   }
+
   .search {
     display: flex;
     align-items: center;
@@ -142,12 +143,13 @@
   .participating-student-list {
     max-height: calc(100vh - 250px); // Điều chỉnh theo khoảng trống trang
     overflow-y: auto;
+
     .participating-student__heading {
       margin-top: 20px;
     }
 
     .table-wrap {
-      max-height: 400px;  // Điều chỉnh nếu cần
+      max-height: 400px; // Điều chỉnh nếu cần
       overflow-y: auto;
     }
 
