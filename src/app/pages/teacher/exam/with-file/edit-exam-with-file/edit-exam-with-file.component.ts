@@ -8,6 +8,7 @@ import * as docx from 'docx-preview';
 import {ExamService} from '../../../../../core/services/exam/exam.service';
 import {QuestionAnswerService} from '../../../../../core/services/question-answer/QuestionAnswer.service';
 import {NgxDocViewerModule} from 'ngx-doc-viewer';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-edit-exam-with-file',
@@ -32,6 +33,9 @@ export class EditExamWithFileComponent implements OnInit {
   changeFile: boolean = false;
   fileRequest: File | null = null;
 
+  // Lưu dữ liệu câu hỏi ban đầu khi tải từ backend
+  initialAnswers: { [key: number]: string } = {};
+
   // biến loading
   loading: boolean = false;
 
@@ -55,7 +59,8 @@ export class EditExamWithFileComponent implements OnInit {
     private examService: ExamService,
     private examQuestionAnswerService: QuestionAnswerService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private toastr: ToastrService
   ) {
     // Khởi tạo form với các control cần thiết cho onSubmit()
     this.examForm = this.fb.group({
@@ -83,13 +88,16 @@ export class EditExamWithFileComponent implements OnInit {
       (response) => {
         this.totalQuestions = response.length / 4;
 
-        // Xử lý để lấy đáp án đúng
-        this.answers = response.reduce((acc: { [key: number]: string }, item: { correct: boolean; questionNo: number; answerText: string }) => {
+        // Lưu đáp án ban đầu vào `initialAnswers`
+        this.initialAnswers = response.reduce((acc: { [key: number]: string }, item: { correct: boolean; questionNo: number; answerText: string }) => {
           if (item.correct) {
             acc[item.questionNo] = item.answerText;
           }
           return acc;
         }, {});
+
+        // Gán dữ liệu hiện tại vào `answers`
+        this.answers = { ...this.initialAnswers };
       },
       (error) => {
         console.error("Lỗi khi tải đáp án:", error);
@@ -128,6 +136,10 @@ export class EditExamWithFileComponent implements OnInit {
     return match ? `https://drive.google.com/file/d/${match[1]}/preview` : '';
   }
 
+  isAnswersChanged(): boolean {
+    return JSON.stringify(this.initialAnswers) !== JSON.stringify(this.answers);
+  }
+
   //=========== các hàm xử lý phần model input và tab-left ========================
   getQuestions(): number[] {
     return Array.from({ length: this.totalQuestions }, (_, i) => i);
@@ -150,6 +162,7 @@ export class EditExamWithFileComponent implements OnInit {
   openQuickInput() {
     this.isQuickInputOpen = true;
     console.log(this.answers);
+    console.log(this.isAnswersChanged())
   }
 
   processQuickInput() {
@@ -180,19 +193,6 @@ export class EditExamWithFileComponent implements OnInit {
 
   setActiveTab(tab: string) {
     this.activeTab = tab;
-  }
-  private formatDateTime(dateTimeLocal: string): string {
-    if (!dateTimeLocal) return '';
-
-    const date = new Date(dateTimeLocal);
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    const hours = String(date.getHours()).padStart(2, '0');
-    const minutes = String(date.getMinutes()).padStart(2, '0');
-    const seconds = "00"; // Mặc định giây = 00
-
-    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
   }
 
   //============== các hàm xử lý phần hiển thị file  ==============================
@@ -239,6 +239,21 @@ export class EditExamWithFileComponent implements OnInit {
   }
 
   // ================ các hàm xử lý phần submit và cancel ==========================
+
+  private formatDateTime(dateTimeLocal: string): string {
+    if (!dateTimeLocal) return "";
+
+    const date = new Date(dateTimeLocal);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    const hours = String(date.getHours()).padStart(2, "0");
+    const minutes = String(date.getMinutes()).padStart(2, "0");
+    const seconds = "00"; // Mặc định giây = 00
+
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+  }
+
   onSubmit() {
     this.loading = true; // Bật loading khi gửi request
 
@@ -246,12 +261,14 @@ export class EditExamWithFileComponent implements OnInit {
     const formData = new FormData();
 
     // Thêm các giá trị từ form vào formData
-    formData.append('exam_name', this.examForm.get('exam_name')?.value);
-    formData.append('exam_duration', this.examForm.get('exam_duration')?.value);
-    formData.append('exam_description', this.examForm.get('exam_description')?.value);
-    formData.append('exam_subject', this.examForm.get('exam_subject')?.value);
-    formData.append('exam_start_date', this.examForm.get('exam_start_date')?.value);
-    formData.append('exam_end_date', this.examForm.get('exam_end_date')?.value);
+    formData.append('id', this.exam_id);
+    formData.append("examSessionId", this.exam_session_id);
+    formData.append('name', this.examForm.get('exam_name')?.value);
+    formData.append('duration', this.examForm.get('exam_duration')?.value);
+    formData.append('description', this.examForm.get('exam_description')?.value);
+    formData.append('subject', this.examForm.get('exam_subject')?.value);
+    formData.append('startDate', this.formatDateTime(this.examForm.get('exam_start_date')?.value));
+    formData.append('endDate', this.formatDateTime(this.examForm.get('exam_end_date')?.value));
 
 
     // Nếu có file được thay đổi, thêm vào formData
@@ -259,15 +276,29 @@ export class EditExamWithFileComponent implements OnInit {
       formData.append('file', this.fileRequest);
     }
 
-    // Console log dữ liệu để kiểm tra
-    console.log("Dữ liệu gửi đi:", formData);
+    for (let [key, value] of formData.entries()) {
+      console.log(`${key}:`, value);
+    }
 
-    // Gửi dữ liệu lên backend
-    this.examService.updateExam(this.exam_id, formData).subscribe(
+
+    //Gửi dữ liệu lên backend
+    this.examService.updateExam(formData).subscribe(
       (response) => {
         console.log("Cập nhật bài thi thành công:", response);
+
+
+        if(this.isAnswersChanged()) {
+          this.examQuestionAnswerService.updateQuestionAnswers(this.exam_id, this.answers).subscribe(
+            (response) => {
+              console.log("cập nhập câu hỏi thành công:", response);
+            },
+            (error) => {
+              console.log("lỗi khi cập nhập câu hỏi", error);
+            }
+          );
+        }
+        this.toastr.success('Cập nhập đề thi thành công', 'Thành công', {timeOut: 2000});
         this.loading = false;
-        // Điều hướng sang trang khác sau khi thành công
         this.router.navigate(["teacher/exam-session-dashboard"], { queryParams: { id: this.exam_session_id } });
       },
       (error) => {
@@ -277,9 +308,8 @@ export class EditExamWithFileComponent implements OnInit {
     );
   }
 
-
-
   goBack() {
+    // @ts-ignore
     this.router.navigate(["teacher/exam-session-dashboard"], { queryParams: { id: this.exam_session_id } });
   }
 }
