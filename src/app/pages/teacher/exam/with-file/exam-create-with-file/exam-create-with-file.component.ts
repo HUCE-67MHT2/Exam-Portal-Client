@@ -123,6 +123,7 @@ export class ExamCreateWithFileComponent implements OnInit {
   openQuickInput() {
     this.isQuickInputOpen = true;
     console.log(this.answers);
+    console.log(this.totalQuestions);
   }
 
   processQuickInput() {
@@ -167,21 +168,13 @@ export class ExamCreateWithFileComponent implements OnInit {
     const formData = new FormData();
     formData.append("examSessionId", this.exam_session_id);
     formData.append("name", this.examForm.get("exam_name")?.value);
+    formData.append("totalQuestions", this.totalQuestions.toString());
     formData.append("duration", this.examForm.get("exam_duration")?.value);
-    formData.append(
-      "description",
-      this.examForm.get("exam_description")?.value
-    );
+    formData.append("description", this.examForm.get("exam_description")?.value);
     formData.append("file", this.selectedFile, this.selectedFile.name);
     formData.append("subject", this.examForm.get("exam_subject")?.value);
-    formData.append(
-      "startDate",
-      this.formatDateTime(this.examForm.get("exam_start_date")?.value)
-    );
-    formData.append(
-      "endDate",
-      this.formatDateTime(this.examForm.get("exam_end_date")?.value)
-    );
+    formData.append("startDate", this.formatDateTime(this.examForm.get("exam_start_date")?.value));
+    formData.append("endDate", this.formatDateTime(this.examForm.get("exam_end_date")?.value));
 
     this.examService.uploadExamWithFile(formData).subscribe({
       next: (response) => {

@@ -264,6 +264,7 @@ export class EditExamWithFileComponent implements OnInit {
     formData.append('id', this.exam_id);
     formData.append("examSessionId", this.exam_session_id);
     formData.append('name', this.examForm.get('exam_name')?.value);
+    formData.append('totalQuestions', this.totalQuestions.toString());
     formData.append('duration', this.examForm.get('exam_duration')?.value);
     formData.append('description', this.examForm.get('exam_description')?.value);
     formData.append('subject', this.examForm.get('exam_subject')?.value);

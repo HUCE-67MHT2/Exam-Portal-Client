@@ -4,6 +4,7 @@ export interface Exam {
   name: string;               // Tên đề thi
   description: string;        // Mô tả đề thi
   type: string;               // Loại đề thi (upload-file hoặc auto-generate)
+  totalQuestions: number;     // Số lượng câu hỏi
   duration: number;           // Thời gian làm bài (phút)
   subject: string;            // Môn thi
   fileUrl: string | null;     // Đường dẫn file đề thi (nếu có)
