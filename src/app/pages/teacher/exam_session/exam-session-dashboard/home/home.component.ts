@@ -115,7 +115,7 @@ export class HomeComponent implements OnInit {
                 timeOut: 2000,
               });
               setTimeout(() => {
-                this.router.navigate(["teacher/exam-session-dashboard"]);
+                this.router.navigate(["teacher/exam-session-dashboard"], { queryParams: { id: this.exam_session_id } });
               }, 1000);
             }
           },
