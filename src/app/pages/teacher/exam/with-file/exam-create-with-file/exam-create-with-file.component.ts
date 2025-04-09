@@ -7,6 +7,7 @@ import {ExamService} from "../../../../../core/services/exam/exam.service";
 import {LoadingComponent} from "../../../../../layout/loadings/loading/loading.component";
 import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
 import {QuestionAnswerService} from "../../../../../core/services/question-answer/QuestionAnswer.service";
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: "app-exam-create-with-file",
@@ -41,7 +42,8 @@ export class ExamCreateWithFileComponent implements OnInit {
     private examService: ExamService,
     private examQuestionAnswerService: QuestionAnswerService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private toastr: ToastrService
   ) {
     // Khởi tạo form với các control cần thiết cho onSubmit()
     this.examForm = this.fb.group({
@@ -185,15 +187,13 @@ export class ExamCreateWithFileComponent implements OnInit {
       next: (response) => {
         console.log("Response từ backend:", response);
         if (response.examId) {
-          console.log("Exam ID nhận được:", response.examId);
           this.uploadMessage = `Tạo kỳ thi thành công! Exam ID: ${response.examId}`;
-
           // Sau khi tạo đề thi thành công, gửi đáp án lên backend
           this.examQuestionAnswerService
             .uploadQuestionAnswers(response.examId, this.answers)
             .subscribe({
               next: () => {
-                console.log("Đáp án đã được lưu thành công.");
+                this.toastr.success('Cập nhập đề thi thành công', 'Thành công', {timeOut: 2000});
                 this.router.navigate(["teacher/exam-session-dashboard"], {
                   queryParams: {id: this.exam_session_id},
                 });
