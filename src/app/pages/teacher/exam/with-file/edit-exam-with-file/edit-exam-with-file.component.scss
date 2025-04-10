@@ -3,6 +3,7 @@
 // =====================
 * {
   font-family: Arial, Helvetica, sans-serif;
+  overflow: hidden;
 }
 
 // =====================
@@ -89,6 +90,7 @@
 .container {
   display: flex;
   height: calc(100vh - 80px);
+
 }
 
 .left-container {
@@ -101,19 +103,40 @@
     display: flex;
     justify-content: center;
 
-    .upload-button {
+    button {
       font-size: 1.6rem;
-      width: 100%;
+      width: 50%;
       height: 40px;
-      background: #04aa6d;
-      color: #ffffff;
       border: none;
       cursor: pointer;
       font-weight: bold;
-      transition: background 0.3s ease-in-out;
+      transition: all 0.3s ease-in-out;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .upload-button {
+      background: #04aa6d; /* Xanh ngọc đậm */
+      color: #ffffff;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 
       &:hover {
-        background: #02774b;
+        background: #048a60;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+      }
+    }
+
+    .reload-button {
+      background: #ec8b2f; /* Cam đất */
+      color: #ffffff;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+
+      &:hover {
+        background: #da761a;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
       }
     }
   }

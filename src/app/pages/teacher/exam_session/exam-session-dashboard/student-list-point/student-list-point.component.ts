@@ -14,6 +14,8 @@ import {DatePipe, NgForOf} from '@angular/common';
 })
 export class StudentListPointComponent implements OnInit {
   @Input() exam_session_id!: number;
+  @Input() exam_name!: string;
+  @Input() exam_description!: string;
   StudentResultInfo: StudentResultInfo[] = [];
 
   constructor(
@@ -44,5 +46,4 @@ export class StudentListPointComponent implements OnInit {
       }
     );
   }
-
 }
