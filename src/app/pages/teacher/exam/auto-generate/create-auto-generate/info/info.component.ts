@@ -1,6 +1,6 @@
-import {Component, OnDestroy, OnInit} from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 
-import {FormsModule} from '@angular/forms';
+import { FormsModule } from "@angular/forms";
 
 @Component({
   selector: "app-info",
@@ -9,32 +9,30 @@ import {FormsModule} from '@angular/forms';
   styleUrls: ["./info.component.scss"],
 })
 export class InfoComponent implements OnInit, OnDestroy {
+saveInfo() {
+throw new Error('Method not implemented.');
+}
   selectedExamType: string | null = null;
   examName: string = "";
   examPassword: string = "";
 
   ngOnInit() {
-    const savedExamType = localStorage.getItem("selectedExamType");
-    const savedExamName = localStorage.getItem("examName");
-    const savedExamPassword = localStorage.getItem("examPassword");
-
-    if (savedExamType) {
-      this.selectedExamType = savedExamType;
-    }
-    if (savedExamName) {
-      this.examName = savedExamName;
-    }
-    if (savedExamPassword) {
-      this.examPassword = savedExamPassword;
+    const savedInfo = localStorage.getItem("info");
+    if (savedInfo) {
+      const info = JSON.parse(savedInfo);
+      this.examName = info.examName || "";
+      this.selectedExamType = info.examType || null;
+      this.examPassword = info.examPassword || "";
     }
   }
 
   ngOnDestroy() {
-    if (this.selectedExamType) {
-      localStorage.setItem("selectedExamType", this.selectedExamType);
-    }
-    localStorage.setItem("examName", this.examName);
-    localStorage.setItem("examPassword", this.examPassword);
+    const info = {
+      examName: this.examName,
+      examType: this.selectedExamType,
+      examPassword: this.examPassword,
+    };
+    localStorage.setItem("info", JSON.stringify(info));
   }
 
   toggleExamTypeList() {
@@ -53,3 +51,6 @@ export class InfoComponent implements OnInit, OnDestroy {
     }
   }
 }
+
+
+

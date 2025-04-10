@@ -28,6 +28,21 @@ li {
       font-weight: 600;
       color: #fff;
     }
+
+    .edit-button {
+      margin-left: 700px;
+      width: 150px;
+      height: 40px;
+      outline: none;
+      border: none;
+      border-radius: 5px;
+      background: #fff;
+      cursor: pointer;
+    }
+
+    .edit-button:hover {
+      opacity: 0.9;
+    }
   }
 
   .question-list-wrap {

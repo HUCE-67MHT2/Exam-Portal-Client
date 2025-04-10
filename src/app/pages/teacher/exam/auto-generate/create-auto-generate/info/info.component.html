@@ -1,6 +1,6 @@
 <div class="container">
   <div class="form-wrap">
-    <form action="" class="form">
+    <form (ngSubmit)="saveInfo()" class="form">
       <h2 class="form-heading">Thông tin bài thi</h2>
 
       <div class="input-wrap">
@@ -36,7 +36,7 @@
         />
       </div>
 
-      <button class="submit">Tạo bài thi</button>
+      <button type="submit" class="submit">Tạo bài thi</button>
     </form>
   </div>
 </div>
