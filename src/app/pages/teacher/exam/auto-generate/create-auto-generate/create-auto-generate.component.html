@@ -1,12 +1,18 @@
 <div class="container">
-  <app-header-back [backRoute]="'/teacher/exam-create-type'">
-    <div class="breadcrumb">
+  <header class="header">
+  <div class="wraper-logo">
+    <div class="logo">Online Exam Portal</div>
+    <nav class="breadcrumb">
       <span>►</span>
-      <span>Kỳ thi: </span>
+      <span>Kỳ thi: {{exam_session_name}}-{{exam_session_description}}</span>
       <span>►</span>
-      <span>Tạo đề thi tự động</span>
-    </div>
-  </app-header-back>
+      <span>Tạo đề mới</span>
+    </nav>
+  </div>
+  <div class="return-button">
+    <button (click)="goBack()">Quay lại</button>
+  </div>
+</header>
 
   <div class="tab-wrap">
     <div
