@@ -1,16 +1,16 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import {Component, OnInit, OnDestroy, Input} from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { DomSanitizer } from "@angular/platform-browser";
-import { Router, ActivatedRoute } from "@angular/router";
+import { Router } from "@angular/router";
 import { ReactiveFormsModule } from '@angular/forms';
 import { ToastrService } from "ngx-toastr";
-import { ExamService } from "../../../../../../core/services/exam/exam.service"; // Cập nhật đúng path nếu khác
+import { ExamService } from "../../../../../../core/services/exam/exam.service";
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: "app-info",
   templateUrl: "./info.component.html",
   styleUrls: ["./info.component.scss"],
-  imports:[ ReactiveFormsModule],
+  imports: [ReactiveFormsModule, NgIf],
   standalone: true,
 })
 export class InfoComponent implements OnInit, OnDestroy {
@@ -18,16 +18,18 @@ export class InfoComponent implements OnInit, OnDestroy {
   selectedExamType: string | null = null;
   examName: string = "";
   examPassword: string = "";
+  @Input() exam_session_id!: string;
+  @Input() exam_session_name!: string;
+  @Input() exam_session_description!: string;
 
   constructor(
     private fb: FormBuilder,
-    private sanitizer: DomSanitizer,
     private examService: ExamService,
     private router: Router,
-    private route: ActivatedRoute,
     private toastr: ToastrService
   ) {
     this.examForm = this.fb.group({
+      number_of_exam: ["", Validators.required],
       exam_name: ["", Validators.required],
       exam_duration: ["", Validators.required],
       exam_description: [""],
@@ -44,32 +46,26 @@ export class InfoComponent implements OnInit, OnDestroy {
       this.examName = info.examName || "";
       this.selectedExamType = info.examType || null;
       this.examPassword = info.examPassword || "";
+
+      this.examForm.patchValue(info.examForm || {});
     }
+
+    // Lắng nghe mọi thay đổi trong form
+    this.examForm.valueChanges.subscribe(formValue => {
+      this.saveToLocalStorage();
+    });
   }
 
   ngOnDestroy() {
+    this.saveToLocalStorage();
+  }
+
+  saveToLocalStorage() {
     const info = {
-      examName: this.examName,
-      examType: this.selectedExamType,
-      examPassword: this.examPassword,
+      examForm: this.examForm.value,
     };
     localStorage.setItem("info", JSON.stringify(info));
-  }
-
-  toggleExamTypeList() {
-    const element = document.getElementById("examTypeList");
-    if (element) {
-      element.classList.toggle("active");
-    }
-  }
-
-  selectExamType(type: string) {
-    this.selectedExamType = type;
-    localStorage.setItem("selectedExamType", type);
-    const element = document.getElementById("examTypeList");
-    if (element) {
-      element.classList.remove("active");
-    }
+    console.log("Dữ liệu đã lưu vào localStorage:", info);
   }
 
   onSubmit() {
@@ -79,7 +75,16 @@ export class InfoComponent implements OnInit, OnDestroy {
       return;
     }
 
-    const examData = this.examForm.value;
-    // Gọi service để gửi dữ liệu lên backend
+    this.router.navigate(["teacher/exam-session-dashboard"], {
+      queryParams: {
+        exam_session_id: this.exam_session_id,
+        exam_session_name: this.exam_session_name,
+        exam_session_description: this.exam_session_description
+      },
+    });
+    localStorage.removeItem("info");
+    localStorage.removeItem("questionNumber");
+    localStorage.removeItem("questions");
+    localStorage.removeItem("answers");
   }
 }

@@ -32,7 +32,7 @@
   </div>
 
   <main class="main">
-    <app-question *ngIf="activeTab === 'left'"></app-question>
-    <app-info *ngIf="activeTab === 'right'"></app-info>
+    <app-question *ngIf="activeTab === 'left'" ></app-question>
+    <app-info *ngIf="activeTab === 'right'" [exam_session_id]="exam_session_id" [exam_session_name]="exam_session_name" [exam_session_description]="exam_session_description"></app-info>
   </main>
 </div>

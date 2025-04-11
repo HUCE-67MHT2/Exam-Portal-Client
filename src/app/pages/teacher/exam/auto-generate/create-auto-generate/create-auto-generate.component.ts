@@ -10,7 +10,7 @@ import { InfoComponent } from "./info/info.component";
   imports: [
     CommonModule,
     QuestionComponent,
-    InfoComponent
+    InfoComponent,
   ],
   templateUrl: "./create-auto-generate.component.html",
   styleUrls: ["./create-auto-generate.component.scss"]

@@ -4,6 +4,13 @@
       <h2 class="exam-info">Thông tin bài thi</h2>
 
       <div class="row-wrapper">
+        <div class="input-wrapper">
+          <label for="number_of_exam">Số lượng câu hỏi</label>
+          <input id="number_of_exam" formControlName="number_of_exam"/>
+          <div class="error" *ngIf="examForm.get('number_of_exam')?.invalid && examForm.get('number_of_exam')?.touched">
+            Số lượng câu hỏi không được để trống.
+            </div>
+        </div>
         <!-- Tên đề thi -->
         <div class="input-wrapper">
           <label for="exam_name">Tên đề thi</label>

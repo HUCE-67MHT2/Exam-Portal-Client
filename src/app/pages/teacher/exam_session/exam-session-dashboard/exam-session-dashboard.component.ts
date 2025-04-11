@@ -36,6 +36,10 @@ export class ExamSessionDashboardComponent implements OnInit {
       this.exam_session_name = params['exam_session_name'];
       this.exam_session_description = params['exam_session_description'];
     });
+    localStorage.removeItem("info");
+    localStorage.removeItem("questionNumber");
+    localStorage.removeItem("questions");
+    localStorage.removeItem("answers");
   }
 
   goBack() {
