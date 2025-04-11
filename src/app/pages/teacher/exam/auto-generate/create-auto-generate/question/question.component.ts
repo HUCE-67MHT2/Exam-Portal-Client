@@ -1,6 +1,6 @@
-import {Component, OnInit} from "@angular/core";
-import {FormsModule} from "@angular/forms";
-import {CommonModule} from "@angular/common";
+import { Component, OnInit } from "@angular/core";
+import { FormsModule } from "@angular/forms";
+import { CommonModule } from "@angular/common";
 
 @Component({
   selector: "app-question",
@@ -87,19 +87,13 @@ export class QuestionComponent implements OnInit {
   public saveState(): void {
     clearTimeout(this.saveTimeout); // Clear any existing timeout
     this.saveTimeout = setTimeout(() => {
-      // Ensure all questions have an initialized answers object
-      this.questions.forEach((question) => {
-        if (!question.answers) {
-          question.answers = {
-            "1": "",
-            "2": "",
-            "3": "",
-            "4": "",
-          };
-        }
-      });
+      const questionsText = this.questions.map((question) => ({
+        text: question.text,
+      }));
+      const answers = this.questions.map((question) => question.answers);
 
-      localStorage.setItem("questions", JSON.stringify(this.questions));
+      localStorage.setItem("questions", JSON.stringify(questionsText));
+      localStorage.setItem("answers", JSON.stringify(answers));
       localStorage.setItem("questionNumber", this.questionNumber.toString());
     }, 300); // Save after 300ms of inactivity
   }
