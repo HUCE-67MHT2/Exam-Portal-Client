@@ -31,6 +31,7 @@
       <th>Tên kỳ thi</th>
       <th>Ngày bắt đầu</th>
       <th>Ngày kết thúc</th>
+      <th>Trạng thái</th>  <!-- Cột trạng thái -->
     </tr>
     </thead>
     <tbody>
@@ -41,6 +42,7 @@
       </td>
       <td>{{ exam.startDate }}</td>
       <td>{{ exam.endDate }}</td>
+      <td>{{ getStatus(exam.startDate, exam.endDate) }}</td>  <!-- Hiển thị trạng thái -->
     </tr>
     </tbody>
   </table>

@@ -1,25 +1,27 @@
-import {Component, OnInit} from '@angular/core';
-import {HeaderStudentComponent} from '../../../layout/header/header-student/header-student.component';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { ExamSession } from '../../../core/models/examSession.model';
+import { ExamSessionEnrollmentService } from '../../../core/services/exam-session-enrollments/exam-session-enrollment.service';
+import { ToastrService } from 'ngx-toastr';
 import {NgForOf, NgIf} from '@angular/common';
-import {Router} from '@angular/router';
-import {ExamSession} from '../../../core/models/examSession.model';
-import {ExamSessionEnrollmentService} from '../../../core/services/exam-session-enrollments/exam-session-enrollment.service';
 import {FormsModule} from '@angular/forms';
-import {ToastrService} from 'ngx-toastr';
+import {HeaderStudentComponent} from '../../../layout/header/header-student/header-student.component';
 
 @Component({
   selector: 'app-exam',
   standalone: true,
   imports: [
-    HeaderStudentComponent,
     NgForOf,
+    FormsModule,
+    HeaderStudentComponent,
     NgIf,
-    FormsModule
+    // Các imports khác của bạn
   ],
   templateUrl: './exam.component.html',
   styleUrls: ['./exam.component.scss']
 })
 export class ExamComponent implements OnInit {
+  // Các biến của component
   searchCode: string = '';
   searchTerm: string = '';
   message: string = '';
@@ -53,12 +55,10 @@ export class ExamComponent implements OnInit {
 
   filterExams() {
     const keyword = this.searchTerm.trim().toLowerCase();
-
     if (!keyword) {
       this.filteredExams = this.ExamSession; // không nhập gì -> show tất cả
       return;
     }
-
     this.filteredExams = this.ExamSession.filter(exam =>
       exam.name?.toLowerCase().includes(keyword) ||
       exam.description?.toLowerCase().includes(keyword) ||
@@ -81,13 +81,13 @@ export class ExamComponent implements OnInit {
       this.examSessionEnrollmentService.joinExamSession(this.searchCode.trim()).subscribe({
         next: (response) => {
           if (response.body) {
-            this.toastr.success("Tham gia kỳ thi thành công","Thành công", {
+            this.toastr.success("Tham gia kỳ thi thành công", "Thành công", {
               timeOut: 2000,
             });
             this.closeModal();
             this.loadExamSessions();
           } else {
-            this.message = "không tìm thấy kỳ thi, vui lòng kiểm tra lại !";
+            this.message = "Không tìm thấy kỳ thi, vui lòng kiểm tra lại !";
           }
         },
         error: (err) => {
@@ -97,4 +97,22 @@ export class ExamComponent implements OnInit {
       });
     }
   }
+
+  // Phương thức để xác định trạng thái của kỳ thi
+  getStatus(startDate: Date, endDate: Date): string {
+    const now = new Date();
+
+    // Nếu startDate và endDate là chuỗi thì cần chuyển đổi:
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+
+    if (now < start) {
+      return 'Sắp mở';
+    } else if (now >= start && now <= end) {
+      return 'Đang mở';
+    } else {
+      return 'Đã đóng';
+    }
+  }
+
 }
