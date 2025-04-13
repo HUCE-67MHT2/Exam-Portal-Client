@@ -44,10 +44,8 @@ export class HeaderComponent implements OnInit {
   getUser = () => {
     this.userService.getUserinfo().subscribe({
       next: (response) => {
-        console.log(response);
         let jsonObject = JSON.parse(response);
         this.UserInfoObject = jsonObject;
-        console.log(this.UserInfoObject.className);
 
       },
       error: (error) => {
