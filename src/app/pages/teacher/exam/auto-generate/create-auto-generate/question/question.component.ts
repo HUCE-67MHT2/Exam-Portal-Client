@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { CommonModule } from "@angular/common";
 
@@ -14,6 +14,9 @@ export class QuestionComponent implements OnInit {
   questionNumber: number = 0; // Số lượng câu hỏi muốn tạo
   input: any;
   private saveTimeout: any; // Timeout để debounce việc lưu
+  @Input() exam_session_id!: string;
+  @Input() exam_session_name!: string;
+  @Input() exam_session_description!: string;
 
   ngOnInit(): void {
     const savedQuestions = localStorage.getItem("questions");
@@ -23,6 +26,7 @@ export class QuestionComponent implements OnInit {
       const parsedQuestions = JSON.parse(savedQuestions);
       this.questions = parsedQuestions.map((q: any, index: number) => ({
         text: q.text || "",
+        examSessionId: this.exam_session_id,
         answers: {
           "1": "",
           "2": "",
@@ -46,6 +50,7 @@ export class QuestionComponent implements OnInit {
       for (let i = this.questions.length; i < numberOfQuestions; i++) {
         this.questions.push({
           text: "",
+          examSessionId: this.exam_session_id,
           answers: {
             "1": "",
             "2": "",
@@ -69,6 +74,7 @@ export class QuestionComponent implements OnInit {
       for (let i = this.questions.length; i < validNumber; i++) {
         this.questions.push({
           text: "",
+          examSessionId: this.exam_session_id,
           answers: {
             "1": "",
             "2": "",
@@ -88,12 +94,13 @@ export class QuestionComponent implements OnInit {
     clearTimeout(this.saveTimeout);
 
     this.saveTimeout = setTimeout(() => {
-      const questionsText = this.questions.map((question) => ({
-        text: question.text,
+      const questionsData = this.questions.map((question) => ({
+        examSessionId: this.exam_session_id,
+        content: question.text,
       }));
       const answers = this.questions.map((question) => question.answers);
 
-      localStorage.setItem("questions", JSON.stringify(questionsText));
+      localStorage.setItem("questions", JSON.stringify(questionsData));
       localStorage.setItem("answers", JSON.stringify(answers));
       localStorage.setItem("questionNumber", this.questionNumber.toString());
     }, 300);
