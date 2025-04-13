@@ -1,27 +1,34 @@
 <div (click)="closePasswordModal($event)" class="main-container">
   <app-header-student></app-header-student>
-  <app-search-bar>
-    <app-find-button>Tìm bài thi</app-find-button>
-  </app-search-bar>
+  <div class="search-bar">
+    <input
+      type="text"
+      [(ngModel)]="searchTerm"
+      (input)="filterExam()"
+      placeholder="Nhập tên hoặc mô tả bài thi để tìm kiếm..."
+    />
+  </div>
   <main (click)="closePasswordModal($event)" class="exam-detail__wrap">
     <table>
       <thead>
       <tr>
-        <th>{{ examType }} - {{ examName }} / {{ examCode }}</th>
+        <th>{{ this.examSession?.name }} - {{ this.examSession?.description }} / {{ this.examSession?.code }}</th>
         <th>Thời gian</th>
         <th>Ngày bắt đầu</th>
-        <th>Trạng thái</th>
+        <th>Ngày kết thúc</th>
+        <th>Trạng thái</th>
       </tr>
       </thead>
       <tbody>
       <tr
         (click)="toggleUserInfoSelection($event)"
-        *ngFor="let exam of exams"
+        *ngFor="let exam of filteredExams"
       >
         <td>{{ exam.name }}</td>
         <td>{{ exam.duration }}</td>
-        <td>{{ exam.dateCreated }}</td>
-        <td>{{ exam.status }}</td>
+        <td>{{ exam.endDate }}</td>
+        <td>{{ exam.startDate }}</td>
+        <td>{{ getStatus(exam.startDate, exam.endDate) }}</td>
       </tr>
       </tbody>
     </table>

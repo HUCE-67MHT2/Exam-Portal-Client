@@ -33,9 +33,6 @@ export class ExamSessionService {
   updateExamSessionInfoById(id: number, examSession: any): Observable<any> {
     const token = localStorage.getItem('authToken');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.post(`${this.baseUrl}/update/exam-session-info/${id}`, examSession, {
-      headers,
-      observe: 'response'
-    });
+    return this.http.post(`${this.baseUrl}/update/exam-session-info/${id}`, examSession, {headers, observe: 'response'});
   }
 }

@@ -1,78 +1,90 @@
 import {Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren,} from "@angular/core";
-import {ActivatedRoute} from "@angular/router";
 import {HeaderStudentComponent} from "../../../layout/header/header-student/header-student.component";
-import {SearchBarComponent} from "../../../layout/search-bar/search-bar.component";
 import {NgForOf} from "@angular/common";
-import {FindButtonComponent} from "../../../layout/button/find-button/find-button.component";
+import {ExamSession} from '../../../core/models/examSession.model';
+import {Exam} from '../../../core/models/exam.model';
+import {ExamService} from '../../../core/services/exam/exam.service';
+import {FormsModule} from '@angular/forms';
 
 @Component({
   selector: "app-exam-detail",
   templateUrl: "./exam-detail.component.html",
-  imports: [HeaderStudentComponent, SearchBarComponent, NgForOf, FindButtonComponent],
+  imports: [HeaderStudentComponent, NgForOf,FormsModule],
   styleUrl: "./exam-detail.component.scss",
 })
 export class ExamDetailComponent implements OnInit {
-  examCode: string = "Mã không xác định"; // Đặt giá trị mặc định để kiểm tra lỗi
-  examName: string = "Tên không xác định"; // Đặt giá trị mặc định để kiểm tra lỗi
-  examType: string = "Loại không xác định"; // Đặt giá trị mặc định để kiểm tra lỗi
-  exams = [
-    {
-      name: "Đề 01",
-      duration: "120 phút",
-      dateCreated: "9/11/2024",
-      status: "Chưa làm",
-    },
-    {
-      name: "Đề 02",
-      duration: "120 phút",
-      dateCreated: "9/11/2024",
-      status: "Đang làm",
-    },
-    {
-      name: "Đề 03",
-      duration: "120 phút",
-      dateCreated: "9/11/2024",
-      status: "Đã làm",
-    },
-    {
-      name: "Đề 04",
-      duration: "120 phút",
-      dateCreated: "9/11/2024",
-      status: "Đã làm",
-    },
-    {
-      name: "Đề 05",
-      duration: "120 phút",
-      dateCreated: "9/11/2024",
-      status: "Đã làm",
-    },
-  ];
+  examSession: ExamSession | null = null;
+  searchTerm: string = '';
+  examList: Exam[] = [];
+  filteredExams: Exam[] = [];
   @ViewChildren("inputBox") inputBoxes!: QueryList<ElementRef>;
   @ViewChild("passwordForm") passwordForm!: ElementRef;
   inputs = new Array(6).fill(""); // Giả sử có 5 ô input
   isPassword = false;
 
-  constructor(private route: ActivatedRoute) {
+  constructor(
+    private examService: ExamService,
+  ) {
   }
 
   ngOnInit() {
-    const param = this.route.snapshot.paramMap.get("examCode");
-    if (param) {
-      this.examCode = param;
+    const storedExam = localStorage.getItem('selectedExam');
+    if (storedExam) {
+      this.examSession = JSON.parse(storedExam);
     }
-    this.route.queryParams.subscribe((params) => {
-      if (params["name"]) {
-        this.examName = params["name"];
-      }
-      if (params["type"]) {
-        this.examType = params["type"];
+    this.getExams()
+  }
+
+  getExams = () => {
+    this.examService.getExams(this.examSession?.id).subscribe({
+      next: (response) => {
+        console.log(response);
+        if (response.status === 200) {
+          this.examList = response.body.exams;
+        }
+        this.filteredExams = [...this.examList];
+
+        // Kiểm tra dữ liệu đã lấy về
+        console.log("Exam List:", this.examList);
+        console.log("Filtered Exam List:", this.filteredExams);
+      },
+      error: (error) => {
+        console.error("Error fetching exams:", error);
       }
     });
   }
 
-  ngAfterViewInit() {
-    this.inputBoxes.first?.nativeElement.focus(); // Tự động focus vào ô đầu tiên
+  getStatus(startDate: Date, endDate: Date): string {
+    const now = new Date();
+
+    // Nếu startDate và endDate là chuỗi thì cần chuyển đổi:
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+
+    if (now < start) {
+      return 'Sắp mở';
+    } else if (now >= start && now <= end) {
+      return 'Đang mở';
+    } else {
+      return 'Đã đóng';
+    }
   }
+
+
+  filterExam() {
+    const normalizedSearchTerm = this.removeVietnameseTones(this.searchTerm.toLowerCase());
+    this.filteredExams = this.examList.filter(exam => {
+      const normalizedExamName = this.removeVietnameseTones(exam.name.toLowerCase());
+      const normalizedExamDescription = this.removeVietnameseTones(exam.description.toLowerCase());
+      return normalizedExamName.includes(normalizedSearchTerm) || normalizedExamDescription.includes(normalizedSearchTerm);
+    });
+  }
+
+  removeVietnameseTones(str: string): string {
+    return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  }
+
+
 
   onInput(index: number, event: Event) {
     const target = event.target as HTMLInputElement;

@@ -15,7 +15,7 @@ export class ExamService {
     return this.http.post<any>(`${this.baseUrl}/add/exam/with/file`, formData);
   }
 
-  getExams(id: number): Observable<any> {
+  getExams(id: any): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}/get/list/exams/by/sessionId/${id}`, {observe: 'response'});
   }
 
