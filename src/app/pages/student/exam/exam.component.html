@@ -7,7 +7,7 @@
          placeholder="Nhập mã, tên, hoặc mô tả kỳ thi..."
          [(ngModel)]="searchTerm"
          (input)="filterExams()" />
-  <button class="search-btn" (click)="openModal()">Tham gia kỳ thi</button>
+  <button class="search-btn" (click)="openModal()">Tham gia kỳ thi với mã</button>
 </div>
 
 <!-- Modal for searching exam code -->
@@ -38,7 +38,7 @@
     <tr *ngFor="let examSession of filteredExams" (click)="goToExamDetail(examSession)" style="cursor: pointer;">
     <td>
         <p class="exam-name">{{ examSession.name }} - {{ examSession.description }}</p>
-        <p class="class-code">Mã lớp: {{ examSession.code }}</p>
+        <p class="class-code">Mã kỳ thi: {{ examSession.code }}</p>
       </td>
       <td>{{ examSession.startDate }}</td>
       <td>{{ examSession.endDate }}</td>

@@ -26,8 +26,8 @@
       >
         <td>{{ exam.name }}</td>
         <td>{{ exam.duration }}</td>
-        <td>{{ exam.endDate }}</td>
-        <td>{{ exam.startDate }}</td>
+        <td>{{ exam.endDate | date: 'HH:mm dd/MM/yyyy' }}</td>
+        <td>{{ exam.startDate | date: 'HH:mm dd/MM/yyyy' }}</td>
         <td>{{ getStatus(exam.startDate, exam.endDate) }}</td>
       </tr>
       </tbody>

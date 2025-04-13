@@ -1,6 +1,6 @@
 import {Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren,} from "@angular/core";
 import {HeaderStudentComponent} from "../../../layout/header/header-student/header-student.component";
-import {NgForOf} from "@angular/common";
+import {DatePipe, NgForOf} from "@angular/common";
 import {ExamSession} from '../../../core/models/examSession.model';
 import {Exam} from '../../../core/models/exam.model';
 import {ExamService} from '../../../core/services/exam/exam.service';
@@ -9,7 +9,7 @@ import {FormsModule} from '@angular/forms';
 @Component({
   selector: "app-exam-detail",
   templateUrl: "./exam-detail.component.html",
-  imports: [HeaderStudentComponent, NgForOf,FormsModule],
+  imports: [HeaderStudentComponent, NgForOf, FormsModule, DatePipe],
   styleUrl: "./exam-detail.component.scss",
 })
 export class ExamDetailComponent implements OnInit {
@@ -83,7 +83,6 @@ export class ExamDetailComponent implements OnInit {
   removeVietnameseTones(str: string): string {
     return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
   }
-
 
 
   onInput(index: number, event: Event) {
