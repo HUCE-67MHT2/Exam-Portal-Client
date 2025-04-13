@@ -38,6 +38,7 @@ export class ExamComponent implements OnInit {
 
   ngOnInit() {
     this.loadExamSessions();
+    localStorage.removeItem('selectedExam');
   }
 
   loadExamSessions() {
@@ -115,4 +116,8 @@ export class ExamComponent implements OnInit {
     }
   }
 
+  goToExamDetail(exam: ExamSession) {
+    localStorage.setItem('selectedExam', JSON.stringify(exam));
+    this.router.navigate(['student/exam-detail']);
+  }
 }

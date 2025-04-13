@@ -1,39 +1,58 @@
 .exam-detail__wrap {
   position: relative;
+  margin-top: 80px;
+
+  .search-bar {
+    margin-top: 200px;
+    width: 60%;
+    display: flex;
+    justify-content: center;
+
+    input {
+      width: 100%;
+      padding: 10px 16px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      outline: none;
+      transition: border-color 0.3s;
+
+      &:focus {
+        border-color: #007bff;
+      }
+    }
+  }
 
   table {
     width: 100%;
     border-collapse: collapse;
+    margin-top: 20px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   }
 
   thead {
-    background-color: #d3d3d3;
+    background-color: rgb(2, 119, 75);
+    color: white;
   }
 
   th,
   td {
-    padding: 12px;
+    padding: 14px 20px;
     text-align: left;
+    border-bottom: 1px solid #ddd;
   }
 
-  th:first-child,
-  td:first-child {
-    padding-left: 60px;
-  }
-
-  tbody tr:hover {
-    background-color: #ededed;
-  }
-
-  /* Định nghĩa tỷ lệ cột */
   thead tr,
   tbody tr {
     display: grid;
-    grid-template-columns: 2.5fr 1fr 1fr 1fr; // Cột 1 chiếm 2.5 phần, các cột khác mỗi cột 1 phần
+    grid-template-columns: 2.5fr 1fr 1fr 1fr 1fr; // Thêm cột trạng thái
   }
 
-  tbody {
-    background-color: #ffffff;
+  tbody tr:hover {
+    background-color: #f9f9f9;
+    cursor: pointer;
   }
 
   .password-form {
