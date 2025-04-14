@@ -3,7 +3,7 @@ import {NgOptimizedImage} from '@angular/common';
 import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
-  selector: 'app-exam-create-type',
+  selector: 'app-exam-session-create-type',
   templateUrl: './exam-create-type.component.html',
   imports: [
     NgOptimizedImage

@@ -10,7 +10,7 @@ import {QuestionAnswerService} from "../../../../../core/services/question-answe
 import {ToastrService} from 'ngx-toastr';
 
 @Component({
-  selector: "app-exam-create-with-file",
+  selector: "app-exam-session-create-with-file",
   imports: [NgIf, ReactiveFormsModule, FormsModule, NgForOf, LoadingComponent],
   templateUrl: "./exam-create-with-file.component.html",
   styleUrl: "./exam-create-with-file.component.scss",

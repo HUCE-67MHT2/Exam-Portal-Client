@@ -11,7 +11,7 @@ import {NgxDocViewerModule} from 'ngx-doc-viewer';
 import {ToastrService} from 'ngx-toastr';
 
 @Component({
-  selector: 'app-edit-exam-with-file',
+  selector: 'app-edit-exam-session-with-file',
   imports: [
     FormsModule,
     LoadingComponent,

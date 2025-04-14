@@ -1,5 +1,6 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {NgForOf, NgIf} from '@angular/common';
+import {Exam} from '../../../core/models/exam.model';
 
 @Component({
   selector: 'app-do-test',
@@ -10,16 +11,36 @@ import {NgForOf, NgIf} from '@angular/common';
   ],
   styleUrl: './do-test.component.scss'
 })
-export class DoTestComponent {
+export class DoTestComponent implements OnInit {
+  exam: Exam | null = null;
   subject = "Toán-GK";
-  numQuestions = 30;
   selectedQuestionIndex: number | null = null;
-  answers: string[] = Array(this.numQuestions).fill(""); // Mảng lưu đáp án
+  answers: string[] = Array(this.exam?.totalQuestions).fill("");
   counter: number = 45 * 60; // 45 phút = 2700 giây
 
   constructor() {
     this.startCountdown();
   }
+
+  ngOnInit() {
+    const storedExam = localStorage.getItem('selectedExam');
+    if (storedExam) {
+      const exam = JSON.parse(storedExam);
+      console.log("Exam lấy từ localStorage:", exam);
+      this.exam = exam;
+    }
+    console.log(this.exam?.totalQuestions);
+  }
+
+  getAnswerJson(): { [key: number]: string } {
+    const result: { [key: number]: string } = {};
+    // @ts-ignore
+    for (let i = 0; i < this.exam?.totalQuestions; i++) {
+      result[i + 1] = this.answers[i] || ""; // nếu chưa chọn sẽ là ""
+    }
+    return result;
+  }
+
 
   // Bắt đầu đếm ngược
   startCountdown() {
@@ -43,7 +64,8 @@ export class DoTestComponent {
   }
 
   submit() {
-    console.log("Bài làm đã nộp:", this.answers);
+    const resultJson = this.getAnswerJson(); // Gọi mỗi lần submit để lấy dữ liệu mới nhất
+    console.log("Bài làm đã nộp:", resultJson);
   }
 
   // Định dạng thời gian (phút:giây)

@@ -5,14 +5,19 @@ import {ExamSession} from '../../../core/models/examSession.model';
 import {Exam} from '../../../core/models/exam.model';
 import {ExamService} from '../../../core/services/exam/exam.service';
 import {FormsModule} from '@angular/forms';
+import {ExamSessionService} from '../../../core/services/exam_session/exam-session.service';
+import {ToastrService} from 'ngx-toastr';
+import {Router} from '@angular/router';
 
 @Component({
-  selector: "app-exam-detail",
-  templateUrl: "./exam-detail.component.html",
+  selector: "app-exam-session-detail",
+  templateUrl: "./exam-session-detail.component.html",
   imports: [HeaderStudentComponent, NgForOf, FormsModule, DatePipe],
-  styleUrl: "./exam-detail.component.scss",
+  styleUrl: "./exam-session-detail.component.scss",
+  providers: [ExamService, ExamSessionService],
 })
-export class ExamDetailComponent implements OnInit {
+export class ExamSessionDetailComponent implements OnInit {
+  selectedExam: Exam | null = null;
   examSession: ExamSession | null = null;
   searchTerm: string = '';
   examList: Exam[] = [];
@@ -21,14 +26,18 @@ export class ExamDetailComponent implements OnInit {
   @ViewChild("passwordForm") passwordForm!: ElementRef;
   inputs = new Array(6).fill(""); // Giả sử có 5 ô input
   isPassword = false;
+  password = "";
 
   constructor(
     private examService: ExamService,
+    private examSessionService: ExamSessionService,
+    private toastr: ToastrService,
+    private router: Router,
   ) {
   }
 
   ngOnInit() {
-    const storedExam = localStorage.getItem('selectedExam');
+    const storedExam = localStorage.getItem('selectedExamSession');
     if (storedExam) {
       this.examSession = JSON.parse(storedExam);
     }
@@ -70,7 +79,6 @@ export class ExamDetailComponent implements OnInit {
     }
   }
 
-
   filterExam() {
     const normalizedSearchTerm = this.removeVietnameseTones(this.searchTerm.toLowerCase());
     this.filteredExams = this.examList.filter(exam => {
@@ -83,7 +91,6 @@ export class ExamDetailComponent implements OnInit {
   removeVietnameseTones(str: string): string {
     return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
   }
-
 
   onInput(index: number, event: Event) {
     const target = event.target as HTMLInputElement;
@@ -110,7 +117,44 @@ export class ExamDetailComponent implements OnInit {
     ) {
       this.inputBoxes.get(index - 1)?.nativeElement.focus(); // Quay lại ô trước nếu nhấn Backspace
     }
+    if (event.key === 'Enter') {
+      this.onEnter(); // Gọi hàm xử lý khi nhấn Enter
+    }
   }
+  openExamWithPassword(exam: Exam, event: Event) {
+    event.stopPropagation();
+    this.selectedExam = exam;
+    this.isPassword = true;
+    this.inputs = new Array(6).fill("");
+    this.password = "";
+    setTimeout(() => {
+      this.inputBoxes.first?.nativeElement.focus(); // focus vào ô đầu tiên
+    });
+  }
+
+  onEnter = () => {
+    if (!this.selectedExam) return;
+
+    console.log('Selected exam-session type:', this.selectedExam.type);
+
+    this.examSessionService.checkPassword(this.password, this.examSession?.id).subscribe({
+      next: (response) => {
+        if (response.status === 200) {
+          this.toastr.success("Password Correct!", '', { timeOut: 2000 });
+          localStorage.setItem('selectedExam', JSON.stringify(this.selectedExam));
+          if (this.selectedExam?.type === "upload-file") {
+            this.router.navigate(["student/do-test"]);
+          } else {
+            this.router.navigate(["home/student"]);
+          }
+        }
+      },
+      error: (error) => {
+        this.toastr.error(error.error || "Sai mật khẩu", '', { timeOut: 2000 });
+      }
+    });
+  }
+
 
   getPassword() {
     const password = this.inputBoxes
@@ -118,11 +162,7 @@ export class ExamDetailComponent implements OnInit {
       .map((input) => input.nativeElement.value)
       .join("");
     console.log("Password nhập vào:", password);
-  }
-
-  toggleUserInfoSelection(event: Event) {
-    event.stopPropagation();
-    this.isPassword = !this.isPassword;
+    this.password = password;
   }
 
   closePasswordModal(event: Event) {

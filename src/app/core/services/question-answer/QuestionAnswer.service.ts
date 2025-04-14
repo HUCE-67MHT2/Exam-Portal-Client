@@ -1,4 +1,4 @@
-// exam-answer.service.ts
+// exam-session-answer.service.ts
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';

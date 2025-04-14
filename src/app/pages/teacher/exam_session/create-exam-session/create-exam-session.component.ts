@@ -7,7 +7,7 @@ import {ExamSessionService} from '../../../../core/services/exam_session/exam-se
 import {ToastrService} from 'ngx-toastr';
 
 @Component({
-  selector: 'app-create-exam-session',
+  selector: 'app-create-exam-session-session',
   templateUrl: './create-exam-session.component.html',
   styleUrls: ['./create-exam-session.component.scss'],
   providers: [DatePipe, ExamSessionService],
