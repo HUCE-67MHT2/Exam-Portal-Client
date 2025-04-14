@@ -4,6 +4,7 @@ import { CommonModule } from "@angular/common";
 import { QuestionComponent } from "./question/question.component";
 import { InfoComponent } from "./info/info.component";
 
+
 @Component({
   selector: "app-create-auto-generate",
   standalone: true,

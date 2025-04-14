@@ -33,4 +33,8 @@ export class ExamService {
   sendExamData(data: any): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/send/exam/data`, data);
   }
+
+  sendExamManuallyData(formData: any): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/add/exam/manually`, formData);
+  }
 }

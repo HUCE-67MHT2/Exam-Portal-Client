@@ -13,6 +13,8 @@ export class QuestionComponent implements OnInit {
   questions: any[] = []; // Danh sách câu hỏi
   questionNumber: number = 0; // Số lượng câu hỏi muốn tạo
   input: any;
+  difficulty: any;
+  examSessionId: string = "";
   private saveTimeout: any; // Timeout để debounce việc lưu
   @Input() exam_session_id!: string;
   @Input() exam_session_name!: string;
@@ -21,12 +23,14 @@ export class QuestionComponent implements OnInit {
   ngOnInit(): void {
     const savedQuestions = localStorage.getItem("questions");
     const savedQuestionNumber = localStorage.getItem("questionNumber");
+    this.examSessionId =
+      localStorage.getItem("exam_session_id") || this.exam_session_id;
 
     if (savedQuestions) {
       const parsedQuestions = JSON.parse(savedQuestions);
       this.questions = parsedQuestions.map((q: any, index: number) => ({
         text: q.text || "",
-        examSessionId: this.exam_session_id,
+        difficulty: q.difficulty || "easy",
         answers: {
           "1": "",
           "2": "",
@@ -50,7 +54,7 @@ export class QuestionComponent implements OnInit {
       for (let i = this.questions.length; i < numberOfQuestions; i++) {
         this.questions.push({
           text: "",
-          examSessionId: this.exam_session_id,
+          difficulty: "easy",
           answers: {
             "1": "",
             "2": "",
@@ -74,7 +78,7 @@ export class QuestionComponent implements OnInit {
       for (let i = this.questions.length; i < validNumber; i++) {
         this.questions.push({
           text: "",
-          examSessionId: this.exam_session_id,
+          difficulty: "easy",
           answers: {
             "1": "",
             "2": "",
@@ -95,8 +99,9 @@ export class QuestionComponent implements OnInit {
 
     this.saveTimeout = setTimeout(() => {
       const questionsData = this.questions.map((question) => ({
-        examSessionId: this.exam_session_id,
+        examSessionId: this.examSessionId,
         content: question.text,
+        difficulty: question.difficulty,
       }));
       const answers = this.questions.map((question) => question.answers);
 

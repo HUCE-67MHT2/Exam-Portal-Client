@@ -45,6 +45,7 @@ export class TeacherHomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadExamSession();
+    localStorage.removeItem('exam_session_id');
 
   }
 
@@ -56,5 +57,11 @@ export class TeacherHomeComponent implements OnInit {
         exam_session_description
       }
     });
+    this.saveExamSessionId(exam_session_id);
+  }
+  // save exam_sesion_id in local storage
+  saveExamSessionId(exam_session_id: number) {
+    localStorage.setItem('exam_session_id', exam_session_id.toString());
   }
 }
+

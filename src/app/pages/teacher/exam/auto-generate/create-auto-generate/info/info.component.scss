@@ -3,11 +3,6 @@ $secondary-color: #f9f9f9;
 $error-color: #e74c3c;
 $input-border-color: #ddd;
 $input-focus-color: rgba(76, 175, 80, 0.5);
-$base-font-size: 16px;
-$heading-font-size: 1.8rem;
-$label-font-size: 1rem;
-$input-font-size: 1rem;
-$button-font-size: 1rem;
 
 li {
   list-style: none;
@@ -66,7 +61,7 @@ li {
         padding: 0 10px;
         border: 1px solid $input-border-color;
         border-radius: 5px;
-        font-size: $input-font-size;
+        font-size: 1.4rem;
         transition: border-color 0.3s, box-shadow 0.3s;
       }
 
@@ -93,11 +88,11 @@ button {
   width: 100%;
   height: 45px;
   margin-top: 20px;
-  background: $primary-color;
+  background: var(--primary-color);
   color: #fff;
   border: none;
   border-radius: 5px;
-  font-size: $button-font-size;
+  font-size: 1.6rem;
   font-weight: bold;
   cursor: pointer;
   transition: background-color 0.3s, box-shadow 0.3s;

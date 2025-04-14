@@ -19,6 +19,7 @@ export class InfoComponent implements OnInit, OnDestroy {
   selectedExamType: string | null = null;
   examName: string = "";
   examPassword: string = "";
+  savedQuestionIds: number[] = [];
   @Input() exam_session_id!: string;
   @Input() exam_session_name!: string;
   @Input() exam_session_description!: string;
@@ -38,6 +39,7 @@ export class InfoComponent implements OnInit, OnDestroy {
       exam_subject: ["", Validators.required],
       exam_start_date: ["", Validators.required],
       exam_end_date: ["", Validators.required],
+      exam_number_of_test: ["", Validators.required],
     });
   }
 
@@ -48,7 +50,6 @@ export class InfoComponent implements OnInit, OnDestroy {
       this.examName = info.examName || "";
       this.selectedExamType = info.examType || null;
       this.examPassword = info.examPassword || "";
-
       this.examForm.patchValue(info.examForm || {});
     }
 
@@ -99,7 +100,7 @@ export class InfoComponent implements OnInit, OnDestroy {
 
     try {
       const info = JSON.parse(savedInfo);
-      this.examService.sendExamData(info).subscribe({
+      this.examService.sendExamManuallyData(info).subscribe({
         next: () => {
           this.toastr.success("Dữ liệu đã được gửi thành công.", "Thành công");
           localStorage.removeItem("info");
@@ -124,20 +125,38 @@ export class InfoComponent implements OnInit, OnDestroy {
 
     try {
       const questions = JSON.parse(savedQuestions);
-      this.questionService.sendQuestionData(questions).subscribe({
-        next: () => {
-          this.toastr.success("Dữ liệu câu hỏi đã được gửi thành công.", "Thành công");
-          localStorage.removeItem("questions");
-        },
-        error: (error) => {
-          this.toastr.error("Gửi dữ liệu câu hỏi thất bại.", "Lỗi");
-          console.error("Lỗi gửi dữ liệu câu hỏi:", error);
-        },
+      console.log("questions", questions);
+
+      if (!Array.isArray(questions)) {
+        throw new Error("Dữ liệu không phải là một mảng.");
+      }
+
+      questions.forEach((question) => {
+        console.log("question", question);
+
+        this.questionService.sendQuestionData(question).subscribe({
+          next: (response) => {
+            const questionId = response.id;
+            this.savedQuestionIds.push(questionId); // Lưu lại vào mảng
+            console.log("ID câu hỏi được lưu:", questionId);
+
+            this.toastr.success(
+              "Dữ liệu câu hỏi đã được gửi thành công.",
+              "Thành công"
+            );
+          },
+          error: (error) => {
+            this.toastr.error("Gửi dữ liệu câu hỏi thất bại.", "Lỗi");
+            console.error("Lỗi gửi dữ liệu câu hỏi:", error);
+          },
+        });
       });
+
+      localStorage.removeItem("questions");
     } catch (e) {
       this.toastr.error("Dữ liệu câu hỏi không hợp lệ.", "Lỗi");
       console.error("Parse error:", e);
     }
+
   }
 }
-
