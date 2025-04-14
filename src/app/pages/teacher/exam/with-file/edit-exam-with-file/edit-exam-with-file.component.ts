@@ -5,8 +5,8 @@ import {NgForOf, NgIf} from "@angular/common";
 import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
 import {ActivatedRoute, Router} from '@angular/router';
 import * as docx from 'docx-preview';
-import {ExamService} from '../../../../../core/services/exam/exam.service';
-import {QuestionAnswerService} from '../../../../../core/services/question-answer/QuestionAnswer.service';
+import {ExamService} from '../../../../../core/services/exam.service';
+import {QuestionAnswerService} from '../../../../../core/services/QuestionAnswer.service';
 import {NgxDocViewerModule} from 'ngx-doc-viewer';
 import {ToastrService} from 'ngx-toastr';
 
@@ -48,6 +48,8 @@ export class EditExamWithFileComponent implements OnInit {
   errorMessage: string = "";
   answers: { [key: number]: string } = {};
   answerOptions: string[] = ["A", "B", "C", "D"];
+  showWarningModal: boolean = false;
+  missingQuestions: number[] = [];
 
   // các biến để xác định đề thi
   exam_id: any;
@@ -201,6 +203,27 @@ export class EditExamWithFileComponent implements OnInit {
     this.activeTab = tab;
   }
 
+  checkAnswersBeforeSubmit(): { isValid: boolean, missingQuestions: number[] } {
+    const missingQuestions: number[] = [];
+
+    // Duyệt qua tất cả các câu hỏi
+    for (let i = 1; i <= this.totalQuestions; i++) {
+      // Kiểm tra xem câu hỏi có đáp án chưa
+      if (!this.answers[i] || this.answers[i].trim() === '') {
+        missingQuestions.push(i);
+      }
+    }
+
+    return {
+      isValid: missingQuestions.length === 0,
+      missingQuestions: missingQuestions
+    };
+  }
+
+  closeWarningModal() {
+    this.showWarningModal = false;
+  }
+
   //============== các hàm xử lý phần hiển thị file  ==============================
   reloadFile() {
     this.changeFile = false;
@@ -261,6 +284,18 @@ export class EditExamWithFileComponent implements OnInit {
   }
 
   onSubmit() {
+    // Kiểm tra đáp án trước khi submit
+    const validationResult = this.checkAnswersBeforeSubmit();
+
+    if (!validationResult.isValid) {
+      // Lưu danh sách câu hỏi thiếu đáp án
+      this.missingQuestions = validationResult.missingQuestions;
+      // Hiển thị modal cảnh báo
+      this.showWarningModal = true;
+      return; // Dừng quá trình submit
+    }
+
+    // Tiếp tục quá trình submit nếu tất cả câu hỏi đều có đáp án
     this.loading = true; // Bật loading khi gửi request
 
     // Lấy dữ liệu từ form
@@ -277,7 +312,6 @@ export class EditExamWithFileComponent implements OnInit {
     formData.append('startDate', this.formatDateTime(this.examForm.get('exam_start_date')?.value));
     formData.append('endDate', this.formatDateTime(this.examForm.get('exam_end_date')?.value));
 
-
     // Nếu có file được thay đổi, thêm vào formData
     if (this.changeFile && this.fileRequest) {
       formData.append('file', this.fileRequest);
@@ -287,24 +321,74 @@ export class EditExamWithFileComponent implements OnInit {
       console.log(`${key}:`, value);
     }
 
-
     //Gửi dữ liệu lên backend
     this.examService.updateExam(formData).subscribe(
       (response) => {
         console.log("Cập nhật bài thi thành công:", response);
 
+        if(this.isAnswersChanged()) {
+          this.examQuestionAnswerService.updateQuestionAnswers(this.exam_id, this.answers).subscribe(
+            (response) => {
+              console.log("cập nhập câu hỏi thành công:", response);
+            },
+            (error) => {
+              console.log("lỗi khi cập nhập câu hỏi", error);
+            }
+          );
+        }
+        this.toastr.success('Cập nhập đề thi thành công', 'Thành công', {timeOut: 2000});
+        this.loading = false;
+        this.router.navigate(["teacher/exam-session-dashboard"], {
+          queryParams: {
+            exam_session_id: this.exam_session_id,
+            exam_session_name: this.exam_session_name,
+            exam_session_description: this.exam_session_description
+          } });
+      },
+      (error) => {
+        console.error("Lỗi khi cập nhật bài thi:", error);
+        this.loading = false;
+      }
+    );
+  }
+
+  continueSubmit() {
+    this.showWarningModal = false;
+
+    // Tiếp tục thực hiện submit (copy code từ phần gửi request trong onSubmit)
+    this.loading = true;
+
+    const formData = new FormData();
+
+    formData.append('id', this.exam_id);
+    formData.append("examSessionId", this.exam_session_id);
+    formData.append('name', this.examForm.get('exam_name')?.value);
+    formData.append('totalQuestions', this.totalQuestions.toString());
+    formData.append('duration', this.examForm.get('exam_duration')?.value);
+    formData.append('description', this.examForm.get('exam_description')?.value);
+    formData.append('subject', this.examForm.get('exam_subject')?.value);
+    formData.append('startDate', this.formatDateTime(this.examForm.get('exam_start_date')?.value));
+    formData.append('endDate', this.formatDateTime(this.examForm.get('exam_end_date')?.value));
+
+    if (this.changeFile && this.fileRequest) {
+      formData.append('file', this.fileRequest);
+    }
+
+    this.examService.updateExam(formData).subscribe(
+      (response) => {
+        console.log("Cập nhật bài thi thành công:", response);
 
         if(this.isAnswersChanged()) {
           this.examQuestionAnswerService.updateQuestionAnswers(this.exam_id, this.answers).subscribe(
             (response) => {
-              console.log("cập nhập câu hỏi thành công:", response);
+              console.log("cập nhập câu hỏi thành công:", response);
             },
             (error) => {
-              console.log("lỗi khi cập nhập câu hỏi", error);
+              console.log("lỗi khi cập nhập câu hỏi", error);
             }
           );
         }
-        this.toastr.success('Cập nhập đề thi thành công', 'Thành công', {timeOut: 2000});
+        this.toastr.success('Cập nhập đề thi thành công', 'Thành công', {timeOut: 2000});
         this.loading = false;
         this.router.navigate(["teacher/exam-session-dashboard"], {
           queryParams: {

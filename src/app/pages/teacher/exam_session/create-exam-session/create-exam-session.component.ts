@@ -3,7 +3,7 @@ import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/
 import {CommonModule, DatePipe, NgOptimizedImage} from '@angular/common';
 import {HeaderComponent} from '../../../../layout/header/header.component';
 import {Router} from '@angular/router';
-import {ExamSessionService} from '../../../../core/services/exam_session/exam-session.service';
+import {ExamSessionService} from '../../../../core/services/exam-session.service';
 import {ToastrService} from 'ngx-toastr';
 
 @Component({

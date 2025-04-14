@@ -3,7 +3,7 @@ import {Exam} from '../../../../../core/models/exam.model';
 import {FormsModule} from '@angular/forms';
 import {DatePipe, NgForOf, NgOptimizedImage} from '@angular/common';
 import {ActivatedRoute, Router} from '@angular/router';
-import {ExamService} from '../../../../../core/services/exam/exam.service';
+import {ExamService} from '../../../../../core/services/exam.service';
 
 @Component({
   selector: 'app-exam',

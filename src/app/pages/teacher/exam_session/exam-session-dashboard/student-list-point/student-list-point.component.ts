@@ -1,8 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {SearchBarComponent} from "../../../../../layout/search-bar/search-bar.component";
-import {
-  GetExamResultBySessionIdServiceService
-} from '../../../../../core/services/exam-result/get-exam-result-by-sessionId.service'
+import {ExamResultService} from '../../../../../core/services/exam-result.service'
 import {StudentResultInfo} from '../../../../../core/models/StudentResultInfo.model';
 import {DatePipe, NgForOf} from '@angular/common';
 
@@ -19,7 +17,7 @@ export class StudentListPointComponent implements OnInit {
   StudentResultInfo: StudentResultInfo[] = [];
 
   constructor(
-    private examResultService: GetExamResultBySessionIdServiceService
+    private examResultService: ExamResultService
   ) {
   }
 

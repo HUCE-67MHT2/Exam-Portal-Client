@@ -3,9 +3,9 @@ import {HeaderStudentComponent} from "../../../layout/header/header-student/head
 import {DatePipe, NgForOf} from "@angular/common";
 import {ExamSession} from '../../../core/models/examSession.model';
 import {Exam} from '../../../core/models/exam.model';
-import {ExamService} from '../../../core/services/exam/exam.service';
+import {ExamService} from '../../../core/services/exam.service';
 import {FormsModule} from '@angular/forms';
-import {ExamSessionService} from '../../../core/services/exam_session/exam-session.service';
+import {ExamSessionService} from '../../../core/services/exam-session.service';
 import {ToastrService} from 'ngx-toastr';
 import {Router} from '@angular/router';
 
@@ -42,6 +42,7 @@ export class ExamSessionDetailComponent implements OnInit {
       this.examSession = JSON.parse(storedExam);
     }
     this.getExams()
+    localStorage.removeItem('selectedExam');
   }
 
   getExams = () => {
@@ -142,7 +143,7 @@ export class ExamSessionDetailComponent implements OnInit {
         if (response.status === 200) {
           this.toastr.success("Password Correct!", '', { timeOut: 2000 });
           localStorage.setItem('selectedExam', JSON.stringify(this.selectedExam));
-          if (this.selectedExam?.type === "upload-file") {
+          if (this.selectedExam?.type === "upload") {
             this.router.navigate(["student/do-test"]);
           } else {
             this.router.navigate(["home/student"]);
