@@ -140,3 +140,4 @@ export class InfoComponent implements OnInit, OnDestroy {
     }
   }
 }
+
