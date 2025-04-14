@@ -3,7 +3,7 @@
     <div class="logo">Online Exam Portal</div>
     <nav class="breadcrumb">
       <span>►</span>
-      <span>Chỉnh sửa đề thi</span>
+      <span>{{ exam_name }}</span>
     </nav>
   </div>
   <div class="return-button">
@@ -11,14 +11,14 @@
   </div>
 </header>
 
-<app-loading *ngIf="loading" text="🌟Creating exam..."></app-loading>
+<app-loading *ngIf="loading" text="✍️Updating exam..."></app-loading>
 
 <div class="container">
   <!-- Left content -->
   <div class="left-container">
     <div class="upload-file-container">
       <button (click)="uploadFile()" class="upload-button">
-        📂 Tải lại file
+        📂 Tải lên file mới
       </button>
       <input
         #fileInput
@@ -26,29 +26,23 @@
         accept=".pdf,.doc,.docx"
         hidden
         id="fileInput"
-        type="file"
-      />
+        type="file">
+      <button (click)="reloadFile()" class="reload-button">
+        🔄 Tải lại file
+      </button>
+    </div>
+    <!-- Hiển thị file lấy từ url Backend-->
+    <ngx-doc-viewer *ngIf="!changeFile" [url]="uploadFileUrl" style="width:100%; height:570px;"
+                    viewer="url"></ngx-doc-viewer>
+
+
+    <!-- Chỉ hiển thị PDF nếu có file PDF -->
+    <div *ngIf="selectedFileUrl" class="pdf-preview-container">
+      <iframe [src]="selectedFileUrl"></iframe>
     </div>
 
-    <ngx-doc-viewer *ngIf="selectedFileUrl && selectedFileUrl.includes('blob:')"
-                    [url]="selectedFileUrl"
-                    style="width:100%; height:570px;"
-                    viewer="url">
-    </ngx-doc-viewer>
-
-    <ngx-doc-viewer *ngIf="fileUrl && !selectedFileUrl"
-                    [url]="fileUrl"
-                    style="width:100%; height:570px;"
-                    viewer="url">
-    </ngx-doc-viewer>
-
-    <!-- Only display Word if no PDF is selected -->
-    <div
-      #wordContainer
-      *ngIf="!selectedFileUrl || !selectedFileUrl.includes('blob:')"
-      class="word-preview-container"
-      style="width:100%; height:570px; overflow:auto;">
-    </div>
+    <!-- Chỉ hiển thị Word nếu không có PDF -->
+    <div #wordContainer *ngIf="!selectedFileUrl" class="word-preview-container"></div>
   </div>
 
   <!-- Right content -->
@@ -111,6 +105,7 @@
 
             <textarea
               [(ngModel)]="quickInputText"
+              [attr.maxlength]="totalQuestions"
               class="quick-input-area"
               placeholder="Nhập đáp án tại đây..."
             ></textarea>
@@ -229,9 +224,31 @@
             </div>
           </div>
 
-          <button [disabled]="examForm.invalid" type="submit">Tạo kỳ thi</button>
+          <button [disabled]="examForm.invalid" type="submit">Sửa thông tin</button>
         </form>
       </div>
     </div>
   </div>
 </div>
+<div class="warning-modal" *ngIf="showWarningModal">
+  <div class="warning-modal-content">
+    <h3>Cảnh báo</h3>
+
+    <div class="warning-message">
+      <p>Có {{ missingQuestions.length }} câu hỏi chưa được nhập đáp án:</p>
+      <div class="missing-questions">
+        <span *ngFor="let question of missingQuestions" class="missing-question-tag">
+          Câu {{ question }}
+        </span>
+      </div>
+    </div>
+
+    <p class="question-text">Bạn có muốn tiếp tục nộp bài thi này?</p>
+
+    <div class="modal-buttons">
+      <button class="cancel-btn" (click)="closeWarningModal()">Quay lại nhập đáp án</button>
+      <button class="continue-btn" (click)="continueSubmit()">Tiếp tục nộp bài</button>
+    </div>
+  </div>
+</div>
+

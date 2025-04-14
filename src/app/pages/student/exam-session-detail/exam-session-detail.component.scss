@@ -1,0 +1,154 @@
+$primary-green: #00c853;
+$primary-green-dark: #009624;
+$light-green: #b9f6ca;
+$background-color: #ffffff;
+$card-shadow: 0 4px 12px rgba(0, 200, 83, 0.2);
+
+.search-bar {
+  margin-top: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 20px 0 20px;
+
+
+  input {
+    width: 50%;
+    padding: 12px 18px;
+    font-size: 16px;
+    border: 2px solid $primary-green;
+    border-radius: 10px;
+    outline: none;
+    transition: all 0.3s ease;
+    background: white;
+    box-shadow: $card-shadow;
+
+    &:focus {
+      border-color: $primary-green-dark;
+      box-shadow: 0 0 10px rgba(0, 200, 83, 0.3);
+    }
+  }
+}
+
+.exam-detail__wrap {
+  position: relative;
+  padding: 20px;
+  background: $background-color;
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: $card-shadow;
+    background: white;
+    animation: fadeIn 0.6s ease-in-out;
+  }
+
+  thead {
+    background: linear-gradient(to right, $primary-green, $primary-green-dark);
+    color: white;
+  }
+
+  th,
+  td {
+    padding: 16px 22px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+    transition: background 0.3s ease;
+  }
+
+  tbody tr {
+    &:hover {
+      background-color: $light-green;
+      cursor: pointer;
+      transform: scale(1.01);
+      transition: transform 0.2s ease, background-color 0.3s ease;
+    }
+  }
+
+  .password-form {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 99;
+    width: 500px;
+    height: 250px;
+    border: 2px solid $primary-green;
+    border-radius: 12px;
+    background: white;
+    box-shadow: $card-shadow;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.4s ease;
+
+    &.visible {
+      display: flex;
+      opacity: 1;
+      pointer-events: all;
+      animation: fadeInUp 0.4s ease forwards;
+    }
+
+    .container {
+      width: 100%;
+      text-align: center;
+
+      h2 {
+        margin-bottom: 20px;
+        color: $primary-green-dark;
+      }
+
+      .input-container {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+      }
+
+      .input-box {
+        width: 45px;
+        height: 45px;
+        text-align: center;
+        font-size: 24px;
+        border: none;
+        border-bottom: 3px solid #ccc;
+        outline: none;
+        transition: all 0.3s ease;
+        background: transparent;
+        text-transform: uppercase;
+
+        &:focus {
+          border-bottom-color: $primary-green;
+          transform: scale(1.1);
+        }
+      }
+    }
+  }
+}
+
+// Animations
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -40%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}

@@ -1,102 +1,114 @@
+$primary-color: #4caf50;
+$secondary-color: #f9f9f9;
+$error-color: #e74c3c;
+$input-border-color: #ddd;
+$input-focus-color: rgba(76, 175, 80, 0.5);
+$base-font-size: 16px;
+$heading-font-size: 1.8rem;
+$label-font-size: 1rem;
+$input-font-size: 1rem;
+$button-font-size: 1rem;
+
 li {
   list-style: none;
 }
 
 .container {
-  margin-top: 124px;
-
-  .form-desc {
-    font-size: 2rem;
-    margin-bottom: 8px;
-  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  background-color: $secondary-color;
+  min-height: 100vh;
 
   .form-wrap {
-    margin: 0 auto;
-    padding: 40px 20px;
-    width: 60%;
+    width: 100%;
+    max-width: 800px;
+    background: #fff;
+    margin-top: 140px;
+    padding: 30px 30px 40px 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 
-    .form {
-      padding: 40px 50px;
-      width: 100%;
-      border-radius: 5px;
-      border: 1px solid #ccc;
+    .exam-info {
+      text-align: center;
+      font-size: 2.8rem;
+      font-weight: bold;
+      color: $primary-color;
+      margin-bottom: 20px;
+    }
 
-      .form-heading {
-        margin-bottom: 20px;
-        text-align: center;
+    .row-wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-bottom: 5px;
+    }
+
+    .select-wrapper {
+      margin-bottom: 5px;
+    }
+
+    .input-wrapper {
+      flex: 1 1 calc(50% - 10px);
+      display: flex;
+      flex-direction: column;
+
+      label {
+        font-size: 1.6rem;
+        color: #333;
+        margin-bottom: 5px;
       }
 
-      .input-wrap {
-        display: flex;
-        flex-direction: column;
-
-        input {
-          height: 35px;
-          padding-left: 10px;
-          border-radius: 5px;
-          outline: none;
-          border: 1px solid #ccc;
-        }
+      input,
+      select {
+        height: 40px;
+        padding: 0 10px;
+        border: 1px solid $input-border-color;
+        border-radius: 5px;
+        font-size: $input-font-size;
+        transition: border-color 0.3s, box-shadow 0.3s;
       }
 
-      .exam-type {
-        margin-top: 10px;
-        margin-bottom: 10px;
+      input:focus,
+      select:focus {
+        border-color: $primary-color;
+        box-shadow: 0 0 5px $input-focus-color;
+      }
 
-        .list-wrap {
-          display: flex;
-          align-items: center;
-          position: relative;
-          height: 35px;
-          padding-left: 20px;
-          border: 1px solid #ccc;
-          border-radius: 5px;
+      .error-wrap {
+        margin-top: 5px;
+        height: 15px;
 
-          .exam-type-list {
-            position: absolute;
-            top: 38px;
-            right: 0;
-            z-index: 99;
-            width: 100%;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            background: #ededed;
-
-            .type {
-              padding-top: 5px;
-              padding-bottom: 5px;
-              padding-left: 20px;
-              border-bottom: 1px solid #ccc;
-            }
-
-            .type:hover {
-              opacity: 0.9;
-              cursor: pointer;
-            }
-          }
+        .error {
+          font-size: 0.9rem;
+          color: $error-color;
         }
       }
     }
   }
-
-  .submit {
-    width: 500px;
-    height: 50px;
-    margin-top: 30px;
-    margin-left: 50%;
-    border: none;
-    transform: translateX(-50%);
-    outline: none;
-    color: #fff;
-    background: var(--primary-color);
-  }
-
-  .submit:hover {
-    opacity: 0.9;
-    cursor: pointer;
-  }
 }
 
-.exam-type-list.active {
-  display: none;
+button {
+  width: 100%;
+  height: 45px;
+  margin-top: 20px;
+  background: $primary-color;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: $button-font-size;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+button:hover {
+  background-color: darken($primary-color, 10%);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
 }

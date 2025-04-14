@@ -3,7 +3,7 @@ import {Exam} from '../../../../../core/models/exam.model';
 import {FormsModule} from '@angular/forms';
 import {DatePipe, NgForOf, NgOptimizedImage} from '@angular/common';
 import {ActivatedRoute, Router} from '@angular/router';
-import {ExamService} from '../../../../../core/services/exam/exam.service';
+import {ExamService} from '../../../../../core/services/exam.service';
 
 @Component({
   selector: 'app-exam',
@@ -21,6 +21,8 @@ export class ExamComponent implements OnInit {
   filteredExams: Exam[] = [];
   searchTerm: string = '';
   @Input() exam_session_id!: number;
+  @Input() exam_session_name!: string;
+  @Input() exam_session_description!: string;
 
   constructor(
     private router: Router,
@@ -32,7 +34,9 @@ export class ExamComponent implements OnInit {
   ngOnInit(): void {
     console.log(this.exam_session_id);
     this.route.queryParams.subscribe(params => {
-      this.exam_session_id = params['id'];
+      this.exam_session_id = params['exam_session_id'];
+      this.exam_session_name = params['exam_session_name'];
+      this.exam_session_description = params['exam_session_description'];
     });
     this.getExams();
   }
@@ -56,6 +60,7 @@ export class ExamComponent implements OnInit {
     });
   }
 
+
   filterExam() {
     const normalizedSearchTerm = this.removeVietnameseTones(this.searchTerm.toLowerCase());
     this.filteredExams = this.examList.filter(exam => {
@@ -71,15 +76,24 @@ export class ExamComponent implements OnInit {
   }
 
   navigateToCreatExam() {
-    this.router.navigate(['/teacher/exam-create-type'], {queryParams: {id: this.exam_session_id}});
+    this.router.navigate(['/teacher/exam-create-type'], {
+      queryParams: {
+        exam_session_id: this.exam_session_id,
+        exam_session_name: this.exam_session_name,
+        exam_session_description: this.exam_session_description
+      }
+    });
     console.log(this.exam_session_id);
   }
 
-  editExam(exam_id: number, exam_session_id: number) {
+  editExam(exam_id: number, exam_name: string, exam_session_id: number) {
     this.router.navigate(['/teacher/edit-exam-with-file'], {
       queryParams: {
         exam_id: exam_id,
-        exam_session_id: exam_session_id
+        exam_name: exam_name,
+        exam_session_id: exam_session_id,
+        exam_session_name: this.exam_session_name,
+        exam_session_description: this.exam_session_description
       }
     });
   }

@@ -4,7 +4,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
-export class GetExamResultBySessionIdServiceService {
+export class ExamResultService {
 
   private baseUrl = 'http://localhost:8081/api/exam-result';
 

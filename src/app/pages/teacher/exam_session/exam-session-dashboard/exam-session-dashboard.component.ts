@@ -21,19 +21,25 @@ import {CommonModule} from "@angular/common";
 })
 export class ExamSessionDashboardComponent implements OnInit {
   activeTab: string = "home";
-  // 2 biến này lấy từ params trên trang home teacher
+
   exam_session_id: number = 0;
+  exam_session_name = "";
+  exam_session_description = "";
 
   constructor(private router: Router, private route: ActivatedRoute, private el: ElementRef) {
   }
 
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.route.queryParams.subscribe(params => {
-      this.exam_session_id = params['id'];
+      this.exam_session_id = params['exam_session_id'];
+      this.exam_session_name = params['exam_session_name'];
+      this.exam_session_description = params['exam_session_description'];
     });
-
-
+    localStorage.removeItem("info");
+    localStorage.removeItem("questionNumber");
+    localStorage.removeItem("questions");
+    localStorage.removeItem("answers");
   }
 
   goBack() {

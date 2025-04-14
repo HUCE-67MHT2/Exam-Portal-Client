@@ -12,7 +12,8 @@
       <th>Ngày đóng</th>
       <th>Trạng thái</th>
     </tr>
-    <tr (click)="navigateExamSessionDashBoard(examSession.id)" *ngFor="let examSession of examSessionList">
+    <tr (click)="navigateExamSessionDashBoard(examSession.id, examSession.name, examSession.description)"
+        *ngFor="let examSession of examSessionList">
       <td>
         <p class="exam-name">{{ examSession.name }} - {{ examSession.description }}</p>
         <p class="class-code">Mã lớp: {{ examSession.code }}</p>

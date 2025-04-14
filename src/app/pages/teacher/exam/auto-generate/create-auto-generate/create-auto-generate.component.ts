@@ -1,19 +1,48 @@
-import {Component} from "@angular/core";
-import {HeaderBackComponent} from "../../../../../layout/header-back/header-back.component";
+import {Component, OnInit} from "@angular/core";
+import {ActivatedRoute, Router} from "@angular/router";
+import {CommonModule} from "@angular/common";
 import {QuestionComponent} from "./question/question.component";
 import {InfoComponent} from "./info/info.component";
-import {CommonModule} from "@angular/common";
 
 @Component({
   selector: "app-create-auto-generate",
-  imports: [HeaderBackComponent, QuestionComponent, CommonModule, InfoComponent],
+  standalone: true,
+  imports: [
+    CommonModule,
+    QuestionComponent,
+    InfoComponent,
+  ],
   templateUrl: "./create-auto-generate.component.html",
-  styleUrl: "./create-auto-generate.component.scss",
+  styleUrls: ["./create-auto-generate.component.scss"]
 })
-export class CreateAutoGenerateComponent {
+export class CreateAutoGenerateComponent implements OnInit {
   activeTab: string = "left";
+  exam_session_id = "";
+  exam_session_name = "";
+  exam_session_description = "";
+
+  constructor(private route: ActivatedRoute, private router: Router) {
+  }
+
+  ngOnInit(): void {
+    this.route.queryParams.subscribe(params => {
+      this.exam_session_id = params["exam_session_id"] || "";
+      this.exam_session_name = params["exam_session_name"] || "";
+      this.exam_session_description = params["exam_session_description"] || "";
+    });
+  }
 
   setActiveTab(tab: string) {
     this.activeTab = tab;
+  }
+
+  goBack() {
+    this.router.navigate(["/teacher/exam-create-type"], {
+      queryParams: {
+        exam_session_id: this.exam_session_id,
+        exam_session_name: this.exam_session_name,
+        exam_session_description: this.exam_session_description
+      }
+    });
   }
 }

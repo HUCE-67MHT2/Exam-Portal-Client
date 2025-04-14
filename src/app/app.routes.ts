@@ -6,11 +6,11 @@ import {StudentSignupComponent} from './pages/sign-up/student-signup/student-sig
 import {TeacherSignupComponent} from './pages/sign-up/teacher-signup/teacher-signup.component';
 import {StudentHomeComponent} from './pages/home/student-home/student-home.component';
 import {TeacherHomeComponent} from './pages/home/teacher-home/teacher-home.component';
-import {ExamComponent} from './pages/student/exam/exam.component';
+import {ExamSessionComponent} from './pages/student/exam-session/exam-session.component';
 import {DoTestComponent} from './pages/student/do-test/do-test.component';
 import {ResultsComponent} from './pages/student/results/results.component';
 import {UserFormComponent} from './shared/components/user-form/user-form.component';
-import {ExamDetailComponent} from './pages/student/exam-detail/exam-detail.component';
+import {ExamSessionDetailComponent} from './pages/student/exam-session-detail/exam-session-detail.component';
 import {ExamCreateTypeComponent} from './pages/teacher/exam-create-type/exam-create-type.component';
 import {
   ExamCreateWithFileComponent
@@ -41,15 +41,14 @@ export const routes: Routes = [
   {path: 'sign-up/teacher', component: TeacherSignupComponent},
   {path: 'home/student', component: StudentHomeComponent},
   {path: 'home/teacher', component: TeacherHomeComponent},
-  {path: 'student/exam', component: ExamComponent},
+  {path: 'student/exam-session', component: ExamSessionComponent},
   {path: 'student/do-test', component: DoTestComponent},
   {path: 'student/results', component: ResultsComponent},
   {path: 'user-form', component: UserFormComponent},
   {path: 'student/user', component: StudentUserComponent},
   {path: 'teacher/user', component: TeacherUserComponent},
   {path: 'student/results', component: ResultsComponent},
-  {path: 'student/exam-detail/:examCode', component: ExamDetailComponent},
-  {path: 'student/exam-detail', component: ExamDetailComponent},
+  {path: 'student/exam-session-detail', component: ExamSessionDetailComponent},
   {path: 'teacher/exam-create-type', component: ExamCreateTypeComponent},
   {path: 'teacher/exam-create-with-file', component: ExamCreateWithFileComponent},
   {path: 'teacher/create-exam-session', component: CreateExamSessionComponent},

@@ -1,4 +1,4 @@
-// exam-answer.service.ts
+// exam-session-answer.service.ts
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
@@ -22,5 +22,13 @@ export class QuestionAnswerService {
 
   getUploadQuestionAnswers(examId: number): Observable<any> {
     return this.http.get(`${this.baseUrl}/upload`, {params: {examId: examId}});
+  }
+
+  updateQuestionAnswers(examId: number, answers: { [key: number]: string }): Observable<any> {
+    const payload = {
+      examId,
+      answers,
+    };
+    return this.http.post(`${this.baseUrl}/update`, payload);
   }
 }

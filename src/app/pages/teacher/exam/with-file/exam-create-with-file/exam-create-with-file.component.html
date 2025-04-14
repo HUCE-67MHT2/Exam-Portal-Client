@@ -103,6 +103,7 @@
 
             <textarea
               [(ngModel)]="quickInputText"
+              [attr.maxlength]="totalQuestions"
               class="quick-input-area"
               placeholder="Nhập đáp án tại đây..."
             ></textarea>
@@ -228,3 +229,25 @@
     </div>
   </div>
 </div>
+<div class="warning-modal" *ngIf="showWarningModal">
+  <div class="warning-modal-content">
+    <h3>Cảnh báo</h3>
+
+    <div class="warning-message">
+      <p>Có {{ missingQuestions.length }} câu hỏi chưa được nhập đáp án:</p>
+      <div class="missing-questions">
+        <span *ngFor="let question of missingQuestions" class="missing-question-tag">
+          Câu {{ question }}
+        </span>
+      </div>
+    </div>
+
+    <p class="question-text">Bạn có muốn tiếp tục nộp bài thi này?</p>
+
+    <div class="modal-buttons">
+      <button class="cancel-btn" (click)="closeWarningModal()">Quay lại nhập đáp án</button>
+      <button class="continue-btn" (click)="continueSubmit()">Tiếp tục nộp bài</button>
+    </div>
+  </div>
+</div>
+
