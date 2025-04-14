@@ -5,8 +5,8 @@ import {ExamSessionService} from "../../../../../core/services/exam-session.serv
 import {ExamSessionEnrollmentService} from '../../../../../core/services/exam-session-enrollment.service';
 import {Router} from "@angular/router";
 import {ToastrService} from "ngx-toastr";
-import {ExamSession} from '../../../../../core/models/examSession.model';
-import {StudentInExamSessionEnrollments} from '../../../../../core/models/examSessionEnrollments.model'
+import {ExamSession} from '../../../../../core/models/exam-session.model';
+import {StudentInExamSessionEnrollments} from '../../../../../core/models/exam-session-enrollments.model'
 
 @Component({
   selector: "app-home",
@@ -119,7 +119,8 @@ export class HomeComponent implements OnInit {
                 this.router.navigate(["teacher/exam-session-dashboard"], {
                   queryParams: {
                     id: this.exam_session_id
-                  } });
+                  }
+                });
               }, 1000);
             }
           },

@@ -103,9 +103,9 @@
 
             <textarea
               [(ngModel)]="quickInputText"
+              [attr.maxlength]="totalQuestions"
               class="quick-input-area"
               placeholder="Nhập đáp án tại đây..."
-              [attr.maxlength]="totalQuestions"
             ></textarea>
             <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
             <p class="answer-count">

@@ -1,6 +1,6 @@
 import {Component, HostListener, OnInit} from "@angular/core";
 import {Router} from "@angular/router";
-import {UserService} from "../../core/services/user/user.service";
+import {UserService} from "../../core/services/user.service";
 import {CommonModule, NgIf} from "@angular/common";
 
 @Component({

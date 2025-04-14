@@ -2,10 +2,10 @@
   <app-header-student></app-header-student>
   <div class="search-bar">
     <input
-      type="text"
-      [(ngModel)]="searchTerm"
       (input)="filterExam()"
+      [(ngModel)]="searchTerm"
       placeholder="Nhập tên hoặc mô tả bài thi để tìm kiếm..."
+      type="text"
     />
   </div>
   <main (click)="closePasswordModal($event)" class="exam-detail__wrap">
@@ -22,11 +22,11 @@
       </thead>
       <tbody>
       <tr
-        *ngFor="let exam of filteredExams"
         (click)="openExamWithPassword(exam , $event)"
+        *ngFor="let exam of filteredExams"
       >
         <td>{{ exam.name }}</td>
-        <td>{{ exam.type}}</td>
+        <td>{{ exam.type }}</td>
         <td>{{ exam.duration }}</td>
         <td>{{ exam.endDate | date: 'HH:mm dd/MM/yyyy' }}</td>
         <td>{{ exam.startDate | date: 'HH:mm dd/MM/yyyy' }}</td>

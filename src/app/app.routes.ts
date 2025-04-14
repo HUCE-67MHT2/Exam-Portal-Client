@@ -12,13 +12,23 @@ import {ResultsComponent} from './pages/student/results/results.component';
 import {UserFormComponent} from './shared/components/user-form/user-form.component';
 import {ExamSessionDetailComponent} from './pages/student/exam-session-detail/exam-session-detail.component';
 import {ExamCreateTypeComponent} from './pages/teacher/exam-create-type/exam-create-type.component';
-import {ExamCreateWithFileComponent} from './pages/teacher/exam/with-file/exam-create-with-file/exam-create-with-file.component';
-import {CreateExamSessionComponent} from './pages/teacher/exam_session/create-exam-session/create-exam-session.component';
-import {ExamSessionDashboardComponent} from './pages/teacher/exam_session/exam-session-dashboard/exam-session-dashboard.component';
-import {CreateAutoGenerateComponent} from './pages/teacher/exam/auto-generate/create-auto-generate/create-auto-generate.component'
+import {
+  ExamCreateWithFileComponent
+} from './pages/teacher/exam/with-file/exam-create-with-file/exam-create-with-file.component';
+import {
+  CreateExamSessionComponent
+} from './pages/teacher/exam_session/create-exam-session/create-exam-session.component';
+import {
+  ExamSessionDashboardComponent
+} from './pages/teacher/exam_session/exam-session-dashboard/exam-session-dashboard.component';
+import {
+  CreateAutoGenerateComponent
+} from './pages/teacher/exam/auto-generate/create-auto-generate/create-auto-generate.component'
 import {LoadingComponent} from './layout/loadings/loading/loading.component';
 import {LoadingLineComponent} from './layout/loadings/loading-line/loading-line.component';
-import {EditExamWithFileComponent} from './pages/teacher/exam/with-file/edit-exam-with-file/edit-exam-with-file.component';
+import {
+  EditExamWithFileComponent
+} from './pages/teacher/exam/with-file/edit-exam-with-file/edit-exam-with-file.component';
 import {TeacherUserComponent} from './pages/user/teacher-user/teacher-user.component';
 import {StudentUserComponent} from './pages/user/student-user/student-user.component';
 

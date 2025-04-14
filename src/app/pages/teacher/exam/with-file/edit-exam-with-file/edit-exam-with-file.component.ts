@@ -90,6 +90,7 @@ export class EditExamWithFileComponent implements OnInit {
     this.getExamById()
     this.getUploadExamQuestionAnswers()
   }
+
   //=========== lây dữ liệu từ backend ===========================================
   getUploadExamQuestionAnswers = () => {
     this.examQuestionAnswerService.getUploadQuestionAnswers(this.exam_id).subscribe(
@@ -97,7 +98,11 @@ export class EditExamWithFileComponent implements OnInit {
         this.totalQuestions = response.length / 4;
 
         // Lưu đáp án ban đầu vào `initialAnswers`
-        this.initialAnswers = response.reduce((acc: { [key: number]: string }, item: { correct: boolean; questionNo: number; answerText: string }) => {
+        this.initialAnswers = response.reduce((acc: { [key: number]: string }, item: {
+          correct: boolean;
+          questionNo: number;
+          answerText: string
+        }) => {
           if (item.correct) {
             acc[item.questionNo] = item.answerText;
           }
@@ -105,7 +110,7 @@ export class EditExamWithFileComponent implements OnInit {
         }, {});
 
         // Gán dữ liệu hiện tại vào `answers`
-        this.answers = { ...this.initialAnswers };
+        this.answers = {...this.initialAnswers};
       },
       (error) => {
         console.error("Lỗi khi tải đáp án:", error);
@@ -150,7 +155,7 @@ export class EditExamWithFileComponent implements OnInit {
 
   //=========== các hàm xử lý phần model input và tab-left ========================
   getQuestions(): number[] {
-    return Array.from({ length: this.totalQuestions }, (_, i) => i);
+    return Array.from({length: this.totalQuestions}, (_, i) => i);
   }
 
   onTotalQuestionsChange() {
@@ -243,8 +248,7 @@ export class EditExamWithFileComponent implements OnInit {
       const fileURL = URL.createObjectURL(file);
       this.selectedFileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(fileURL);
 
-    }
-    else if (file.type === "application/vnd.openxmlformats-officedocument.wordprocessingml.document") {
+    } else if (file.type === "application/vnd.openxmlformats-officedocument.wordprocessingml.document") {
       const reader = new FileReader();
       reader.onload = (e: any) => {
         const arrayBuffer = e.target.result;

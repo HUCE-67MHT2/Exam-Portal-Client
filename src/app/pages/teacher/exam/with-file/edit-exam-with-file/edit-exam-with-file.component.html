@@ -3,7 +3,7 @@
     <div class="logo">Online Exam Portal</div>
     <nav class="breadcrumb">
       <span>►</span>
-      <span>{{exam_name}}</span>
+      <span>{{ exam_name }}</span>
     </nav>
   </div>
   <div class="return-button">
@@ -32,7 +32,8 @@
       </button>
     </div>
     <!-- Hiển thị file lấy từ url Backend-->
-    <ngx-doc-viewer *ngIf="!changeFile" [url]="uploadFileUrl" viewer="url" style="width:100%; height:570px;"></ngx-doc-viewer>
+    <ngx-doc-viewer *ngIf="!changeFile" [url]="uploadFileUrl" style="width:100%; height:570px;"
+                    viewer="url"></ngx-doc-viewer>
 
 
     <!-- Chỉ hiển thị PDF nếu có file PDF -->
@@ -104,9 +105,9 @@
 
             <textarea
               [(ngModel)]="quickInputText"
+              [attr.maxlength]="totalQuestions"
               class="quick-input-area"
               placeholder="Nhập đáp án tại đây..."
-              [attr.maxlength]="totalQuestions"
             ></textarea>
             <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
             <p class="answer-count">
