@@ -23,4 +23,5 @@ export class UserService {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     return this.http.get(`${this.baseUrl}/get/info/user`, {headers, responseType: 'text'});
   }
+
 }

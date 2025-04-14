@@ -31,7 +31,7 @@
     <!-- Phần thông tin cá nhân -->
     <div class="personal-info-section">
       <h2>Thông tin cá nhân</h2>
-      <form>
+      <form (ngSubmit)="saveInfo()"  [formGroup]="userForm">
         <div class="form-group">
           <input [value]="UserInfo.user.fullName" id="fullname" name="fullname" placeholder="Họ tên" type="text">
         </div>

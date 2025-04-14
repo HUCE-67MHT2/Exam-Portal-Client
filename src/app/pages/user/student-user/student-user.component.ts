@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {UserFormComponent} from '../../../shared/components/user-form/user-form.component';
-import {UserService} from '../../../core/services/user/user.service';
+import {UserService} from '../../../core/services/user.service';
 import {ToastrService} from 'ngx-toastr';
 import {OnInit} from '@angular/core';
 @Component({
@@ -14,7 +14,23 @@ import {OnInit} from '@angular/core';
 })
 export class StudentUserComponent implements OnInit {
   name ='quan bui';
-  userInfo = {};
+  userInfo = {user : {
+      id: undefined,
+      username: undefined,
+      password: undefined,
+      enabled: undefined,
+      fullName: undefined,
+      gender: undefined,
+      birthday: undefined,
+      address: undefined,
+      email: undefined,
+      telephone: undefined,
+      avatarUrl: undefined,
+      school: undefined,
+      className: undefined,
+      status: undefined,
+      createdAt: undefined,
+      updatedAt: undefined,}};
   constructor(private userService: UserService, private toastr: ToastrService) {
 
   }
