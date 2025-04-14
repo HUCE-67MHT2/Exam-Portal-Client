@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ExamSession } from '../../../core/models/examSession.model';
+import { ExamSession } from '../../../core/models/exam-session.model';
 import { ExamSessionEnrollmentService } from '../../../core/services/exam-session-enrollment.service';
 import { ToastrService } from 'ngx-toastr';
 import {NgForOf, NgIf} from '@angular/common';
