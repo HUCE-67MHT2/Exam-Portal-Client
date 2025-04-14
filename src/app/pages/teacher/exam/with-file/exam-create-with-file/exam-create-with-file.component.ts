@@ -6,7 +6,7 @@ import * as docx from "docx-preview";
 import {ExamService} from "../../../../../core/services/exam.service";
 import {LoadingComponent} from "../../../../../layout/loadings/loading/loading.component";
 import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
-import {QuestionAnswerService} from "../../../../../core/services/QuestionAnswer.service";
+import {QuestionAnswerService} from "../../../../../core/services/question-answer.service";
 import {ToastrService} from 'ngx-toastr';
 
 @Component({

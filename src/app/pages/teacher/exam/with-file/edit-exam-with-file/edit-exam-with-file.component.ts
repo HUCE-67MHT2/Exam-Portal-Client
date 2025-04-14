@@ -6,7 +6,7 @@ import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
 import {ActivatedRoute, Router} from '@angular/router';
 import * as docx from 'docx-preview';
 import {ExamService} from '../../../../../core/services/exam.service';
-import {QuestionAnswerService} from '../../../../../core/services/QuestionAnswer.service';
+import {QuestionAnswerService} from '../../../../../core/services/question-answer.service';
 import {NgxDocViewerModule} from 'ngx-doc-viewer';
 import {ToastrService} from 'ngx-toastr';
 
