@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {SearchBarComponent} from "../../../../../layout/search-bar/search-bar.component";
 import {ExamResultService} from '../../../../../core/services/exam-result.service'
-import {StudentResultInfo} from '../../../../../core/models/StudentResultInfo.model';
+import {StudentResultInfo} from '../../../../../core/models/student-result-info.model';
 import {DatePipe, NgForOf} from '@angular/common';
 
 @Component({
