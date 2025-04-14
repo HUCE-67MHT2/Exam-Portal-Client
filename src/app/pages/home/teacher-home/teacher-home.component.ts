@@ -4,8 +4,8 @@ import {CreateButtonComponent} from '../../../layout/button/create-button/create
 import {SearchBarComponent} from '../../../layout/search-bar/search-bar.component';
 import {HeaderComponent} from '../../../layout/header/header.component';
 import {DatePipe, NgForOf} from '@angular/common';
-import {ExamSession} from '../../../core/models/examSession.model';
-import {ExamSessionService} from '../../../core/services/exam_session/exam-session.service';
+import {ExamSession} from '../../../core/models/exam-session.model';
+import {ExamSessionService} from '../../../core/services/exam-session.service';
 
 @Component({
   selector: 'app-home-teacher',

@@ -1,11 +1,11 @@
 import {Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren,} from "@angular/core";
 import {HeaderStudentComponent} from "../../../layout/header/header-student/header-student.component";
 import {DatePipe, NgForOf} from "@angular/common";
-import {ExamSession} from '../../../core/models/examSession.model';
+import {ExamSession} from '../../../core/models/exam-session.model';
 import {Exam} from '../../../core/models/exam.model';
-import {ExamService} from '../../../core/services/exam/exam.service';
+import {ExamService} from '../../../core/services/exam.service';
 import {FormsModule} from '@angular/forms';
-import {ExamSessionService} from '../../../core/services/exam_session/exam-session.service';
+import {ExamSessionService} from '../../../core/services/exam-session.service';
 import {ToastrService} from 'ngx-toastr';
 import {Router} from '@angular/router';
 
@@ -121,6 +121,7 @@ export class ExamSessionDetailComponent implements OnInit {
       this.onEnter(); // Gọi hàm xử lý khi nhấn Enter
     }
   }
+
   openExamWithPassword(exam: Exam, event: Event) {
     event.stopPropagation();
     this.selectedExam = exam;
@@ -140,7 +141,7 @@ export class ExamSessionDetailComponent implements OnInit {
     this.examSessionService.checkPassword(this.password, this.examSession?.id).subscribe({
       next: (response) => {
         if (response.status === 200) {
-          this.toastr.success("Password Correct!", '', { timeOut: 2000 });
+          this.toastr.success("Password Correct!", '', {timeOut: 2000});
           localStorage.setItem('selectedExam', JSON.stringify(this.selectedExam));
           if (this.selectedExam?.type === "upload-file") {
             this.router.navigate(["student/do-test"]);
@@ -150,7 +151,7 @@ export class ExamSessionDetailComponent implements OnInit {
         }
       },
       error: (error) => {
-        this.toastr.error(error.error || "Sai mật khẩu", '', { timeOut: 2000 });
+        this.toastr.error(error.error || "Sai mật khẩu", '', {timeOut: 2000});
       }
     });
   }

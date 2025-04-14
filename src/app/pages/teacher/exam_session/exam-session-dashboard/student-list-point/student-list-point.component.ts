@@ -2,8 +2,8 @@ import {Component, Input, OnInit} from '@angular/core';
 import {SearchBarComponent} from "../../../../../layout/search-bar/search-bar.component";
 import {
   GetExamResultBySessionIdServiceService
-} from '../../../../../core/services/exam-result/get-exam-result-by-sessionId.service'
-import {StudentResultInfo} from '../../../../../core/models/StudentResultInfo.model';
+} from '../../../../../core/services/get-exam-result-by-session-id.service'
+import {StudentResultInfo} from '../../../../../core/models/student-result-info.model';
 import {DatePipe, NgForOf} from '@angular/common';
 
 @Component({

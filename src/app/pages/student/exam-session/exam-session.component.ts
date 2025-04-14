@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { ExamSession } from '../../../core/models/examSession.model';
-import { ExamSessionEnrollmentService } from '../../../core/services/exam-session-enrollments/exam-session-enrollment.service';
-import { ToastrService } from 'ngx-toastr';
+import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {ExamSession} from '../../../core/models/exam-session.model';
+import {ExamSessionEnrollmentService} from '../../../core/services/exam-session-enrollment.service';
+import {ToastrService} from 'ngx-toastr';
 import {NgForOf, NgIf} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {HeaderStudentComponent} from '../../../layout/header/header-student/header-student.component';
@@ -34,7 +34,8 @@ export class ExamSessionComponent implements OnInit {
     private router: Router,
     private toastr: ToastrService,
     private examSessionEnrollmentService: ExamSessionEnrollmentService
-  ) {}
+  ) {
+  }
 
   ngOnInit() {
     this.loadExamSessions();

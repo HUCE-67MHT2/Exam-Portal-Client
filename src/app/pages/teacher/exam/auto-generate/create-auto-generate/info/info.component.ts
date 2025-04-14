@@ -1,11 +1,10 @@
-import { Component, OnInit, OnDestroy, Input } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { Router } from "@angular/router";
-import { ReactiveFormsModule } from "@angular/forms";
-import { ToastrService } from "ngx-toastr";
-import { ExamService } from "../../../../../../core/services/exam/exam.service";
-import { QuestionService } from "../../../../../../core/services/question/question.service";
-import { NgIf } from "@angular/common";
+import {Component, Input, OnDestroy, OnInit} from "@angular/core";
+import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
+import {Router} from "@angular/router";
+import {ToastrService} from "ngx-toastr";
+import {ExamService} from "../../../../../../core/services/exam.service";
+import {QuestionService} from "../../../../../../core/services/question.service";
+import {NgIf} from "@angular/common";
 
 @Component({
   selector: "app-info",

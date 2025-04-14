@@ -3,7 +3,7 @@ import {Exam} from '../../../../../core/models/exam.model';
 import {FormsModule} from '@angular/forms';
 import {DatePipe, NgForOf, NgOptimizedImage} from '@angular/common';
 import {ActivatedRoute, Router} from '@angular/router';
-import {ExamService} from '../../../../../core/services/exam/exam.service';
+import {ExamService} from '../../../../../core/services/exam.service';
 
 @Component({
   selector: 'app-exam',
@@ -81,11 +81,12 @@ export class ExamComponent implements OnInit {
         exam_session_id: this.exam_session_id,
         exam_session_name: this.exam_session_name,
         exam_session_description: this.exam_session_description
-      }});
+      }
+    });
     console.log(this.exam_session_id);
   }
 
-  editExam(exam_id: number,exam_name:string ,exam_session_id: number) {
+  editExam(exam_id: number, exam_name: string, exam_session_id: number) {
     this.router.navigate(['/teacher/edit-exam-with-file'], {
       queryParams: {
         exam_id: exam_id,

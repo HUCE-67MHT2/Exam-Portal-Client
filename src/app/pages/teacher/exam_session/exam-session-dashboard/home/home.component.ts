@@ -1,12 +1,12 @@
 import {CommonModule, DatePipe, NgOptimizedImage} from "@angular/common";
 import {Component, Input, OnInit} from "@angular/core";
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
-import {ExamSessionService} from "../../../../../core/services/exam_session/exam-session.service";
-import {ExamSessionEnrollmentService} from '../../../../../core/services/exam-session-enrollments/exam-session-enrollment.service';
+import {ExamSessionService} from "../../../../../core/services/exam-session.service";
+import {ExamSessionEnrollmentService} from '../../../../../core/services/exam-session-enrollment.service';
 import {Router} from "@angular/router";
 import {ToastrService} from "ngx-toastr";
-import {ExamSession} from '../../../../../core/models/examSession.model';
-import {StudentInExamSessionEnrollments} from '../../../../../core/models/examSessionEnrollments.model'
+import {ExamSession} from '../../../../../core/models/exam-session.model';
+import {StudentInExamSessionEnrollments} from '../../../../../core/models/exam-session-enrollments.model'
 
 @Component({
   selector: "app-home",
@@ -119,7 +119,8 @@ export class HomeComponent implements OnInit {
                 this.router.navigate(["teacher/exam-session-dashboard"], {
                   queryParams: {
                     id: this.exam_session_id
-                  } });
+                  }
+                });
               }, 1000);
             }
           },

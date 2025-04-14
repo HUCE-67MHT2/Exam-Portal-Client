@@ -3,10 +3,10 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {NgForOf, NgIf} from "@angular/common";
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators,} from "@angular/forms";
 import * as docx from "docx-preview";
-import {ExamService} from "../../../../../core/services/exam/exam.service";
+import {ExamService} from "../../../../../core/services/exam.service";
 import {LoadingComponent} from "../../../../../layout/loadings/loading/loading.component";
 import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
-import {QuestionAnswerService} from "../../../../../core/services/question-answer/QuestionAnswer.service";
+import {QuestionAnswerService} from "../../../../../core/services/question-answer.service";
 import {ToastrService} from 'ngx-toastr';
 
 @Component({
