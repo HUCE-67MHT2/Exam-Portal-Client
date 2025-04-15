@@ -46,20 +46,37 @@ export class DoTestComponent implements OnInit {
     }
     this.fileUrl = this.convertToPreviewUrl(this.exam?.fileUrl);
     console.log(this.exam?.totalQuestions);
-    this.startTest();
+    this.loadExamState()
   }
 
   //====================Logic cho testing========================
-  startTest = () => {
-    this.examService.startTest(this.exam?.id).subscribe({
-      next: data => {
-        console.log(data);
-      },
-      error: error => {
-        console.error('Error:', error);
-      }
-    })
+
+  loadExamState() {
+    if (this.exam?.id) {
+      this.examService.getTestState(this.exam.id).subscribe({
+        next: response => {
+          console.log("Trạng thái bài thi:", response);
+
+          // Tạo mảng rỗng theo số lượng câu hỏi
+          const total = this.exam?.totalQuestions || 0;
+          this.answers = Array(total).fill("");
+
+          // Đổ dữ liệu từ API vào answers
+          for (const ans of response.answers) {
+            const index = ans.questionNo - 1;
+            if (index >= 0 && index < total) {
+              this.answers[index] = ans.answerText;
+            }
+          }
+        },
+        error: (err) => {
+          console.error("Lỗi chi tiết:", err);
+          console.error("Thông báo lỗi:", err.error?.message); // đây là dòng quan trọng
+        }
+      });
+    }
   }
+
 
   autoSaveAnswer=()=> {
     if (this.exam?.id) {

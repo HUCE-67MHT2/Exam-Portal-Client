@@ -1,6 +1,7 @@
 import {Injectable} from "@angular/core";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
+import {ExamStateResponse} from '../models/exam-upload-state.model';
 
 @Injectable({
   providedIn: "root",
@@ -43,5 +44,11 @@ export class ExamService {
     const token = localStorage.getItem('authToken');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     return this.http.post<any>(`${this.baseUrl}/start-test/${examId}`, null, {headers, observe: 'response'});
+  }
+
+  getTestState(examId: number) {
+    const token = localStorage.getItem('authToken');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.post<ExamStateResponse>(`${this.baseUrl}/get/test/state/${examId}`, {}, { headers });
   }
 }
