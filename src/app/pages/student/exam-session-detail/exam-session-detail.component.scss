@@ -1,183 +1,273 @@
-$primary-green: #00c853;
-$primary-green-dark: #009624;
-$light-green: #b9f6ca;
-$background-color: #ffffff;
-$card-shadow: 0 4px 12px rgba(0, 200, 83, 0.2);
+// Modern Color Palette
+    $primary-green: #00c853;
+    $primary-green-dark: #009624;
+    $primary-green-light: #b9f6ca;
+    $accent-color: #304ffe;
+    $background-color: #f7f9fc;
+    $text-dark: #2c3e50;
+    $text-light: #7f8c8d;
+    $shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.05);
+    $shadow-medium: 0 15px 35px rgba(0, 200, 83, 0.15);
+    $shadow-hover: 0 20px 40px rgba(0, 200, 83, 0.2);
+    $transition-standard: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 
-.search-bar {
-  margin-top: 80px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px 20px 0 20px;
-
-
-  input {
-    width: 50%;
-    padding: 12px 18px;
-    font-size: 16px;
-    border: 2px solid $primary-green;
-    border-radius: 10px;
-    outline: none;
-    transition: all 0.3s ease;
-    background: white;
-    box-shadow: $card-shadow;
-
-    &:focus {
-      border-color: $primary-green-dark;
-      box-shadow: 0 0 10px rgba(0, 200, 83, 0.3);
+    .main-container {
+      background-color: $background-color;
+      min-height: 100vh;
     }
-  }
-}
 
-.exam-detail__wrap {
-  position: relative;
-  padding: 20px;
-  background: $background-color;
-
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: $card-shadow;
-    background: white;
-    animation: fadeIn 0.6s ease-in-out;
-  }
-
-  thead {
-    background: linear-gradient(to right, $primary-green, $primary-green-dark);
-    color: white;
-  }
-
-  th,
-  td {
-    padding: 16px 22px;
-    text-align: left;
-    border-bottom: 1px solid #eee;
-    transition: background 0.3s ease;
-  }
-
-  tbody tr {
-    &:hover {
-      background-color: $light-green;
-      cursor: pointer;
-      transform: scale(1.01);
-      transition: transform 0.2s ease, background-color 0.3s ease;
-    }
-  }
-
-  .password-form {
-    display: none;
-    align-items: center;
-    justify-content: center;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 99;
-    width: 500px;
-    height: auto;
-    min-height: 320px;
-    border: 2px solid $primary-green;
-    border-radius: 12px;
-    background: white;
-    box-shadow: $card-shadow;
-    opacity: 0;
-    pointer-events: none;
-    transition: all 0.4s ease;
-    padding: 25px;
-
-    &.visible {
+    .search-bar {
+      margin-top: 80px;
       display: flex;
-      opacity: 1;
-      pointer-events: all;
-      animation: fadeInUp 0.4s ease forwards;
-    }
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      position: relative;
+      z-index: 1;
 
-    .container {
-      width: 100%;
-      text-align: center;
+      input {
+        width: 60%;
+        padding: 16px 24px;
+        font-size: 16px;
+        border: none;
+        border-radius: 16px;
+        outline: none;
+        transition: $transition-standard;
+        background: white;
+        box-shadow: $shadow-soft;
+        color: $text-dark;
 
-      .exam-info {
-        margin-bottom: 25px;
-
-        h2 {
-          color: $primary-green-dark;
-          margin-bottom: 12px;
-          font-size: 22px;
+        &::placeholder {
+          color: rgba($text-light, 0.7);
         }
 
-        .exam-details {
-          display: flex;
-          justify-content: center;
-          gap: 30px;
+        &:focus {
+          box-shadow: $shadow-medium;
+          transform: translateY(-2px);
+        }
+      }
+    }
 
-          p {
-            margin: 5px 0;
-            color: #555;
+    .exam-detail__wrap {
+      position: relative;
+      padding: 20px 30px 40px;
+      background: $background-color;
+      max-width: 1400px;
+      margin: 0 auto;
 
-            span {
-              font-weight: 600;
-              color: #333;
+      table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        margin-top: 20px;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: $shadow-soft;
+        background: white;
+        animation: fadeIn 0.7s cubic-bezier(0.19, 1, 0.22, 1);
+      }
+
+      thead {
+        background: linear-gradient(135deg, $primary-green, $primary-green-dark);
+        color: white;
+
+        th {
+          font-weight: 600;
+          letter-spacing: 0.5px;
+          text-transform: uppercase;
+          font-size: 14px;
+          padding: 18px 24px;
+        }
+      }
+
+      th, td {
+        padding: 18px 24px;
+        text-align: left;
+        border-bottom: 1px solid rgba(#eee, 0.7);
+        transition: $transition-standard;
+      }
+
+      tbody tr {
+        position: relative;
+        transition: $transition-standard;
+
+        &:last-child td {
+          border-bottom: none;
+        }
+
+        &:hover {
+          background-color: rgba($primary-green-light, 0.1);
+          cursor: pointer;
+          transform: translateY(-3px);
+          box-shadow: 0 7px 14px rgba(0, 200, 83, 0.1);
+          z-index: 1;
+
+          td {
+            color: $primary-green-dark;
+          }
+        }
+
+        &:active {
+          transform: translateY(0px);
+          background-color: rgba($primary-green-light, 0.2);
+        }
+      }
+
+      .password-form {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.4);
+        backdrop-filter: blur(8px);
+        z-index: 100;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+
+        &.visible {
+          opacity: 1;
+          pointer-events: all;
+
+          .container {
+            animation: modalSlideIn 0.5s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+          }
+        }
+
+        .container {
+          width: 480px;
+          max-width: 90%;
+          background: white;
+          border-radius: 20px;
+          padding: 35px;
+          text-align: center;
+          box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+          transform: translateY(30px);
+          opacity: 0;
+
+          .exam-info {
+            margin-bottom: 30px;
+            padding-bottom: 25px;
+            border-bottom: 1px solid rgba(#eee, 0.7);
+
+            h2 {
+              color: $text-dark;
+              margin-bottom: 16px;
+              font-size: 24px;
+              font-weight: 700;
+            }
+
+            .exam-details {
+              display: flex;
+              justify-content: center;
+              flex-wrap: wrap;
+              gap: 30px;
+
+              p {
+                margin: 5px 0;
+                color: $text-light;
+                font-size: 15px;
+
+                span {
+                  font-weight: 600;
+                  color: $text-dark;
+                  display: block;
+                  margin-bottom: 4px;
+                }
+              }
+            }
+          }
+
+          h3 {
+            margin-bottom: 30px;
+            color: $text-dark;
+            font-size: 18px;
+            font-weight: 500;
+          }
+
+          .input-container {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 20px;
+          }
+
+          .input-box {
+            width: 50px;
+            height: 60px;
+            text-align: center;
+            font-size: 28px;
+            font-weight: 600;
+            border: none;
+            border-radius: 12px;
+            background: rgba(#f5f5f5, 0.8);
+            outline: none;
+            transition: $transition-standard;
+            text-transform: uppercase;
+
+            &:focus {
+              background: white;
+              box-shadow: 0 0 0 2px $primary-green, 0 5px 15px rgba(0, 200, 83, 0.2);
+              transform: translateY(-5px);
+            }
+
+            &:not(:placeholder-shown) {
+              color: $primary-green-dark;
             }
           }
         }
       }
+    }
 
-      h3 {
-        margin-bottom: 20px;
-        color: #555;
-        font-size: 18px;
+    // Enhanced Animations
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes modalSlideIn {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    // Add responsive styles for mobile
+    @media (max-width: 768px) {
+      .search-bar input {
+        width: 90%;
       }
 
-      .input-container {
-        display: flex;
-        gap: 15px;
-        justify-content: center;
-      }
+      .exam-detail__wrap {
+        padding: 15px;
 
-      .input-box {
-        width: 45px;
-        height: 45px;
-        text-align: center;
-        font-size: 24px;
-        border: none;
-        border-bottom: 3px solid #ccc;
-        outline: none;
-        transition: all 0.3s ease;
-        background: transparent;
-        text-transform: uppercase;
+        table {
+          display: block;
+          overflow-x: auto;
+        }
 
-        &:focus {
-          border-bottom-color: $primary-green;
-          transform: scale(1.1);
+        .password-form .container {
+          padding: 25px 20px;
+
+          .input-box {
+            width: 40px;
+            height: 50px;
+            font-size: 24px;
+          }
         }
       }
     }
-  }
-}
-
-// Animations
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translate(-50%, -40%);
-  }
-  to {
-    opacity: 1;
-    transform: translate(-50%, -50%);
-  }
-}

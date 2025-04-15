@@ -129,8 +129,13 @@ export class ExamSessionDetailComponent implements OnInit {
     this.isPassword = true;
     this.inputs = new Array(6).fill("");
     this.password = "";
+
     setTimeout(() => {
-      this.inputBoxes.first?.nativeElement.focus(); // focus vào ô đầu tiên
+      // Clear all input fields and focus on the first one
+      this.inputBoxes.forEach(input => {
+        input.nativeElement.value = "";
+      });
+      this.inputBoxes.first?.nativeElement.focus();
     });
   }
 
@@ -168,10 +173,13 @@ export class ExamSessionDetailComponent implements OnInit {
   }
 
   closePasswordModal(event: Event) {
-    if (
-      this.isPassword &&
-      !this.passwordForm.nativeElement.contains(event.target)
-    ) {
+    // Only proceed if the modal is open
+    if (!this.isPassword) return;
+
+    const containerElement = this.passwordForm.nativeElement.querySelector('.container');
+
+    if (!containerElement.contains(event.target) ||
+      event.target === this.passwordForm.nativeElement) {
       this.isPassword = false;
     }
   }
