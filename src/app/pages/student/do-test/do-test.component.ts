@@ -25,6 +25,8 @@ export class DoTestComponent implements OnInit {
   fileUrl = "";
   showConfirmModal: boolean = false; // Trạng thái hiển thị modal
 
+
+
   @ViewChild('questionGrid') questionGrid!: ElementRef;
   @ViewChild('answerButtons') answerButtons!: ElementRef;
 
@@ -33,7 +35,6 @@ export class DoTestComponent implements OnInit {
     private examService: ExamService,
     private StudentAnswerService: StudentAnswerService,
   ) {
-    this.startCountdown();
   }
 
   autoSaveTimeout: any = null;
@@ -50,12 +51,27 @@ export class DoTestComponent implements OnInit {
   }
 
   //====================Logic cho testing========================
+  endTime = new Date();
 
   loadExamState() {
     if (this.exam?.id) {
       this.examService.getTestState(this.exam.id).subscribe({
         next: response => {
           console.log("Trạng thái bài thi:", response);
+
+          //lấy deadline bài thi
+          this.endTime = this.parseDateTime(response.endTime);
+
+          // Tính thời gian còn lại
+          const now = new Date();
+          const timeLeftInMs = this.endTime.getTime() - now.getTime();
+          if (timeLeftInMs > 0) {
+            this.counter = Math.floor(timeLeftInMs / 1000); // giây
+            this.startCountdown();
+          } else {
+            this.counter = 0;
+            this.confirmSubmit();
+          }
 
           // Tạo mảng rỗng theo số lượng câu hỏi
           const total = this.exam?.totalQuestions || 0;
@@ -88,6 +104,28 @@ export class DoTestComponent implements OnInit {
     }
   }
 
+  // Bắt đầu đếm ngược
+  startCountdown() {
+    setInterval(() => {
+      if (this.counter > 0) {
+        this.counter--;
+      } else {
+        // Tự động nộp bài khi hết thời gian
+        this.confirmSubmit();
+      }
+    }, 1000);
+  }
+
+  // Định dạng thời gian (phút:giây)
+  getFormattedTime(): string {
+    const minutes = Math.floor(this.counter / 60);
+    const seconds = this.counter % 60;
+    return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+  }
+
+  private parseDateTime(dateTimeStr: string): Date {
+    return new Date(dateTimeStr.replace(' ', 'T'));
+  }
 
   // =====================Logic cho xem file========================
 
@@ -169,22 +207,7 @@ export class DoTestComponent implements OnInit {
     return this.answers.filter(answer => answer === "").length;
   }
 
-  // Bắt đầu đếm ngược
-  startCountdown() {
-    setInterval(() => {
-      if (this.counter > 0) {
-        this.counter--;
-      } else {
-        // Tự động nộp bài khi hết thời gian
-        this.confirmSubmit();
-      }
-    }, 1000);
-  }
 
-  // Định dạng thời gian (phút:giây)
-  getFormattedTime(): string {
-    const minutes = Math.floor(this.counter / 60);
-    const seconds = this.counter % 60;
-    return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-  }
+
+
 }

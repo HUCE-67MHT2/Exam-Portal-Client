@@ -78,7 +78,8 @@ $card-shadow: 0 4px 12px rgba(0, 200, 83, 0.2);
     transform: translate(-50%, -50%);
     z-index: 99;
     width: 500px;
-    height: 250px;
+    height: auto;
+    min-height: 320px;
     border: 2px solid $primary-green;
     border-radius: 12px;
     background: white;
@@ -86,6 +87,7 @@ $card-shadow: 0 4px 12px rgba(0, 200, 83, 0.2);
     opacity: 0;
     pointer-events: none;
     transition: all 0.4s ease;
+    padding: 25px;
 
     &.visible {
       display: flex;
@@ -98,9 +100,36 @@ $card-shadow: 0 4px 12px rgba(0, 200, 83, 0.2);
       width: 100%;
       text-align: center;
 
-      h2 {
+      .exam-info {
+        margin-bottom: 25px;
+
+        h2 {
+          color: $primary-green-dark;
+          margin-bottom: 12px;
+          font-size: 22px;
+        }
+
+        .exam-details {
+          display: flex;
+          justify-content: center;
+          gap: 30px;
+
+          p {
+            margin: 5px 0;
+            color: #555;
+
+            span {
+              font-weight: 600;
+              color: #333;
+            }
+          }
+        }
+      }
+
+      h3 {
         margin-bottom: 20px;
-        color: $primary-green-dark;
+        color: #555;
+        font-size: 18px;
       }
 
       .input-container {

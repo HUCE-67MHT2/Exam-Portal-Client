@@ -37,7 +37,16 @@
 
     <div #passwordForm [class.visible]="isPassword" class="password-form">
       <div class="container">
-        <h2>Nhập password</h2>
+        <!-- Exam information section -->
+        <div class="exam-info" *ngIf="selectedExam">
+          <h2>{{ selectedExam.name }}</h2>
+          <div class="exam-details">
+            <p><span>Loại đề:</span> {{ selectedExam.type }}</p>
+            <p><span>Thời gian:</span> {{ selectedExam.duration }} phút</p>
+          </div>
+        </div>
+
+        <h3>Nhập mật khẩu để bắt đầu làm bài</h3>
         <div class="input-container">
           <input
             #inputBox

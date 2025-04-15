@@ -1,6 +1,6 @@
 import {Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren,} from "@angular/core";
 import {HeaderStudentComponent} from "../../../layout/header/header-student/header-student.component";
-import {DatePipe, NgForOf} from "@angular/common";
+import {DatePipe, NgForOf, NgIf} from "@angular/common";
 import {ExamSession} from '../../../core/models/exam-session.model';
 import {Exam} from '../../../core/models/exam.model';
 import {ExamService} from '../../../core/services/exam.service';
@@ -12,7 +12,7 @@ import {Router} from '@angular/router';
 @Component({
   selector: "app-exam-session-detail",
   templateUrl: "./exam-session-detail.component.html",
-  imports: [HeaderStudentComponent, NgForOf, FormsModule, DatePipe],
+  imports: [HeaderStudentComponent, NgForOf, FormsModule, DatePipe, NgIf],
   styleUrl: "./exam-session-detail.component.scss",
   providers: [ExamService, ExamSessionService],
 })

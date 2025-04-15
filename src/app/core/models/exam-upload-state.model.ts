@@ -5,5 +5,6 @@ export interface StudentAnswerDTO {
 
 export interface ExamStateResponse {
   message: string;
+  endTime: string;
   answers: StudentAnswerDTO[];
 }
