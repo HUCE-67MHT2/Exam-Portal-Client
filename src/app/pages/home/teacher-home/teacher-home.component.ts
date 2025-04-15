@@ -59,6 +59,7 @@ export class TeacherHomeComponent implements OnInit {
     });
     this.saveExamSessionId(exam_session_id);
   }
+
   // save exam_sesion_id in local storage
   saveExamSessionId(exam_session_id: number) {
     localStorage.setItem('exam_session_id', exam_session_id.toString());

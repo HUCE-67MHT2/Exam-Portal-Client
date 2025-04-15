@@ -1,9 +1,8 @@
-import {Component, input, OnInit} from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {UserService} from '../../../core/services/user.service';
-import {ReactiveFormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
+
 @Component({
   selector: 'app-user-form',
   standalone: true, // 👈 Thêm dòng này
@@ -17,24 +16,28 @@ import {CommonModule} from '@angular/common';
 })
 export class UserFormComponent implements OnInit {
   userForm!: FormGroup;
-@Input() onGetInfo!: () => void;
-@Input() UserInfo!: {user : {
-    id: undefined,
-    username: undefined,
-    password: undefined,
-    enabled: undefined,
-    fullName: undefined,
-    gender: undefined,
-    birthday: undefined,
-    address: undefined,
-    email: undefined,
-    telephone: undefined,
-    avatarUrl: undefined,
-    school: undefined,
-    className: undefined,
-    status: undefined,
-    createdAt: undefined,
-    updatedAt: undefined,}};
+  @Input() onGetInfo!: () => void;
+  @Input() UserInfo!: {
+    user: {
+      id: undefined,
+      username: undefined,
+      password: undefined,
+      enabled: undefined,
+      fullName: undefined,
+      gender: undefined,
+      birthday: undefined,
+      address: undefined,
+      email: undefined,
+      telephone: undefined,
+      avatarUrl: undefined,
+      school: undefined,
+      className: undefined,
+      status: undefined,
+      createdAt: undefined,
+      updatedAt: undefined,
+    }
+  };
+
   constructor(private userService: UserService) {
   }
 

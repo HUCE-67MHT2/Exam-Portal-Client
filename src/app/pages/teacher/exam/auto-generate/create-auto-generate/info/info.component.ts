@@ -1,13 +1,12 @@
-import { Component, OnInit, OnDestroy, Input } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { Router } from "@angular/router";
-import { ReactiveFormsModule } from "@angular/forms";
-import { ToastrService } from "ngx-toastr";
-import { ExamService } from "../../../../../../core/services/exam.service";
-import { QuestionService } from "../../../../../../core/services/question.service";
-import { QuestionAnswerService } from "../../../../../../core/services/question-answer.service";
-import { NgIf } from "@angular/common";
-import { catchError, forkJoin, Observable, of, tap, throwError } from "rxjs";
+import {Component, Input, OnDestroy, OnInit} from "@angular/core";
+import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
+import {Router} from "@angular/router";
+import {ToastrService} from "ngx-toastr";
+import {ExamService} from "../../../../../../core/services/exam.service";
+import {QuestionService} from "../../../../../../core/services/question.service";
+import {QuestionAnswerService} from "../../../../../../core/services/question-answer.service";
+import {NgIf} from "@angular/common";
+import {catchError, forkJoin, Observable, of, tap, throwError} from "rxjs";
 
 @Component({
   selector: "app-info",
@@ -170,7 +169,7 @@ export class InfoComponent implements OnInit, OnDestroy {
       formattedAnswers[key] = rawAnswers[index];
     });
 
-    const result = { answers: formattedAnswers };
+    const result = {answers: formattedAnswers};
 
     // Lưu vào localStorage
     localStorage.setItem("answers", JSON.stringify(result));
@@ -223,7 +222,6 @@ export class InfoComponent implements OnInit, OnDestroy {
       }
     });
   }
-
 
 
 }
