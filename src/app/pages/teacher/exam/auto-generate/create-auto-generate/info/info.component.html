@@ -6,14 +6,14 @@
       <div class="row-wrapper">
         <div class="input-wrapper">
           <label for="number_of_exam">Số lượng câu hỏi</label>
-          <input id="number_of_exam" formControlName="number_of_exam" />
+          <input formControlName="number_of_exam" id="number_of_exam"/>
           <div class="error-wrap">
             <div
-              class="error"
               *ngIf="
                 examForm.get('number_of_exam')?.invalid &&
                 examForm.get('number_of_exam')?.touched
               "
+              class="error"
             >
               Số lượng câu hỏi không được để trống.
             </div>
@@ -22,14 +22,14 @@
         <!-- Tên đề thi -->
         <div class="input-wrapper">
           <label for="exam_name">Tên đề thi</label>
-          <input id="exam_name" formControlName="exam_name" />
+          <input formControlName="exam_name" id="exam_name"/>
           <div class="error-wrap">
             <div
-              class="error"
               *ngIf="
                 examForm.get('exam_name')?.invalid &&
                 examForm.get('exam_name')?.touched
               "
+              class="error"
             >
               Tên đề không được để trống.
             </div>
@@ -41,7 +41,7 @@
         <!-- Thời gian làm bài -->
         <div class="input-wrapper">
           <label for="exam_duration">Thời gian làm bài:</label>
-          <select id="exam_duration" formControlName="exam_duration">
+          <select formControlName="exam_duration" id="exam_duration">
             <option value="">-- Chọn thời gian --</option>
             <option value="15">15 phút</option>
             <option value="30">30 phút</option>
@@ -51,11 +51,11 @@
           </select>
           <div class="error-wrap">
             <div
-              class="error"
               *ngIf="
                 examForm.get('exam_duration')?.invalid &&
                 examForm.get('exam_duration')?.touched
               "
+              class="error"
             >
               Vui lòng chọn thời gian làm bài.
             </div>
@@ -65,17 +65,17 @@
         <div class="input-wrapper">
           <label for="exam_number_of_test">Số đề</label>
           <input
-            type="text"
-            id="exam_number_of_test"
             formControlName="exam_number_of_test"
+            id="exam_number_of_test"
+            type="text"
           />
           <div class="error-wrap">
             <div
-              class="error"
               *ngIf="
                 examForm.get('exam_number_of_test')?.invalid &&
                 examForm.get('exam_number_of_test')?.touched
               "
+              class="error"
             >
               Số đề không được để trống.
             </div>
@@ -93,14 +93,14 @@
         <!-- Môn thi -->
         <div class="input-wrapper">
           <label for="exam_subject">Môn thi</label>
-          <input id="exam_subject" formControlName="exam_subject" />
+          <input formControlName="exam_subject" id="exam_subject"/>
           <div class="error-wrap">
             <div
-              class="error"
               *ngIf="
                 examForm.get('exam_subject')?.invalid &&
                 examForm.get('exam_subject')?.touched
               "
+              class="error"
             >
               Tên môn học không được để trống.
             </div>
@@ -119,11 +119,11 @@
           />
           <div class="error-wrap">
             <div
-              class="error"
               *ngIf="
                 examForm.get('exam_start_date')?.invalid &&
                 examForm.get('exam_start_date')?.touched
               "
+              class="error"
             >
               Vui lòng chọn thời gian bắt đầu.
             </div>
@@ -140,11 +140,11 @@
           />
           <div class="error-wrap">
             <div
-              class="error"
               *ngIf="
                 examForm.get('exam_end_date')?.invalid &&
                 examForm.get('exam_end_date')?.touched
               "
+              class="error"
             >
               Vui lòng chọn thời gian kết thúc.
             </div>
@@ -152,7 +152,7 @@
         </div>
       </div>
 
-      <button type="submit" [disabled]="examForm.invalid" (click)="handleSubmitAll()">Tạo bài thi</button>
+      <button (click)="handleSubmitAll()" [disabled]="examForm.invalid" type="submit">Tạo bài thi</button>
     </form>
   </div>
 </div>

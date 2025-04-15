@@ -25,6 +25,7 @@ export class DoTestComponent implements OnInit {
 
   @ViewChild('questionGrid') questionGrid!: ElementRef;
   @ViewChild('answerButtons') answerButtons!: ElementRef;
+
   constructor(
     private router: Router,
   ) {

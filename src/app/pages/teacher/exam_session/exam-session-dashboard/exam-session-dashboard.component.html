@@ -27,7 +27,8 @@
   </ul>
 </div>
 <main>
-  <app-home *ngIf="activeTab === 'home'" [exam_session_description]="exam_session_description" [exam_session_id]="exam_session_id"
+  <app-home *ngIf="activeTab === 'home'" [exam_session_description]="exam_session_description"
+            [exam_session_id]="exam_session_id"
             [exam_session_name]="exam_session_name"></app-home>
   <app-student-list-point *ngIf="activeTab === 'student-list-point'" [exam_description]="exam_session_description"
                           [exam_name]="exam_session_name"

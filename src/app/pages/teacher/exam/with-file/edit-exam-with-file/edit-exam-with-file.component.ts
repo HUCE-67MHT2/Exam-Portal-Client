@@ -273,20 +273,6 @@ export class EditExamWithFileComponent implements OnInit {
 
   // ================ các hàm xử lý phần submit và cancel ==========================
 
-  private formatDateTime(dateTimeLocal: string): string {
-    if (!dateTimeLocal) return "";
-
-    const date = new Date(dateTimeLocal);
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, "0");
-    const day = String(date.getDate()).padStart(2, "0");
-    const hours = String(date.getHours()).padStart(2, "0");
-    const minutes = String(date.getMinutes()).padStart(2, "0");
-    const seconds = "00"; // Mặc định giây = 00
-
-    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-  }
-
   onSubmit() {
     // Kiểm tra đáp án trước khi submit
     const validationResult = this.checkAnswersBeforeSubmit();
@@ -330,7 +316,7 @@ export class EditExamWithFileComponent implements OnInit {
       (response) => {
         console.log("Cập nhật bài thi thành công:", response);
 
-        if(this.isAnswersChanged()) {
+        if (this.isAnswersChanged()) {
           this.examQuestionAnswerService.updateQuestionAnswers(this.exam_id, this.answers).subscribe(
             (response) => {
               console.log("cập nhập câu hỏi thành công:", response);
@@ -347,7 +333,8 @@ export class EditExamWithFileComponent implements OnInit {
             exam_session_id: this.exam_session_id,
             exam_session_name: this.exam_session_name,
             exam_session_description: this.exam_session_description
-          } });
+          }
+        });
       },
       (error) => {
         console.error("Lỗi khi cập nhật bài thi:", error);
@@ -382,7 +369,7 @@ export class EditExamWithFileComponent implements OnInit {
       (response) => {
         console.log("Cập nhật bài thi thành công:", response);
 
-        if(this.isAnswersChanged()) {
+        if (this.isAnswersChanged()) {
           this.examQuestionAnswerService.updateQuestionAnswers(this.exam_id, this.answers).subscribe(
             (response) => {
               console.log("cập nhập câu hỏi thành công:", response);
@@ -399,7 +386,8 @@ export class EditExamWithFileComponent implements OnInit {
             exam_session_id: this.exam_session_id,
             exam_session_name: this.exam_session_name,
             exam_session_description: this.exam_session_description
-          } });
+          }
+        });
       },
       (error) => {
         console.error("Lỗi khi cập nhật bài thi:", error);
@@ -415,6 +403,21 @@ export class EditExamWithFileComponent implements OnInit {
         exam_session_id: this.exam_session_id,
         exam_session_name: this.exam_session_name,
         exam_session_description: this.exam_session_description
-      } });
+      }
+    });
+  }
+
+  private formatDateTime(dateTimeLocal: string): string {
+    if (!dateTimeLocal) return "";
+
+    const date = new Date(dateTimeLocal);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    const hours = String(date.getHours()).padStart(2, "0");
+    const minutes = String(date.getMinutes()).padStart(2, "0");
+    const seconds = "00"; // Mặc định giây = 00
+
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
   }
 }

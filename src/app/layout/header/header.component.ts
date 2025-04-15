@@ -63,6 +63,7 @@ export class HeaderComponent implements OnInit {
   onDocumentClick(event: Event) {
     this.isUserInfoSelectionVisible = false;
   }
+
   User = () => {
     this.router.navigate(["/student/user"]);
   }

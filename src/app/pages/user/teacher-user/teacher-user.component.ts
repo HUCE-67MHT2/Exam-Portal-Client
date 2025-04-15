@@ -1,8 +1,7 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {UserFormComponent} from '../../../shared/components/user-form/user-form.component';
 import {UserService} from '../../../core/services/user.service';
 import {ToastrService} from 'ngx-toastr';
-import {OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-teacher-user',
@@ -14,8 +13,9 @@ import {OnInit} from '@angular/core';
   providers: [UserService],
 })
 export class TeacherUserComponent implements OnInit {
-  name ='quan bui';
-  userInfo = {user : {
+  name = 'quan bui';
+  userInfo = {
+    user: {
       id: undefined,
       username: undefined,
       password: undefined,
@@ -31,13 +31,18 @@ export class TeacherUserComponent implements OnInit {
       className: undefined,
       status: undefined,
       createdAt: undefined,
-      updatedAt: undefined,}};
+      updatedAt: undefined,
+    }
+  };
+
   constructor(private userService: UserService, private toastr: ToastrService) {
 
   }
+
   ngOnInit(): void {
     this.onGetUserInfo();
   }
+
   onGetUserInfo = () => {
     this.userService.getInfo().subscribe({
       next: (response) => {
@@ -48,7 +53,7 @@ export class TeacherUserComponent implements OnInit {
       },
       error: (error) => {
         console.error('Lỗi khi cập nhật:', error);
-        this.toastr.error(error.error.message, 'Lỗi', { timeOut: 2000 });
+        this.toastr.error(error.error.message, 'Lỗi', {timeOut: 2000});
       }
     });
   }
