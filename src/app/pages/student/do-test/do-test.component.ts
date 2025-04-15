@@ -2,7 +2,9 @@ import {Component, ElementRef, HostListener, OnInit, ViewChild} from '@angular/c
 import {NgForOf, NgIf} from '@angular/common';
 import {Exam} from '../../../core/models/exam.model';
 import {NgxDocViewerModule} from 'ngx-doc-viewer';
+import {ExamService} from '../../../core/services/exam.service';
 import {Router} from '@angular/router';
+import {StudentAnswerService} from '../../../core/services/student-answer.service';
 
 @Component({
   selector: 'app-do-test',
@@ -25,11 +27,16 @@ export class DoTestComponent implements OnInit {
 
   @ViewChild('questionGrid') questionGrid!: ElementRef;
   @ViewChild('answerButtons') answerButtons!: ElementRef;
+
   constructor(
     private router: Router,
+    private examService: ExamService,
+    private StudentAnswerService: StudentAnswerService,
   ) {
     this.startCountdown();
   }
+
+  autoSaveTimeout: any = null;
 
   ngOnInit() {
     const storedExam = localStorage.getItem('selectedExam');
@@ -39,7 +46,33 @@ export class DoTestComponent implements OnInit {
     }
     this.fileUrl = this.convertToPreviewUrl(this.exam?.fileUrl);
     console.log(this.exam?.totalQuestions);
+    this.startTest();
   }
+
+  //====================Logic cho testing========================
+  startTest = () => {
+    this.examService.startTest(this.exam?.id).subscribe({
+      next: data => {
+        console.log(data);
+      },
+      error: error => {
+        console.error('Error:', error);
+      }
+    })
+  }
+
+  autoSaveAnswer=()=> {
+    if (this.exam?.id) {
+      const answerJson = this.getAnswerJson();
+      this.StudentAnswerService.saveUploadStudentAnswers(this.exam.id, answerJson).subscribe({
+        next: () => console.log("Tự động lưu câu trả lời thành công"),
+        error: err => console.error("Lỗi khi lưu tự động:", err)
+      });
+    }
+  }
+
+
+  // =====================Logic cho xem file========================
 
   convertToPreviewUrl(url: string | null | undefined): string {
     if (!url) return '';
@@ -72,18 +105,25 @@ export class DoTestComponent implements OnInit {
     this.selectedQuestionIndex = index;
   }
 
-  // Cập nhật đáp án
   updateAnswer(answer: string) {
     if (this.selectedQuestionIndex !== null) {
       if (this.answers[this.selectedQuestionIndex] === answer) {
-        // Nếu người dùng click lại cùng một đáp án => bỏ chọn
         this.answers[this.selectedQuestionIndex] = "";
       } else {
-        // Nếu chọn đáp án khác => cập nhật như bình thường
         this.answers[this.selectedQuestionIndex] = answer;
       }
+
+      // Reset auto-save timer
+      if (this.autoSaveTimeout) {
+        clearTimeout(this.autoSaveTimeout);
+      }
+
+      this.autoSaveTimeout = setTimeout(() => {
+        this.autoSaveAnswer(); // Gọi API sau 15 giây nếu không thao tác nữa
+      }, 5000);
     }
   }
+
 
   //====================Logic cho nộp bài thi========================
 

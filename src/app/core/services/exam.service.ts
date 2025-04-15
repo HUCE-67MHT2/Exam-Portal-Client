@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
 
 @Injectable({
@@ -37,5 +37,11 @@ export class ExamService {
 
   sendExamManuallyData(formData: any): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/add/exam/manually`, formData);
+  }
+
+  startTest(examId: any) {
+    const token = localStorage.getItem('authToken');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.post<any>(`${this.baseUrl}/start-test/${examId}`, null, {headers, observe: 'response'});
   }
 }
