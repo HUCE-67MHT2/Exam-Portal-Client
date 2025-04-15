@@ -15,7 +15,7 @@ export class QuestionComponent implements OnInit {
   input: any;
   difficulty: any;
   examSessionId: string = "";
-  private saveTimeout: any; // Timeout để debounce việc lưu
+  // Timeout để debounce việc lưu
   @Input() exam_session_id!: string;
   @Input() exam_session_name!: string;
   @Input() exam_session_description!: string;

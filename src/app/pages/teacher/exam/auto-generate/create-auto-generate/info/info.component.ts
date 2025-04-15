@@ -3,9 +3,9 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { ReactiveFormsModule } from "@angular/forms";
 import { ToastrService } from "ngx-toastr";
-import { ExamService } from "../../../../../../core/services/exam/exam.service";
-import { QuestionService } from "../../../../../../core/services/question/question.service";
-import { QuestionAnswerService } from "../../../../../../core/services/question-answer/QuestionAnswer.service";
+import { ExamService } from "../../../../../../core/services/exam.service";
+import { QuestionService } from "../../../../../../core/services/question.service";
+import { QuestionAnswerService } from "../../../../../../core/services/question-answer.service";
 import { NgIf } from "@angular/common";
 
 @Component({
@@ -242,12 +242,5 @@ export class InfoComponent implements OnInit, OnDestroy {
       console.error("❌ Lỗi toàn bộ quá trình:", error);
     }
   }
-
-
-
-
-
-
-
 
 }
