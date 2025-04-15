@@ -1,6 +1,6 @@
 import {Component, HostListener, OnInit} from "@angular/core";
 import {Router} from "@angular/router";
-import {UserService} from "../../core/services/user/user.service";
+import {UserService} from "../../core/services/user.service";
 import {CommonModule, NgIf} from "@angular/common";
 
 @Component({
@@ -63,7 +63,9 @@ export class HeaderComponent implements OnInit {
   onDocumentClick(event: Event) {
     this.isUserInfoSelectionVisible = false;
   }
-
+  User = () => {
+    this.router.navigate(["/student/user"]);
+  }
   Logout = () => {
     localStorage.clear();
     this.router.navigate([""]);

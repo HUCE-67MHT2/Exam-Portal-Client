@@ -1,18 +1,18 @@
 <div class="container">
   <header class="header">
-  <div class="wraper-logo">
-    <div class="logo">Online Exam Portal</div>
-    <nav class="breadcrumb">
-      <span>►</span>
-      <span>Kỳ thi: {{exam_session_name}}-{{exam_session_description}}</span>
-      <span>►</span>
-      <span>Tạo đề mới</span>
-    </nav>
-  </div>
-  <div class="return-button">
-    <button (click)="goBack()">Quay lại</button>
-  </div>
-</header>
+    <div class="wraper-logo">
+      <div class="logo">Online Exam Portal</div>
+      <nav class="breadcrumb">
+        <span>►</span>
+        <span>Kỳ thi: {{ exam_session_name }}-{{ exam_session_description }}</span>
+        <span>►</span>
+        <span>Tạo đề mới</span>
+      </nav>
+    </div>
+    <div class="return-button">
+      <button (click)="goBack()">Quay lại</button>
+    </div>
+  </header>
 
   <div class="tab-wrap">
     <div
@@ -32,7 +32,8 @@
   </div>
 
   <main class="main">
-    <app-question *ngIf="activeTab === 'left'" ></app-question>
-    <app-info *ngIf="activeTab === 'right'" [exam_session_id]="exam_session_id" [exam_session_name]="exam_session_name" [exam_session_description]="exam_session_description"></app-info>
+    <app-question *ngIf="activeTab === 'left'"></app-question>
+    <app-info *ngIf="activeTab === 'right'" [exam_session_description]="exam_session_description" [exam_session_id]="exam_session_id"
+              [exam_session_name]="exam_session_name"></app-info>
   </main>
 </div>

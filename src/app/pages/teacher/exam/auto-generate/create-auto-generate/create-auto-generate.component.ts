@@ -1,8 +1,8 @@
-import { Component, OnInit } from "@angular/core";
-import { ActivatedRoute, Router } from "@angular/router";
-import { CommonModule } from "@angular/common";
-import { QuestionComponent } from "./question/question.component";
-import { InfoComponent } from "./info/info.component";
+import {Component, OnInit} from "@angular/core";
+import {ActivatedRoute, Router} from "@angular/router";
+import {CommonModule} from "@angular/common";
+import {QuestionComponent} from "./question/question.component";
+import {InfoComponent} from "./info/info.component";
 
 
 @Component({
@@ -22,7 +22,8 @@ export class CreateAutoGenerateComponent implements OnInit {
   exam_session_name = "";
   exam_session_description = "";
 
-  constructor(private route: ActivatedRoute, private router: Router) {}
+  constructor(private route: ActivatedRoute, private router: Router) {
+  }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {

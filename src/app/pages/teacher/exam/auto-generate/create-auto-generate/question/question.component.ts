@@ -1,6 +1,6 @@
-import { Component, Input, OnInit } from "@angular/core";
-import { FormsModule } from "@angular/forms";
-import { CommonModule } from "@angular/common";
+import {Component, Input, OnInit} from "@angular/core";
+import {FormsModule} from "@angular/forms";
+import {CommonModule} from "@angular/common";
 
 @Component({
   selector: "app-question",
@@ -19,6 +19,7 @@ export class QuestionComponent implements OnInit {
   @Input() exam_session_id!: string;
   @Input() exam_session_name!: string;
   @Input() exam_session_description!: string;
+  private saveTimeout: any; // Timeout để debounce việc lưu
 
   ngOnInit(): void {
     const savedQuestions = localStorage.getItem("questions");

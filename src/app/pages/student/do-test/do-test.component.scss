@@ -11,6 +11,7 @@
     background: #e5e5e5;
     font-size: 18px;
     color: #333;
+    height: 100vh;
   }
 
   .do-test {
@@ -41,7 +42,7 @@
       margin-top: 15px;
 
       .subject {
-        width: 90%;
+        width: 100%;
         padding: 8px;
         text-align: center;
         border: 1px solid #ccc;
@@ -71,12 +72,26 @@
           border-radius: 5px;
 
           &.selected {
-            background-color: lightblue;
+            background-color: #00b894;
+            color: white;
+            border: 2px solid #0b7dda;
+            transform: scale(1.1);
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+            z-index: 1;
           }
 
           &.answered {
             font-weight: bold;
-            background-color: #9d9d9e; // Màu vàng nhẹ để đánh dấu đã trả lời
+            background-color: #00cf84;
+          }
+
+          &.answered.selected {
+            background-color: #ffffff !important;
+            color: #000000;
+            border: 2px solid #0b7dda;
+            transform: scale(1.1);
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+            z-index: 1;
           }
         }
       }
@@ -97,11 +112,11 @@
           transition: background-color 0.2s;
 
           &:hover {
-            background-color: #ddd;
+            background-color: #628b7c;
           }
 
           &.selected-answer {
-            background-color: #04AA6D;
+            background-color: #04aa6d;
             color: white;
           }
         }
@@ -125,4 +140,85 @@
     }
   }
 }
+//scss cho phần model thông báo xác nhận submit
+.confirm-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
 
+  .modal-content {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    width: 400px;
+    max-width: 90%;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    text-align: center;
+
+    h3 {
+      margin-top: 0;
+      color: #333;
+      font-size: 2.5rem;
+    }
+
+    p {
+      margin: 15px 0;
+      font-size: 1.6rem;
+    }
+
+    .summary {
+      margin: 15px 0;
+      padding: 10px;
+      background-color: #fff3cd;
+      border-radius: 5px;
+
+      .warning {
+        color: #856404;
+        font-weight: bold;
+        margin: 0;
+      }
+    }
+
+    .modal-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 20px;
+
+      button {
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1.4rem;
+        transition: all 0.2s;
+
+        &.cancel-btn {
+          background-color: #f1f1f1;
+          border: 1px solid #ccc;
+          color: #333;
+
+          &:hover {
+            background-color: #e1e1e1;
+          }
+        }
+
+        &.confirm-btn {
+          background-color: #04AA6D;
+          border: none;
+          color: white;
+
+          &:hover {
+            background-color: #038857;
+          }
+        }
+      }
+    }
+  }
+}

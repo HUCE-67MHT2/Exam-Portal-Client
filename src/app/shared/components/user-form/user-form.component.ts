@@ -1,19 +1,41 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, input, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {NgOptimizedImage} from '@angular/common';
-
+import {Input} from '@angular/core';
+import {UserService} from '../../../core/services/user.service';
+import {ReactiveFormsModule} from '@angular/forms';
+import {CommonModule} from '@angular/common';
 @Component({
   selector: 'app-user-form',
+  standalone: true, // 👈 Thêm dòng này
   templateUrl: './user-form.component.html',
   imports: [
-    NgOptimizedImage
+    CommonModule,
+    ReactiveFormsModule
   ],
-  styleUrls: ['./user-form.component.scss']
+  styleUrls: ['./user-form.component.scss'],
+  providers: [UserService]
 })
 export class UserFormComponent implements OnInit {
   userForm!: FormGroup;
-
-  constructor() {
+@Input() onGetInfo!: () => void;
+@Input() UserInfo!: {user : {
+    id: undefined,
+    username: undefined,
+    password: undefined,
+    enabled: undefined,
+    fullName: undefined,
+    gender: undefined,
+    birthday: undefined,
+    address: undefined,
+    email: undefined,
+    telephone: undefined,
+    avatarUrl: undefined,
+    school: undefined,
+    className: undefined,
+    status: undefined,
+    createdAt: undefined,
+    updatedAt: undefined,}};
+  constructor(private userService: UserService) {
   }
 
 
@@ -31,13 +53,14 @@ export class UserFormComponent implements OnInit {
     });
   }
 
-  saveInfo() {
+  saveInfo = () => {
     if (this.userForm.get('name')?.valid &&
       this.userForm.get('class')?.valid &&
       this.userForm.get('school')?.valid &&
       this.userForm.get('dob')?.valid &&
       this.userForm.get('province')?.valid) {
-      console.log('Thông tin cá nhân đã được lưu:', this.userForm.value);
+      const userValue = this.userForm.value;
+      console.log('Thông tin cá nhân đã được lưu:', userValue);
       // Gọi API để lưu thông tin cá nhân
     } else {
       console.log('Vui lòng điền đầy đủ thông tin cá nhân.');

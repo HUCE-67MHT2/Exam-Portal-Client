@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ExamSession } from '../../../core/models/examSession.model';
-import { ExamSessionEnrollmentService } from '../../../core/services/exam-session-enrollments/exam-session-enrollment.service';
+import { ExamSession } from '../../../core/models/exam-session.model';
+import { ExamSessionEnrollmentService } from '../../../core/services/exam-session-enrollment.service';
 import { ToastrService } from 'ngx-toastr';
 import {NgForOf, NgIf} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {HeaderStudentComponent} from '../../../layout/header/header-student/header-student.component';
 
 @Component({
-  selector: 'app-exam',
+  selector: 'app-exam-session',
   standalone: true,
   imports: [
     NgForOf,
@@ -17,10 +17,10 @@ import {HeaderStudentComponent} from '../../../layout/header/header-student/head
     NgIf,
     // Các imports khác của bạn
   ],
-  templateUrl: './exam.component.html',
-  styleUrls: ['./exam.component.scss']
+  templateUrl: './exam-session.component.html',
+  styleUrls: ['./exam-session.component.scss']
 })
-export class ExamComponent implements OnInit {
+export class ExamSessionComponent implements OnInit {
   // Các biến của component
   searchCode: string = '';
   searchTerm: string = '';
@@ -38,7 +38,7 @@ export class ExamComponent implements OnInit {
 
   ngOnInit() {
     this.loadExamSessions();
-    localStorage.removeItem('selectedExam');
+    localStorage.removeItem('selectedExamSession');
   }
 
   loadExamSessions() {
@@ -92,7 +92,7 @@ export class ExamComponent implements OnInit {
           }
         },
         error: (err) => {
-          console.error('Error searching exam by code:', err);
+          console.error('Error searching exam-session by code:', err);
           this.message = err.error.message;
         }
       });
@@ -117,7 +117,7 @@ export class ExamComponent implements OnInit {
   }
 
   goToExamDetail(exam: ExamSession) {
-    localStorage.setItem('selectedExam', JSON.stringify(exam));
-    this.router.navigate(['student/exam-detail']);
+    localStorage.setItem('selectedExamSession', JSON.stringify(exam));
+    this.router.navigate(['student/exam-session-detail']);
   }
 }

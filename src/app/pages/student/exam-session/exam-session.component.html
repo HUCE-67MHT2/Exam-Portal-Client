@@ -1,21 +1,20 @@
 <app-header-student></app-header-student>
-<app-header-student></app-header-student>
 
 <!-- Search input for table filtering -->
 <div class="search-container">
-  <input type="text"
-         placeholder="Nhập mã, tên, hoặc mô tả kỳ thi..."
+  <input (input)="filterExams()"
          [(ngModel)]="searchTerm"
-         (input)="filterExams()" />
-  <button class="search-btn" (click)="openModal()">Tham gia kỳ thi với mã</button>
+         placeholder="Nhập mã, tên, hoặc mô tả kỳ thi..."
+         type="text"/>
+  <button (click)="openModal()" class="search-btn">Tham gia kỳ thi với mã</button>
 </div>
 
-<!-- Modal for searching exam code -->
-<div class="modal-overlay" *ngIf="isModalOpen">
+<!-- Modal for searching exam-session code -->
+<div *ngIf="isModalOpen" class="modal-overlay">
   <div class="modal">
     <h2>Nhập mã kỳ thi</h2>
-    <input type="text" [(ngModel)]="searchCode" placeholder="Nhập mã kỳ thi..." />
-    <p>{{this.message}}</p>
+    <input [(ngModel)]="searchCode" placeholder="Nhập mã kỳ thi..." type="text"/>
+    <p>{{ this.message }}</p>
     <div class="modal-buttons">
       <button (click)="searchByCode()">Tìm kiếm</button>
       <button (click)="closeModal()">Đóng</button>
@@ -35,8 +34,8 @@
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let examSession of filteredExams" (click)="goToExamDetail(examSession)" style="cursor: pointer;">
-    <td>
+    <tr (click)="goToExamDetail(examSession)" *ngFor="let examSession of filteredExams" style="cursor: pointer;">
+      <td>
         <p class="exam-name">{{ examSession.name }} - {{ examSession.description }}</p>
         <p class="class-code">Mã kỳ thi: {{ examSession.code }}</p>
       </td>

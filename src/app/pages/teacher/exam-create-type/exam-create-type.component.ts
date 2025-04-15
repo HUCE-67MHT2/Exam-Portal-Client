@@ -3,7 +3,7 @@ import {NgOptimizedImage} from '@angular/common';
 import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
-  selector: 'app-exam-create-type',
+  selector: 'app-exam-session-create-type',
   templateUrl: './exam-create-type.component.html',
   imports: [
     NgOptimizedImage
@@ -32,12 +32,13 @@ export class ExamCreateTypeComponent implements OnInit {
         exam_session_id: this.exam_session_id,
         exam_session_name: this.exam_session_name,
         exam_session_description: this.exam_session_description
-      }});
+      }
+    });
   }
 
   navigateToAutoGenerate() {
-    this.router.navigate(['teacher/exam-create-auto-generate'],{
-      queryParams:{
+    this.router.navigate(['teacher/exam-create-auto-generate'], {
+      queryParams: {
         exam_session_id: this.exam_session_id,
         exam_session_name: this.exam_session_name,
         exam_session_description: this.exam_session_description
@@ -51,6 +52,7 @@ export class ExamCreateTypeComponent implements OnInit {
         exam_session_id: this.exam_session_id,
         exam_session_name: this.exam_session_name,
         exam_session_description: this.exam_session_description
-      }});
+      }
+    });
   }
 }

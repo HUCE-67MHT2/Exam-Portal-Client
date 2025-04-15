@@ -3,14 +3,14 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {NgForOf, NgIf} from "@angular/common";
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators,} from "@angular/forms";
 import * as docx from "docx-preview";
-import {ExamService} from "../../../../../core/services/exam/exam.service";
+import {ExamService} from "../../../../../core/services/exam.service";
 import {LoadingComponent} from "../../../../../layout/loadings/loading/loading.component";
 import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
-import {QuestionAnswerService} from "../../../../../core/services/question-answer/QuestionAnswer.service";
+import {QuestionAnswerService} from "../../../../../core/services/question-answer.service";
 import {ToastrService} from 'ngx-toastr';
 
 @Component({
-  selector: "app-exam-create-with-file",
+  selector: "app-exam-session-create-with-file",
   imports: [NgIf, ReactiveFormsModule, FormsModule, NgForOf, LoadingComponent],
   templateUrl: "./exam-create-with-file.component.html",
   styleUrl: "./exam-create-with-file.component.scss",
@@ -37,6 +37,9 @@ export class ExamCreateWithFileComponent implements OnInit {
   exam_session_id: any;
   exam_session_name: any;
   exam_session_description: any;
+  showWarningModal: boolean = false;
+  missingQuestions: number[] = [];
+
 
   constructor(
     private fb: FormBuilder,
@@ -156,7 +159,39 @@ export class ExamCreateWithFileComponent implements OnInit {
     this.isQuickInputOpen = false;
   }
 
+  checkAnswersBeforeSubmit(): { isValid: boolean, missingQuestions: number[] } {
+    const missingQuestions: number[] = [];
+
+    // Duyệt qua tất cả các câu hỏi
+    for (let i = 1; i <= this.totalQuestions; i++) {
+      // Kiểm tra xem câu hỏi có đáp án chưa
+      if (!this.answers[i] || this.answers[i].trim() === '') {
+        missingQuestions.push(i);
+      }
+    }
+
+    return {
+      isValid: missingQuestions.length === 0,
+      missingQuestions: missingQuestions
+    };
+  }
+
+  closeWarningModal() {
+    this.showWarningModal = false;
+  }
+
   onSubmit() {
+    // Kiểm tra đáp án trước khi submit
+    const validationResult = this.checkAnswersBeforeSubmit();
+
+    if (!validationResult.isValid) {
+      // Lưu danh sách câu hỏi thiếu đáp án
+      this.missingQuestions = validationResult.missingQuestions;
+      // Hiển thị modal cảnh báo
+      this.showWarningModal = true;
+      return; // Dừng quá trình submit
+    }
+
     const fileInput = document.getElementById("fileInput") as HTMLInputElement;
     if (fileInput.files && fileInput.files.length > 0) {
       this.selectedFile = fileInput.files[0];
@@ -216,6 +251,74 @@ export class ExamCreateWithFileComponent implements OnInit {
       },
     });
   }
+
+  continueSubmit() {
+    const fileInput = document.getElementById("fileInput") as HTMLInputElement;
+    if (fileInput.files && fileInput.files.length > 0) {
+      this.selectedFile = fileInput.files[0];
+    }
+
+    if (this.examForm.invalid || !this.selectedFile) {
+      this.uploadMessage = "Vui lòng điền đầy đủ thông tin và chọn file";
+      console.log("Form không hợp lệ hoặc chưa chọn file");
+      return;
+    }
+
+    this.loading = true;
+
+    const formData = new FormData();
+    formData.append("examSessionId", this.exam_session_id);
+    formData.append("name", this.examForm.get("exam_name")?.value);
+    formData.append("totalQuestions", this.totalQuestions.toString());
+    formData.append("duration", this.examForm.get("exam_duration")?.value);
+    formData.append("description", this.examForm.get("exam_description")?.value);
+    formData.append("file", this.selectedFile, this.selectedFile.name);
+    formData.append("subject", this.examForm.get("exam_subject")?.value);
+    formData.append("startDate", this.formatDateTime(this.examForm.get("exam_start_date")?.value));
+    formData.append("endDate", this.formatDateTime(this.examForm.get("exam_end_date")?.value));
+
+    this.examService.uploadExamWithFile(formData).subscribe({
+      next: (response) => {
+        console.log("Response từ backend:", response);
+        if (response.examId) {
+          this.uploadMessage = `Tạo kỳ thi thành công! Exam ID: ${response.examId}`;
+
+          // Đảm bảo tất cả đáp án từ 1 -> totalQuestions đều có key
+          const completeAnswers: { [key: number]: string } = {};
+          for (let i = 1; i <= this.totalQuestions; i++) {
+            completeAnswers[i] = this.answers[i] || "";
+          }
+
+          this.examQuestionAnswerService
+            .uploadQuestionAnswers(response.examId, completeAnswers)
+            .subscribe({
+              next: () => {
+                this.toastr.success('Cập nhập đề thi thành công', 'Thành công', { timeOut: 2000 });
+                this.router.navigate(["teacher/exam-session-dashboard"], {
+                  queryParams: {
+                    exam_session_id: this.exam_session_id,
+                    exam_session_name: this.exam_session_name,
+                    exam_session_description: this.exam_session_description
+                  },
+                });
+              },
+              error: (err) => {
+                console.error("Lỗi khi lưu đáp án:", err);
+              },
+            });
+        } else {
+          this.uploadMessage = "Tạo kỳ thi thành công nhưng không nhận được Exam ID!";
+        }
+        this.loading = false;
+      },
+      error: (err) => {
+        console.error("Lỗi khi tạo kỳ thi:", err);
+        this.uploadMessage = "Upload thất bại!";
+        this.loading = false;
+      },
+    });
+  }
+
 
   goBack() {
     this.router.navigate(["teacher/exam-create-type"], {

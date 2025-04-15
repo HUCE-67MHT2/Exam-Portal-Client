@@ -3,11 +3,11 @@ import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/
 import {CommonModule, DatePipe, NgOptimizedImage} from '@angular/common';
 import {HeaderComponent} from '../../../../layout/header/header.component';
 import {Router} from '@angular/router';
-import {ExamSessionService} from '../../../../core/services/exam_session/exam-session.service';
+import {ExamSessionService} from '../../../../core/services/exam-session.service';
 import {ToastrService} from 'ngx-toastr';
 
 @Component({
-  selector: 'app-create-exam-session',
+  selector: 'app-create-exam-session-session',
   templateUrl: './create-exam-session.component.html',
   styleUrls: ['./create-exam-session.component.scss'],
   providers: [DatePipe, ExamSessionService],

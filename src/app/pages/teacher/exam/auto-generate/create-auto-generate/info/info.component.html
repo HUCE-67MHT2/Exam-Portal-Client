@@ -87,7 +87,7 @@
         <!-- Mô tả -->
         <div class="input-wrapper">
           <label for="exam_description">Lưu ý</label>
-          <input id="exam_description" formControlName="exam_description" />
+          <input formControlName="exam_description" id="exam_description"/>
         </div>
 
         <!-- Môn thi -->
@@ -113,9 +113,9 @@
         <div class="input-wrapper">
           <label for="exam_start_date">Thời gian bắt đầu:</label>
           <input
+            formControlName="exam_start_date"
             id="exam_start_date"
             type="datetime-local"
-            formControlName="exam_start_date"
           />
           <div class="error-wrap">
             <div
@@ -134,9 +134,9 @@
         <div class="input-wrapper">
           <label for="exam_end_date">Thời gian kết thúc:</label>
           <input
+            formControlName="exam_end_date"
             id="exam_end_date"
             type="datetime-local"
-            formControlName="exam_end_date"
           />
           <div class="error-wrap">
             <div
