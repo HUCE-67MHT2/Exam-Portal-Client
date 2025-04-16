@@ -1,8 +1,6 @@
 import {Component, OnInit} from "@angular/core";
 import {ActivatedRoute, Router} from "@angular/router";
 import {CommonModule} from "@angular/common";
-import {QuestionComponent} from "./question/question.component";
-import {InfoComponent} from "./info/info.component";
 import { RouterModule } from '@angular/router';
 
 @Component({
@@ -10,8 +8,6 @@ import { RouterModule } from '@angular/router';
   standalone: true,
   imports: [
     CommonModule,
-    QuestionComponent,
-    InfoComponent,
     RouterModule,
   ],
   templateUrl: "./create-auto-generate.component.html",

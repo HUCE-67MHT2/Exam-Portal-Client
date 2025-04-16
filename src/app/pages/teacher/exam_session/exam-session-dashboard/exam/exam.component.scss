@@ -84,6 +84,10 @@ $hover-bg: #f1faff;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   }
 
+  .table-container::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+  }
+
   table {
     width: 100%;
     border-collapse: collapse;

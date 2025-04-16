@@ -16,10 +16,11 @@ li {
   }
 
   .number-question {
+    width: 85%;
     display: flex;
     align-items: center;
-    column-gap: 50px;
-    padding-left: 65px;
+    column-gap: 3%;
+    padding: 0 65px;
     height: 65px;
     background-color: var(--primary-color);
 
@@ -27,6 +28,10 @@ li {
       font-size: 20px;
       font-weight: 600;
       color: #fff;
+    }
+
+    p:nth-child(2) {
+      flex-grow: 1;
     }
 
     .edit-button {
