@@ -3,7 +3,9 @@
     <div class="logo">Online Exam Portal</div>
     <nav class="breadcrumb">
       <span>►</span>
-      <span>Kỳ thi: {{ exam_session_name }}-{{ exam_session_description }}</span>
+      <span
+        >Kỳ thi: {{ exam_session_name }}-{{ exam_session_description }}</span
+      >
       <span>►</span>
       <span>Tạo đề mới</span>
     </nav>
@@ -14,14 +16,26 @@
 </header>
 <div class="exam-create-container">
   <div class="option-card">
-    <img alt="Kho học liệu" class="option-icon" height="512" ngSrc="/icon/autoGenerateExam.png" width="512"/>
+    <img
+      alt="Kho học liệu"
+      class="option-icon"
+      height="512"
+      ngSrc="/icon/autoGenerateExam.png"
+      width="512"
+    />
     <h3>Sử dụng kho học liệu</h3>
     <p>Sử dụng lại những câu hỏi biên soạn để sinh đề tự động</p>
     <button (click)="navigateToAutoGenerate()" class="primary-btn">Chọn</button>
   </div>
 
   <div class="option-card">
-    <img alt="Tải lên từ máy tính" class="option-icon" height="512" ngSrc="/icon/UpLoadFileExam.png" width="512"/>
+    <img
+      alt="Tải lên từ máy tính"
+      class="option-icon"
+      height="512"
+      ngSrc="/icon/UpLoadFileExam.png"
+      width="512"
+    />
     <h3>Tải lên từ máy tính</h3>
     <p>Tải đề bài lên từ máy tính và cấu hình bài tập mới</p>
     <button (click)="navigateToECWF()" class="primary-btn">Bắt đầu</button>

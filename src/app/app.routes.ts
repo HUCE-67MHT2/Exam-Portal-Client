@@ -24,6 +24,8 @@ import {
 import {
   CreateAutoGenerateComponent
 } from './pages/teacher/exam/auto-generate/create-auto-generate/create-auto-generate.component'
+import {QuestionComponent} from './pages/teacher/exam/auto-generate/create-auto-generate/question/question.component';
+import {InfoComponent} from './pages/teacher/exam/auto-generate/create-auto-generate/info/info.component';
 import {LoadingComponent} from './layout/loadings/loading/loading.component';
 import {LoadingLineComponent} from './layout/loadings/loading-line/loading-line.component';
 import {
@@ -53,7 +55,15 @@ export const routes: Routes = [
   {path: 'teacher/exam-create-with-file', component: ExamCreateWithFileComponent},
   {path: 'teacher/create-exam-session', component: CreateExamSessionComponent},
   {path: 'teacher/exam-session-dashboard', component: ExamSessionDashboardComponent},
-  {path: 'teacher/exam-create-auto-generate', component: CreateAutoGenerateComponent},
+  {path: 'exam/auto-generate/create-auto-generate',
+    component: CreateAutoGenerateComponent,
+    children: [
+      { path: 'question', component: QuestionComponent },
+      { path: 'info', component: InfoComponent },
+      { path: '', redirectTo: 'question', pathMatch: 'full' }
+    ]
+  },
+  {path: 'exam/auto-generate/create-auto-generate/question', component: QuestionComponent},
   {path: 'loading', component: LoadingComponent},
   {path: 'loading-line', component: LoadingLineComponent},
   {path: 'teacher/edit-exam-with-file', component: EditExamWithFileComponent},

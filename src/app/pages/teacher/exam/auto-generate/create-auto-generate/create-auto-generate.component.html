@@ -13,28 +13,6 @@
       <button (click)="goBack()">Quay lại</button>
     </div>
   </header>
-
-  <div class="tab-wrap">
-    <div
-      (click)="setActiveTab('left')"
-      [class.active]="activeTab === 'left'"
-      class="tab"
-    >
-      <p class="tab-desc">Kho câu hỏi</p>
-    </div>
-    <div
-      (click)="setActiveTab('right')"
-      [class.active]="activeTab === 'right'"
-      class="tab"
-    >
-      <p class="desc">Thông tin bài thi</p>
-    </div>
-  </div>
-
-  <main class="main">
-    <app-question *ngIf="activeTab === 'left'"></app-question>
-    <app-info *ngIf="activeTab === 'right'" [exam_session_description]="exam_session_description"
-              [exam_session_id]="exam_session_id"
-              [exam_session_name]="exam_session_name"></app-info>
-  </main>
 </div>
+
+<router-outlet></router-outlet>

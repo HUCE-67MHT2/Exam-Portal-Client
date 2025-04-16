@@ -1,6 +1,11 @@
-import {Component, Input, OnInit} from "@angular/core";
+import { Component, OnInit, OnDestroy, Input } from "@angular/core";
 import {FormsModule} from "@angular/forms";
 import {CommonModule} from "@angular/common";
+import { QuestionService } from "../../../../../../core/services/question.service";
+import { QuestionAnswerService } from "../../../../../../core/services/question-answer.service";
+import { ToastrService } from "ngx-toastr";
+import { Router, ActivatedRoute } from "@angular/router";
+import { catchError, forkJoin, Observable, of, tap, throwError } from "rxjs";
 
 @Component({
   selector: "app-question",
@@ -15,11 +20,22 @@ export class QuestionComponent implements OnInit {
   input: any;
   difficulty: any;
   examSessionId: string = "";
+  savedQuestionIds: number[] = [];
   // Timeout để debounce việc lưu
   @Input() exam_session_id!: string;
   @Input() exam_session_name!: string;
   @Input() exam_session_description!: string;
   private saveTimeout: any; // Timeout để debounce việc lưu
+
+  constructor(
+    private questionService: QuestionService,
+    private questionAnswerService: QuestionAnswerService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private toastr: ToastrService
+  ) {
+
+  }
 
   ngOnInit(): void {
     const savedQuestions = localStorage.getItem("questions");
@@ -110,5 +126,110 @@ export class QuestionComponent implements OnInit {
       localStorage.setItem("answers", JSON.stringify(answers));
       localStorage.setItem("questionNumber", this.questionNumber.toString());
     }, 300);
+  }
+
+  sendQuestionsToBackend(): Observable<any[]> {
+    const savedQuestions = localStorage.getItem("questions");
+
+    if (!savedQuestions) {
+      this.toastr.error("Không có dữ liệu câu hỏi để gửi.", "Lỗi");
+      return of([]); // Trả về Observable rỗng để tránh lỗi
+    }
+
+    try {
+      const questions = JSON.parse(savedQuestions);
+
+      if (!Array.isArray(questions)) {
+        throw new Error("Dữ liệu không phải là một mảng.");
+      }
+
+      const requests = questions.map((question: any) =>
+        this.questionService.sendQuestionData(question)
+      );
+
+      return forkJoin(requests).pipe(
+        tap((responses) => {
+          responses.forEach((response: any) => {
+            const questionId = response.id;
+            this.savedQuestionIds.push(questionId);
+            console.log("ID câu hỏi được lưu:", questionId);
+          });
+          this.toastr.success("Tất cả câu hỏi đã được gửi thành công.", "Thành công");
+          localStorage.removeItem("questions");
+        }),
+        catchError((err) => {
+          this.toastr.error("Gửi dữ liệu câu hỏi thất bại.", "Lỗi");
+          console.error("Lỗi gửi dữ liệu câu hỏi:", err);
+          return throwError(() => err);
+        })
+      );
+    } catch (e) {
+      this.toastr.error("Dữ liệu câu hỏi không hợp lệ.", "Lỗi");
+      console.error("Parse error:", e);
+      return throwError(() => e);
+    }
+  }
+
+
+  formatAndSaveAnswers(questionIds: number[], rawAnswers: any[]): void {
+    const formattedAnswers: Record<string, any> = {};
+
+    questionIds.forEach((id, index) => {
+      const key = id.toString(); // Chuyển number thành string
+      formattedAnswers[key] = rawAnswers[index];
+    });
+
+    const result = { answers: formattedAnswers };
+
+    // Lưu vào localStorage
+    localStorage.setItem("answers", JSON.stringify(result));
+
+    console.log("✅ Đã lưu answers format vào localStorage:", result);
+  }
+
+
+  getAnswerData() {
+    const savedAnswers = localStorage.getItem("answers");
+
+    if (savedAnswers) {
+      const rawAnswers = JSON.parse(savedAnswers);
+      this.formatAndSaveAnswers(this.savedQuestionIds, rawAnswers);
+    }
+  }
+
+  submitFormattedAnswers(): void {
+    // Bước 1: Gọi hàm format lại dữ liệu
+    this.getAnswerData();
+
+    // Bước 2: Lấy dữ liệu đã format
+    const formattedData = localStorage.getItem("answers");
+
+    if (formattedData) {
+      const answerData = JSON.parse(formattedData);
+
+      // Bước 3: Gửi dữ liệu qua API
+      this.questionAnswerService.sendManualAnswers(answerData).subscribe({
+        next: (res) => {
+          console.log("✅ Gửi dữ liệu thành công:", res);
+        },
+        error: (err) => {
+          console.error("❌ Gửi dữ liệu thất bại:", err);
+        }
+      });
+    } else {
+      console.warn("⚠️ Không tìm thấy dữ liệu answers trong localStorage.");
+    }
+  }
+
+  handleSubmitAll(): void {
+    this.sendQuestionsToBackend().subscribe({
+      next: () => {
+        // ✅ Sau khi gửi câu hỏi xong thì mới gửi đáp án
+        this.submitFormattedAnswers();
+      },
+      error: (err) => {
+        console.error("❌ Dừng quy trình vì lỗi gửi câu hỏi:", err);
+      }
+    });
   }
 }
