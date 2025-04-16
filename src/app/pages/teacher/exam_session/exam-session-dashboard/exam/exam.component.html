@@ -1,12 +1,22 @@
 <div class="container">
   <div class="search-bar">
     <div class="search">
-      <img alt="search icon" class="search-icon" height="16" ngSrc="/icon/find_icon.svg" width="16">
-      <input (input)="filterExam()" (keyup.enter)="filterExam()" [(ngModel)]="searchTerm"
-             placeholder="Nhập tên đề thi"
-             type="text">
+      <img
+        alt="search icon"
+        class="search-icon"
+        height="16"
+        ngSrc="/icon/find_icon.svg"
+        width="16"
+      />
+      <input
+        (input)="filterExam()"
+        (keyup.enter)="filterExam()"
+        [(ngModel)]="searchTerm"
+        placeholder="Nhập tên đề thi"
+        type="text"
+      />
       <div class="create-button">
-        <button (click)="navigateToCreatExam()">Tạo đề mới</button>
+        <button (click)="navigateToCreateExam()">Tạo đề mới</button>
       </div>
     </div>
   </div>
@@ -15,29 +25,30 @@
     <div class="table-container">
       <table>
         <thead class="table-heading">
-        <tr>
-          <th>Tên mã đề</th>
-          <th>Thời lượng</th>
-          <th>Dạng đề</th>
-          <th>Ngày tạo</th>
-          <th></th>
-        </tr>
+          <tr>
+            <th>Tên mã đề</th>
+            <th>Thời lượng</th>
+            <th>Dạng đề</th>
+            <th>Ngày tạo</th>
+            <th></th>
+          </tr>
         </thead>
         <tbody>
-        <tr (click)="editExam(exam.id, exam.name ,this.exam_session_id)" *ngFor="let exam of filteredExams">
-          <td>
-            <p class="exam-name">{{ exam.name }} - {{ exam.description }}</p>
-          </td>
-          <td>{{ exam.duration }}</td>
-          <td>{{ exam.type }}</td>
-          <td>{{ exam.createDate | date:'dd/MM/yyyy' }}</td>
-          <td>
-            <button>xóa</button>
-          </td>
-        </tr>
-        <tr>
-
-        </tr>
+          <tr
+            (click)="editExam(exam.id, exam.name, this.exam_session_id)"
+            *ngFor="let exam of filteredExams"
+          >
+            <td>
+              <p class="exam-name">{{ exam.name }} - {{ exam.description }}</p>
+            </td>
+            <td>{{ exam.duration }}</td>
+            <td>{{ exam.type }}</td>
+            <td>{{ exam.createDate | date : "dd/MM/yyyy" }}</td>
+            <td>
+              <button>xóa</button>
+            </td>
+          </tr>
+          <tr></tr>
         </tbody>
       </table>
     </div>

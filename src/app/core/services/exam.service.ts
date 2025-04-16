@@ -1,6 +1,7 @@
 import {Injectable} from "@angular/core";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
+import {ExamStateResponse} from '../models/exam-upload-state.model';
 
 @Injectable({
   providedIn: "root",
@@ -33,5 +34,21 @@ export class ExamService {
 
   sendExamData(data: any): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/send/exam/data`, data);
+  }
+
+  sendExamManuallyData(formData: any): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/add/exam/manually`, formData);
+  }
+
+  getTestState(examId: number) {
+    const token = localStorage.getItem('authToken');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.post<ExamStateResponse>(`${this.baseUrl}/get/test/state/${examId}`, {}, { headers });
+  }
+
+  submitUploadExam(examId: number) {
+    const token = localStorage.getItem('authToken');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.post<ExamStateResponse>(`${this.baseUrl}/upload/submit/${examId}`, {}, { headers });
   }
 }

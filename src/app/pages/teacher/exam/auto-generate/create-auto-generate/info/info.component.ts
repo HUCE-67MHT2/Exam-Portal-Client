@@ -1,11 +1,12 @@
-import { Component, OnInit, OnDestroy, Input } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { Router } from "@angular/router";
-import { ReactiveFormsModule } from "@angular/forms";
-import { ToastrService } from "ngx-toastr";
-import { ExamService } from "../../../../../../core/services/exam.service";
-import { QuestionService } from "../../../../../../core/services/question.service";
-import { NgIf } from "@angular/common";
+import {Component, Input, OnDestroy, OnInit} from "@angular/core";
+import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
+import {Router} from "@angular/router";
+import {ToastrService} from "ngx-toastr";
+import {ExamService} from "../../../../../../core/services/exam.service";
+import {QuestionService} from "../../../../../../core/services/question.service";
+import {QuestionAnswerService} from "../../../../../../core/services/question-answer.service";
+import {NgIf} from "@angular/common";
+import {catchError, forkJoin, Observable, of, tap, throwError} from "rxjs";
 
 @Component({
   selector: "app-info",
@@ -19,6 +20,7 @@ export class InfoComponent implements OnInit, OnDestroy {
   selectedExamType: string | null = null;
   examName: string = "";
   examPassword: string = "";
+  savedQuestionIds: number[] = [];
   @Input() exam_session_id!: string;
   @Input() exam_session_name!: string;
   @Input() exam_session_description!: string;
@@ -27,6 +29,7 @@ export class InfoComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private examService: ExamService,
     private questionService: QuestionService,
+    private questionAnswerService: QuestionAnswerService,
     private router: Router,
     private toastr: ToastrService
   ) {
@@ -38,6 +41,7 @@ export class InfoComponent implements OnInit, OnDestroy {
       exam_subject: ["", Validators.required],
       exam_start_date: ["", Validators.required],
       exam_end_date: ["", Validators.required],
+      exam_number_of_test: ["", Validators.required],
     });
   }
 
@@ -48,7 +52,6 @@ export class InfoComponent implements OnInit, OnDestroy {
       this.examName = info.examName || "";
       this.selectedExamType = info.examType || null;
       this.examPassword = info.examPassword || "";
-
       this.examForm.patchValue(info.examForm || {});
     }
 
@@ -99,7 +102,7 @@ export class InfoComponent implements OnInit, OnDestroy {
 
     try {
       const info = JSON.parse(savedInfo);
-      this.examService.sendExamData(info).subscribe({
+      this.examService.sendExamManuallyData(info).subscribe({
         next: () => {
           this.toastr.success("Dữ liệu đã được gửi thành công.", "Thành công");
           localStorage.removeItem("info");
@@ -114,30 +117,4 @@ export class InfoComponent implements OnInit, OnDestroy {
       console.error("Parse error:", e);
     }
   }
-
-  sendQuestionsToBackend() {
-    const savedQuestions = localStorage.getItem("questions");
-    if (!savedQuestions) {
-      this.toastr.error("Không có dữ liệu câu hỏi để gửi.", "Lỗi");
-      return;
-    }
-
-    try {
-      const questions = JSON.parse(savedQuestions);
-      this.questionService.sendQuestionData(questions).subscribe({
-        next: () => {
-          this.toastr.success("Dữ liệu câu hỏi đã được gửi thành công.", "Thành công");
-          localStorage.removeItem("questions");
-        },
-        error: (error) => {
-          this.toastr.error("Gửi dữ liệu câu hỏi thất bại.", "Lỗi");
-          console.error("Lỗi gửi dữ liệu câu hỏi:", error);
-        },
-      });
-    } catch (e) {
-      this.toastr.error("Dữ liệu câu hỏi không hợp lệ.", "Lỗi");
-      console.error("Parse error:", e);
-    }
-  }
 }
-

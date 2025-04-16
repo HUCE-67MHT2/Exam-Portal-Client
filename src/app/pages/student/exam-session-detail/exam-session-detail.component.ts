@@ -1,6 +1,6 @@
 import {Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren,} from "@angular/core";
 import {HeaderStudentComponent} from "../../../layout/header/header-student/header-student.component";
-import {DatePipe, NgForOf} from "@angular/common";
+import {DatePipe, NgForOf, NgIf} from "@angular/common";
 import {ExamSession} from '../../../core/models/exam-session.model';
 import {Exam} from '../../../core/models/exam.model';
 import {ExamService} from '../../../core/services/exam.service';
@@ -12,7 +12,7 @@ import {Router} from '@angular/router';
 @Component({
   selector: "app-exam-session-detail",
   templateUrl: "./exam-session-detail.component.html",
-  imports: [HeaderStudentComponent, NgForOf, FormsModule, DatePipe],
+  imports: [HeaderStudentComponent, NgForOf, FormsModule, DatePipe, NgIf],
   styleUrl: "./exam-session-detail.component.scss",
   providers: [ExamService, ExamSessionService],
 })
@@ -129,8 +129,13 @@ export class ExamSessionDetailComponent implements OnInit {
     this.isPassword = true;
     this.inputs = new Array(6).fill("");
     this.password = "";
+
     setTimeout(() => {
-      this.inputBoxes.first?.nativeElement.focus(); // focus vào ô đầu tiên
+      // Clear all input fields and focus on the first one
+      this.inputBoxes.forEach(input => {
+        input.nativeElement.value = "";
+      });
+      this.inputBoxes.first?.nativeElement.focus();
     });
   }
 
@@ -168,10 +173,13 @@ export class ExamSessionDetailComponent implements OnInit {
   }
 
   closePasswordModal(event: Event) {
-    if (
-      this.isPassword &&
-      !this.passwordForm.nativeElement.contains(event.target)
-    ) {
+    // Only proceed if the modal is open
+    if (!this.isPassword) return;
+
+    const containerElement = this.passwordForm.nativeElement.querySelector('.container');
+
+    if (!containerElement.contains(event.target) ||
+      event.target === this.passwordForm.nativeElement) {
       this.isPassword = false;
     }
   }

@@ -230,7 +230,7 @@
     </div>
   </div>
 </div>
-<div class="warning-modal" *ngIf="showWarningModal">
+<div *ngIf="showWarningModal" class="warning-modal">
   <div class="warning-modal-content">
     <h3>Cảnh báo</h3>
 
@@ -246,8 +246,8 @@
     <p class="question-text">Bạn có muốn tiếp tục nộp bài thi này?</p>
 
     <div class="modal-buttons">
-      <button class="cancel-btn" (click)="closeWarningModal()">Quay lại nhập đáp án</button>
-      <button class="continue-btn" (click)="continueSubmit()">Tiếp tục nộp bài</button>
+      <button (click)="closeWarningModal()" class="cancel-btn">Quay lại nhập đáp án</button>
+      <button (click)="continueSubmit()" class="continue-btn">Tiếp tục nộp bài</button>
     </div>
   </div>
 </div>

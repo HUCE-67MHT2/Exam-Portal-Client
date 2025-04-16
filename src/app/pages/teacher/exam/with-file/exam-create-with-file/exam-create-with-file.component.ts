@@ -293,7 +293,7 @@ export class ExamCreateWithFileComponent implements OnInit {
             .uploadQuestionAnswers(response.examId, completeAnswers)
             .subscribe({
               next: () => {
-                this.toastr.success('Cập nhập đề thi thành công', 'Thành công', { timeOut: 2000 });
+                this.toastr.success('Cập nhập đề thi thành công', 'Thành công', {timeOut: 2000});
                 this.router.navigate(["teacher/exam-session-dashboard"], {
                   queryParams: {
                     exam_session_id: this.exam_session_id,

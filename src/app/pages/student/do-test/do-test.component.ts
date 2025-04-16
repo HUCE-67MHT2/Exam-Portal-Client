@@ -2,7 +2,10 @@ import {Component, ElementRef, HostListener, OnInit, ViewChild} from '@angular/c
 import {NgForOf, NgIf} from '@angular/common';
 import {Exam} from '../../../core/models/exam.model';
 import {NgxDocViewerModule} from 'ngx-doc-viewer';
+import {ExamService} from '../../../core/services/exam.service';
 import {Router} from '@angular/router';
+import {StudentAnswerService} from '../../../core/services/student-answer.service';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-do-test',
@@ -23,13 +26,20 @@ export class DoTestComponent implements OnInit {
   fileUrl = "";
   showConfirmModal: boolean = false; // Trạng thái hiển thị modal
 
+
+
   @ViewChild('questionGrid') questionGrid!: ElementRef;
   @ViewChild('answerButtons') answerButtons!: ElementRef;
+
   constructor(
     private router: Router,
+    private examService: ExamService,
+    private StudentAnswerService: StudentAnswerService,
+    private toastr: ToastrService,
   ) {
-    this.startCountdown();
   }
+
+  autoSaveTimeout: any = null;
 
   ngOnInit() {
     const storedExam = localStorage.getItem('selectedExam');
@@ -39,12 +49,130 @@ export class DoTestComponent implements OnInit {
     }
     this.fileUrl = this.convertToPreviewUrl(this.exam?.fileUrl);
     console.log(this.exam?.totalQuestions);
+    this.loadExamState();
   }
+
+  //====================Logic cho testing========================
+  endTime = new Date();
+
+  loadExamState() {
+    if (this.exam?.id) {
+      this.examService.getTestState(this.exam.id).subscribe({
+        next: response => {
+          console.log("Trạng thái bài thi:", response);
+
+          //lấy deadline bài thi
+          this.endTime = this.parseDateTime(response.endTime);
+
+          // Tính thời gian còn lại
+          const now = new Date();
+          const timeLeftInMs = this.endTime.getTime() - now.getTime();
+          if (timeLeftInMs > 0) {
+            this.counter = Math.floor(timeLeftInMs / 1000); // giây
+            this.startCountdown();
+          } else {
+            this.counter = 0;
+            this.confirmSubmit();
+          }
+
+          // Tạo mảng rỗng theo số lượng câu hỏi
+          const total = this.exam?.totalQuestions || 0;
+          this.answers = Array(total).fill("");
+
+          // Đổ dữ liệu từ API vào answers
+          for (const ans of response.answers) {
+            const index = ans.questionNo - 1;
+            if (index >= 0 && index < total) {
+              this.answers[index] = ans.answerText;
+            }
+          }
+        },
+        error: (err) => {
+          console.error("Lỗi chi tiết:", err);
+          console.error("Thông báo lỗi:", err.error?.message); // đây là dòng quan trọng
+        }
+      });
+    }
+
+  }
+
+
+  autoSaveAnswer=()=> {
+    if (this.exam?.id) {
+      const answerJson = this.getAnswerJson();
+      this.StudentAnswerService.saveUploadStudentAnswers(this.exam.id, answerJson).subscribe({
+        next: () => console.log("Tự động lưu câu trả lời thành công"),
+        error: err => console.error("Lỗi khi lưu tự động:", err)
+      });
+    }
+  }
+
+  // Bắt đầu đếm ngược
+  startCountdown() {
+    setInterval(() => {
+      if (this.counter > 0) {
+        this.counter--;
+      } else {
+        // Tự động nộp bài khi hết thời gian
+        this.confirmSubmit();
+      }
+    }, 1000);
+  }
+
+  // Định dạng thời gian (phút:giây)
+  getFormattedTime(): string {
+    const minutes = Math.floor(this.counter / 60);
+    const seconds = this.counter % 60;
+    return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+  }
+
+  private parseDateTime(dateTimeStr: string): Date {
+    return new Date(dateTimeStr.replace(' ', 'T'));
+  }
+
+  // =====================Logic cho xem file========================
 
   convertToPreviewUrl(url: string | null | undefined): string {
     if (!url) return '';
     const match = url.match(/\/d\/(.*?)\//);
     return match ? `https://drive.google.com/file/d/${match[1]}/preview` : '';
+  }
+  //====================Logic cho nộp bài thi========================
+
+  // Mở modal xác nhận khi click vào nút Nộp bài
+  submit = () => {
+    this.showConfirmModal = true;
+
+    // @ts-ignore
+    this.examService.submitUploadExam(this.exam.id).subscribe({
+      next: (response) => {
+        this.toastr.success('Nộp bài thành công', 'Thành công');
+        this.router.navigate(['student/exam-session-detail']);
+      },
+      error: (err) => {
+        console.error(err); // Sửa lỗi chính tả: console.err -> console.error
+        this.toastr.error('Đã xảy ra lỗi khi nộp bài', 'Lỗi');
+      }
+    });
+  }
+
+
+  // Hủy nộp bài, đóng modal
+  cancelSubmit() {
+    this.showConfirmModal = false;
+  }
+
+  // Xác nhận nộp bài
+  confirmSubmit() {
+    const resultJson = this.getAnswerJson();
+    console.log("Bài làm đã nộp:", resultJson);
+    this.submit()
+    this.router.navigate(['student/exam-session-detail']);
+  }
+
+  // Đếm số câu hỏi chưa trả lời
+  getUnansweredCount(): number {
+    return this.answers.filter(answer => answer === "").length;
   }
 
   //===================Logic cho phiếu trả lời========================
@@ -72,62 +200,25 @@ export class DoTestComponent implements OnInit {
     this.selectedQuestionIndex = index;
   }
 
-  // Cập nhật đáp án
   updateAnswer(answer: string) {
     if (this.selectedQuestionIndex !== null) {
       if (this.answers[this.selectedQuestionIndex] === answer) {
-        // Nếu người dùng click lại cùng một đáp án => bỏ chọn
         this.answers[this.selectedQuestionIndex] = "";
       } else {
-        // Nếu chọn đáp án khác => cập nhật như bình thường
         this.answers[this.selectedQuestionIndex] = answer;
       }
+
+      // Reset auto-save timer
+      if (this.autoSaveTimeout) {
+        clearTimeout(this.autoSaveTimeout);
+      }
+
+      this.autoSaveTimeout = setTimeout(() => {
+        this.autoSaveAnswer(); // Gọi API sau 3 giây nếu không thao tác nữa
+      }, 3000);
     }
   }
 
-  //====================Logic cho nộp bài thi========================
 
-  // Mở modal xác nhận khi click vào nút Nộp bài
-  submit() {
-    this.showConfirmModal = true;
-    const answerJson = this.getAnswerJson();
-    console.log(answerJson);
-  }
 
-  // Hủy nộp bài, đóng modal
-  cancelSubmit() {
-    this.showConfirmModal = false;
-  }
-
-  // Xác nhận nộp bài
-  confirmSubmit() {
-    const resultJson = this.getAnswerJson();
-    console.log("Bài làm đã nộp:", resultJson);
-    // Có thể thêm logic lưu bài làm ở đây
-    this.router.navigate(['student/exam-session-detail']);
-  }
-
-  // Đếm số câu hỏi chưa trả lời
-  getUnansweredCount(): number {
-    return this.answers.filter(answer => answer === "").length;
-  }
-
-  // Bắt đầu đếm ngược
-  startCountdown() {
-    setInterval(() => {
-      if (this.counter > 0) {
-        this.counter--;
-      } else {
-        // Tự động nộp bài khi hết thời gian
-        this.confirmSubmit();
-      }
-    }, 1000);
-  }
-
-  // Định dạng thời gian (phút:giây)
-  getFormattedTime(): string {
-    const minutes = Math.floor(this.counter / 60);
-    const seconds = this.counter % 60;
-    return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-  }
 }
