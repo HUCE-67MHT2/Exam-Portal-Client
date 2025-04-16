@@ -35,12 +35,19 @@ export class CreateAutoGenerateComponent implements OnInit {
   }
 
   goBack() {
-    this.router.navigate(["/teacher/exam-create-type"], {
-      queryParams: {
-        exam_session_id: this.exam_session_id,
-        exam_session_name: this.exam_session_name,
-        exam_session_description: this.exam_session_description
-      }
-    });
+    const currentUrl = this.router.url;
+    if (currentUrl.includes("create-auto-generate/info")) {
+      this.router.navigate(["/teacher/exam-create-type"], {
+        queryParams: {
+          exam_session_id: this.exam_session_id,
+          exam_session_name: this.exam_session_name,
+          exam_session_description: this.exam_session_description
+        }
+      });
+    } else if (currentUrl.includes("create-auto-generate/question")) {
+      this.router.navigate(["teacher/exam-session-dashboard"]);
+    }
   }
 }
+
+

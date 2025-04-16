@@ -33,6 +33,7 @@ import {
 } from './pages/teacher/exam/with-file/edit-exam-with-file/edit-exam-with-file.component';
 import {TeacherUserComponent} from './pages/user/teacher-user/teacher-user.component';
 import {StudentUserComponent} from './pages/user/student-user/student-user.component';
+import {QuestionBankComponent} from './pages/teacher/exam_session/exam-session-dashboard/question-bank/question-bank.component';
 
 export const routes: Routes = [
 
@@ -67,5 +68,5 @@ export const routes: Routes = [
   {path: 'loading', component: LoadingComponent},
   {path: 'loading-line', component: LoadingLineComponent},
   {path: 'teacher/edit-exam-with-file', component: EditExamWithFileComponent},
-
+  {path: 'teacher/exam-session-dashboard/question-bank', component: QuestionBankComponent},
 ];
