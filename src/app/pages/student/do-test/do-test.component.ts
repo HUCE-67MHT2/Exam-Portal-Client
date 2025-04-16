@@ -5,6 +5,7 @@ import {NgxDocViewerModule} from 'ngx-doc-viewer';
 import {ExamService} from '../../../core/services/exam.service';
 import {Router} from '@angular/router';
 import {StudentAnswerService} from '../../../core/services/student-answer.service';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-do-test',
@@ -34,6 +35,7 @@ export class DoTestComponent implements OnInit {
     private router: Router,
     private examService: ExamService,
     private StudentAnswerService: StudentAnswerService,
+    private toastr: ToastrService,
   ) {
   }
 
@@ -47,7 +49,7 @@ export class DoTestComponent implements OnInit {
     }
     this.fileUrl = this.convertToPreviewUrl(this.exam?.fileUrl);
     console.log(this.exam?.totalQuestions);
-    this.loadExamState()
+    this.loadExamState();
   }
 
   //====================Logic cho testing========================
@@ -91,6 +93,7 @@ export class DoTestComponent implements OnInit {
         }
       });
     }
+
   }
 
 
@@ -134,6 +137,43 @@ export class DoTestComponent implements OnInit {
     const match = url.match(/\/d\/(.*?)\//);
     return match ? `https://drive.google.com/file/d/${match[1]}/preview` : '';
   }
+  //====================Logic cho nộp bài thi========================
+
+  // Mở modal xác nhận khi click vào nút Nộp bài
+  submit = () => {
+    this.showConfirmModal = true;
+
+    // @ts-ignore
+    this.examService.submitUploadExam(this.exam.id).subscribe({
+      next: (response) => {
+        this.toastr.success('Nộp bài thành công', 'Thành công');
+        this.router.navigate(['student/exam-session-detail']);
+      },
+      error: (err) => {
+        console.error(err); // Sửa lỗi chính tả: console.err -> console.error
+        this.toastr.error('Đã xảy ra lỗi khi nộp bài', 'Lỗi');
+      }
+    });
+  }
+
+
+  // Hủy nộp bài, đóng modal
+  cancelSubmit() {
+    this.showConfirmModal = false;
+  }
+
+  // Xác nhận nộp bài
+  confirmSubmit() {
+    const resultJson = this.getAnswerJson();
+    console.log("Bài làm đã nộp:", resultJson);
+    this.submit()
+    this.router.navigate(['student/exam-session-detail']);
+  }
+
+  // Đếm số câu hỏi chưa trả lời
+  getUnansweredCount(): number {
+    return this.answers.filter(answer => answer === "").length;
+  }
 
   //===================Logic cho phiếu trả lời========================
   getAnswerJson(): { [key: number]: string } {
@@ -174,39 +214,10 @@ export class DoTestComponent implements OnInit {
       }
 
       this.autoSaveTimeout = setTimeout(() => {
-        this.autoSaveAnswer(); // Gọi API sau 15 giây nếu không thao tác nữa
-      }, 5000);
+        this.autoSaveAnswer(); // Gọi API sau 3 giây nếu không thao tác nữa
+      }, 3000);
     }
   }
-
-
-  //====================Logic cho nộp bài thi========================
-
-  // Mở modal xác nhận khi click vào nút Nộp bài
-  submit() {
-    this.showConfirmModal = true;
-    const answerJson = this.getAnswerJson();
-    console.log(answerJson);
-  }
-
-  // Hủy nộp bài, đóng modal
-  cancelSubmit() {
-    this.showConfirmModal = false;
-  }
-
-  // Xác nhận nộp bài
-  confirmSubmit() {
-    const resultJson = this.getAnswerJson();
-    console.log("Bài làm đã nộp:", resultJson);
-    // Có thể thêm logic lưu bài làm ở đây
-    this.router.navigate(['student/exam-session-detail']);
-  }
-
-  // Đếm số câu hỏi chưa trả lời
-  getUnansweredCount(): number {
-    return this.answers.filter(answer => answer === "").length;
-  }
-
 
 
 
