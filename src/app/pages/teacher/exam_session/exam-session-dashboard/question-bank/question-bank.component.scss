@@ -25,13 +25,10 @@ li {
     background-color: var(--primary-color);
 
     p {
-      font-size: 20px;
+      flex-grow: 1;
+      font-size: 2rem;
       font-weight: 600;
       color: #fff;
-    }
-
-    p:nth-child(2) {
-      flex-grow: 1;
     }
 
     .edit-button {
