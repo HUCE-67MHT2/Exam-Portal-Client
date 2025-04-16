@@ -61,6 +61,11 @@ export class DoTestComponent implements OnInit {
         next: response => {
           console.log("Trạng thái bài thi:", response);
 
+          this.toastr.success(response.message, 'Thông báo', {
+            timeOut: 3000 // hiển thị trong 3 giây
+          });
+
+
           //lấy deadline bài thi
           this.endTime = this.parseDateTime(response.endTime);
 
@@ -88,8 +93,12 @@ export class DoTestComponent implements OnInit {
           }
         },
         error: (err) => {
+          this.toastr.error(err.error?.message, 'Lỗi', {
+            timeOut: 5000 // hiển thị trong 5 giây
+          });
           console.error("Lỗi chi tiết:", err);
-          console.error("Thông báo lỗi:", err.error?.message); // đây là dòng quan trọng
+          console.error("Thông báo lỗi:", err.error?.message);
+          this.router.navigate(['student/exam-session-detail']);
         }
       });
     }
