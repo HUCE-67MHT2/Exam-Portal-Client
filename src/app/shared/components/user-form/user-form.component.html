@@ -13,10 +13,9 @@
   <div class="content">
     <!-- Phần avatar và thông tin người dùng -->
     <div class="profile">
-      <img alt="mặt Tỏ" class="avatar" id="avatar-image"
-           src="https://images.aeonmedia.co/images/acd6897d-9849-4188-92c6-79dabcbcd518/essay-final-gettyimages-685469924.jpg?width=3840&quality=75&format=auto">
+      <img alt="mặt Tỏ" class="avatar" id="avatar-image" src="https://images.aeonmedia.co/images/acd6897d-9849-4188-92c6-79dabcbcd518/essay-final-gettyimages-685469924.jpg?width=3840&quality=75&format=auto">
       <div class="profile-info">
-        <div class="profile-name">{{ UserInfo.user.fullName }}</div>
+        <div class="profile-name">{{UserInfo.user.fullName}}</div>
         <!-- Input file ẩn -->
         <input accept="image/*" id="avatar-upload" style="display: none;" type="file">
         <!-- Nút thay đổi ảnh đại diện -->
@@ -32,51 +31,50 @@
     <!-- Phần thông tin cá nhân -->
     <div class="personal-info-section">
       <h2>Thông tin cá nhân</h2>
-      <form (ngSubmit)="saveInfo()" [formGroup]="userForm">
+      <form (ngSubmit)="saveInfo()" [formGroup]="personalInfoForm">
         <div class="form-group">
-          <input [value]="UserInfo.user.fullName" id="fullname" name="fullname" placeholder="Họ tên" type="text">
+          <input formControlName="name" id="fullname" placeholder="Họ tên" type="text">
         </div>
         <div class="form-row">
           <div class="form-group">
-            <input [value]="UserInfo.user.className" id="class" name="class" placeholder="Lớp" type="text">
+            <input formControlName="class" id="class" placeholder="Lớp" type="text">
           </div>
           <div class="form-group">
-            <input [value]="UserInfo.user.school" id="school" name="school" placeholder="Trường" type="text">
+            <input formControlName="school" id="school" placeholder="Trường" type="text">
           </div>
         </div>
         <div class="form-row">
           <div class="form-group">
-            <input [value]="UserInfo.user.birthday" id="dob" name="dob" placeholder="Ngày sinh" type="date">
+            <input formControlName="dob" id="dob" placeholder="Ngày sinh" type="date">
           </div>
           <div class="form-group">
-            <input [value]="UserInfo.user.address" id="province" name="province" placeholder="Tỉnh" type="text">
+            <input formControlName="province" id="province" placeholder="Tỉnh" type="text">
           </div>
         </div>
         <button class="btn" type="submit">Lưu thông tin</button>
       </form>
+
     </div>
 
-    <!-- Phần thông tin tài khoản -->
     <div class="account-info-section">
       <h2>Thông tin tài khoản</h2>
       <div class="account-info">
-        <form>
+        <form (ngSubmit)="changePassword()" [formGroup]="accountForm">
           <div class="form-group">
-            <input [value]="UserInfo.user.username" id="phone-email" name="phone-email"
-                   placeholder="Số điện thoại hoặc email" type="text">
+            <input formControlName="emailOrPhone" id="phone-email" placeholder="Số điện thoại hoặc email" type="text">
           </div>
 
           <!-- Phần đổi mật khẩu -->
           <div class="change-password-section">
             <h4>Đổi mật khẩu</h4>
             <div class="form-group">
-              <input id="current-password" name="current-password" placeholder="Mật khẩu hiện tại" type="password">
+              <input formControlName="currentPassword" id="current-password" placeholder="Mật khẩu hiện tại" type="password">
             </div>
             <div class="form-group">
-              <input id="new-password" name="new-password" placeholder="Mật khẩu mới" type="password">
+              <input formControlName="newPassword" id="new-password" placeholder="Mật khẩu mới" type="password">
             </div>
             <div class="form-group">
-              <input id="confirm-password" name="confirm-password" placeholder="Xác nhận mật khẩu mới" type="password">
+              <input formControlName="confirmPassword" id="confirm-password" placeholder="Xác nhận mật khẩu mới" type="password">
             </div>
             <button class="btn btn-change-password" type="submit">Đổi mật khẩu</button>
           </div>

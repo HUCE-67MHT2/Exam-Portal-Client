@@ -57,4 +57,5 @@ export class StudentUserComponent implements OnInit {
       }
     });
   }
+  student: string | undefined;
 }
