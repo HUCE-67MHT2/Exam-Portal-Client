@@ -27,9 +27,11 @@ export class DoTestComponent implements OnInit {
   showConfirmModal: boolean = false; // Trạng thái hiển thị modal
 
 
-
   @ViewChild('questionGrid') questionGrid!: ElementRef;
   @ViewChild('answerButtons') answerButtons!: ElementRef;
+  autoSaveTimeout: any = null;
+  //====================Logic cho testing========================
+  endTime = new Date();
 
   constructor(
     private router: Router,
@@ -38,8 +40,6 @@ export class DoTestComponent implements OnInit {
     private toastr: ToastrService,
   ) {
   }
-
-  autoSaveTimeout: any = null;
 
   ngOnInit() {
     const storedExam = localStorage.getItem('selectedExam');
@@ -51,9 +51,6 @@ export class DoTestComponent implements OnInit {
     console.log(this.exam?.totalQuestions);
     this.loadExamState();
   }
-
-  //====================Logic cho testing========================
-  endTime = new Date();
 
   loadExamState() {
     if (this.exam?.id) {
@@ -106,7 +103,7 @@ export class DoTestComponent implements OnInit {
   }
 
 
-  autoSaveAnswer=()=> {
+  autoSaveAnswer = () => {
     if (this.exam?.id) {
       const answerJson = this.getAnswerJson();
       this.StudentAnswerService.saveUploadStudentAnswers(this.exam.id, answerJson).subscribe({
@@ -135,18 +132,13 @@ export class DoTestComponent implements OnInit {
     return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
   }
 
-  private parseDateTime(dateTimeStr: string): Date {
-    return new Date(dateTimeStr.replace(' ', 'T'));
-  }
-
-  // =====================Logic cho xem file========================
-
   convertToPreviewUrl(url: string | null | undefined): string {
     if (!url) return '';
     const match = url.match(/\/d\/(.*?)\//);
     return match ? `https://drive.google.com/file/d/${match[1]}/preview` : '';
   }
-  //====================Logic cho nộp bài thi========================
+
+  // =====================Logic cho xem file========================
 
   // Mở modal xác nhận khi click vào nút Nộp bài
   submit = () => {
@@ -165,6 +157,7 @@ export class DoTestComponent implements OnInit {
     });
   }
 
+  //====================Logic cho nộp bài thi========================
 
   // Hủy nộp bài, đóng modal
   cancelSubmit() {
@@ -228,6 +221,9 @@ export class DoTestComponent implements OnInit {
     }
   }
 
+  private parseDateTime(dateTimeStr: string): Date {
+    return new Date(dateTimeStr.replace(' ', 'T'));
+  }
 
 
 }

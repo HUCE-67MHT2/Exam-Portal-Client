@@ -25,30 +25,30 @@
     <div class="table-container">
       <table>
         <thead class="table-heading">
-          <tr>
-            <th>Tên mã đề</th>
-            <th>Thời lượng</th>
-            <th>Dạng đề</th>
-            <th>Ngày tạo</th>
-            <th></th>
-          </tr>
+        <tr>
+          <th>Tên mã đề</th>
+          <th>Thời lượng</th>
+          <th>Dạng đề</th>
+          <th>Ngày tạo</th>
+          <th></th>
+        </tr>
         </thead>
         <tbody>
-          <tr
-            (click)="editExam(exam.id, exam.name, this.exam_session_id)"
-            *ngFor="let exam of filteredExams"
-          >
-            <td>
-              <p class="exam-name">{{ exam.name }} - {{ exam.description }}</p>
-            </td>
-            <td>{{ exam.duration }}</td>
-            <td>{{ exam.type }}</td>
-            <td>{{ exam.createDate | date : "dd/MM/yyyy" }}</td>
-            <td>
-              <button>xóa</button>
-            </td>
-          </tr>
-          <tr></tr>
+        <tr
+          (click)="editExam(exam.id, exam.name, this.exam_session_id)"
+          *ngFor="let exam of filteredExams"
+        >
+          <td>
+            <p class="exam-name">{{ exam.name }} - {{ exam.description }}</p>
+          </td>
+          <td>{{ exam.duration }}</td>
+          <td>{{ exam.type }}</td>
+          <td>{{ exam.createDate | date : "dd/MM/yyyy" }}</td>
+          <td>
+            <button>xóa</button>
+          </td>
+        </tr>
+        <tr></tr>
         </tbody>
       </table>
     </div>

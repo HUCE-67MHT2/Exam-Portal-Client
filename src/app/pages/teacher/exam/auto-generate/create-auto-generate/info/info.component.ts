@@ -6,7 +6,6 @@ import {ExamService} from "../../../../../../core/services/exam.service";
 import {QuestionService} from "../../../../../../core/services/question.service";
 import {QuestionAnswerService} from "../../../../../../core/services/question-answer.service";
 import {NgIf} from "@angular/common";
-import {catchError, forkJoin, Observable, of, tap, throwError} from "rxjs";
 
 @Component({
   selector: "app-info",

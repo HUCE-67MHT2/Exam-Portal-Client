@@ -33,7 +33,9 @@ import {
 } from './pages/teacher/exam/with-file/edit-exam-with-file/edit-exam-with-file.component';
 import {TeacherUserComponent} from './pages/user/teacher-user/teacher-user.component';
 import {StudentUserComponent} from './pages/user/student-user/student-user.component';
-import {QuestionBankComponent} from './pages/teacher/exam_session/exam-session-dashboard/question-bank/question-bank.component';
+import {
+  QuestionBankComponent
+} from './pages/teacher/exam_session/exam-session-dashboard/question-bank/question-bank.component';
 
 export const routes: Routes = [
 
@@ -56,12 +58,13 @@ export const routes: Routes = [
   {path: 'teacher/exam-create-with-file', component: ExamCreateWithFileComponent},
   {path: 'teacher/create-exam-session', component: CreateExamSessionComponent},
   {path: 'teacher/exam-session-dashboard', component: ExamSessionDashboardComponent},
-  {path: 'exam/auto-generate/create-auto-generate',
+  {
+    path: 'exam/auto-generate/create-auto-generate',
     component: CreateAutoGenerateComponent,
     children: [
-      { path: 'question', component: QuestionComponent },
-      { path: 'info', component: InfoComponent },
-      { path: '', redirectTo: 'question', pathMatch: 'full' }
+      {path: 'question', component: QuestionComponent},
+      {path: 'info', component: InfoComponent},
+      {path: '', redirectTo: 'question', pathMatch: 'full'}
     ]
   },
   {path: 'exam/auto-generate/create-auto-generate/question', component: QuestionComponent},

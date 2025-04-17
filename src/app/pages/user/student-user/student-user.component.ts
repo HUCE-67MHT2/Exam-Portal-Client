@@ -34,6 +34,7 @@ export class StudentUserComponent implements OnInit {
       updatedAt: undefined,
     }
   };
+  student: string | undefined;
 
   constructor(private userService: UserService, private toastr: ToastrService) {
 
@@ -57,5 +58,4 @@ export class StudentUserComponent implements OnInit {
       }
     });
   }
-  student: string | undefined;
 }

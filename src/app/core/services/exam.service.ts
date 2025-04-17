@@ -43,12 +43,12 @@ export class ExamService {
   getTestState(examId: number) {
     const token = localStorage.getItem('authToken');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.post<ExamStateResponse>(`${this.baseUrl}/get/test/state/${examId}`, {}, { headers });
+    return this.http.post<ExamStateResponse>(`${this.baseUrl}/get/test/state/${examId}`, {}, {headers});
   }
 
   submitUploadExam(examId: number) {
     const token = localStorage.getItem('authToken');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.post<ExamStateResponse>(`${this.baseUrl}/upload/submit/${examId}`, {}, { headers });
+    return this.http.post<ExamStateResponse>(`${this.baseUrl}/upload/submit/${examId}`, {}, {headers});
   }
 }
