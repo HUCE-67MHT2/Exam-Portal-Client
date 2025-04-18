@@ -18,6 +18,6 @@ export class StudentAnswerService {
     };
     const token = localStorage.getItem('authToken');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.post(`${this.baseUrl}/upload/save`, payload, { headers });
+    return this.http.post(`${this.baseUrl}/upload/save`, payload, {headers});
   }
 }

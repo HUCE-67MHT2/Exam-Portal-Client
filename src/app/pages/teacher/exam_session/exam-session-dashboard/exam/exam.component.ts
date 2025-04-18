@@ -1,9 +1,9 @@
-import { Component, Input, OnInit } from "@angular/core";
-import { Exam } from "../../../../../core/models/exam.model";
-import { FormsModule } from "@angular/forms";
-import { DatePipe, NgForOf, NgOptimizedImage } from "@angular/common";
-import { ActivatedRoute, Router } from "@angular/router";
-import { ExamService } from "../../../../../core/services/exam.service";
+import {Component, Input, OnInit} from "@angular/core";
+import {Exam} from "../../../../../core/models/exam.model";
+import {FormsModule} from "@angular/forms";
+import {DatePipe, NgForOf, NgOptimizedImage} from "@angular/common";
+import {ActivatedRoute, Router} from "@angular/router";
+import {ExamService} from "../../../../../core/services/exam.service";
 
 @Component({
   selector: "app-exam",
@@ -23,7 +23,8 @@ export class ExamComponent implements OnInit {
     private router: Router,
     private examService: ExamService,
     private route: ActivatedRoute
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     console.log(this.exam_session_id);

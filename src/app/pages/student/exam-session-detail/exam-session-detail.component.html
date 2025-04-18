@@ -35,10 +35,10 @@
       </tbody>
     </table>
 
-    <div #passwordForm [class.visible]="isPassword" class="password-form" (click)="closePasswordModal($event)">
-      <div class="container" (click)="$event.stopPropagation()">
+    <div #passwordForm (click)="closePasswordModal($event)" [class.visible]="isPassword" class="password-form">
+      <div (click)="$event.stopPropagation()" class="container">
         <!-- Exam information section -->
-        <div class="exam-info" *ngIf="selectedExam">
+        <div *ngIf="selectedExam" class="exam-info">
           <h2>{{ selectedExam.name }}</h2>
           <div class="exam-details">
             <p><span>Loại đề:</span> {{ selectedExam.type }}</p>

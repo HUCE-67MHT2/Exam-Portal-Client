@@ -1,5 +1,5 @@
-import { Component } from "@angular/core";
-import { ActivatedRoute, Router } from "@angular/router";
+import {Component} from "@angular/core";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: "app-question-bank",
@@ -12,7 +12,8 @@ export class QuestionBankComponent {
   exam_session_name = "";
   exam_session_description = "";
 
-  constructor(private route: ActivatedRoute, private router: Router) {}
+  constructor(private route: ActivatedRoute, private router: Router) {
+  }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe((params) => {

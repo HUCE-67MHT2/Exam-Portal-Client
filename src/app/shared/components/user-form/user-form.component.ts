@@ -1,8 +1,7 @@
-import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { UserService } from '../../../core/services/user.service';
-import { ReactiveFormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {UserService} from '../../../core/services/user.service';
+import {CommonModule} from '@angular/common';
 import {ToastrService} from 'ngx-toastr';
 import {Router} from '@angular/router';
 
@@ -24,7 +23,8 @@ export class UserFormComponent implements OnInit, OnChanges {
   personalInfoForm!: FormGroup;
   accountForm!: FormGroup;
 
-  constructor(private userService: UserService, private toarstService: ToastrService, private router: Router) {}
+  constructor(private userService: UserService, private toarstService: ToastrService, private router: Router) {
+  }
 
   ngOnInit() {
     this.personalInfoForm = new FormGroup({
@@ -72,7 +72,13 @@ export class UserFormComponent implements OnInit, OnChanges {
     if (this.personalInfoForm.valid) {
       const personalData = this.personalInfoForm.value;
       console.log('Thông tin cá nhân đã được lưu:', personalData);
-      this.userService.changeInfo({fullname : personalData.name, birthday : personalData.dob, school : personalData.school, address: personalData.province, className: personalData.class }).subscribe({
+      this.userService.changeInfo({
+        fullname: personalData.name,
+        birthday: personalData.dob,
+        school: personalData.school,
+        address: personalData.province,
+        className: personalData.class
+      }).subscribe({
         next: (response) => {
           console.log('Cập nhật thông tin thành công:', response);
           this.toarstService.success('Cập nhật thông tin thành công', 'Thành công', {timeOut: 2000});
@@ -90,12 +96,15 @@ export class UserFormComponent implements OnInit, OnChanges {
     }
   }
 
-  changePassword=()=> {
+  changePassword = () => {
     if (this.accountForm.valid) {
-      const { newPassword, confirmPassword } = this.accountForm.value;
+      const {newPassword, confirmPassword} = this.accountForm.value;
       if (newPassword === confirmPassword) {
         console.log('Đổi mật khẩu thành công:', this.accountForm.value);
-        this.userService.changePassword({password : this.accountForm.value.currentPassword, newPassword: this.accountForm.value.newPassword}).subscribe({
+        this.userService.changePassword({
+          password: this.accountForm.value.currentPassword,
+          newPassword: this.accountForm.value.newPassword
+        }).subscribe({
           next: (response) => {
             console.log('Đổi mật khẩu thành công:', response);
             this.toarstService.success('Cập nhật mật khâủ thành công', 'Thành công', {timeOut: 2000});

@@ -1,11 +1,11 @@
-import { Component, OnInit, OnDestroy, Input } from "@angular/core";
+import {Component, Input, OnInit} from "@angular/core";
 import {FormsModule} from "@angular/forms";
 import {CommonModule} from "@angular/common";
-import { QuestionService } from "../../../../../../core/services/question.service";
-import { QuestionAnswerService } from "../../../../../../core/services/question-answer.service";
-import { ToastrService } from "ngx-toastr";
-import { Router, ActivatedRoute } from "@angular/router";
-import { catchError, forkJoin, Observable, of, tap, throwError } from "rxjs";
+import {QuestionService} from "../../../../../../core/services/question.service";
+import {QuestionAnswerService} from "../../../../../../core/services/question-answer.service";
+import {ToastrService} from "ngx-toastr";
+import {ActivatedRoute, Router} from "@angular/router";
+import {catchError, forkJoin, Observable, of, tap, throwError} from "rxjs";
 
 @Component({
   selector: "app-question",
@@ -179,7 +179,7 @@ export class QuestionComponent implements OnInit {
       formattedAnswers[key] = rawAnswers[index];
     });
 
-    const result = { answers: formattedAnswers };
+    const result = {answers: formattedAnswers};
 
     // Lưu vào localStorage
     localStorage.setItem("answers", JSON.stringify(result));

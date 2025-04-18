@@ -23,11 +23,13 @@ export class UserService {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     return this.http.get(`${this.baseUrl}/get/info/user`, {headers, responseType: 'text'});
   }
+
   changeInfo(user: any): Observable<any> {
     const token = localStorage.getItem('authToken');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     return this.http.post(`${this.baseUrl}/update/info/user`, user, {headers, responseType: 'text'});
   }
+
   changePassword(user: any): Observable<any> {
     const token = localStorage.getItem('authToken');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
