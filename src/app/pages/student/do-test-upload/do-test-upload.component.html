@@ -8,6 +8,7 @@
       <div class="counter">
         <p>{{ getFormattedTime() }}</p>
       </div>
+      <div class="ws-status" [class.connected]="isConnected" title="Trạng thái kết nối"></div>
     </div>
     <div class="answer-sheet">
       <div class="subject">

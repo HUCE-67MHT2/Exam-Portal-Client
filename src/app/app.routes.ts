@@ -7,7 +7,7 @@ import {TeacherSignupComponent} from './pages/sign-up/teacher-signup/teacher-sig
 import {StudentHomeComponent} from './pages/home/student-home/student-home.component';
 import {TeacherHomeComponent} from './pages/home/teacher-home/teacher-home.component';
 import {ExamSessionComponent} from './pages/student/exam-session/exam-session.component';
-import {DoTestComponent} from './pages/student/do-test/do-test.component';
+import {DoTestUploadComponent} from './pages/student/do-test-upload/do-test-upload.component';
 import {ResultsComponent} from './pages/student/results/results.component';
 import {UserFormComponent} from './shared/components/user-form/user-form.component';
 import {ExamSessionDetailComponent} from './pages/student/exam-session-detail/exam-session-detail.component';
@@ -34,6 +34,7 @@ import {
 import {TeacherUserComponent} from './pages/user/teacher-user/teacher-user.component';
 import {StudentUserComponent} from './pages/user/student-user/student-user.component';
 import {QuestionBankComponent} from './pages/teacher/exam_session/exam-session-dashboard/question-bank/question-bank.component';
+import {DoTestAutogenComponent} from './pages/student/do-test-autogen/do-test-autogen.component';
 
 export const routes: Routes = [
 
@@ -45,7 +46,8 @@ export const routes: Routes = [
   {path: 'home/student', component: StudentHomeComponent},
   {path: 'home/teacher', component: TeacherHomeComponent},
   {path: 'student/exam-session', component: ExamSessionComponent},
-  {path: 'student/do-test', component: DoTestComponent},
+  {path: 'student/do-test-upload', component: DoTestUploadComponent},
+  {path: 'student/do-test-autogen', component: DoTestAutogenComponent},
   {path: 'student/results', component: ResultsComponent},
   {path: 'user-form', component: UserFormComponent},
   {path: 'student/user', component: StudentUserComponent},

@@ -456,3 +456,17 @@
     }
   }
 }
+.ws-status {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #cc0000;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  transition: background-color 0.3s ease;
+
+  &.connected {
+    background-color: #4CAF50;
+  }
+}

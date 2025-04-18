@@ -12,3 +12,38 @@ export interface Exam {
   startDate: Date;          // Ngày bắt đầu đề thi (ISO 8601 string)
   endDate: Date;            // Ngày kết thúc đề thi (ISO 8601 string)
 }
+
+
+export interface Answer {
+  answer_id: number;
+  answer_text: string;
+}
+
+export interface Question {
+  question_id: number;
+  question_text: string;
+  question_answers: Answer[];
+}
+
+export interface ExamData {
+  exam_id?: number;
+  questions: Question[];
+}
+
+export interface StudentAnswer {
+  question_id: number;
+  selected_answer_id: number | null;
+}
+
+interface StudentSubmission {
+  student_id: number;
+  exam_id: number;
+  answers: StudentAnswer[];
+}
+
+export interface ExamTimer {
+  hours: number;
+  minutes: number;
+  seconds: number;
+  totalSeconds: number;
+}

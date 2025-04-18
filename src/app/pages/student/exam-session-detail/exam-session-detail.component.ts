@@ -150,9 +150,9 @@ export class ExamSessionDetailComponent implements OnInit {
           this.toastr.success("Password Correct!", '', {timeOut: 2000});
           localStorage.setItem('selectedExam', JSON.stringify(this.selectedExam));
           if (this.selectedExam?.type === "upload") {
-            this.router.navigate(["student/do-test"]);
+            this.router.navigate(["student/do-test-upload"]);
           } else {
-            this.router.navigate(["home/student"]);
+            this.router.navigate(["student/do-test-autogen"]);
           }
         }
       },

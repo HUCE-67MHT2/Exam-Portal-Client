@@ -1,4 +1,4 @@
-import {Component, ElementRef, HostListener, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {NgForOf, NgIf} from '@angular/common';
 import {Exam} from '../../../core/models/exam.model';
 import {NgxDocViewerModule} from 'ngx-doc-viewer';
@@ -6,18 +6,20 @@ import {ExamService} from '../../../core/services/exam.service';
 import {Router} from '@angular/router';
 import {StudentAnswerService} from '../../../core/services/student-answer.service';
 import {ToastrService} from 'ngx-toastr';
+import {WebsocketService, NotificationMessage} from '../../../core/services/websocket.service';
+import {Subscription} from 'rxjs';
 
 @Component({
-  selector: 'app-do-test',
-  templateUrl: './do-test.component.html',
+  selector: 'app-do-test-upload',
+  templateUrl: './do-test-upload.component.html',
   imports: [
     NgForOf,
     NgIf,
     NgxDocViewerModule
   ],
-  styleUrl: './do-test.component.scss'
+  styleUrl: './do-test-upload.component.scss'
 })
-export class DoTestComponent implements OnInit {
+export class DoTestUploadComponent implements OnInit, OnDestroy {
   exam: Exam | null = null;
   subject = "Toán-GK";
   selectedQuestionIndex: number | null = null;
@@ -36,6 +38,7 @@ export class DoTestComponent implements OnInit {
     private examService: ExamService,
     private StudentAnswerService: StudentAnswerService,
     private toastr: ToastrService,
+    private websocketService: WebsocketService,
   ) {
   }
 
@@ -50,6 +53,8 @@ export class DoTestComponent implements OnInit {
     this.fileUrl = this.convertToPreviewUrl(this.exam?.fileUrl);
     console.log(this.exam?.totalQuestions);
     this.loadExamState();
+
+    this.connectWebSocket();
   }
 
   //====================Logic cho testing========================
@@ -116,17 +121,19 @@ export class DoTestComponent implements OnInit {
     }
   }
 
-  // Bắt đầu đếm ngược
+  private countdownInterval: any;
+
   startCountdown() {
-    setInterval(() => {
+    this.countdownInterval = setInterval(() => {
       if (this.counter > 0) {
         this.counter--;
       } else {
-        // Tự động nộp bài khi hết thời gian
-        this.confirmSubmit();
+        clearInterval(this.countdownInterval); // Dừng đếm ngược!
+        this.confirmSubmit(); // Gọi 1 lần duy nhất
       }
     }, 1000);
   }
+
 
   // Định dạng thời gian (phút:giây)
   getFormattedTime(): string {
@@ -146,37 +153,109 @@ export class DoTestComponent implements OnInit {
     const match = url.match(/\/d\/(.*?)\//);
     return match ? `https://drive.google.com/file/d/${match[1]}/preview` : '';
   }
+
+  //====================Logic cho thông báo realtime========================
+  private wsSubscription: Subscription | null = null;
+  isConnected: boolean = false;
+
+  ngOnDestroy = ()=> {
+    // Clean up subscriptions
+    if (this.wsSubscription) {
+      this.wsSubscription.unsubscribe();
+    }
+
+    // Disconnect from WebSocket
+    this.websocketService.disconnect();
+
+    // Clear any pending autoSaveTimeout
+    if (this.autoSaveTimeout) {
+      clearTimeout(this.autoSaveTimeout);
+    }
+  }
+
+  // Connect to WebSocket and handle notifications
+  connectWebSocket = ()=> {
+    // Subscribe to connection state
+    this.websocketService.connectionState$.subscribe(connected => {
+      this.isConnected = connected;
+      if (connected) {
+        console.log('WebSocket connected successfully');
+      } else {
+        console.log('WebSocket disconnected');
+      }
+    });
+
+    // Subscribe to notifications
+    this.wsSubscription = this.websocketService.message$.subscribe(
+      (notification: NotificationMessage) => {
+        this.handleNotification(notification);
+      }
+    );
+
+    // Establish connection
+    this.websocketService.connect();
+  }
+
+  // Handle different types of notifications
+  handleNotification(notification: NotificationMessage) {
+    console.log('Received notification:', notification);
+
+    switch(notification.type) {
+      case 'WARNING':
+        this.toastr.warning(notification.message, 'Cảnh báo');
+        break;
+
+      case 'FORCE_SUBMIT':
+        this.toastr.error(notification.message, 'Bắt buộc nộp bài', {
+          timeOut: 5000, // Cho user thời gian đọc
+          progressBar: true,
+          disableTimeOut: false, // Để toastr tự đóng
+          closeButton: true
+        });
+        console.log("Force submit triggered by server.");
+        break;
+
+      case 'INFO':
+        this.toastr.info(notification.message, 'Thông tin');
+        break;
+
+      case 'ERROR':
+        this.toastr.error(notification.message, 'Lỗi');
+        break;
+    }
+
+    this.router.navigate(['student/exam-session-detail']);
+  }
   //====================Logic cho nộp bài thi========================
 
   // Mở modal xác nhận khi click vào nút Nộp bài
   submit = () => {
     this.showConfirmModal = true;
-
-    // @ts-ignore
-    this.examService.submitUploadExam(this.exam.id).subscribe({
-      next: (response) => {
-        this.toastr.success('Nộp bài thành công', 'Thành công');
-        this.router.navigate(['student/exam-session-detail']);
-      },
-      error: (err) => {
-        console.error(err); // Sửa lỗi chính tả: console.err -> console.error
-        this.toastr.error('Đã xảy ra lỗi khi nộp bài', 'Lỗi');
-      }
-    });
   }
-
 
   // Hủy nộp bài, đóng modal
   cancelSubmit() {
     this.showConfirmModal = false;
   }
 
-  // Xác nhận nộp bài
   confirmSubmit() {
+    // First create the answer JSON
     const resultJson = this.getAnswerJson();
     console.log("Bài làm đã nộp:", resultJson);
-    this.submit()
-    this.router.navigate(['student/exam-session-detail']);
+
+    // Call the API to submit the exam
+    if (this.exam?.id) {
+      this.examService.submitUploadExam(this.exam.id).subscribe({
+        next: (response) => {
+          this.toastr.success('Nộp bài thành công', 'Thành công');
+          this.router.navigate(['student/exam-session-detail']);
+        },
+        error: (err) => {
+          console.error(err);
+          this.toastr.error('Đã xảy ra lỗi khi nộp bài', 'Lỗi');
+        }
+      });
+    }
   }
 
   // Đếm số câu hỏi chưa trả lời
@@ -227,7 +306,4 @@ export class DoTestComponent implements OnInit {
       }, 3000);
     }
   }
-
-
-
 }
