@@ -317,9 +317,19 @@ export class DoTestAutogenComponent implements OnInit, OnDestroy {
     this.isExamOverviewVisible = !this.isExamOverviewVisible;
   }
 
-  getLetterFromAnswerId(answerId: number): string {
-    // Convert answer ID to letter: 1->A, 2->B, 3->C, 4->D
-    return String.fromCharCode(64 + answerId);
+  // Updated method to get letter based on answer position, not ID
+  getLetterFromAnswer(questionId: number, answerId: number | null): string {
+    if (answerId === null) return '?';
+
+    // Find the question object
+    const question = this.examData?.questions?.find(q => q.question_id === questionId);
+    if (!question) return '?';
+
+    // Find the index of the selected answer within the question's answers
+    const answerIndex = question.question_answers.findIndex(a => a.answer_id === answerId);
+
+    // Convert index to letter (0 → A, 1 → B, etc.)
+    return answerIndex >= 0 ? String.fromCharCode(65 + answerIndex) : '?';
   }
 
 }

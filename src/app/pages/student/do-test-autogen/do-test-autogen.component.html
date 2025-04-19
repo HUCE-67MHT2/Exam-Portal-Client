@@ -96,7 +96,8 @@
                 {{i + 1}}
               </div>
               <div class="answer-content">
-                {{answer.selected_answer_id !== null ? getLetterFromAnswerId(answer.selected_answer_id) : '?'}}
+                {{answer.selected_answer_id !== null ?
+                getLetterFromAnswer(answer.question_id, answer.selected_answer_id) : '?'}}
               </div>
             </div>
           </div>
