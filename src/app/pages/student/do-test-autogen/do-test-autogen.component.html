@@ -38,7 +38,7 @@
     </div>
 
     <div class="questions-list">
-      <div *ngFor="let question of examData.questions; let i = index"
+      <div *ngFor="let question of examData?.questions; let i = index"
            class="question-item"
            id="question-item-{{i}}">
 
@@ -74,7 +74,7 @@
     <div class="progress-section">
       <div class="progress-header">
         <span>Tiến độ làm bài</span>
-        <span class="progress-count">{{getAnsweredCount()}}/{{examData.questions.length}}</span>
+        <span class="progress-count">{{getAnsweredCount()}}/{{examData?.questions?.length}}</span>
       </div>
 
       <div class="progress-bar-container">
@@ -117,7 +117,7 @@
           </div>
           <div class="stat-item">
             <div class="stat-label">Tổng số</div>
-            <div class="stat-value">{{examData.questions.length}}</div>
+            <div class="stat-value">{{examData?.questions?.length}}</div>
           </div>
         </div>
       </div>

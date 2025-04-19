@@ -14,19 +14,22 @@ export interface Exam {
 }
 
 
+// Interface cho Answer
 export interface Answer {
   answer_id: number;
   answer_text: string;
 }
 
+// Interface cho Question
 export interface Question {
   question_id: number;
   question_text: string;
   question_answers: Answer[];
 }
 
+// Interface cho ExamData
 export interface ExamData {
-  exam_id?: number;
+  exam_id: number;
   questions: Question[];
 }
 
@@ -46,4 +49,9 @@ export interface ExamTimer {
   minutes: number;
   seconds: number;
   totalSeconds: number;
+}
+
+export interface ExamResultTimer{
+  startTime: Date;
+  endTime: Date;
 }

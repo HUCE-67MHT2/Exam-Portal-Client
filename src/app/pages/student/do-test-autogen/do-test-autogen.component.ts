@@ -1,242 +1,103 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import { Exam, ExamData, StudentAnswer,} from '../../../core/models/exam.model';
+import {Exam, ExamData, ExamResultTimer, StudentAnswer,} from '../../../core/models/exam.model';
 import { NgForOf, NgIf} from '@angular/common';
+import  { Router } from '@angular/router';
+import { ExamService } from '../../../core/services/exam.service';
+import {ExamResultService} from '../../../core/services/exam-result.service';
+import {ToastrService} from 'ngx-toastr';
+import {StudentAnswerService} from '../../../core/services/student-answer.service';
 
 @Component({
   selector: 'app-do-test-autogen',
+  standalone: true,
   imports: [
     NgForOf,
     NgIf,
   ],
   templateUrl: './do-test-autogen.component.html',
-  styleUrl: './do-test-autogen.component.scss'
+  styleUrl: './do-test-autogen.component.scss',
+  providers:[ExamResultService,ExamService]
 })
 
 export class DoTestAutogenComponent implements OnInit, OnDestroy {
 
 
-  // State variables
-  examData: ExamData = {
-    exam_id: 456,
-    questions: [
-      {
-        question_id: 12323,
-        question_text: "Thủ đô của Việt Nam là?",
-        question_answers: [
-          { answer_id: 1, answer_text: "Hà Nội" },
-          { answer_id: 2, answer_text: "Hồ Chí Minh" },
-          { answer_id: 3, answer_text: "Đà Nẵng" },
-          { answer_id: 4, answer_text: "Hải Phòng" }
-        ]
-      },
-      {
-        question_id: 23442,
-        question_text: "Ngôn ngữ lập trình nào không phải là ngôn ngữ hướng đối tượng?",
-        question_answers: [
-          { answer_id: 1, answer_text: "Java" },
-          { answer_id: 2, answer_text: "C++" },
-          { answer_id: 3, answer_text: "C" },
-          { answer_id: 4, answer_text: "Python" }
-        ]
-      },
-      {
-        question_id: 5453,
-        question_text: "Angular được phát triển bởi công ty nào?",
-        question_answers: [
-          { answer_id: 1, answer_text: "Facebook" },
-          { answer_id: 2, answer_text: "Google" },
-          { answer_id: 3, answer_text: "Microsoft" },
-          { answer_id: 4, answer_text: "Amazon" }
-        ]
-      },
-      {
-        question_id: 434342,
-        question_text: "Trong JavaScript, để khai báo một biến không thay đổi giá trị, ta sử dụng từ khóa nào?, Trong JavaScript, để khai báo một biến không thay đổi giá trị, ta sử dụng từ khóa nào, Trong JavaScript, để khai báo một biến không thay đổi giá trị, ta sử dụng từ khóa nào",
-        question_answers: [
-          { answer_id: 1, answer_text: "varTrong JavaScript, để khai báo một biến không thay đổi giá trị, ta sử dụng từ khóa nàoTrong JavaScript, để khai báo một biến không thay đổi giá trị, ta sử dụng từ khóa nàoTrong JavaScript, để khai báo một biến không thay đổi giá trị, ta sử dụng từ khóa nào" },
-          { answer_id: 2, answer_text: "let" },
-          { answer_id: 3, answer_text: "const" },
-          { answer_id: 4, answer_text: "static" }
-        ]
-      },
-      {
-        question_id: 53453,
-        question_text: "Trong CSS, thuộc tính nào dùng để thiết lập khoảng cách giữa các phần tử?",
-        question_answers: [
-          { answer_id: 1, answer_text: "margin" },
-          { answer_id: 2, answer_text: "padding" },
-          { answer_id: 3, answer_text: "spacing" },
-          { answer_id: 4, answer_text: "gap" }
-        ]
-      },
-      {
-        question_id: 665465,
-        question_text: "HTTP status code nào đại diện cho lỗi 'Không tìm thấy'?",
-        question_answers: [
-          { answer_id: 1, answer_text: "200" },
-          { answer_id: 2, answer_text: "404" },
-          { answer_id: 3, answer_text: "500" },
-          { answer_id: 4, answer_text: "403" }
-        ]
-      },
-      {
-        question_id: 7345345,
-        question_text: "Trong Angular, decorator nào được sử dụng để định nghĩa một component?",
-        question_answers: [
-          { answer_id: 1, answer_text: "@Component" },
-          { answer_id: 2, answer_text: "@NgModule" },
-          { answer_id: 3, answer_text: "@Injectable" },
-          { answer_id: 4, answer_text: "@Directive" }
-        ]
-      },
-      {
-        question_id: 834534,
-        question_text: "Phương thức HTTP nào dùng để cập nhật một phần của tài nguyên?",
-        question_answers: [
-          { answer_id: 1, answer_text: "GET" },
-          { answer_id: 2, answer_text: "POST" },
-          { answer_id: 3, answer_text: "PUT" },
-          { answer_id: 4, answer_text: "PATCH" }
-        ]
-      },
-      {
-        question_id: 934534,
-        question_text: "Thuật ngữ 'SPA' trong phát triển web là viết tắt của?",
-        question_answers: [
-          { answer_id: 1, answer_text: "Simple Page Application" },
-          { answer_id: 2, answer_text: "Single Page Application" },
-          { answer_id: 3, answer_text: "System Page Application" },
-          { answer_id: 4, answer_text: "Standard Page Application" }
-        ]
-      },
-      {
-        question_id: 130345,
-        question_text: "Hàm JavaScript nào dùng để chuyển đổi một chuỗi JSON thành đối tượng JavaScript?",
-        question_answers: [
-          { answer_id: 1, answer_text: "JSON.parse()" },
-          { answer_id: 2, answer_text: "JSON.stringify()" },
-          { answer_id: 3, answer_text: "JSON.convert()" },
-          { answer_id: 4, answer_text: "JSON.toObject()" }
-        ]
-      },
-      {
-        question_id: 34561,
-        question_text: "Thủ đô của Việt Nam là?",
-        question_answers: [
-          { answer_id: 1, answer_text: "Hà Nội" },
-          { answer_id: 2, answer_text: "Hồ Chí Minh" },
-          { answer_id: 3, answer_text: "Đà Nẵng" },
-          { answer_id: 4, answer_text: "Hải Phòng" }
-        ]
-      },
-      {
-        question_id: 257562,
-        question_text: "Ngôn ngữ lập trình nào không phải là ngôn ngữ hướng đối tượng?",
-        question_answers: [
-          { answer_id: 1, answer_text: "Java" },
-          { answer_id: 2, answer_text: "C++" },
-          { answer_id: 3, answer_text: "C" },
-          { answer_id: 4, answer_text: "Python" }
-        ]
-      },
-      {
-        question_id: 36725,
-        question_text: "Angular được phát triển bởi công ty nào?",
-        question_answers: [
-          { answer_id: 1, answer_text: "Facebook" },
-          { answer_id: 2, answer_text: "Google" },
-          { answer_id: 3, answer_text: "Microsoft" },
-          { answer_id: 4, answer_text: "Amazon" }
-        ]
-      },
-      {
-        question_id: 256454,
-        question_text: "Trong JavaScript, để khai báo một biến không thay đổi giá trị, ta sử dụng từ khóa nào?, Trong JavaScript, để khai báo một biến không thay đổi giá trị, ta sử dụng từ khóa nào, Trong JavaScript, để khai báo một biến không thay đổi giá trị, ta sử dụng từ khóa nào",
-        question_answers: [
-          { answer_id: 1, answer_text: "varTrong JavaScript, để khai báo một biến không thay đổi giá trị, ta sử dụng từ khóa nàoTrong JavaScript, để khai báo một biến không thay đổi giá trị, ta sử dụng từ khóa nàoTrong JavaScript, để khai báo một biến không thay đổi giá trị, ta sử dụng từ khóa nào" },
-          { answer_id: 2, answer_text: "let" },
-          { answer_id: 3, answer_text: "const" },
-          { answer_id: 4, answer_text: "static" }
-        ]
-      },
-      {
-        question_id: 54625,
-        question_text: "Trong CSS, thuộc tính nào dùng để thiết lập khoảng cách giữa các phần tử?",
-        question_answers: [
-          { answer_id: 1, answer_text: "margin" },
-          { answer_id: 2, answer_text: "padding" },
-          { answer_id: 3, answer_text: "spacing" },
-          { answer_id: 4, answer_text: "gap" }
-        ]
-      },
-      {
-        question_id: 5245426,
-        question_text: "HTTP status code nào đại diện cho lỗi 'Không tìm thấy'?",
-        question_answers: [
-          { answer_id: 1, answer_text: "200" },
-          { answer_id: 2, answer_text: "404" },
-          { answer_id: 3, answer_text: "500" },
-          { answer_id: 4, answer_text: "403" }
-        ]
-      },
-      {
-        question_id: 76877,
-        question_text: "Trong Angular, decorator nào được sử dụng để định nghĩa một component?",
-        question_answers: [
-          { answer_id: 1, answer_text: "@Component" },
-          { answer_id: 2, answer_text: "@NgModule" },
-          { answer_id: 3, answer_text: "@Injectable" },
-          { answer_id: 4, answer_text: "@Directive" }
-        ]
-      },
-      {
-        question_id: 453258,
-        question_text: "Phương thức HTTP nào dùng để cập nhật một phần của tài nguyên?",
-        question_answers: [
-          { answer_id: 1, answer_text: "GET" },
-          { answer_id: 2, answer_text: "POST" },
-          { answer_id: 3, answer_text: "PUT" },
-          { answer_id: 4, answer_text: "PATCH" }
-        ]
-      },
-      {
-        question_id: 2134329,
-        question_text: "Thuật ngữ 'SPA' trong phát triển web là viết tắt của?",
-        question_answers: [
-          { answer_id: 1, answer_text: "Simple Page Application" },
-          { answer_id: 2, answer_text: "Single Page Application" },
-          { answer_id: 3, answer_text: "System Page Application" },
-          { answer_id: 4, answer_text: "Standard Page Application" }
-        ]
-      },
-      {
-        question_id: 10213423,
-        question_text: "Hàm JavaScript nào dùng để chuyển đổi một chuỗi JSON thành đối tượng JavaScript?",
-        question_answers: [
-          { answer_id: 1, answer_text: "JSON.parse()" },
-          { answer_id: 2, answer_text: "JSON.stringify()" },
-          { answer_id: 3, answer_text: "JSON.convert()" },
-          { answer_id: 4, answer_text: "JSON.toObject()" }
-        ]
-      }
-    ]
-  };
 
   studentAnswers: StudentAnswer[] = [];
   remainingTimeInSeconds: number = 0;
   timerInterval: any;
   examSubmitted: boolean = false;
+  checkDoTest : boolean = false;
   currentExamViewIndex: number = 0;
   isExamOverviewVisible: boolean = false;
-
-
+  examData: ExamData | null = null;
+  examResultTime : ExamResultTimer | null = null;
   localExamData: Exam | null = null;
 
-  constructor() {}
+  constructor(private router: Router,private examService: ExamService,
+              private examResultService: ExamResultService,
+              private toarstService: ToastrService,
+              private studentAnswerService : StudentAnswerService ) {}
 
+  createExamResult = (examId: number)=>{
+    if (this.localExamData) {
+      this.examResultService.createExamResultAutoGen(this.localExamData.id).subscribe({
+        next: (response) => {
 
+          this.toarstService.success('Làm bài thi đi', 'Thông báo', {timeOut: 2000});
+        },
+        error: (error) => {
+          this.checkDoTest = true;
+          this.toarstService.success(error.error.message, 'Thông báo', {timeOut: 2000});
+        }
+      })
+    } else {
+      console.error('localExamData is null');
+    }
+  }
+
+  fetchExamData = (examId: number) => {
+    this.examService.getAllQuestionsAutogenbyExamId(examId).subscribe({
+      next: (response) => {
+        this.examData = response;
+        // Chỉ khởi tạo exam và studentAnswers khi dữ liệu đã sẵn sàng
+        this.initializeExam();
+      },
+      error: (error) => {
+        console.error("Error fetching exam data:", error);
+      }
+    });
+  }
+
+  fetchExamResultData = (examId: number) => {
+    this.studentAnswerService.getStudentAnswerByExamId(examId).subscribe({
+      next: (response) => {
+        this.studentAnswers = response.body;
+      },
+      error: (error) => {
+        console.error("Error fetching exam result data:", error);
+      }
+    });
+  }
+
+  getResultExamTime = (examId: number) => {
+    this.examResultService.getEntimeExamResultById(examId).subscribe({
+      next: (response) => {
+
+        this.examResultTime = response.body.examResultTimerDTO;
+        console.log("Exam result time data fetched successfully:", this.examResultTime);
+        console.log('type of',typeof this.examResultTime?.endTime);
+        this.initializeExam();  // Chuyển initialize vào đây
+        this.startTimer();
+      },
+      error: (error) => {
+        console.error("Error fetching exam result data:", error);
+      }
+    })
+  }
   totalTimeInMinutes: number = 60;
-  ngOnInit(): void {
+  autosaveInterval: any;
+  ngOnInit  ()  {
     // Load exam data from localStorage
     const storedExam = localStorage.getItem('selectedExam');
     if (storedExam) {
@@ -244,32 +105,57 @@ export class DoTestAutogenComponent implements OnInit, OnDestroy {
       this.localExamData = JSON.parse(storedExam);
       // Update exam details from localStorage
       this.totalTimeInMinutes = examData.duration;
+      console.log('examSelected',examData)
+      this.getResultExamTime(examData.id);
+      this.createExamResult(examData.id);
+      this.fetchExamData(examData.id)
+      this.fetchExamResultData(examData.id);
 
-
-      // Log the loaded data
-      console.log('Loaded exam data from localStorage:', examData);
+      this.autosaveInterval = setInterval(() => {
+        this.autoSaveAnswers(examData.id);
+      }, 2000);
     } else {
       console.warn('No exam data found in localStorage');
     }
+    // this.startTimer();
 
-    this.initializeExam();
-    this.startTimer();
   }
 
   ngOnDestroy(): void {
     this.stopTimer();
+    if (this.autosaveInterval) {
+      clearInterval(this.autosaveInterval);
+    }
   }
 
   // INITIALIZATION GROUP
   initializeExam(): void {
-    // Initialize student answers with null (not answered)
-    this.studentAnswers = this.examData.questions.map(question => ({
-      question_id: question.question_id,
-      selected_answer_id: null
-    }));
+    if (this.examData && this.examData.questions && !this.checkDoTest) {
+      // Initialize student answers with null (not answered)
+      this.studentAnswers = this.examData.questions.map(question => ({
+        question_id: question.question_id,
+        selected_answer_id: null
+      }));
 
-    // Set timer
-    this.remainingTimeInSeconds = this.totalTimeInMinutes * 60;
+      // Set timer
+      if (this.examResultTime?.endTime) {
+        const endTime = new Date(this.examResultTime.endTime).getTime();
+        const now = new Date().getTime();
+        const remainingSeconds = Math.floor((endTime - now) / 1000);
+        this.remainingTimeInSeconds = remainingSeconds > 0 ? remainingSeconds : 0;
+        console.log('remainingSeconds',remainingSeconds)
+      }
+    } else {
+      // Handle the case where examData or questions is null
+      if (this.examResultTime?.endTime) {
+        const endTime = new Date(this.examResultTime.endTime).getTime();
+        const now = new Date().getTime();
+        const remainingSeconds = Math.floor((endTime - now) / 1000);
+        this.remainingTimeInSeconds = remainingSeconds > 0 ? remainingSeconds : 0;
+        console.log('remainingSeconds',remainingSeconds)
+      }
+
+    }
   }
 
   // TIMER HANDLING GROUP
@@ -316,6 +202,16 @@ export class DoTestAutogenComponent implements OnInit, OnDestroy {
     }
   }
 
+  autoSaveAnswers = (examId : number)=> {
+    this.studentAnswerService.saveAutogenStudentAnswer(examId, this.studentAnswers)
+      .subscribe({
+        next: (response) => {
+        },
+        error: (error) => {
+          console.error("Lỗi khi lưu câu trả lời tự động:", error);
+        }
+      });
+  }
   isAnswerSelected(questionId: number, answerId: number): boolean {
     const answer = this.studentAnswers.find(a => a.question_id === questionId);
     return answer?.selected_answer_id === answerId;
@@ -335,20 +231,41 @@ export class DoTestAutogenComponent implements OnInit, OnDestroy {
   }
 
   getCompletedPercentage(): number {
-    return (this.getAnsweredCount() / this.examData.questions.length) * 100;
+    if (this.examData && this.examData.questions && this.examData.questions.length > 0) {
+      return (this.getAnsweredCount() / this.examData.questions.length) * 100;
+    } else {
+      // Return 0 if no questions available or examData is missing
+      console.error('Exam data or questions is missing or empty!');
+      return 0;
+    }
   }
-
   // EXAM SUBMISSION GROUP
-  submitExam(): void {
+  submitExam = () => {
     if (this.examSubmitted) return;
+
+    // Ensure examData and studentAnswers are available before proceeding
+    if (!this.examData || !this.examData.questions || !this.studentAnswers) {
+      console.error('Exam data or student answers are not available.');
+      return;
+    }
 
     this.stopTimer();
     this.examSubmitted = true;
-
-    // Format data according to required backend structure
+    this.autoSaveAnswers(this.examData.exam_id);
+    this.examService.submitExamAutogen(this.examData.exam_id).subscribe({
+      next: (response) => {
+        this.toarstService.success('Nộp bài thành công', 'Thông báo', {timeOut: 2000});
+        this.router.navigate(['student/exam-session-detail']);
+      },
+      error: (error) => {
+        console.error('Error submitting exam:', error);
+        this.toarstService.error('Đã xảy ra lỗi khi nộp bài', 'Lỗi', {timeOut: 2000});
+      }
+    })
+    // Format data according to the required backend structure
     const submission = {
       exam_id: this.examData.exam_id,
-      answers: [...this.studentAnswers]
+      answers: [...this.studentAnswers] // Spread to avoid reference issues
     };
 
     // Log the formatted submission for verification
@@ -359,11 +276,13 @@ export class DoTestAutogenComponent implements OnInit, OnDestroy {
     console.log('===== DETAILED SUBMISSION DATA =====');
     console.log(`Exam ID: ${this.examData.exam_id}`);
     console.log(`Questions answered: ${this.getAnsweredCount()} / ${this.examData.questions.length}`);
-    console.log(`Time used: ${this.totalTimeInMinutes * 60 - this.remainingTimeInSeconds} seconds`);
+
+    // Check if time tracking is available and log time used
+    const timeUsed = this.totalTimeInMinutes * 60 - this.remainingTimeInSeconds;
+    console.log(`Time used: ${timeUsed} seconds`);
 
     // Here you would send the data to your backend API
-    // this.examService.submitExam(submission).subscribe(...);
-
+    // Example: this.examService.submitExam(submission).subscribe(...);
   }
 
   confirmSubmit(): void {

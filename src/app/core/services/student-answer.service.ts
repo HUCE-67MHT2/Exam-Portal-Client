@@ -20,4 +20,18 @@ export class StudentAnswerService {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     return this.http.post(`${this.baseUrl}/upload/save`, payload, {headers});
   }
+  getStudentAnswerByExamId(examId: number): Observable<any> {
+    const token = localStorage.getItem('authToken');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get(`${this.baseUrl}/get/list/student-answer/auto-generate/${examId}`, {
+      headers,
+      observe: 'response'
+    });
+  }
+
+  saveAutogenStudentAnswer(examId: number, student_answers: any): Observable<any> {
+    const token = localStorage.getItem('authToken');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.post(`http://localhost:8081/api/exam-result/auto/save/answer-student/${examId}`, student_answers, {headers});
+  }
 }

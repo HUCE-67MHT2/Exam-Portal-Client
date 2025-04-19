@@ -51,4 +51,14 @@ export class ExamService {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     return this.http.post<ExamStateResponse>(`${this.baseUrl}/upload/submit/${examId}`, {}, {headers});
   }
+
+  getAllQuestionsAutogenbyExamId(examId: number) : Observable<any> {
+  return this.http.get(`${this.baseUrl}/get/all/questions/and/answers/${examId}`);
+  }
+
+  submitExamAutogen(examId: number) {
+    const token = localStorage.getItem('authToken');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.post(`${this.baseUrl}/submit/exam/type/auto-generate`,examId, {headers, observe: 'response'});
+  }
 }
