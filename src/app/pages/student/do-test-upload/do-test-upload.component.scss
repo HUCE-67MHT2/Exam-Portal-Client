@@ -17,12 +17,26 @@ $accent-gradient: linear-gradient(135deg, #FF4081, #C2185B);
   .exam-file {
     flex: 3;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    flex-direction: column;
     background: #e5e5e5;
-    font-size: 18px;
-    color: #333;
     height: 100vh;
+
+    .exam-file-header {
+      background: $primary-dark;
+      color: white;
+      padding: 10px 16px;
+      margin: 0;
+      font-weight: 600;
+      font-size: 1.1rem;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+      z-index: 1;
+      text-align: center;
+    }
+
+    .file-viewer-container {
+      flex: 1;
+      overflow: hidden;
+    }
   }
 
   .do-test {
@@ -86,24 +100,6 @@ $accent-gradient: linear-gradient(135deg, #FF4081, #C2185B);
       &::-webkit-scrollbar-thumb {
         background: rgba(0,0,0,0.1);
         border-radius: 3px;
-      }
-
-      .subject {
-        margin: 16px 0;
-        padding: 12px;
-        background: white;
-        border-radius: 12px;
-        box-shadow: $shadow-light;
-        font-weight: 600;
-        color: $primary-dark;
-        font-size: 1rem;
-        text-align: center;
-        transition: all 0.3s ease;
-
-        &:hover {
-          transform: translateY(-2px);
-          box-shadow: $shadow-medium;
-        }
       }
 
       h3 {
@@ -206,10 +202,10 @@ $accent-gradient: linear-gradient(135deg, #FF4081, #C2185B);
         .grid {
           display: grid;
           grid-template-columns: repeat(5, 1fr);
-          gap: 8px;
-          max-height: 260px;
+          gap: 12px;
+          max-height: 250px;
           overflow-y: auto;
-          padding-right: 4px;
+          padding: 4px 8px 5px 4px;
 
           &::-webkit-scrollbar {
             width: 4px;
