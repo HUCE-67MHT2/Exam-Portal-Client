@@ -22,8 +22,20 @@
                 *ngFor="let answer of answers; let i = index"
                 [class.answered]="answers[i] !== ''"
                 [class.selected]="selectedQuestionIndex === i">
-          {{ i + 1 }}
+          <div class="question-number">{{ i + 1 }}</div>
+          <div class="answer-content">
+            {{ answers[i] || '?' }}
+          </div>
         </button>
+      </div>
+
+      <div class="progress-container">
+        <div class="progress-label">
+          Hoàn thành: {{ getAnsweredCount() }}/{{ answers.length }} câu
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" [style.width]="getCompletedPercentage() + '%'"></div>
+        </div>
       </div>
 
       <div #answerButtons *ngIf="selectedQuestionIndex !== null" class="answer-buttons">

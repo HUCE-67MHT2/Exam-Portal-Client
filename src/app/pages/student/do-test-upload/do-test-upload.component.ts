@@ -306,4 +306,14 @@ export class DoTestUploadComponent implements OnInit, OnDestroy {
       }, 3000);
     }
   }
+
+  // Get number of answered questions
+  getAnsweredCount(): number {
+    return this.answers.filter(answer => answer !== "").length;
+  }
+
+  // Calculate completion percentage for progress bar
+  getCompletedPercentage(): number {
+    return (this.getAnsweredCount() / this.answers.length) * 100;
+  }
 }
