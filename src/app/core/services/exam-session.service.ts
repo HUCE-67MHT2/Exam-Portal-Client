@@ -24,6 +24,12 @@ export class ExamSessionService {
     return this.http.post(`${this.baseUrl}/add/exam-session`, examSession, {headers, observe: 'response'});
   }
 
+  deleteExamSessionById(id: number): Observable<any> {
+    const token = localStorage.getItem('authToken');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.delete(`${this.baseUrl}/delete/exam-session/${id}`, {headers, observe: 'response'});
+  }
+
   getExamSessionInfoById(id: number): Observable<any> {
     const token = localStorage.getItem('authToken');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);

@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import {DatePipe, NgForOf, NgClass, NgIf, NgOptimizedImage} from '@angular/common';
+import {DatePipe, NgForOf, NgClass, NgIf,} from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ExamSession } from '../../../core/models/exam-session.model';
 import { ExamSessionService } from '../../../core/services/exam-session.service';
 import { HeaderComponent } from '../../../layout/header/header.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-home-teacher',
@@ -17,7 +18,6 @@ import { HeaderComponent } from '../../../layout/header/header.component';
     NgIf,
     DatePipe,
     FormsModule,
-    NgOptimizedImage
   ],
   styleUrls: ['./teacher-home.component.scss'],
   providers: [DatePipe, ExamSessionService]
@@ -28,11 +28,15 @@ export class TeacherHomeComponent implements OnInit {
   searchTerm: string = '';
   currentFilter: string = 'all';
 
-  constructor(private router: Router, private examSessionService: ExamSessionService) {}
+  constructor(
+    private router: Router,
+    private examSessionService: ExamSessionService,
+    private toastr: ToastrService,
+    ) {}
 
   ngOnInit(): void {
     this.loadExamSession();
-    localStorage.removeItem('exam_session_id');
+    localStorage.removeItem('selectedSession');
   }
 
   loadExamSession = () => {
@@ -41,6 +45,7 @@ export class TeacherHomeComponent implements OnInit {
         if (response.status === 200) {
           this.examSessionList = response.body.examSessions;
           this.filteredExams = [...this.examSessionList];
+          console.log('examSessionList:', this.examSessionList);
         }
       },
       error: (error) => {
@@ -49,19 +54,58 @@ export class TeacherHomeComponent implements OnInit {
     });
   };
 
-  navigateExamSessionDashBoard(exam_session_id: number, exam_session_name: string, exam_session_description: string) {
-    this.router.navigate(['teacher/exam-session-dashboard'], {
-      queryParams: {
-        exam_session_id,
-        exam_session_name,
-        exam_session_description
-      }
-    });
-    this.saveExamSessionId(exam_session_id);
+  showDeleteConfirmation: boolean = false;
+  examToDelete: number | null = null;
+
+  confirmDelete(event: Event, examId: number) {
+    event.stopPropagation(); // Prevent card navigation
+    this.examToDelete = examId;
+    this.showDeleteConfirmation = true;
   }
 
-  saveExamSessionId(exam_session_id: number) {
-    localStorage.setItem('exam_session_id', exam_session_id.toString());
+  cancelDelete() {
+    this.showDeleteConfirmation = false;
+    this.examToDelete = null;
+  }
+
+  proceedWithDelete() {
+    if (this.examToDelete) {
+      this.deleteExamSession(this.examToDelete);
+      this.showDeleteConfirmation = false;
+      this.examToDelete = null;
+    }
+  }
+
+  deleteExamSession(examSessionId: number) {
+    this.examSessionService.deleteExamSessionById(examSessionId).subscribe({
+      next: (response) => {
+        if (response.status === 200) {
+          this.toastr.success("Xóa kỳ thi thành công", "Thành công", {
+            timeOut: 2000,
+            progressBar: true,
+            progressAnimation: 'increasing',
+            closeButton: true,
+          })
+          this.loadExamSession();
+        }
+      },
+      error: (error) => {
+        console.error("Lỗi khi xóa kỳ thi:", error);
+        this.toastr.error("Xóa kỳ thi thất bại", "Lỗi", {
+          timeOut: 1000,
+          progressBar: true,
+          progressAnimation: 'increasing',
+          closeButton: true,
+        })
+      }
+    })
+  }
+
+
+
+  navigateExamSessionDashBoard(examSession: ExamSession) {
+    localStorage.setItem('selectedSession', JSON.stringify(examSession));
+    this.router.navigate(['teacher/exam-session-dashboard']);
   }
 
   navigateToCreateExam() {
@@ -113,7 +157,8 @@ export class TeacherHomeComponent implements OnInit {
     }
   }
 
-  getStatusLabel(status: string): string {
+  getStatusLabel(exam: ExamSession): string {
+    const status = this.getExamStatus(exam);
     switch (status) {
       case 'active': return 'Đang diễn ra';
       case 'upcoming': return 'Sắp diễn ra';

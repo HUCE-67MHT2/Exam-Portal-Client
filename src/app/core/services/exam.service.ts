@@ -16,6 +16,12 @@ export class ExamService {
     return this.http.post<any>(`${this.baseUrl}/add/exam/with/file`, formData);
   }
 
+  deleteExamById(id: number): Observable<any> {
+    const token = localStorage.getItem('authToken');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.delete(`${this.baseUrl}/delete/exam/${id}`, {headers, observe: 'response'});
+  }
+
   getExams(id: any): Observable<any> {
     return this.http.get<any>(
       `${this.baseUrl}/get/list/exams/by/sessionId/${id}`,

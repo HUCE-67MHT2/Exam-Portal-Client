@@ -31,11 +31,19 @@ export class ExamSessionDashboardComponent implements OnInit {
 
 
   ngOnInit() {
-    this.route.queryParams.subscribe(params => {
-      this.exam_session_id = params['exam_session_id'];
-      this.exam_session_name = params['exam_session_name'];
-      this.exam_session_description = params['exam_session_description'];
-    });
+    // Get exam session details from localStorage instead of query params
+    const sessionData = localStorage.getItem('selectedSession');
+    if (sessionData) {
+      const examSession = JSON.parse(sessionData);
+      this.exam_session_id = examSession.id;
+      this.exam_session_name = examSession.name;
+      this.exam_session_description = examSession.description;
+    } else {
+      console.error("No exam session data found in localStorage");
+      }
+
+
+    // Clear other localStorage items
     localStorage.removeItem("info");
     localStorage.removeItem("questionNumber");
     localStorage.removeItem("questions");
