@@ -1,14 +1,14 @@
 import {Component, HostListener, OnInit} from "@angular/core";
 import {Router} from "@angular/router";
 import {UserService} from "../../core/services/user.service";
-import {CommonModule, NgIf} from "@angular/common";
+import {CommonModule, NgIf, NgOptimizedImage} from "@angular/common";
 
 @Component({
   selector: "app-header",
   templateUrl: "./header.component.html",
   styleUrls: ["./header.component.scss"],
   standalone: true,
-  imports: [CommonModule, NgIf],
+  imports: [CommonModule, NgIf, NgOptimizedImage],
   providers: [UserService],
 })
 

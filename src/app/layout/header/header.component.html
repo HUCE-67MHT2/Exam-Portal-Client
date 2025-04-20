@@ -8,11 +8,9 @@
   <!-- User Dropdown -->
   <div (click)="toggleUserInfoSelection($event)" class="user-info">
     <div class="user-info__wrap">
-      <figure class="avatar"><img alt=""
-                                  src="https://scontent.fhan2-4.fna.fbcdn.net/v/t1.30497-1/453178253_471506465671661_2781666950760530985_n.png?stp=dst-png_s200x200&_nc_cat=1&ccb=1-7&_nc_sid=136b72&_nc_ohc=N52xZ5eAv9QQ7kNvgHi4bp8&_nc_oc=AdlKGXR7nzo8OCDdWMM6bybkcxcaJnR_kHLyOOu9zXVU7lqjdyfRG99OAQrXkMtLAQGsKC6JK49Md-DH5CQY7UZn&_nc_zt=24&_nc_ht=scontent.fhan2-4.fna&_nc_gid=7XlK3ux4aY5xsO9O4Vttag&oh=00_AYFS7joFoTv-QqQgJanf_eHlTsukICGpUWMDxbzy-6SU-w&oe=680A347A"/>
-      </figure>
+      <img ngSrc="/images/avatar_student.jpg" alt="student-avatar" height="736" width="736"/>
       <p *ngIf="UserInfoObject" class="user-name">{{ UserInfoObject.fullName }}</p>
-      <img alt="" class="drop-down-arrow" src="/icon/drop-down-arrow.svg"/>
+      <img alt="" class="drop-down-arrow" ngSrc="/icon/drop-down-arrow.svg" height="24" width="24"/>
     </div>
   </div>
 

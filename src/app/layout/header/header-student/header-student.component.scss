@@ -1,5 +1,5 @@
-$primary-color: #04AA6D; // Màu xanh lá
-$text-color: #333;
+$primary-color: #8ed8ff; // Màu xanh lá
+$text-color: #76a6ff;
 
 .nav {
   display: flex;
@@ -20,6 +20,7 @@ $text-color: #333;
     &.active {
       color: $primary-color;
       font-weight: bold;
+      border-bottom: 2px solid $primary-color;
     }
   }
 }
