@@ -20,6 +20,7 @@ export class InfoComponent implements OnInit, OnDestroy {
   examName: string = "";
   examPassword: string = "";
   savedQuestionIds: number[] = [];
+  examSessionId: string = "";
   @Input() exam_session_id!: string;
   @Input() exam_session_name!: string;
   @Input() exam_session_description!: string;
@@ -32,14 +33,16 @@ export class InfoComponent implements OnInit, OnDestroy {
     private router: Router,
     private toastr: ToastrService
   ) {
+    this.examSessionId = localStorage.getItem("exam_session_id") || "";
+
     this.examForm = this.fb.group({
-      number_of_exam: ["", Validators.required],
       exam_name: ["", Validators.required],
       exam_duration: ["", Validators.required],
       exam_description: [""],
       exam_subject: ["", Validators.required],
       exam_start_date: ["", Validators.required],
       exam_end_date: ["", Validators.required],
+      number_of_exam: ["", Validators.required],
       exam_number_of_test: ["", Validators.required],
     });
   }
@@ -56,21 +59,19 @@ export class InfoComponent implements OnInit, OnDestroy {
 
     // Lắng nghe mọi thay đổi trong form
     this.examForm.valueChanges.subscribe((formValue) => {
-      this.saveToLocalStorage();
+      this.saveNumberOfExamAndTest();
+      this.saveExamInfo();
     });
   }
 
   ngOnDestroy() {
-    this.saveToLocalStorage();
+    // Xóa dữ liệu khỏi localStorage khi component bị hủy
+    localStorage.removeItem("info");
+    localStorage.removeItem("examInfoNumber");
+    localStorage.removeItem("examInfo");
   }
 
-  saveToLocalStorage() {
-    const info = {
-      examForm: this.examForm.value,
-    };
-    localStorage.setItem("info", JSON.stringify(info));
-    console.log("Dữ liệu đã lưu vào localStorage:", info);
-  }
+
 
   onSubmit() {
     if (this.examForm.invalid) {
@@ -86,10 +87,36 @@ export class InfoComponent implements OnInit, OnDestroy {
         exam_session_description: this.exam_session_description,
       },
     });
-    localStorage.removeItem("info");
-    localStorage.removeItem("questionNumber");
-    localStorage.removeItem("questions");
-    localStorage.removeItem("answers");
+
+  }
+
+  saveExamInfo() {
+    const examInfo = {
+      examSessionId: this.examSessionId,
+      name: this.examForm.get("exam_name")?.value,
+      duration: this.examForm.get("exam_duration")?.value,
+      description: this.examForm.get("exam_description")?.value,
+      subject: this.examForm.get("exam_subject")?.value,
+      startDate: this.examForm.get("exam_start_date")?.value,
+      endDate: this.examForm.get("exam_end_date")?.value,
+    };
+
+    localStorage.setItem("examInfo", JSON.stringify(examInfo));
+    console.log("Dữ liệu examInfo đã được lưu vào localStorage");
+  }
+
+  saveNumberOfExamAndTest() {
+    const numberOfExam = this.examForm.get('number_of_exam')?.value;
+    const examNumberOfTest = this.examForm.get('exam_number_of_test')?.value;
+
+    const examInfoNumber = {
+      id: this.examSessionId,
+      examNumber: numberOfExam,
+      questionPerExam: examNumberOfTest,
+    }
+
+    localStorage.setItem("examInfoNumber", JSON.stringify(examInfoNumber));
+    console.log("Dữ liệu number_of_exam và exam_number_of_test đã được lưu vào localStorage");
   }
 
   sendInfoToBackend() {

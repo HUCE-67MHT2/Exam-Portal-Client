@@ -1,16 +1,13 @@
-import {Component, OnInit} from "@angular/core";
-import {ActivatedRoute, Router, RouterModule} from "@angular/router";
-import {CommonModule} from "@angular/common";
+import { Component, OnInit } from "@angular/core";
+import { ActivatedRoute, Router, RouterModule } from "@angular/router";
+import { CommonModule } from "@angular/common";
 
 @Component({
   selector: "app-create-auto-generate",
   standalone: true,
-  imports: [
-    CommonModule,
-    RouterModule,
-  ],
+  imports: [CommonModule, RouterModule],
   templateUrl: "./create-auto-generate.component.html",
-  styleUrls: ["./create-auto-generate.component.scss"]
+  styleUrls: ["./create-auto-generate.component.scss"],
 })
 export class CreateAutoGenerateComponent implements OnInit {
   activeTab: string = "left";
@@ -18,19 +15,14 @@ export class CreateAutoGenerateComponent implements OnInit {
   exam_session_name = "";
   exam_session_description = "";
 
-  constructor(private route: ActivatedRoute, private router: Router) {
-  }
+  constructor(private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe(params => {
+    this.route.queryParams.subscribe((params) => {
       this.exam_session_id = params["exam_session_id"] || "";
       this.exam_session_name = params["exam_session_name"] || "";
       this.exam_session_description = params["exam_session_description"] || "";
     });
-  }
-
-  setActiveTab(tab: string) {
-    this.activeTab = tab;
   }
 
   goBack() {
@@ -40,13 +32,17 @@ export class CreateAutoGenerateComponent implements OnInit {
         queryParams: {
           exam_session_id: this.exam_session_id,
           exam_session_name: this.exam_session_name,
-          exam_session_description: this.exam_session_description
-        }
+          exam_session_description: this.exam_session_description,
+        },
       });
     } else if (currentUrl.includes("create-auto-generate/question")) {
-      this.router.navigate(["teacher/exam-session-dashboard"]);
+      this.router.navigate(["teacher/exam-session-dashboard"], {
+        queryParams: {
+          exam_session_id: this.exam_session_id,
+          exam_session_name: this.exam_session_name,
+          exam_session_description: this.exam_session_description,
+        },
+      });
     }
   }
 }
-
-
