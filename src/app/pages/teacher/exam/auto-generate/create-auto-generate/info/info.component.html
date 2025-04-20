@@ -4,25 +4,10 @@
       <h2 class="exam-info">Thông tin đề thi</h2>
 
       <div class="row-wrapper">
-        <div class="input-wrapper">
-          <label for="number_of_exam">Số lượng câu hỏi</label>
-          <input formControlName="number_of_exam" id="number_of_exam"/>
-          <div class="error-wrap">
-            <div
-              *ngIf="
-                examForm.get('number_of_exam')?.invalid &&
-                examForm.get('number_of_exam')?.touched
-              "
-              class="error"
-            >
-              Số lượng câu hỏi không được để trống.
-            </div>
-          </div>
-        </div>
         <!-- Tên đề thi -->
         <div class="input-wrapper">
           <label for="exam_name">Tên đề thi</label>
-          <input formControlName="exam_name" id="exam_name"/>
+          <input formControlName="exam_name" id="exam_name" />
           <div class="error-wrap">
             <div
               *ngIf="
@@ -32,6 +17,23 @@
               class="error"
             >
               Tên đề không được để trống.
+            </div>
+          </div>
+        </div>
+
+        <!-- Số lượng câu hỏi -->
+        <div class="input-wrapper">
+          <label for="number_of_exam">Số lượng câu hỏi</label>
+          <input formControlName="number_of_exam" id="number_of_exam" />
+          <div class="error-wrap">
+            <div
+              *ngIf="
+                examForm.get('number_of_exam')?.invalid &&
+                examForm.get('number_of_exam')?.touched
+              "
+              class="error"
+            >
+              Số lượng câu hỏi không được để trống.
             </div>
           </div>
         </div>
@@ -84,16 +86,10 @@
       </div>
 
       <div class="row-wrapper">
-        <!-- Mô tả -->
-        <div class="input-wrapper">
-          <label for="exam_description">Lưu ý</label>
-          <input formControlName="exam_description" id="exam_description"/>
-        </div>
-
         <!-- Môn thi -->
         <div class="input-wrapper">
           <label for="exam_subject">Môn thi</label>
-          <input formControlName="exam_subject" id="exam_subject"/>
+          <input formControlName="exam_subject" id="exam_subject" />
           <div class="error-wrap">
             <div
               *ngIf="
@@ -105,6 +101,12 @@
               Tên môn học không được để trống.
             </div>
           </div>
+        </div>
+
+        <!-- Mô tả -->
+        <div class="input-wrapper">
+          <label for="exam_description">Lưu ý</label>
+          <input formControlName="exam_description" id="exam_description" />
         </div>
       </div>
 
