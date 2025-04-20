@@ -1,28 +1,72 @@
 <app-header></app-header>
-<app-search-bar>
-  <app-create-button></app-create-button>
-</app-search-bar>
-<div class="table-container">
-  <table>
-    <tbody>
-    <tr>
-      <th>Tên kỳ thi đã tạo</th>
-      <th>Ngày tạo</th>
-      <th>Ngày mở</th>
-      <th>Ngày đóng</th>
-      <th>Trạng thái</th>
-    </tr>
-    <tr (click)="navigateExamSessionDashBoard(examSession.id, examSession.name, examSession.description)"
-        *ngFor="let examSession of examSessionList">
-      <td>
-        <p class="exam-name">{{ examSession.name }} - {{ examSession.description }}</p>
-        <p class="class-code">Mã lớp: {{ examSession.code }}</p>
-      </td>
-      <td>{{ examSession.createDate | date: 'dd-MM-yyyy HH:mm:ss' }}</td>
-      <td>{{ examSession.startDate | date: 'dd-MM-yyyy HH:mm:ss' }}</td>
-      <td>{{ examSession.endDate | date: 'dd-MM-yyyy HH:mm:ss' }}</td>
-      <td>{{ examSession.status }}</td>
-    </tr>
-    </tbody>
-  </table>
+<div class="dashboard-container">
+  <div class="dashboard-header">
+    <h1 class="dashboard-title">Kỳ thi của tôi</h1>
+    <div class="actions-container">
+      <div class="search-wrapper">
+        <input type="text" placeholder="Tìm kiếm kỳ thi..." [(ngModel)]="searchTerm" (keyup)="filterExams()">
+        <i class="search-icon fa fa-search"></i>
+      </div>
+      <button class="create-btn" (click)="navigateToCreateExam()">
+        <i class="fa fa-plus"></i> Tạo kỳ thi mới
+      </button>
+    </div>
+  </div>
+
+  <div class="filter-tabs">
+    <button class="tab-btn" [class.active]="currentFilter === 'all'" (click)="applyFilter('all')">Tất cả</button>
+    <button class="tab-btn" [class.active]="currentFilter === 'active'" (click)="applyFilter('active')">Đang diễn ra</button>
+    <button class="tab-btn" [class.active]="currentFilter === 'upcoming'" (click)="applyFilter('upcoming')">Sắp diễn ra</button>
+    <button class="tab-btn" [class.active]="currentFilter === 'completed'" (click)="applyFilter('completed')">Đã kết thúc</button>
+  </div>
+
+  <div class="exam-cards-container">
+    <div class="no-exams" *ngIf="filteredExams.length === 0">
+      <img ngSrc="/images/avatar_student.jpg" alt="No exams found" height="736" width="736">
+      <p>Không tìm thấy kỳ thi nào</p>
+    </div>
+
+    <div class="exam-card" *ngFor="let examSession of filteredExams"
+         (click)="navigateExamSessionDashBoard(examSession.id, examSession.name, examSession.description)">
+      <div class="card-header">
+        <span class="status-badge" [ngClass]="getStatusClassForExam(examSession)">
+            {{ getStatusLabel(examSession.status) }}
+        </span>
+        <span class="code-badge">Mã: {{ examSession.code }}</span>
+      </div>
+
+      <h2 class="exam-title">{{ examSession.name }}</h2>
+      <p class="exam-description">{{ examSession.description }}</p>
+
+      <div class="card-details">
+        <div class="detail-item">
+          <i class="fa fa-calendar"></i>
+          <div>
+            <span class="detail-label">Ngày tạo</span>
+            <span class="detail-value">{{ examSession.createDate | date: 'dd/MM/yyyy' }}</span>
+          </div>
+        </div>
+
+        <div class="detail-item">
+          <i class="fa fa-hourglass-start"></i>
+          <div>
+            <span class="detail-label">Bắt đầu</span>
+            <span class="detail-value">{{ examSession.startDate | date: 'dd/MM/yyyy HH:mm' }}</span>
+          </div>
+        </div>
+
+        <div class="detail-item">
+          <i class="fa fa-times "></i>
+          <div>
+            <span class="detail-label">Kết thúc</span>
+            <span class="detail-value">{{ examSession.endDate | date: 'dd/MM/yyyy HH:mm' }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-footer">
+        <button class="view-btn">Xem chi tiết</button>
+      </div>
+    </div>
+  </div>
 </div>
