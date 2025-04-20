@@ -1,20 +1,25 @@
+// Color variables
+$primary-blue: #3f9bfa;
+$primary-dark-blue: #7e7d7d;
+$primary-light-blue: #bbdefb;
+$text-dark: #333333;
+$text-light: #ffffff;
+$text-gray: #757575;
+$bg-light: #f8f9fa;
+$bg-white: #ffffff;
+$border-color: #e0e0e0;
+
 html {
   scroll-behavior: smooth;
 }
 
-.link-item {
-  cursor: pointer;
-}
-
-#schedule, #unfished-exam, #achievement {
-  scroll-margin-top: 100px;
-}
-
+// Sidebar styles
 .sidebar-links {
   position: fixed;
   width: 242px;
   height: 100vh;
-  background: #fff;
+  background: $bg-white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 
   .links-wrap {
     display: flex;
@@ -24,44 +29,111 @@ html {
     margin-top: 145px;
 
     .link-item {
-      scroll-behavior: smooth;
-      color: #000;
+      color: $text-gray;
+      font-size: 1.4rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s;
+
+      &:hover {
+        color: $primary-blue;
+        transform: translateX(5px);
+      }
     }
   }
 }
 
+// Main content styles
 .main {
   display: flex;
   flex-direction: column;
-  gap: 60px;
-  height: 100%;
-  padding-left: 292px;
-  padding-top: 120px;
-  background: #e8e8e8;
+  gap: 40px;
+  min-height: 100vh;
+  padding: 100px 50px 50px 292px;
+  background: linear-gradient(135deg, #f6f8fd 0%, #edf2ff 100%);
 
   .heading {
-    font-size: 2rem;
+    position: relative;
+    font-size: 2.2rem;
+    color: $primary-dark-blue;
     font-weight: 500;
+    padding-bottom: 15px;
+    margin-bottom: 30px;
+
+    &::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 80px;
+      height: 3px;
+      background: $primary-blue;
+      border-radius: 3px;
+    }
   }
 
   .list {
-    width: 75%;
+    width: 90%;
     height: 300px;
-    margin-top: 25px;
-    border-radius: 5px;
-    background: #fff;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    box-shadow:
+      0 10px 15px -3px rgba(0, 0, 0, 0.05),
+      0 4px 6px -2px rgba(0, 0, 0, 0.025);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    overflow: hidden;
+    transition: all 0.4s ease;
+
+    &:hover {
+      transform: translateY(-3px);
+      box-shadow:
+        0 20px 25px -5px rgba(0, 0, 0, 0.08),
+        0 10px 10px -5px rgba(0, 0, 0, 0.02);
+    }
 
     .list-heading {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      height: 50px;
-      padding: 0 25px;
-      border-bottom: solid 1px #ccc;
+      height: 68px;
+      padding: 0 40px;
+      background: $bg-white;
+      border-bottom: 2px solid $border-color;
 
-      .list-heading-item:last-of-type {
-        width: 190px;
+      .list-heading-item {
+        position: relative;
+        font-size: 1.35rem;
+        font-weight: 600;
+        color: $primary-dark-blue;
+        text-transform: capitalize;
+        padding: 8px 0;
+
+        &::after {
+          content: '';
+          position: absolute;
+          left: 0;
+          bottom: 0;
+          width: 100%;
+          height: 2px;
+          background: $primary-blue;
+          transform: scaleX(0);
+          transition: transform 0.3s ease;
+        }
+
+        &:hover::after {
+          transform: scaleX(1);
+        }
+
+        &:last-of-type {
+          width: 170px;
+        }
       }
     }
   }
+}
+
+// Section scroll offsets
+#schedule, #unfished-exam, #achievement {
+  scroll-margin-top: 100px;
 }
