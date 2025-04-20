@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
-import { Client, CompatClient, Stomp, IMessage, StompSubscription } from '@stomp/stompjs';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { filter } from 'rxjs/operators';
+import {Injectable} from '@angular/core';
+import {CompatClient, IMessage, Stomp, StompSubscription} from '@stomp/stompjs';
+import {BehaviorSubject, Observable} from 'rxjs';
+import {filter} from 'rxjs/operators';
 
 // Interface message
 export interface NotificationMessage {
@@ -27,7 +27,7 @@ export class WebsocketService {
 
   constructor() {}
 
-  connect(authToken?: string): void {
+  connect(): void {
     if (this.isConnected()) {
       console.log('WebSocket already connected.');
       return;
@@ -38,30 +38,21 @@ export class WebsocketService {
     console.log('Attempting to connect to:', socketUrl);
 
     try {
-      // Thay đổi cách tạo stompClient sử dụng factory function
       this.stompClient = Stomp.over(() => {
-        const socket = new WebSocket(socketUrl);
-        socket.onopen = () => console.log('WebSocket connection opened');
-        socket.onerror = (error) => console.error('WebSocket Error:', error);
-        socket.onclose = (event) => console.log(`WebSocket closed: code=${event.code}, reason=${event.reason || 'No reason provided'}`);
-        return socket;
+        return new WebSocket(socketUrl);
       });
 
-      // Optional: Bật debug log để xem chi tiết stomp frames
-      this.stompClient.debug = (str) => { console.log('STOMP DEBUG:', str); };
-
       const token = localStorage.getItem('authToken');
-      const headers = {
-        'Origin': 'http://localhost:4200'
+      const headers: Record<string,string> = {
+        'Authorization': `Bearer ${token}`
       };
-      if (authToken) {
-        // @ts-ignore
-        headers['Authorization'] = `Bearer ${authToken}`;
-      }
+
+      // // Optional: Bật debug log để xem chi tiết stomp frames
+      // this.stompClient.debug = (str) => { console.log('STOMP DEBUG:', str); };
 
       console.log('Connecting STOMP over WebSocket...');
       this.stompClient.connect(
-        headers,  // Truyền headers chứa token
+        headers,
         (frame: any) => {
           console.log('WebSocket and STOMP Connected:', frame); // Log rõ hơn
           this.connectionState.next(true);

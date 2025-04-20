@@ -77,6 +77,9 @@ export class DoTestUploadComponent implements OnInit, OnDestroy {
           // Tính thời gian còn lại
           const now = new Date();
           const timeLeftInMs = this.endTime.getTime() - now.getTime();
+
+          // Sử dụng endtime + thêm 1 phút để test force submit realtime
+          // const timeLeftInMs = this.endTime.getTime() - now.getTime() + 60000;
           if (timeLeftInMs > 0) {
             this.counter = Math.floor(timeLeftInMs / 1000); // giây
             this.startCountdown();
@@ -200,20 +203,21 @@ export class DoTestUploadComponent implements OnInit, OnDestroy {
   handleNotification(notification: NotificationMessage) {
     console.log('Received notification:', notification);
 
-    switch(notification.type) {
+    switch (notification.type) {
       case 'WARNING':
         this.toastr.warning(notification.message, 'Cảnh báo');
         break;
 
       case 'FORCE_SUBMIT':
         this.toastr.error(notification.message, 'Bắt buộc nộp bài', {
-          timeOut: 5000, // Cho user thời gian đọc
+          timeOut: 5000,
           progressBar: true,
-          disableTimeOut: false, // Để toastr tự đóng
           closeButton: true
         });
         console.log("Force submit triggered by server.");
-        break;
+        // Chỉ navigate khi bị FORCE_SUBMIT
+        this.router.navigate(['student/exam-session-detail']);
+        return;  // hoặc break; nếu bạn muốn tiếp tục xử lý khác
 
       case 'INFO':
         this.toastr.info(notification.message, 'Thông tin');
@@ -223,9 +227,8 @@ export class DoTestUploadComponent implements OnInit, OnDestroy {
         this.toastr.error(notification.message, 'Lỗi');
         break;
     }
-
-    this.router.navigate(['student/exam-session-detail']);
   }
+
   //====================Logic cho nộp bài thi========================
 
   // Mở modal xác nhận khi click vào nút Nộp bài
