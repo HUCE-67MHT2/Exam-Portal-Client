@@ -1,3 +1,9 @@
+// Blue color variables
+$primary-blue: #2563eb;
+$secondary-blue: #3b82f6;
+$dark-blue: #1e40af;
+$light-blue: #60a5fa;
+
 // =====================
 // RESET CSS
 // =====================
@@ -71,7 +77,7 @@
   transform: translate(-50%, -50%);
   font-size: 1.5rem;
   color: #000000;
-  z-index: 1001; // Ensure it is above the overlay
+  z-index: 1001;
 }
 
 .modal-overlay {
@@ -80,8 +86,8 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5); // Dark background with 50% opacity
-  z-index: 1000; // Ensure it is below the loading indicator
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
 }
 
 // =====================
@@ -90,7 +96,6 @@
 .container {
   display: flex;
   height: calc(100vh - 80px);
-
 }
 
 .left-container {
@@ -119,18 +124,18 @@
     }
 
     .upload-button {
-      background: #04aa6d; /* Xanh ngọc đậm */
+      background: $primary-blue;
       color: #ffffff;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 
       &:hover {
-        background: #048a60;
+        background: $dark-blue;
         box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
       }
     }
 
     .reload-button {
-      background: #ec8b2f; /* Cam đất */
+      background: #ec8b2f;
       color: #ffffff;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 
@@ -175,7 +180,7 @@
 
     &.active {
       color: #ffffff;
-      background: #04aa6d;
+      background: $primary-blue;
     }
   }
 }
@@ -187,7 +192,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #00834e;
+  background-color: $dark-blue;
   color: white;
   padding: 15px 20px 15px 20px;
 
@@ -214,7 +219,7 @@
   }
 
   .quick-input {
-    background-color: #02a678;
+    background-color: $secondary-blue;
     border: none;
     padding: 10px 15px;
     color: white;
@@ -224,7 +229,7 @@
     transition: 0.3s;
 
     &:hover {
-      background-color: #028f68;
+      background-color: $primary-blue;
     }
   }
 }
@@ -242,7 +247,7 @@
   width: 400px;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  z-index: 1001; // Đặt cao hơn overlay
+  z-index: 1001;
 
   .modal-content {
     display: flex;
@@ -271,6 +276,12 @@
     border-radius: 5px;
     font-size: 14px;
     resize: none;
+
+    &:focus {
+      border-color: $light-blue;
+      box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.2);
+      outline: none;
+    }
   }
 
   .error-message {
@@ -305,7 +316,7 @@
     }
 
     .confirm-btn {
-      background: #04aa6d;
+      background: $primary-blue;
       color: white;
     }
 
@@ -314,7 +325,7 @@
     }
 
     .confirm-btn:hover {
-      background: #02774b;
+      background: $dark-blue;
     }
   }
 }
@@ -326,8 +337,8 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5); // Màu tối có độ trong suốt 50%
-  z-index: 1000; // Đặt thấp hơn modal
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
 }
 
 // =====================
@@ -335,7 +346,7 @@
 // =====================
 .question-list {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); // 3 câu mỗi hàng
+  grid-template-columns: repeat(3, 1fr);
   gap: 15px;
   padding: 10px;
   max-height: 70vh;
@@ -348,7 +359,7 @@
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
-    justify-content: space-between; // Căn chỉnh khoảng cách hợp lý
+    justify-content: space-between;
     align-items: stretch;
     width: 100%;
 
@@ -361,17 +372,23 @@
     .input-group {
       display: flex;
       align-items: center;
-      justify-content: space-between; // Đẩy input về bên phải
+      justify-content: space-between;
       width: 100%;
       margin-bottom: 8px;
 
       .answer-select,
       .score-input {
-        width: 60px; // Độ rộng hợp lý để input không quá dài
+        width: 60px;
         padding: 5px;
         border: 1px solid #ccc;
         border-radius: 4px;
-        text-align: left; // Căn phải giống trong ảnh
+        text-align: left;
+      }
+
+      .answer-select:focus {
+        border-color: $light-blue;
+        box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.2);
+        outline: none;
       }
 
       .score-input {
@@ -400,12 +417,18 @@ form {
     border: 1px solid #ccc;
     border-radius: 4px;
     width: 100%;
+
+    &:focus {
+      border-color: $light-blue;
+      box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.2);
+      outline: none;
+    }
   }
 
   button {
     margin-top: 20px;
     padding: 15px;
-    background: #04aa6d;
+    background: $primary-blue;
     color: white;
     border: none;
     cursor: pointer;
@@ -413,7 +436,7 @@ form {
     transition: 0.3s;
 
     &:hover {
-      background: #038658;
+      background: $dark-blue;
     }
   }
 }
@@ -461,8 +484,7 @@ form {
   margin-top: 15px;
 }
 
-/* Thêm đoạn CSS này vào file .scss của bạn */
-
+// warning model
 .warning-modal {
   position: fixed;
   top: 0;
@@ -549,12 +571,12 @@ form {
         }
 
         &.continue-btn {
-          background-color: #e74c3c;
+          background-color: $primary-blue !important;
           border: none;
           color: white;
 
           &:hover {
-            background-color: #c0392b;
+            background-color: $dark-blue !important;
           }
         }
       }

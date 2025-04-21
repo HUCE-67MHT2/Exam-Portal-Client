@@ -1,3 +1,7 @@
+$primary-blue: #2563eb;
+$secondary-blue: #3b82f6;
+$dark-blue: #1e40af;
+$accent-blue: #60a5fa;
 // =====================
 // HEADER
 // =====================
@@ -96,7 +100,7 @@
     }
 
     .primary-btn {
-      background-color: #04AA6D;
+      background-color: $primary-blue;
       color: white;
       border: none;
       padding: 10px 20px;
@@ -108,7 +112,7 @@
       width: 100%;
 
       &:hover {
-        background-color: #0A944F;
+        background-color: $dark-blue;
       }
     }
   }
