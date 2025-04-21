@@ -123,5 +123,12 @@ export class UserFormComponent implements OnInit, OnChanges {
       console.log('Vui lòng điền đầy đủ thông tin tài khoản.');
     }
   }
+  Home = () => {
+    if (this.role === 'student') {
+      this.router.navigate(['/home/student']);
+    } else if (this.role === 'teacher') {
+      this.router.navigate(['home/teacher']);
+    }
+  }
 }
 
