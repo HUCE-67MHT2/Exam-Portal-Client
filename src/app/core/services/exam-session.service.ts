@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs';
 
 @Injectable({
@@ -47,5 +47,11 @@ export class ExamSessionService {
 
   checkPassword(password: String, examSessionId: any): Observable<any> {
     return this.http.post(`${this.baseUrl}/check-password/${examSessionId}`, password, {observe: 'response'});
+  }
+
+  updateExamSessionConfiguration(id: number, questionPerExam: number): Observable<any> {
+    const params = new HttpParams()
+      .set('questionPerExam', questionPerExam.toString());
+    return this.http.put(`${this.baseUrl}/update/exam-session-configuration/${id}`, null, { params });
   }
 }

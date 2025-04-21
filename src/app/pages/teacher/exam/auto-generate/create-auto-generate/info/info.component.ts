@@ -1,10 +1,8 @@
 import {Component, Input, OnDestroy, OnInit} from "@angular/core";
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
+import {ExamSessionService} from "../../../../../../core/services/exam-session.service";
 import {Router} from "@angular/router";
 import {ToastrService} from "ngx-toastr";
-import {ExamService} from "../../../../../../core/services/exam.service";
-import {QuestionService} from "../../../../../../core/services/question.service";
-import {QuestionAnswerService} from "../../../../../../core/services/question-answer.service";
 import {NgIf} from "@angular/common";
 
 @Component({
@@ -27,10 +25,8 @@ export class InfoComponent implements OnInit, OnDestroy {
 
   constructor(
     private fb: FormBuilder,
-    private examService: ExamService,
-    private questionService: QuestionService,
-    private questionAnswerService: QuestionAnswerService,
     private router: Router,
+    private examSessionService: ExamSessionService,
     private toastr: ToastrService
   ) {
     this.examSessionId = localStorage.getItem("exam_session_id") || "";
@@ -80,6 +76,8 @@ export class InfoComponent implements OnInit, OnDestroy {
       return;
     }
 
+    this.sendNumberOfExamAndTestToBackend();
+
     this.router.navigate(["teacher/exam-session-dashboard"], {
       queryParams: {
         exam_session_id: this.exam_session_id,
@@ -87,7 +85,6 @@ export class InfoComponent implements OnInit, OnDestroy {
         exam_session_description: this.exam_session_description,
       },
     });
-
   }
 
   saveExamInfo() {
@@ -106,41 +103,49 @@ export class InfoComponent implements OnInit, OnDestroy {
   }
 
   saveNumberOfExamAndTest() {
-    const numberOfExam = this.examForm.get('number_of_exam')?.value;
-    const examNumberOfTest = this.examForm.get('exam_number_of_test')?.value;
+    const defaultQuestionPerExam = this.examForm.get('number_of_exam')?.value;
 
     const examInfoNumber = {
       id: this.examSessionId,
-      examNumber: numberOfExam,
-      questionPerExam: examNumberOfTest,
+      defaultQuestionPerExam: defaultQuestionPerExam,
     }
 
     localStorage.setItem("examInfoNumber", JSON.stringify(examInfoNumber));
-    console.log("Dữ liệu number_of_exam và exam_number_of_test đã được lưu vào localStorage");
+    console.log("Dữ liệu number_of_exam được lưu vào localStorage");
   }
 
-  sendInfoToBackend() {
-    const savedInfo = localStorage.getItem("info");
-    if (!savedInfo) {
-      this.toastr.error("Không có dữ liệu để gửi.", "Lỗi");
-      return;
+  private parseFormValues(): { defaultQuestionPerExam: number, examSessionId: number } | null {
+    const defaultQuestionPerExam = parseInt(this.examForm.get('number_of_exam')?.value, 10);
+    const examSessionId = parseInt(this.examSessionId, 10);
+
+    if (isNaN(defaultQuestionPerExam)  || isNaN(examSessionId)) {
+      this.toastr.error("Dữ liệu không hợp lệ. Vui lòng kiểm tra lại.", "Lỗi");
+      return null;
     }
 
-    try {
-      const info = JSON.parse(savedInfo);
-      this.examService.sendExamManuallyData(info).subscribe({
-        next: () => {
-          this.toastr.success("Dữ liệu đã được gửi thành công.", "Thành công");
-          localStorage.removeItem("info");
-        },
-        error: (error) => {
-          this.toastr.error("Gửi dữ liệu thất bại. Vui lòng thử lại.", "Lỗi");
-          console.error("Lỗi gửi dữ liệu bài thi:", error);
-        },
-      });
-    } catch (e) {
-      this.toastr.error("Dữ liệu không hợp lệ.", "Lỗi");
-      console.error("Parse error:", e);
+    return { defaultQuestionPerExam, examSessionId };
+  }
+
+  sendNumberOfExamAndTestToBackend() {
+    const parsedValues = this.parseFormValues();
+    if (!parsedValues) {
+      return; // Dừng lại nếu dữ liệu không hợp lệ
     }
+
+    const { defaultQuestionPerExam, examSessionId } = parsedValues;
+
+    this.examSessionService.updateExamSessionConfiguration(
+      examSessionId,
+      defaultQuestionPerExam
+    ).subscribe({
+      next: (response) => {
+        this.toastr.success('Cập nhật cấu hình kỳ thi thành công!', 'Thành công');
+        console.log('Response from backend:', response);
+      },
+      error: (error) => {
+        this.toastr.error('Có lỗi xảy ra khi cập nhật cấu hình kỳ thi.', 'Lỗi');
+        console.error('Error from backend:', error);
+      },
+    });
   }
 }
