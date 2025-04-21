@@ -1,103 +1,385 @@
-/* Reset cơ bản */
+/* Modern variables */
+$primary-blue: #2563eb;
+$secondary-blue: #3b82f6;
+$accent-blue: #60a5fa;
+$dark-blue: #1e40af;
+$light-blue: #dbeafe;
+$text-dark: #1e293b;
+$text-medium: #64748b;
+$text-light: #ffffff;
+$background: #f8fafc;
+$card-bg: #ffffff;
+$border-light: #e2e8f0;
+
+/* Base styles with improved typography */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: Arial, sans-serif;
+  font-family: 'Poppins', 'Segoe UI', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Tổng thể */
-.container {
-  padding: 20px;
-  margin-left: 7%;
-  margin-right: 7%;
+body {
+  background-color: $background;
+  color: $text-dark;
+  font-size: 16px;
+  line-height: 1.5;
+  height: 100vh;
+  overflow: hidden;
 }
 
-/* Header */
-.header {
+/* Main container strictly constrained to viewport height */
+.welcome-container {
+  height: 100vh;
+  max-height: 100vh;
+  padding: 20px 40px;
+  margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Decorative circles with reduced size */
+.decoration-circle {
+  position: absolute;
+  border-radius: 50%;
+  z-index: -1;
+
+  &.circle-1 {
+    width: 250px;
+    height: 250px;
+    background: linear-gradient(135deg, rgba($accent-blue, 0.8), rgba($primary-blue, 0.8));
+    top: -80px;
+    right: -40px;
+    filter: blur(30px);
+  }
+
+  &.circle-2 {
+    width: 180px;
+    height: 180px;
+    background: linear-gradient(45deg, rgba($secondary-blue, 0.7), rgba($primary-blue, 0.7));
+    bottom: -70px;
+    left: 10%;
+    filter: blur(35px);
+  }
+
+  &.circle-3 {
+    width: 120px;
+    height: 120px;
+    background: rgba($light-blue, 0.8);
+    top: 40%;
+    left: -40px;
+    filter: blur(25px);
+  }
+}
+
+/* Compact header */
+.welcome-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 20px;
+  padding: 15px 0;
+  margin-bottom: 20px;
 }
 
-.header h5 {
-  margin-left: -1.5%;
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo-text {
+  font-size: 22px;
+  font-weight: 700;
+  background: linear-gradient(45deg, $primary-blue, $secondary-blue);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  letter-spacing: -0.5px;
+  text-shadow: 0 1px 1px rgba(0,0,0,0.05);
+}
+
+/* Content layout - using flex to fill available space */
+.welcome-content {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* Left card with adjusted padding */
+.welcome-card {
+  flex: 1;
+  background: $card-bg;
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05),
+  0 2px 8px rgba(0, 0, 0, 0.03);
+  display: flex;
+  flex-direction: column;
+  max-height: 100%;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08),
+    0 3px 12px rgba(0, 0, 0, 0.04);
+  }
+}
+
+.welcome-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: $text-dark;
+  margin-bottom: 25px;
+  line-height: 1.3;
+  letter-spacing: -0.3px;
+
+  .highlight {
+    background: linear-gradient(45deg, $primary-blue, $secondary-blue);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 0 1px 1px rgba(0,0,0,0.05);
+  }
+}
+
+/* Role selector with compact design */
+.role-selector {
+  margin-bottom: 25px;
+
+  label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    color: $text-medium;
+    font-weight: 500;
+  }
+}
+
+.custom-select {
+  position: relative;
+
+  select {
+    width: 100%;
+    padding: 14px 18px;
+    font-size: 15px;
+    border: 2px solid $border-light;
+    border-radius: 12px;
+    background-color: $background;
+    color: $text-dark;
+    cursor: pointer;
+    appearance: none;
+    transition: all 0.3s ease;
+
+    &:focus {
+      border-color: $secondary-blue;
+      box-shadow: 0 0 0 3px rgba($secondary-blue, 0.15);
+      outline: none;
+    }
+  }
+
+  .select-arrow {
+    position: absolute;
+    right: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: $primary-blue;
+    font-size: 8px;
+    pointer-events: none;
+    transition: transform 0.3s ease;
+  }
+
+  &:hover .select-arrow {
+    transform: translateY(-50%) rotate(180deg);
+  }
+}
+
+/* Button styles with proper spacing */
+.action-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: auto;
+}
+
+.continue-btn, .register-btn {
+  position: relative;
+  padding: 14px 20px;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  z-index: 1;
+
+  .btn-text {
+    z-index: 2;
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .btn-icon {
+    position: absolute;
+    right: 20px;
+    opacity: 0;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    z-index: 2;
+  }
+
+  &:hover .btn-text {
+    transform: translateX(-10px);
+  }
+
+  &:hover .btn-icon {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.continue-btn {
+  background: linear-gradient(135deg, $primary-blue, $secondary-blue);
+  color: $text-light;
+  border: none;
+  transform: translateY(0);
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, $secondary-blue, $dark-blue);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: -1;
+  }
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba($primary-blue, 0.4);
+
+    &::before {
+      opacity: 1;
+    }
+  }
+
+  &:active {
+    transform: translateY(-1px);
+  }
 }
 
 .register-btn {
-  width: 150px;
-  height: 40px;
-  background-color: white;
-  border: 1px solid #28a745;
-  color: #28a745;
-  padding: 6px 14px; /* Giảm kích thước nút đăng ký */
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-  transition: background-color 0.3s, color 0.3s;
-}
-
-.register-btn:hover {
-  background-color: #28a745;
-  color: white;
-}
-
-/* Nội dung chính */
-.content {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 40px; /* Giảm khoảng cách phần nội dung */
-}
-
-/* Phần bên trái */
-.left-panel {
-  width: 500px;
-}
-
-.left-panel h2 {
-  font-size: 32px; /* Giảm kích thước tiêu đề */
-  margin-bottom: 16px;
-}
-
-.left-panel label {
-  display: block;
-  margin-bottom: 6px; /* Giảm khoảng cách giữa label và select */
-  font-size: 14px;
-  color: #28a745;
-}
-
-.left-panel select {
-  font-size: 14px; /* Giảm font-size */
-  height: 42px; /* Giảm chiều cao dropdown */
-  padding: 8px; /* Giảm padding */
-  border: 1px solid #ccc;
-  width: 100%;
-  margin-bottom: 12px; /* Tăng khoảng cách với nút Tiếp tục */
-  border-radius: 5px;
-}
-
-/* Nút tiếp tục */
-.continue-btn {
-  background-color: #28a745;
+  background: $light-blue;
+  color: $primary-blue;
   border: none;
-  color: white;
-  font-size: 16px;
-  height: 40px;
-  border-radius: 5px;
-  width: 100%;
-  cursor: pointer;
-  transition: background-color 0.3s;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, $light-blue, rgba($accent-blue, 0.3));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: -1;
+  }
+
+  &:hover {
+    color: $dark-blue;
+
+    &::before {
+      opacity: 1;
+    }
+  }
 }
 
-.continue-btn:hover {
-  background-color: #1e7e34;
+/* Image container with height constraints */
+.image-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-height: 100%;
+  overflow: hidden;
 }
 
-/* Phần bên phải */
-.right-panel img {
-  width: 550px; /* Giảm kích thước ảnh một chút */
-  height: 550px;
-  border-radius: 10px;
+.image-wrapper {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  max-height: 80vh;
+
+  img {
+    display: block;
+    max-width: 100%;
+    max-height: 80vh;
+    object-fit: contain;
+  }
+}
+
+/* Responsive design with height considerations */
+@media (max-width: 1100px) {
+  .welcome-content {
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  .welcome-card, .image-container {
+    max-width: 100%;
+  }
+
+  .image-wrapper {
+    max-width: 450px;
+    max-height: 40vh;
+    margin: 0 auto;
+  }
+
+  .welcome-title {
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 768px) {
+  .welcome-container {
+    padding: 15px;
+  }
+
+  .welcome-card {
+    padding: 20px;
+  }
+
+  .decoration-circle {
+    opacity: 0.5;
+  }
+}
+
+@media (max-height: 700px) {
+  .welcome-header {
+    margin-bottom: 10px;
+  }
+
+  .welcome-title {
+    font-size: 22px;
+    margin-bottom: 15px;
+  }
+
+  .role-selector {
+    margin-bottom: 15px;
+  }
+
+  .continue-btn, .register-btn {
+    padding: 12px 16px;
+  }
 }

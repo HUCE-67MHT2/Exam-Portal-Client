@@ -1,67 +1,90 @@
+// Color variables
+$primary-blue: #1e88e5;
+$secondary-blue: #64b5f6;
+$dark-blue: #0d47a1;
+$light-blue: #bbdefb;
+$text-dark: #212121;
+$text-light: #f5f5f5;
+$border-color: #e0e0e0;
+$shadow-color: rgba(0, 0, 0, 0.1);
+$danger-color: #f44336;
+
+// Typography
 * {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-$primary-blue: #2563eb;
-$secondary-blue: #3b82f6;
-$dark-blue: #1e40af;
-$accent-blue: #60a5fa;
+html {
+  font-size: 62.5%; // 1rem = 10px
+}
 
+body {
+  font-size: 1.6rem;
+  color: $text-dark;
+  background-color: #f8f9fa;
+}
 .header {
-  top: 0;
-  z-index: 99;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
   height: 80px;
-  padding: 0 30px;
-  border-bottom: solid 1px #ededed;
-  background: #ffffff;
+  padding: 0 3rem;
+  background: white;
+  box-shadow: 0 2px 10px $shadow-color;
+  position: sticky;
+  top: 0;
+  z-index: 100;
 
   .wraper-logo {
     display: flex;
     align-items: center;
-    width: 100%;
 
     .logo {
-      font-size: 2rem;
-      font-weight: bold;
-      margin-right: 20px;
+      font-size: 2.4rem;
+      font-weight: 700;
+      color: $primary-blue;
+      margin-right: 2rem;
     }
 
     .breadcrumb {
-      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      font-size: 1.4rem;
       color: #555;
 
       span {
-        margin-right: 5px;
+        margin-right: 0.8rem;
         font-size: 1.6rem;
       }
     }
   }
 
-  .return-button {
-    width: 180px;
+  .return-button button {
+    background-color: #f0f5f3;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 0.6rem;
+    font-size: 1.6rem;
+    font-weight: 500;
+    color: $text-dark;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px $shadow-color;
 
-    button {
-      background-color: #f0f5f3;
-      border: none;
-      width: 100%;
-      color: #000000;
-      font-size: 1.6rem;
-      padding: 10px 20px;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: background-color 0.3s;
+    &:hover {
+      background-color: $light-blue;
+      transform: translateY(-2px);
+    }
 
-      &:hover {
-        background-color: #d9e2df;
-      }
+    &:active {
+      transform: translateY(0);
     }
   }
 }
-
+//===========================================================================
 .loading-indicator {
   position: fixed;
   top: 50%;
@@ -92,27 +115,35 @@ $accent-blue: #60a5fa;
 
 .left-container {
   width: 60%;
-  background: #ffffff;
+  background-color: white;
+  border-right: 1px solid $border-color;
   height: calc(100vh - 80px);
+  overflow: hidden;
+
 
   .upload-file-container {
-    width: 100%;
     display: flex;
-    justify-content: center;
+    padding: 1.5rem;
+    gap: 1rem;
 
     .upload-button {
-      font-size: 1.6rem;
-      width: 100%;
-      height: 40px;
-      background: $primary-blue;
-      color: #ffffff;
+      flex: 1;
+      height: 5rem;
       border: none;
+      border-radius: 0.6rem;
+      font-size: 1.6rem;
+      font-weight: 600;
       cursor: pointer;
-      font-weight: bold;
-      transition: background 0.3s ease-in-out;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 6px $shadow-color;
 
       &:hover {
+        color: $text-light;
         background: $dark-blue;
+        transform: translateY(-2px);
       }
     }
   }
@@ -129,412 +160,473 @@ $accent-blue: #60a5fa;
   }
 }
 
+// Right section - Tabs
 .right-container {
   width: 40%;
-}
-
-// =====================
-// TAB HEADER
-// =====================
-.tab-header {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  background-color: #f8f9fa;
 
-  .tab-button {
-    flex: 1;
-    height: 40px;
-    border: none;
-    background: #ededed;
-    cursor: pointer;
-    font-size: 16px;
-    transition: 0.3s;
+  .tab-header {
+    display: flex;
+    background-color: white;
+    box-shadow: 0 2px 4px $shadow-color;
 
-    &.active {
-      color: #ffffff;
-      background: $primary-blue;
+    .tab-button {
+      flex: 1;
+      padding: 1.5rem 0;
+      border: none;
+      background: white;
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: $text-dark;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      position: relative;
+
+      &:after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0;
+        height: 3px;
+        background-color: $primary-blue;
+        transition: width 0.2s ease;
+      }
+
+      &.active {
+        color: $primary-blue;
+
+        &:after {
+          width: 100%;
+        }
+      }
+
+      &:hover:not(.active) {
+        background-color: $light-blue;
+      }
     }
+  }
+
+  .tab-content {
+    flex: 1;
+    overflow: auto;
+    padding: 2rem;
   }
 }
 
-// =====================
-// Tab Answer
-// =====================
+// Questions tab
 .score-summary {
+  background: linear-gradient(to right, $dark-blue, $primary-blue);
+  color: white;
+  padding: 1.5rem;
+  border-radius: 0.8rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 6px $shadow-color;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: $dark-blue;
-  color: white;
-  padding: 15px 20px 15px 20px;
 
   .score-item-wrappper {
     display: flex;
-    justify-content: space-between;
+    gap: 2rem;
 
     .score-item {
       display: flex;
-      margin-left: 10px;
-      gap: 5px;
-      justify-content: space-between;
-      align-items: center;
+      flex-direction: column;
+
+      label {
+        font-size: 1.4rem;
+        margin-bottom: 0.5rem;
+      }
 
       input {
-        width: 60px;
-        text-align: center;
-        font-size: 1.6rem;
-        padding: 10px;
+        width: 8rem;
+        height: 4rem;
+        padding: 0.5rem;
         border: none;
-        border-radius: 5px;
+        border-radius: 0.4rem;
+        font-size: 1.6rem;
+        text-align: center;
       }
     }
   }
 
   .quick-input {
-    background-color: $secondary-blue;
+    background-color: white;
+    color: $primary-blue;
     border: none;
-    padding: 10px 15px;
-    color: white;
-    font-size: 16px;
+    padding: 1rem 2rem;
+    border-radius: 0.4rem;
+    font-weight: 600;
     cursor: pointer;
-    border-radius: 5px;
-    transition: 0.3s;
+    transition: all 0.2s ease;
 
     &:hover {
-      background-color: $dark-blue;
+      background-color: $light-blue;
+      transform: translateY(-2px);
+    }
+
+    &:active {
+      transform: translateY(0);
     }
   }
 }
 
-//=================
-//QUICK INPUT MODAL
-//=================
-.quick-input-modal {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: white;
-  padding: 20px;
-  width: 400px;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  z-index: 1001; // Đặt cao hơn overlay
-
-  .modal-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .modal-title {
-    font-size: 20px;
-    font-weight: bold;
-    margin-bottom: 10px;
-  }
-
-  .modal-description {
-    font-size: 14px;
-    color: #555;
-    text-align: center;
-    margin-bottom: 10px;
-  }
-
-  .quick-input-area {
-    width: 100%;
-    height: 80px;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 14px;
-    resize: none;
-  }
-
-  .error-message {
-    font-size: 1.2rem;
-    color: red;
-  }
-
-  .answer-count {
-    font-size: 12px;
-    color: #888;
-    margin-top: 5px;
-  }
-
-  .modal-actions {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    margin-top: 15px;
-
-    .cancel-btn,
-    .confirm-btn {
-      padding: 8px 16px;
-      border: none;
-      border-radius: 5px;
-      font-size: 14px;
-      cursor: pointer;
-    }
-
-    .cancel-btn {
-      background: #f3f3f3;
-      color: #333;
-    }
-
-    .confirm-btn {
-      background: #04aa6d;
-      color: white;
-    }
-
-    .cancel-btn:hover {
-      background: #e0e0e0;
-    }
-
-    .confirm-btn:hover {
-      background: #02774b;
-    }
-  }
-}
-
-// Thêm lớp overlay (nền mờ)
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5); // Màu tối có độ trong suốt 50%
-  z-index: 1000; // Đặt thấp hơn modal
-}
-
-// =====================
-// QUESTION LIST
-// =====================
 .question-list {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); // 3 câu mỗi hàng
-  gap: 15px;
-  padding: 10px;
-  max-height: 70vh;
-  overflow-y: auto;
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
 
   .question-item {
-    background: #f1f1f1;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between; // Căn chỉnh khoảng cách hợp lý
-    align-items: stretch;
-    width: 100%;
+    background: white;
+    padding: 1.5rem;
+    border-radius: 0.8rem;
+    box-shadow: 0 2px 8px $shadow-color;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+    &:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 4px 12px $shadow-color;
+    }
 
     .question-title {
-      margin-bottom: 10px;
-      font-size: 1.6rem;
-      font-weight: bold;
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: $primary-blue;
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.8rem;
     }
 
     .input-group {
       display: flex;
+      justify-content: space-between;
       align-items: center;
-      justify-content: space-between; // Đẩy input về bên phải
-      width: 100%;
-      margin-bottom: 8px;
+      margin-bottom: 1rem;
 
-      .answer-select,
-      .score-input {
-        width: 60px; // Độ rộng hợp lý để input không quá dài
-        padding: 5px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        text-align: left; // Căn phải giống trong ảnh
+      .input-label {
+        font-weight: 500;
+      }
+
+      .answer-select, .score-input {
+        width: 10rem;
+        padding: 0.8rem;
+        border: 1px solid $border-color;
+        border-radius: 0.4rem;
+        background-color: white;
+        font-size: 1.4rem;
+        transition: border-color 0.2s ease;
+
+        &:focus {
+          border-color: $primary-blue;
+          outline: none;
+          box-shadow: 0 0 0 3px rgba($primary-blue, 0.2);
+        }
       }
 
       .score-input {
-        background: #e9ecef;
+        background-color: #f0f0f0;
       }
     }
   }
 }
 
-// =====================
-// Tab infomation
-// =====================
+// Exam info tab
 form {
-  display: flex;
-  flex-direction: column;
-  padding: 20px;
+  background: white;
+  padding: 2rem;
+  border-radius: 0.8rem;
+  box-shadow: 0 2px 8px $shadow-color;
 
-  label {
-    font-weight: bold;
+  .exam-info {
+    font-size: 2rem;
+    font-weight: 600;
+    color: $primary-blue;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid $border-color;
   }
 
-  input,
-  select {
-    padding: 10px;
-    margin-bottom: 12px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+  .row-wrapper {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 1.5rem;
+
+    .input-wrapper {
+      flex: 1;
+      position: relative;
+
+      label {
+        display: block;
+        font-size: 1.4rem;
+        font-weight: 600;
+        margin-bottom: 0.8rem;
+        color: $text-dark;
+      }
+
+      input, select {
+        width: 100%;
+        padding: 1.2rem;
+        border: 1px solid $border-color;
+        border-radius: 0.4rem;
+        font-size: 1.5rem;
+        transition: all 0.2s ease;
+
+        &:focus {
+          border-color: $primary-blue;
+          outline: none;
+          box-shadow: 0 0 0 3px rgba($primary-blue, 0.2);
+        }
+      }
+
+      .error {
+        position: absolute;
+        color: $danger-color;
+        font-size: 1.2rem;
+        margin-top: 0.4rem;
+      }
+    }
+  }
+
+  button[type="submit"] {
     width: 100%;
-  }
-
-  button {
-    margin-top: 20px;
-    padding: 15px;
+    padding: 1.4rem;
     background: $primary-blue;
     color: white;
     border: none;
+    border-radius: 0.6rem;
+    font-size: 1.6rem;
+    font-weight: 600;
     cursor: pointer;
-    border-radius: 5px;
-    transition: 0.3s;
+    transition: all 0.2s ease;
+    margin-top: 2rem;
+    box-shadow: 0 4px 6px $shadow-color;
 
-    &:hover {
+    &:hover:not(:disabled) {
       background: $dark-blue;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px $shadow-color;
+    }
+
+    &:active:not(:disabled) {
+      transform: translateY(0);
+    }
+
+    &:disabled {
+      background: #cccccc;
+      cursor: not-allowed;
     }
   }
 }
 
-// FORM VALIDATION ERROR
-.input-wrapper {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-
-  input[type="date"],
-  input[type="time"],
-  input[type="datetime-local"] {
-    margin-bottom: 8px;
-  }
-
-  .error {
-    position: absolute;
-    bottom: 8px;
-    background: #ffffff;
-    left: 0;
-    color: red;
-    font-size: 10px;
-  }
-}
-
-.row-wrapper {
-  display: flex;
-  gap: 20px;
-
-  .input-wrapper {
-    width: 50%;
-
-    label {
-      margin-bottom: 5px;
-    }
-  }
-}
-
-.exam-info {
-  margin-bottom: 15px;
-}
-
-.exam-info:nth-of-type(2) {
-  margin-top: 15px;
-}
-
-// warning model
-/* Thêm đoạn CSS này vào file .scss của bạn */
-
-.warning-modal {
+// Modal styling
+.quick-input-modal, .warning-modal {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.6);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
 
-  .warning-modal-content {
-    background-color: #fff;
-    border-radius: 8px;
-    padding: 25px;
-    max-width: 500px;
-    width: 90%;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: -1;
+  }
+}
 
-    h3 {
-      color: #e74c3c;
-      margin-top: 0;
-      font-size: 22px;
-      margin-bottom: 20px;
+.quick-input-modal .modal-content {
+  background: white;
+  padding: 2.5rem;
+  border-radius: 1rem;
+  width: 40rem;
+  max-width: 90%;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+
+  .modal-title {
+    font-size: 2.2rem;
+    font-weight: 600;
+    color: $primary-blue;
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+
+  .modal-description {
+    font-size: 1.4rem;
+    color: #666;
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+
+  .quick-input-area {
+    width: 100%;
+    height: 12rem;
+    padding: 1.2rem;
+    border: 1px solid $border-color;
+    border-radius: 0.6rem;
+    font-size: 1.6rem;
+    resize: none;
+    margin-bottom: 1rem;
+
+    &:focus {
+      border-color: $primary-blue;
+      outline: none;
+      box-shadow: 0 0 0 3px rgba($primary-blue, 0.2);
     }
+  }
 
-    .warning-message {
-      background-color: #fef2f2;
-      border-left: 4px solid #e74c3c;
-      padding: 15px;
-      margin-bottom: 20px;
+  .error-message {
+    color: $danger-color;
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+  }
 
-      p {
-        margin-top: 0;
-        font-weight: 500;
+  .answer-count {
+    font-size: 1.3rem;
+    color: #666;
+    margin-bottom: 2rem;
+  }
+
+  .modal-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 1.5rem;
+
+    button {
+      flex: 1;
+      padding: 1.2rem;
+      border: none;
+      border-radius: 0.6rem;
+      font-size: 1.5rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+
+      &.cancel-btn {
+        background: #f0f0f0;
         color: #333;
-      }
-    }
 
-    .missing-questions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 10px;
-
-      .missing-question-tag {
-        background-color: #ffecec;
-        color: #e74c3c;
-        padding: 4px 12px;
-        border-radius: 20px;
-        font-size: 14px;
-        border: 1px solid #fad7d7;
-      }
-    }
-
-    .question-text {
-      font-weight: 500;
-      margin-bottom: 20px;
-      text-align: center;
-    }
-
-    .modal-buttons {
-      display: flex;
-      justify-content: space-between;
-      gap: 15px;
-
-      button {
-        flex: 1;
-        padding: 12px;
-        border-radius: 6px;
-        cursor: pointer;
-        font-weight: 500;
-        transition: all 0.2s;
-
-        &.cancel-btn {
-          background-color: #f8f9fa;
-          border: 1px solid #ddd;
-          color: #333;
-
-          &:hover {
-            background-color: #e9ecef;
-          }
+        &:hover {
+          background: #e0e0e0;
         }
+      }
 
-        &.continue-btn {
-          background-color: $primary-blue !important;
-          border: none;
-          color: white;
+      &.confirm-btn {
+        background: $primary-blue;
+        color: white;
 
-          &:hover {
-            background-color: $dark-blue !important;
-          }
+        &:hover {
+          background: $dark-blue;
         }
       }
     }
   }
+}
+
+.warning-modal-content {
+  background: white;
+  padding: 2.5rem;
+  border-radius: 1rem;
+  width: 50rem;
+  max-width: 90%;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+
+  h3 {
+    color: $danger-color;
+    font-size: 2.2rem;
+    margin-bottom: 2rem;
+  }
+
+  .warning-message {
+    background-color: #fff8f8;
+    border-left: 4px solid $danger-color;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+
+    p {
+      font-weight: 500;
+      margin-bottom: 1rem;
+    }
+  }
+
+  .missing-questions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+
+    .missing-question-tag {
+      background-color: #fff0f0;
+      color: $danger-color;
+      padding: 0.6rem 1.2rem;
+      border-radius: 2rem;
+      font-size: 1.3rem;
+      border: 1px solid #ffd7d7;
+    }
+  }
+
+  .question-text {
+    font-weight: 500;
+    margin: 2rem 0;
+    text-align: center;
+    font-size: 1.6rem;
+  }
+
+  .modal-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 1.5rem;
+
+    button {
+      flex: 1;
+      padding: 1.2rem;
+      border-radius: 0.6rem;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.2s;
+      font-size: 1.5rem;
+
+      &.cancel-btn {
+        background-color: #f8f9fa;
+        border: 1px solid #ddd;
+        color: #333;
+
+        &:hover {
+          background-color: #e9ecef;
+        }
+      }
+
+      &.continue-btn {
+        background-color: $primary-blue;
+        border: none;
+        color: white;
+
+        &:hover {
+          background-color: $dark-blue;
+        }
+      }
+    }
+  }
+}
+
+// Loading indicator
+app-loading {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.8);
+  z-index: 1100;
 }

@@ -1,22 +1,48 @@
-<div class="container">
-  <div class="header">
-    <h5 style="font-size: 24px">Online Exam Portal</h5>
-    <button (click)="onRegister()" class="register-btn">Đăng ký</button>
-  </div>
+<div class="welcome-container">
+  <!-- Decorative elements -->
+  <div class="decoration-circle circle-1"></div>
+  <div class="decoration-circle circle-2"></div>
+  <div class="decoration-circle circle-3"></div>
 
-  <div class="content">
-    <div class="left-panel">
-      <h2 style="font-size: 36px">Chào mừng bạn đến với<br>Online Exam Portal</h2>
-      <label for="role" style="font-size: 16px">Chọn vai trò của bạn</label>
-      <select [(ngModel)]="selectedRole" id="role">
-        <option>Tôi là học sinh</option>
-        <option>Tôi là giáo viên</option>
-      </select>
-      <button (click)="onContinue()" class="continue-btn">Tiếp tục</button>
+  <!-- Compact header -->
+  <header class="welcome-header">
+    <div class="logo-container">
+      <h1 class="logo-text">Online Exam Portal</h1>
+    </div>
+  </header>
+
+  <!-- Main content with adjusted layout -->
+  <div class="welcome-content">
+    <div class="welcome-card">
+      <h2 class="welcome-title">Chào mừng bạn đến với<br><span class="highlight">Online Exam Portal</span></h2>
+
+      <div class="role-selector">
+        <label for="role">Chọn vai trò của bạn</label>
+        <div class="custom-select">
+          <select [(ngModel)]="selectedRole" id="role">
+            <option>Tôi là học sinh</option>
+            <option>Tôi là giáo viên</option>
+          </select>
+          <div class="select-arrow">▼</div>
+        </div>
+      </div>
+
+      <div class="action-buttons">
+        <button (click)="onContinue()" class="continue-btn">
+          <span class="btn-text">Tiếp tục</span>
+          <span class="btn-icon">→</span>
+        </button>
+        <button (click)="onRegister()" class="register-btn">
+          <span class="btn-text">Đăng ký</span>
+          <span class="btn-icon">+</span>
+        </button>
+      </div>
     </div>
 
-    <div class="right-panel">
-      <img alt="Exam Portal Image" height="584" ngSrc="/images/Login.png" width="584"/>
+    <div class="image-container">
+      <div class="image-wrapper">
+        <img alt="Exam Portal Image" height="584" ngSrc="/images/Login.png" width="584"/>
+      </div>
     </div>
   </div>
 </div>
