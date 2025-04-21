@@ -1,149 +1,193 @@
-* {
-  padding: 0;
-  box-sizing: border-box;
-}
+// Color variables
+$primary-blue: #3f9bfa;
+$primary-dark-blue: #7e7d7d;
+$primary-light-blue: #bbdefb;
+$text-dark: #333333;
+$text-light: #ffffff;
+$text-gray: #757575;
+$bg-light: #f8f9fa;
+$bg-white: #ffffff;
+$border-color: #e0e0e0;
 
 .container {
-  font-family: Arial, sans-serif;
-  padding: 20px;
-  margin-left: 7%;
-  margin-right: 7%;
-}
-
-.login-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.login-header h2 {
-  font-size: 24px;
-  font-weight: bold;
-}
-
-.login-header a {
-  text-decoration: none;
-  color: #000000;
-  font-size: 20px;
-  font-weight: bold;
-}
-
-.user-type-button {
-  background: #ffffff;
-  color: #000000;
-  border: 1px solid #333333;
-  cursor: pointer;
-  font-size: 16px;
-  padding: 10px 20px;
-  position: relative;
-  overflow: hidden;
-}
-
-.user-type-button::after {
-  content: attr(data-hover);
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: #ffffff;
-  opacity: 0;
-  white-space: nowrap;
-}
-
-.user-type-button:hover::after {
-  opacity: 1;
-}
-
-.user-type-button:hover {
-  background: #00A859;
-  border: 1px solid #00a758;
-  color: transparent; /* Ẩn nội dung gốc khi hover */
-}
-
-
-.login-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 50px;
-}
-
-.login-form {
-  width: 40%;
-}
-
-.login-form h3 {
-  margin: 20px 0;
-}
-
-.login-form form {
-  display: flex;
-  flex-direction: column;
-}
-
-.input-wrapper {
-  position: relative;
-  margin: 10px 0;
-}
-
-.login-form input,
-button {
   width: 100%;
-  padding: 12px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 16px;
-}
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f6f8fd 0%, #edf2ff 100%);
+  padding: 40px;
 
-.forgot-password {
-  text-align: left;
-  font-size: 16px;
-  color: #007bff;
-  text-decoration: none;
-  margin-bottom: 20px;
-  margin-top: 5px;
-}
+  .login-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 60px;
 
-.forgot-password:hover {
-  text-decoration: underline;
-}
+    a {
+      font-size: 2.2rem;
+      font-weight: 600;
+      color: $primary-dark-blue;
+      text-decoration: none;
+      transition: all 0.3s ease;
 
-button {
-  background-color: #00a859;
-  color: #fff;
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.3s, font-weight 0.3s;
-}
+      &:hover {
+        color: $primary-blue;
+      }
+    }
 
-button:hover {
-  background-color: #008c4a;
-}
+    .user-type-button {
+      padding: 12px 24px;
+      font-size: 1.4rem;
+      font-weight: 500;
+      color: $primary-blue;
+      background: $bg-white;
+      border: 2px solid $primary-blue;
+      border-radius: 12px;
+      transition: all 0.3s ease;
+      cursor: pointer;
 
-.register {
-  margin-top: 15px;
-  font-size: 14px;
-}
+      &:hover {
+        color: $bg-white;
+        background: $primary-blue;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 15px rgba($primary-blue, 0.15);
+      }
+    }
+  }
 
-//.register a {
-//  color: #007bff;
-//  text-decoration: none;
-//}
+  .login-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px;
+    background: rgba($bg-white, 0.95);
+    border-radius: 30px;
+    backdrop-filter: blur(10px);
+    box-shadow:
+      0 20px 40px -15px rgba(0, 0, 0, 0.1),
+      0 0 20px rgba($primary-blue, 0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 40px;
 
-.register a:hover {
-  text-decoration: underline;
-}
+    .login-form {
+      width: 100%;
+      max-width: 450px;
 
-.login-image {
-  width: 600px;
-  border-radius: 10px;
-}
+      h3 {
+        font-size: 2.2rem;
+        color: $primary-dark-blue;
+        margin-bottom: 32px;
+        position: relative;
+        padding-bottom: 16px;
 
-.error {
-  position: absolute;
-  bottom: -4px;
-  background: #ffffff;
-  left: 0;
-  color: red;
-  font-size: 10px;
+        &::after {
+          content: '';
+          position: absolute;
+          left: 0;
+          bottom: 0;
+          width: 80px;
+          height: 3px;
+          background: $primary-blue;
+          border-radius: 3px;
+        }
+      }
+
+      .input-wrapper {
+        margin-bottom: 24px;
+        position: relative;
+
+        input {
+          width: 100%;
+          height: 52px;
+          padding: 0 24px;
+          font-size: 1.4rem;
+          color: $primary-dark-blue;
+          background: $bg-white;
+          border: 2px solid $border-color;
+          border-radius: 15px;
+          transition: all 0.3s ease;
+
+          &:focus {
+            outline: none;
+            border-color: $primary-blue;
+            box-shadow: 0 0 0 4px rgba($primary-blue, 0.1);
+          }
+        }
+
+        .error {
+          position: absolute;
+          bottom: -20px;
+          left: 0;
+          color: #ff3d57;
+          font-size: 1.2rem;
+        }
+      }
+
+      .forgot-password {
+        display: inline-block;
+        font-size: 1.4rem;
+        color: $primary-blue;
+        margin-bottom: 24px;
+        transition: all 0.3s ease;
+
+        &:hover {
+          transform: translateX(5px);
+        }
+      }
+
+      button {
+        width: 100%;
+        height: 52px;
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: $bg-white;
+        background: $primary-blue;
+        border: none;
+        border-radius: 15px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+
+        &:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 8px 15px rgba($primary-blue, 0.2);
+        }
+
+        &:disabled {
+          background: $text-gray;
+          cursor: not-allowed;
+          transform: none;
+          box-shadow: none;
+        }
+      }
+
+      .register {
+        margin-top: 24px;
+        text-align: center;
+        font-size: 1.4rem;
+        color: $text-gray;
+
+        a {
+          color: $primary-blue;
+          font-weight: 500;
+          margin-left: 5px;
+          transition: all 0.3s ease;
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+
+    .login-image {
+      width: 50%;
+      border-radius: 20px;
+      overflow: hidden;
+
+      img {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+      }
+    }
+  }
 }

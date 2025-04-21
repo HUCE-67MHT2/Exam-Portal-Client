@@ -8,10 +8,10 @@ import {HeaderStudentComponent} from '../../../layout/header/header-student/head
   styleUrl: './student-home.component.scss'
 })
 export class StudentHomeComponent {
-  constructor() {
-  }
+  activeSection: string = 'schedule';
 
   scrollToSection(elementId: string): void {
+    this.activeSection = elementId;
     document.getElementById(elementId)?.scrollIntoView({behavior: 'smooth'});
   }
 }

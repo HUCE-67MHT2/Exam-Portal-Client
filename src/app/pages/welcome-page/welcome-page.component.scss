@@ -1,103 +1,170 @@
-/* Reset cơ bản */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: Arial, sans-serif;
-}
+// Color variables
+$primary-blue: #3f9bfa;
+$primary-dark-blue: #7e7d7d;
+$primary-light-blue: #bbdefb;
+$text-dark: #333333;
+$text-light: #ffffff;
+$text-gray: #757575;
+$bg-light: #f8f9fa;
+$bg-white: #ffffff;
+$border-color: #e0e0e0;
 
-/* Tổng thể */
 .container {
-  padding: 20px;
-  margin-left: 7%;
-  margin-right: 7%;
-}
-
-/* Header */
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px 20px;
-}
-
-.header h5 {
-  margin-left: -1.5%;
-}
-
-.register-btn {
-  width: 150px;
-  height: 40px;
-  background-color: white;
-  border: 1px solid #28a745;
-  color: #28a745;
-  padding: 6px 14px; /* Giảm kích thước nút đăng ký */
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-  transition: background-color 0.3s, color 0.3s;
-}
-
-.register-btn:hover {
-  background-color: #28a745;
-  color: white;
-}
-
-/* Nội dung chính */
-.content {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 40px; /* Giảm khoảng cách phần nội dung */
-}
-
-/* Phần bên trái */
-.left-panel {
-  width: 500px;
-}
-
-.left-panel h2 {
-  font-size: 32px; /* Giảm kích thước tiêu đề */
-  margin-bottom: 16px;
-}
-
-.left-panel label {
-  display: block;
-  margin-bottom: 6px; /* Giảm khoảng cách giữa label và select */
-  font-size: 14px;
-  color: #28a745;
-}
-
-.left-panel select {
-  font-size: 14px; /* Giảm font-size */
-  height: 42px; /* Giảm chiều cao dropdown */
-  padding: 8px; /* Giảm padding */
-  border: 1px solid #ccc;
   width: 100%;
-  margin-bottom: 12px; /* Tăng khoảng cách với nút Tiếp tục */
-  border-radius: 5px;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f6f8fd 0%, #edf2ff 100%);
+  padding: 40px;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 60px;
+
+    h5 {
+      font-size: 2.2rem;
+      font-weight: 600;
+      color: $primary-dark-blue;
+    }
+
+    .register-btn {
+      padding: 12px 24px;
+      font-size: 1.4rem;
+      font-weight: 500;
+      color: $primary-blue;
+      background: $bg-white;
+      border: 2px solid $primary-blue;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+
+      &:hover {
+        color: $bg-white;
+        background: $primary-blue;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 15px rgba($primary-blue, 0.15);
+      }
+    }
+  }
+
+  .content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px;
+    background: rgba($bg-white, 0.95);
+    border-radius: 30px;
+    backdrop-filter: blur(10px);
+    box-shadow:
+      0 20px 40px -15px rgba(0, 0, 0, 0.1),
+      0 0 20px rgba($primary-blue, 0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 40px;
+
+    .left-panel {
+      width: 100%;
+      max-width: 450px;
+
+      h2 {
+        font-size: 3.6rem;
+        color: $primary-dark-blue;
+        margin-bottom: 32px;
+        position: relative;
+        padding-bottom: 16px;
+
+        &::after {
+          content: '';
+          position: absolute;
+          left: 0;
+          bottom: 0;
+          width: 80px;
+          height: 3px;
+          background: $primary-blue;
+          border-radius: 3px;
+        }
+      }
+
+      label {
+        display: block;
+        font-size: 1.4rem;
+        font-weight: 500;
+        color: $primary-blue;
+        margin-bottom: 12px;
+      }
+
+      select {
+        width: 100%;
+        height: 52px;
+        padding: 0 24px;
+        font-size: 1.4rem;
+        color: $primary-dark-blue;
+        background: $bg-white;
+        border: 2px solid $border-color;
+        border-radius: 15px;
+        margin-bottom: 24px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+
+        &:focus {
+          outline: none;
+          border-color: $primary-blue;
+          box-shadow: 0 0 0 4px rgba($primary-blue, 0.1);
+        }
+      }
+
+      .continue-btn {
+        width: 100%;
+        height: 52px;
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: $bg-white;
+        background: $primary-blue;
+        border: none;
+        border-radius: 15px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+
+        &:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 8px 15px rgba($primary-blue, 0.2);
+        }
+      }
+    }
+
+    .right-panel {
+      width: 50%;
+      border-radius: 20px;
+      overflow: hidden;
+
+      img {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+      }
+    }
+  }
 }
 
-/* Nút tiếp tục */
-.continue-btn {
-  background-color: #28a745;
-  border: none;
-  color: white;
-  font-size: 16px;
-  height: 40px;
-  border-radius: 5px;
-  width: 100%;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
+@media (max-width: 768px) {
+  .container {
+    padding: 20px;
 
-.continue-btn:hover {
-  background-color: #1e7e34;
-}
+    .content {
+      flex-direction: column;
+      padding: 20px;
 
-/* Phần bên phải */
-.right-panel img {
-  width: 550px; /* Giảm kích thước ảnh một chút */
-  height: 550px;
-  border-radius: 10px;
+      .left-panel {
+        max-width: 100%;
+
+        h2 {
+          font-size: 2.8rem;
+        }
+      }
+
+      .right-panel {
+        width: 100%;
+      }
+    }
+  }
 }
