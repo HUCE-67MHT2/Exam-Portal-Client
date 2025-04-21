@@ -1,47 +1,60 @@
-<div class="container">
-  <div class="login-header">
-    <a routerLink="">Online Exam Portal</a>
-    <div class="user-type">
+<div class="login-wrapper">
+  <div class="login-container">
+    <div class="login-header">
+      <a routerLink="" class="logo">Online Exam Portal</a>
       <button (click)="navigateToLink()" class="user-type-button" data-hover="Thay đổi vai trò">
         <ng-content select="[present_role]"></ng-content>
       </button>
     </div>
-  </div>
-  <app-loading *ngIf="loading"></app-loading>
-  <div class="login-container">
-    <div class="login-form">
-      <h3 style="font-size: 36px">
-        <ng-content select="[login_heading]"></ng-content>
-      </h3>
-      <form (ngSubmit)="onSubmit()" [formGroup]="loginForm">
-        <div class="input-wrapper">
-          <input formControlName="contact" placeholder="Email/ Số điện thoại" required type="text"/>
-          <div *ngIf="loginForm.get('contact')?.touched && loginForm.get('contact')?.errors">
-            <small *ngIf="loginForm.get('contact')?.errors?.['required']" class="error">Liên hệ không được để
-              trống.</small>
-            <small *ngIf="loginForm.get('contact')?.errors?.['email']" class="error">Email không hợp lệ</small>
-          </div>
+
+    <div class="content-container">
+      <div class="form-container">
+        <div class="form-header">
+          <h2><ng-content select="[login_heading]"></ng-content></h2>
+          <p class="welcome-text">Chào mừng trở lại, vui lòng đăng nhập để tiếp tục</p>
         </div>
-        <div class="input-wrapper">
-          <input formControlName="password" placeholder="Mật khẩu" required type="password"/>
-          <div *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.errors">
-            <small *ngIf="loginForm.get('password')?.errors?.['required']" class="error">Mật khẩu không được để
-              trống.</small>
+
+        <form (ngSubmit)="onSubmit()" [formGroup]="loginForm">
+          <div class="input-group">
+            <div class="input-wrapper">
+              <span class="input-icon"><i class="fa fa-envelope"></i></span>
+              <input formControlName="contact" placeholder="Email/ Số điện thoại" required type="text"/>
+              <div *ngIf="loginForm.get('contact')?.touched && loginForm.get('contact')?.errors" class="error-container">
+                <small *ngIf="loginForm.get('contact')?.errors?.['required']" class="error">Liên hệ không được để trống</small>
+                <small *ngIf="loginForm.get('contact')?.errors?.['email']" class="error">Email không hợp lệ</small>
+              </div>
+            </div>
+
+            <div class="input-wrapper">
+              <span class="input-icon"><i class="fa fa-lock"></i></span>
+              <input formControlName="password" placeholder="Mật khẩu" required type="password"/>
+              <div *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.errors" class="error-container">
+                <small *ngIf="loginForm.get('password')?.errors?.['required']" class="error">Mật khẩu không được để trống</small>
+              </div>
+            </div>
           </div>
-        </div>
-        <a class="forgot-password" routerLink="/forgot-password">Quên mật khẩu?</a>
-        <button [disabled]="loginForm.invalid" type="submit">Đăng nhập</button>
-        <p class="register">Bạn chưa có tài khoản? <a [routerLink]="link">Đăng ký ngay</a></p>
-        <p *ngIf="loginError" class="error">{{ loginError }}</p>
-      </form>
+
+          <a class="forgot-password" routerLink="/forgot-password">Quên mật khẩu?</a>
+
+          <button [disabled]="loginForm.invalid" type="submit" class="login-button">
+            <span class="button-text">Đăng nhập</span>
+            <span class="button-icon"><i class="fa fa-arrow-right"></i></span>
+          </button>
+
+          <p class="register">Bạn chưa có tài khoản? <a [routerLink]="link" class="register-link">Đăng ký ngay</a></p>
+          <p *ngIf="loginError" class="login-error">{{ loginError }}</p>
+        </form>
+      </div>
+
+      <div class="image-container">
+        <img alt="Login Illustration" ngSrc="/images/Login.png" width="584" height="584" class="login-image"/>
+      </div>
     </div>
 
-    <div class="login-image">
-      <img alt="Login Illustration" height="584" ngSrc="/images/Login.png" width="584"/>
+    <div class="custom-footer">
+      <ng-content select="[custom_footer]"></ng-content>
     </div>
-  </div>
-
-  <div class="custom-footer">
-    <ng-content select="[custom_footer]"></ng-content>
   </div>
 </div>
+
+<app-loading *ngIf="loading" text="Đang đăng nhập..."></app-loading>

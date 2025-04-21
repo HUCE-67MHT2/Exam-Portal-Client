@@ -1,4 +1,4 @@
-import {CommonModule, DatePipe, NgOptimizedImage} from "@angular/common";
+import {CommonModule, DatePipe} from "@angular/common";
 import {Component, Input, OnInit} from "@angular/core";
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {ExamSessionService} from "../../../../../core/services/exam-session.service";
@@ -10,7 +10,7 @@ import {StudentInExamSessionEnrollments} from '../../../../../core/models/exam-s
 
 @Component({
   selector: "app-home",
-  imports: [ReactiveFormsModule, CommonModule, NgOptimizedImage, FormsModule],
+  imports: [ReactiveFormsModule, CommonModule, FormsModule],
   providers: [DatePipe],
   templateUrl: "./home.component.html",
   styleUrl: "./home.component.scss",
