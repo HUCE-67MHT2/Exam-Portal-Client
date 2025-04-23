@@ -67,4 +67,9 @@ export class ExamService {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     return this.http.post(`${this.baseUrl}/submit/exam/type/auto-generate`,examId, {headers, observe: 'response'});
   }
+
+  addExamManually(formData: FormData): Observable<any> {
+    return this.http.post(`${this.baseUrl}/add/exam/auto-generate`, formData);
+  }
+
 }

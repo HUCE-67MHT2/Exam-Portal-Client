@@ -1,9 +1,17 @@
-import {Component, Input, OnDestroy, OnInit} from "@angular/core";
-import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
-import {ExamSessionService} from "../../../../../../core/services/exam-session.service";
-import {Router} from "@angular/router";
-import {ToastrService} from "ngx-toastr";
-import {NgIf} from "@angular/common";
+import { Component, Input, OnDestroy, OnInit } from "@angular/core";
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from "@angular/forms";
+import { ExamSessionService } from "../../../../../../core/services/exam-session.service";
+import { ExamService } from "../../../../../../core/services/exam.service";
+import { ExamQuestionService } from "../../../../../../core/services/exam-question.service";
+import { Router } from "@angular/router";
+import { ToastrService } from "ngx-toastr";
+import { NgIf } from "@angular/common";
+import { lastValueFrom } from 'rxjs';
 
 @Component({
   selector: "app-info",
@@ -27,9 +35,11 @@ export class InfoComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private router: Router,
     private examSessionService: ExamSessionService,
+    private examService: ExamService,
+    private examQuestionService: ExamQuestionService,
     private toastr: ToastrService
   ) {
-    this.examSessionId = localStorage.getItem("exam_session_id") || "";
+    this.examSessionId = JSON.parse(localStorage.getItem("selectedSession") || "{}").id;
 
     this.examForm = this.fb.group({
       exam_name: ["", Validators.required],
@@ -60,6 +70,8 @@ export class InfoComponent implements OnInit, OnDestroy {
     });
   }
 
+
+
   ngOnDestroy() {
     // Xóa dữ liệu khỏi localStorage khi component bị hủy
     localStorage.removeItem("info");
@@ -67,16 +79,15 @@ export class InfoComponent implements OnInit, OnDestroy {
     localStorage.removeItem("examInfo");
   }
 
-
-
-  onSubmit() {
+  async onSubmit() {
     if (this.examForm.invalid) {
       this.examForm.markAllAsTouched();
       this.toastr.error("Vui lòng kiểm tra lại thông tin.", "Lỗi");
       return;
     }
 
-    this.sendNumberOfExamAndTestToBackend();
+    // this.sendNumberOfExamAndTestToBackend();
+    await this.sendExamInfoToBackend();
 
     this.router.navigate(["teacher/exam-session-dashboard"], {
       queryParams: {
@@ -103,22 +114,28 @@ export class InfoComponent implements OnInit, OnDestroy {
   }
 
   saveNumberOfExamAndTest() {
-    const defaultQuestionPerExam = this.examForm.get('number_of_exam')?.value;
+    const defaultQuestionPerExam = this.examForm.get("number_of_exam")?.value;
 
     const examInfoNumber = {
       id: this.examSessionId,
       defaultQuestionPerExam: defaultQuestionPerExam,
-    }
+    };
 
     localStorage.setItem("examInfoNumber", JSON.stringify(examInfoNumber));
     console.log("Dữ liệu number_of_exam được lưu vào localStorage");
   }
 
-  private parseFormValues(): { defaultQuestionPerExam: number, examSessionId: number } | null {
-    const defaultQuestionPerExam = parseInt(this.examForm.get('number_of_exam')?.value, 10);
+  private parseFormValues(): {
+    defaultQuestionPerExam: number;
+    examSessionId: number;
+  } | null {
+    const defaultQuestionPerExam = parseInt(
+      this.examForm.get("number_of_exam")?.value,
+      10
+    );
     const examSessionId = parseInt(this.examSessionId, 10);
 
-    if (isNaN(defaultQuestionPerExam)  || isNaN(examSessionId)) {
+    if (isNaN(defaultQuestionPerExam) || isNaN(examSessionId)) {
       this.toastr.error("Dữ liệu không hợp lệ. Vui lòng kiểm tra lại.", "Lỗi");
       return null;
     }
@@ -134,18 +151,113 @@ export class InfoComponent implements OnInit, OnDestroy {
 
     const { defaultQuestionPerExam, examSessionId } = parsedValues;
 
-    this.examSessionService.updateExamSessionConfiguration(
-      examSessionId,
-      defaultQuestionPerExam
-    ).subscribe({
-      next: (response) => {
-        this.toastr.success('Cập nhật cấu hình kỳ thi thành công!', 'Thành công');
-        console.log('Response from backend:', response);
-      },
-      error: (error) => {
-        this.toastr.error('Có lỗi xảy ra khi cập nhật cấu hình kỳ thi.', 'Lỗi');
-        console.error('Error from backend:', error);
-      },
-    });
+    this.examSessionService
+      .updateExamSessionConfiguration(examSessionId, defaultQuestionPerExam)
+      .subscribe({
+        next: (response) => {
+          this.toastr.success(
+            "Cập nhật cấu hình kỳ thi thành công!",
+            "Thành công"
+          );
+          console.log("Response from backend:", response);
+        },
+        error: (error) => {
+          this.toastr.error(
+            "Có lỗi xảy ra khi cập nhật cấu hình kỳ thi.",
+            "Lỗi"
+          );
+          console.error("Error from backend:", error);
+        },
+      });
+  }
+
+  getNumberOfExam() {
+    const numberOfExam = this.examForm.get("number_of_exam")?.value;
+    if (numberOfExam) {
+      return numberOfExam;
+    } else {
+      return 0;
+    }
+  }
+
+  getNumberOfQuestion() {
+    const numberOfQuestion = this.examForm.get("exam_number_of_test")?.value;
+    if (numberOfQuestion) {
+      return numberOfQuestion;
+    } else {
+      return 0;
+    }
+  }
+
+  formatDateTime(rawDate: string): string {
+    const date = new Date(rawDate);
+
+    const yyyy = date.getFullYear();
+    const MM = String(date.getMonth() + 1).padStart(2, '0');
+    const dd = String(date.getDate()).padStart(2, '0');
+    const HH = String(date.getHours()).padStart(2, '0');
+    const mm = String(date.getMinutes()).padStart(2, '0');
+    const ss = '00'; // hoặc String(date.getSeconds()).padStart(2, '0') nếu cần chính xác
+
+    return `${yyyy}-${MM}-${dd} ${HH}:${mm}:${ss}`;
+  }
+
+
+  getExamInfo(index: number): FormData {
+    const examInfoForm = new FormData();
+    const baseName = this.examForm.get("exam_name")?.value;
+    const finalName = `${baseName} - Đề ${index}`;
+
+    examInfoForm.append("name", finalName);
+    examInfoForm.append(
+      "duration",
+      Number(this.examForm.get("exam_duration")?.value).toString() // Chuyển thành số
+    );
+    examInfoForm.append(
+      "totalQuestions",
+      Number(this.getNumberOfQuestion()).toString() // Chuyển thành số
+    );
+    examInfoForm.append("description", this.examForm.get("exam_description")?.value);
+    examInfoForm.append("subject", this.examForm.get("exam_subject")?.value);
+    examInfoForm.append("startDate", this.formatDateTime(this.examForm.get("exam_start_date")?.value));
+    examInfoForm.append("endDate", this.formatDateTime(this.examForm.get("exam_end_date")?.value));
+    examInfoForm.append(
+      "examSessionId",
+      Number(this.examSessionId).toString() // Chuyển thành số
+    );
+
+    return examInfoForm;
+  }
+
+  async sendExamInfoToBackend() {
+    this.sendNumberOfExamAndTestToBackend();
+    const numberOfExam = this.getNumberOfExam();
+    const numberOfQuestion = this.getNumberOfQuestion();
+
+    for (let i = 1; i <= numberOfExam; i++) {
+      const examInfo = this.getExamInfo(i);
+
+      // In log để kiểm tra dữ liệu đang gửi
+      for (const [key, value] of examInfo.entries()) {
+        console.log(`${key}: ${value}`);
+      }
+
+      try {
+        const response = await lastValueFrom(this.examService.addExamManually(examInfo));
+        const examId = response.examId;
+        this.toastr.success(`Tạo bài thi thành công! (ID: ${examId})`, "Thành công");
+
+        const result = await lastValueFrom(
+          this.examQuestionService.generateExamQuestions(examId, numberOfQuestion)
+        );
+        console.log("Kết quả sinh câu hỏi:", result);
+
+        this.toastr.success(`Sinh câu hỏi thành công cho bài thi ${examId}`, "Thành công");
+
+      } catch (error) {
+        this.toastr.error("Có lỗi xảy ra khi tạo bài thi hoặc sinh câu hỏi.", "Lỗi");
+        console.error(`Lỗi trong lần lặp thứ ${i}:`, error);
+      }
+    }
   }
 }
