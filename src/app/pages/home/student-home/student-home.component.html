@@ -3,9 +3,24 @@
 
 <aside class="sidebar-links">
   <div class="links-wrap">
-    <a (click)="scrollToSection('schedule')" class="link-item">Lịch thi hôm nay</a>
-    <a (click)="scrollToSection('unfished-exam')" class="link-item">Bài thi chưa làm</a>
-    <a (click)="scrollToSection('achievement')" class="link-item">Thành tích</a>
+    <a (click)="scrollToSection('schedule')"
+       [class.active]="activeSection === 'schedule'"
+       class="link-item">
+      <i class="fas fa-calendar-alt"></i>
+      Lịch thi hôm nay
+    </a>
+    <a (click)="scrollToSection('unfished-exam')"
+       [class.active]="activeSection === 'unfished-exam'"
+       class="link-item">
+      <i class="fas fa-file-alt"></i>
+      Bài thi chưa làm
+    </a>
+    <a (click)="scrollToSection('achievement')"
+       [class.active]="activeSection === 'achievement'"
+       class="link-item">
+      <i class="fas fa-trophy"></i>
+      Thành tích
+    </a>
   </div>
 </aside>
 
