@@ -30,17 +30,24 @@ export class LoginFormComponent {
     });
   }
 
+
   onSubmit = () => {
     if (this.loginForm.valid) {
-      this.loadingChange.emit(true); // Bật loading trước khi gửi request
+      this.loadingChange.emit(true);
+
+
+      const safetyTimeout = setTimeout(() => {
+        this.loadingChange.emit(false);
+      }, 1000);
 
       const loginRequest = this.loginForm.value;
       if (this.onLogin) {
         this.onLogin({
           username: loginRequest.contact,
           password: loginRequest.password,
-          callback: (success: boolean) => {
-            this.loadingChange.emit(false); // Tắt loading khi có phản hồi
+          callback: () => {
+            clearTimeout(safetyTimeout);
+            this.loadingChange.emit(false);
           }
         });
       }

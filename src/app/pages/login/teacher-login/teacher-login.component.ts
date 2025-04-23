@@ -37,7 +37,8 @@ export class TeacherLoginComponent {
           this.toastr.success('Đăng nhập thành công', 'Thành công', {timeOut: 2000});
           localStorage.setItem('authToken', response.body.token);
           setTimeout(() => {
-            this.loading = false; // Tắt loading khi điều hướng xong
+            this.loading = false;
+            if (teacher.callback) teacher.callback(); // Call the callback
             this.router.navigate(['/home/teacher']);
           }, 2000);
         }
@@ -45,7 +46,8 @@ export class TeacherLoginComponent {
       error: (error) => {
         console.error('Lỗi khi đăng nhập:', error);
         this.toastr.error(error.error.message, 'Lỗi', {timeOut: 2000});
-        this.loading = false; // Tắt loading khi có lỗi
+        this.loading = false;
+        if (teacher.callback) teacher.callback(); // Call the callback
       }
     });
   }
