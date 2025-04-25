@@ -208,7 +208,7 @@ export class QuestionComponent implements OnInit {
       const answerData = JSON.parse(formattedData);
 
       // Bước 3: Gửi dữ liệu qua API
-      this.questionAnswerService.sendManualAnswers(answerData).subscribe({
+      this.questionAnswerService.sendAutoGenerateAnswers(answerData).subscribe({
         next: (res) => {
           console.log("✅ Gửi dữ liệu thành công:", res);
         },

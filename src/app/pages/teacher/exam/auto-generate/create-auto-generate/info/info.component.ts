@@ -243,7 +243,7 @@ export class InfoComponent implements OnInit, OnDestroy {
       }
 
       try {
-        const response = await lastValueFrom(this.examService.addExamManually(examInfo));
+        const response = await lastValueFrom(this.examService.addAutoGenerateExam(examInfo));
         const examId = response.examId;
         this.toastr.success(`Tạo bài thi thành công! (ID: ${examId})`, "Thành công");
 

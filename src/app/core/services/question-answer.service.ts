@@ -32,7 +32,7 @@ export class QuestionAnswerService {
     return this.http.post(`${this.baseUrl}/update`, payload);
   }
 
-  sendManualAnswers(answerData: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/manual`, answerData);
+  sendAutoGenerateAnswers(answerData: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/auto-generate`, answerData);
   }
 }

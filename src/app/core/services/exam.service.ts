@@ -41,11 +41,6 @@ export class ExamService {
   sendExamData(data: any): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/send/exam/data`, data);
   }
-
-  sendExamManuallyData(formData: any): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}/add/exam/manually`, formData);
-  }
-
   getTestState(examId: number) {
     const token = localStorage.getItem('authToken');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
@@ -68,7 +63,7 @@ export class ExamService {
     return this.http.post(`${this.baseUrl}/submit/exam/type/auto-generate`,examId, {headers, observe: 'response'});
   }
 
-  addExamManually(formData: FormData): Observable<any> {
+  addAutoGenerateExam(formData: FormData): Observable<any> {
     return this.http.post(`${this.baseUrl}/add/exam/auto-generate`, formData);
   }
 
