@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import {DatePipe, NgForOf, NgClass, NgIf,} from '@angular/common';
+import {DatePipe, NgForOf, NgClass, NgIf, NgOptimizedImage,} from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ExamSession } from '../../../core/models/exam-session.model';
 import { ExamSessionService } from '../../../core/services/exam-session.service';
@@ -18,6 +18,7 @@ import { ToastrService } from 'ngx-toastr';
     NgIf,
     DatePipe,
     FormsModule,
+    NgOptimizedImage,
   ],
   styleUrls: ['./teacher-home.component.scss'],
   providers: [DatePipe, ExamSessionService]

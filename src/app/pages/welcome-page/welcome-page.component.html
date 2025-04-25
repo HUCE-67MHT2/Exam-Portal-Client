@@ -1,51 +1,52 @@
 <div class="welcome-container">
-  <!-- Decorative elements -->
-  <div class="decoration-circle circle-1"></div>
-  <div class="decoration-circle circle-2"></div>
-  <div class="decoration-circle circle-3"></div>
+  <!-- Floating particles -->
+  <div class="particles">
+    <div class="particle" *ngFor="let i of [1,2,3,4,5,6,7,8,9,10]"></div>
+  </div>
 
-  <!-- Compact header -->
-  <header class="welcome-header">
-    <div class="logo-container">
-      <h1 class="logo-text">Online Exam Portal</h1>
-    </div>
-  </header>
+  <!-- Logo with LED effect -->
+  <div class="logo-container">
+    <span class="logo-text led-effect">
+      Online Exam Portal
+    </span>
+  </div>
 
-  <!-- Main content with adjusted layout -->
+  <!-- Main content with glassmorphism effect -->
   <div class="welcome-content">
-    <div class="welcome-card">
-      <h2 class="welcome-title">Chào mừng bạn đến với<br><span class="highlight">Online Exam Portal</span></h2>
-
-      <div class="role-selector">
-        <label for="role">Chọn vai trò của bạn</label>
-        <div class="custom-select">
-          <select [(ngModel)]="selectedRole" id="role">
-            <option>Tôi là học sinh</option>
-            <option>Tôi là giáo viên</option>
-          </select>
-          <div class="select-arrow">▼</div>
+    <div class="glass-card">
+      <div class="card-content">
+        <!-- Left side with title and description -->
+        <div class="info-section">
+          <h2 class="welcome-title">Chào mừng đến với <br> <span class="highlight led-effect">Online Exam Portal</span></h2>
+          <p class="welcome-description">Nền tảng học tập và kiểm tra trực tuyến hiện đại, giúp việc học tập trở nên hiệu quả hơn.</p>
         </div>
-      </div>
 
-      <div class="action-buttons">
-        <button (click)="onContinue()" class="continue-btn">
-          <span class="btn-text">Tiếp tục</span>
-          <span class="btn-icon">
-            <i class="fa-solid fa-arrow-right"></i>
-          </span>
-        </button>
-        <button (click)="onRegister()" class="register-btn">
-          <span class="btn-text">Đăng ký</span>
-          <span class="btn-icon">
-            <i class="fa-solid fa-plus"></i>
-          </span>
-        </button>
-      </div>
-    </div>
+        <!-- Right side with form -->
+        <div class="form-section">
+          <div class="role-selector">
+            <label for="role">Chọn vai trò của bạn</label>
+            <div class="custom-select">
+              <select [(ngModel)]="selectedRole" id="role">
+                <option>Tôi là học sinh</option>
+                <option>Tôi là giáo viên</option>
+              </select>
+              <div class="select-arrow">▼</div>
+            </div>
+          </div>
 
-    <div class="image-container">
-      <div class="image-wrapper">
-        <img alt="Exam Portal Image" height="584" ngSrc="/images/Login.png" width="584"/>
+          <div class="action-buttons">
+            <button (click)="onContinue()" class="continue-btn">
+              <span class="btn-text">Tiếp tục</span>
+              <span class="btn-icon">
+              </span>
+            </button>
+            <button (click)="onRegister()" class="register-btn">
+              <span class="btn-text">Đăng ký</span>
+              <span class="btn-icon">
+              </span>
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </div>

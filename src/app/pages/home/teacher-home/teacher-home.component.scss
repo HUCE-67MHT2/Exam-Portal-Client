@@ -15,10 +15,35 @@ $warning-color: #ff9800;
 $error-color: #f44336;
 $card-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 
+
+:host {
+  display: block;
+  min-height: calc(100vh - 80px); /* Adjust 80px to your header height */
+  padding-top: 80px; /* Match your header height */
+  background-image: url('/images/background1.png'); /* Correct path to your image */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
 .dashboard-container {
   max-width: 1200px;
-  margin: 100px auto 40px;
-  padding: 0 20px;
+  margin: 20px auto 0;
+  padding-bottom: 20px ;
+  position: relative;
+  /* Remove the background image from here */
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.7);
+    z-index: -1;
+  }
 }
 
 .dashboard-header {
