@@ -13,6 +13,8 @@ $error-color: #d93025;
 $success-green: #0f9d58;
 $hover-blue: rgba($primary-blue, 0.08);
 
+@use "sass:color";
+
 // Typography
 $heading-font: 'Montserrat', 'Segoe UI', sans-serif;
 $base-font: 'Roboto', 'Segoe UI', sans-serif;
@@ -495,7 +497,7 @@ $base-font: 'Roboto', 'Segoe UI', sans-serif;
       border: 1px solid $border-color;
 
       &:hover {
-        background: darken($light-gray, 5%);
+        background-color: color.adjust($light-gray, $lightness: -5%);
         transform: translateY(-2px);
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
       }

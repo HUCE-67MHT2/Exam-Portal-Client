@@ -10,6 +10,7 @@ $text-light: #ffffff;
 $background: #f8fafc;
 $card-bg: rgba(255, 255, 255, 0.15);
 $border-light: rgba(255, 255, 255, 0.2);
+@use "sass:math";
 
 /* Base styles */
 * {
@@ -65,11 +66,11 @@ $border-light: rgba(255, 255, 255, 0.2);
 
   @for $i from 1 through 10 {
     &:nth-child(#{$i}) {
-      top: random(100) * 1%;
-      left: random(100) * 1%;
-      opacity: random(10) * 0.1;
-      animation-duration: (10 + random(20)) * 1s;
-      animation-delay: random(10) * -1s;
+      top: math.random(100) * 1%;
+      left: math.random(100) * 1%;
+      opacity: math.random(10) * 0.1;
+      animation-duration: (10 + math.random(20)) * 1s;
+      animation-delay: math.random(10) * -1s;
     }
   }
 }

@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {RouterLink} from '@angular/router';
-import {NgIf, NgOptimizedImage} from '@angular/common';
+import {NgIf} from '@angular/common';
 import {LoadingComponent} from '../../../layout/loadings/loading/loading.component';
 
 
@@ -10,7 +10,7 @@ import {LoadingComponent} from '../../../layout/loadings/loading/loading.compone
   templateUrl: './login-form.component.html',
   styleUrls: ['./login-form.component.scss'],
   standalone: true,
-  imports: [ReactiveFormsModule, RouterLink, NgOptimizedImage, NgIf, LoadingComponent]
+  imports: [ReactiveFormsModule, RouterLink, NgIf, LoadingComponent]
 })
 export class LoginFormComponent {
   @Input() link: string = '';
