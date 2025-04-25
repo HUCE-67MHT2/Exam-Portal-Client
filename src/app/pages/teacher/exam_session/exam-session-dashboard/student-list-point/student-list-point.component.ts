@@ -51,6 +51,7 @@ export class StudentListPointComponent implements OnInit, AfterViewInit {
         console.error('Lỗi khi gọi API kết quả học sinh:', error);
       },
       complete: () => {
+        console.log(this.StudentResultInfo)
         console.log('Hoàn tất lấy dữ liệu kết quả học sinh.');
       }
     });
