@@ -1,3 +1,5 @@
+import { QuestionAnswerService } from '../../../../../core/services/question-answer.service';
+import { QuestionService } from '../../../../../core/services/question.service';
 import {Component} from "@angular/core";
 import {ActivatedRoute, Router} from "@angular/router";
 
@@ -11,8 +13,11 @@ export class QuestionBankComponent {
   exam_session_id = "";
   exam_session_name = "";
   exam_session_description = "";
+  isEditMode = false;
+  questions: any[] = [];
+  answers: any[] = [];
 
-  constructor(private route: ActivatedRoute, private router: Router) {
+  constructor(private route: ActivatedRoute, private router: Router, private questionAnwserService: QuestionAnswerService, private questionService: QuestionService) {
   }
 
   ngOnInit(): void {

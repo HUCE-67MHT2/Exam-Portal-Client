@@ -40,8 +40,7 @@ export class QuestionComponent implements OnInit {
   ngOnInit(): void {
     const savedQuestions = localStorage.getItem("questions");
     const savedQuestionNumber = localStorage.getItem("questionNumber");
-    this.examSessionId =
-      localStorage.getItem("exam_session_id") || this.exam_session_id;
+    this.examSessionId = JSON.parse(localStorage.getItem("selectedSession") || "{}").id;
 
     if (savedQuestions) {
       const parsedQuestions = JSON.parse(savedQuestions);

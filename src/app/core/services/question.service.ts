@@ -15,5 +15,7 @@ export class QuestionService {
     return this.http.post(`${this.baseUrl}/add/question`, questionData);
   }
 
-
+  getQuestionsByExamSessionId(sessionId: number): Observable<any> {
+    return this.http.get(`${this.baseUrl}/get/question/by/exam/session/id/${sessionId}`);
+  }
 }
