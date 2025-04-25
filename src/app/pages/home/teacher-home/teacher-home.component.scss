@@ -14,7 +14,7 @@ $success-color: #4caf50;
 $warning-color: #ff9800;
 $error-color: #f44336;
 $card-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-
+@use "sass:color";
 
 :host {
   display: block;
@@ -158,7 +158,8 @@ $card-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 60px 20px;
+  margin: 50px 0 122px 0;
+  padding: 80px 20px;
   background: white;
   border-radius: 10px;
   border: 1px dashed $border-color;
@@ -422,7 +423,7 @@ $card-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         color: $text-light;
 
         &:hover {
-          background-color: darken($error-color, 10%);
+          background-color: color.adjust($error-color, $lightness: -10%);
         }
       }
     }
