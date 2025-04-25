@@ -61,33 +61,18 @@ li {
         background-color: #fff;
 
         .question-name {
-          margin-bottom: 10px;
+          margin-bottom: 15px;
           font-size: 20px;
           font-weight: 600;
         }
 
-        .correct-answer,
-        .other-answer {
-          font-weight: 600;
-          margin-bottom: 5px;
-        }
-
-        .correct-answer {
-          color: rgb(33, 128, 33);
-        }
-
-        .other-answer {
-          color: rgb(255, 96, 96);
-        }
-
         .answer {
-          margin-bottom: 8px;
+          margin-bottom: 15px;
           padding: 8px 20px;
           width: 100%;
           border: 2px solid #ccc;
           border-radius: 3px;
         }
-
         .correct {
           border-color: rgb(33, 128, 33);
         }
@@ -95,3 +80,5 @@ li {
     }
   }
 }
+
+
