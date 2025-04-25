@@ -48,7 +48,6 @@ export class DoTestAutogenComponent implements OnInit, OnDestroy {
         },
         error: (error) => {
           this.checkDoTest = true;
-          this.toarstService.success(error.error.message, 'Thông báo', {timeOut: 2000});
         }
       })
     } else {
@@ -85,17 +84,14 @@ export class DoTestAutogenComponent implements OnInit, OnDestroy {
       next: (response) => {
 
         this.examResultTime = response.body.examResultTimerDTO;
-        console.log("Exam result time data fetched successfully:", this.examResultTime);
-        console.log('type of',typeof this.examResultTime?.endTime);
         this.initializeExam();  // Chuyển initialize vào đây
-        this.startTimer();
       },
       error: (error) => {
         console.error("Error fetching exam result data:", error);
       }
     })
   }
-  totalTimeInMinutes: number = 60;
+
   autosaveInterval: any;
   ngOnInit  ()  {
     // Load exam data from localStorage
@@ -104,13 +100,16 @@ export class DoTestAutogenComponent implements OnInit, OnDestroy {
       const examData = JSON.parse(storedExam);
       this.localExamData = JSON.parse(storedExam);
       // Update exam details from localStorage
-      this.totalTimeInMinutes = examData.duration;
+
       console.log('examSelected',examData)
       this.getResultExamTime(examData.id);
+      this.startTimer();
+      setTimeout(() => {
+        this.getResultExamTime(examData.id);
+      }, 500); // delay là 1000 milliseconds (tức 1 giây)
       this.createExamResult(examData.id);
       this.fetchExamData(examData.id)
       this.fetchExamResultData(examData.id);
-
       this.autosaveInterval = setInterval(() => {
         this.autoSaveAnswers(examData.id);
       }, 2000);
@@ -278,8 +277,6 @@ export class DoTestAutogenComponent implements OnInit, OnDestroy {
     console.log(`Questions answered: ${this.getAnsweredCount()} / ${this.examData.questions.length}`);
 
     // Check if time tracking is available and log time used
-    const timeUsed = this.totalTimeInMinutes * 60 - this.remainingTimeInSeconds;
-    console.log(`Time used: ${timeUsed} seconds`);
 
     // Here you would send the data to your backend API
     // Example: this.examService.submitExam(submission).subscribe(...);
