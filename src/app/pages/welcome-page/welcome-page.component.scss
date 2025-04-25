@@ -8,10 +8,10 @@ $text-dark: #1e293b;
 $text-medium: #64748b;
 $text-light: #ffffff;
 $background: #f8fafc;
-$card-bg: #ffffff;
-$border-light: #e2e8f0;
+$card-bg: rgba(255, 255, 255, 0.15);
+$border-light: rgba(255, 255, 255, 0.2);
 
-/* Base styles with improved typography */
+/* Base styles */
 * {
   margin: 0;
   padding: 0;
@@ -21,142 +21,214 @@ $border-light: #e2e8f0;
   -moz-osx-font-smoothing: grayscale;
 }
 
-body {
-  background-color: $background;
-  color: $text-dark;
-  font-size: 16px;
-  line-height: 1.5;
-  height: 100vh;
-  overflow: hidden;
-}
-
-/* Main container strictly constrained to viewport height */
 .welcome-container {
   height: 100vh;
-  max-height: 100vh;
-  padding: 20px 40px;
-  margin: 0 auto;
-  position: relative;
+  width: 100%;
   overflow: hidden;
+  position: relative;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-image: url("/images/background3.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(11, 27, 103, 0.85), rgba(2, 8, 34, 0.9));
+    z-index: 0;
+  }
 }
 
-/* Decorative circles with reduced size */
-.decoration-circle {
+/* Particles animation */
+.particles {
   position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background-color: rgba(255, 255, 255, 0.5);
   border-radius: 50%;
-  z-index: -1;
+  animation: float 15s infinite linear;
 
-  &.circle-1 {
-    width: 250px;
-    height: 250px;
-    background: linear-gradient(135deg, rgba($accent-blue, 0.8), rgba($primary-blue, 0.8));
-    top: -80px;
-    right: -40px;
-    filter: blur(30px);
-  }
-
-  &.circle-2 {
-    width: 180px;
-    height: 180px;
-    background: linear-gradient(45deg, rgba($secondary-blue, 0.7), rgba($primary-blue, 0.7));
-    bottom: -70px;
-    left: 10%;
-    filter: blur(35px);
-  }
-
-  &.circle-3 {
-    width: 120px;
-    height: 120px;
-    background: rgba($light-blue, 0.8);
-    top: 40%;
-    left: -40px;
-    filter: blur(25px);
+  @for $i from 1 through 10 {
+    &:nth-child(#{$i}) {
+      top: random(100) * 1%;
+      left: random(100) * 1%;
+      opacity: random(10) * 0.1;
+      animation-duration: (10 + random(20)) * 1s;
+      animation-delay: random(10) * -1s;
+    }
   }
 }
 
-/* Compact header */
-.welcome-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px 0;
-  margin-bottom: 20px;
-}
-
+/* Logo */
 .logo-container {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+  position: absolute;
+  top: 30px;
+  left: 40px;
+  z-index: 2;
 }
 
 .logo-text {
-  font-size: 22px;
+  font-size: 26px;
   font-weight: 700;
-  background: linear-gradient(45deg, $primary-blue, $secondary-blue);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  text-align: center;
+  line-height: 1.3;
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   letter-spacing: -0.5px;
-  text-shadow: 0 1px 1px rgba(0,0,0,0.05);
 }
 
-/* Content layout - using flex to fill available space */
+/* LED effect for logo text */
+.led-effect {
+  color: #60a5fa; /* Using accent-blue color */
+  text-shadow:
+    0 0 5px rgba(96, 165, 250, 0.5),
+    0 0 10px rgba(96, 165, 250, 0.5),
+    0 0 15px rgba(96, 165, 250, 0.5),
+    0 0 20px rgba(96, 165, 250, 0.5),
+    0 0 30px rgba(37, 99, 235, 0.5),
+    0 0 40px rgba(37, 99, 235, 0.5);
+  animation: ledPulse 2s infinite alternate;
+}
+
+@keyframes ledPulse {
+  0% {
+    text-shadow:
+      0 0 5px rgba(96, 165, 250, 0.5),
+      0 0 10px rgba(96, 165, 250, 0.5),
+      0 0 15px rgba(96, 165, 250, 0.5),
+      0 0 20px rgba(96, 165, 250, 0.5);
+  }
+  100% {
+    text-shadow:
+      0 0 10px rgba(96, 165, 250, 0.8),
+      0 0 20px rgba(96, 165, 250, 0.8),
+      0 0 30px rgba(37, 99, 235, 0.8),
+      0 0 40px rgba(37, 99, 235, 0.8),
+      0 0 50px rgba(37, 99, 235, 0.5),
+      0 0 60px rgba(37, 99, 235, 0.5);
+  }
+}
+
+/* Main content */
 .welcome-content {
+  position: relative;
+  width: 100%;
+  padding: 0 40px;
+  z-index: 2;
   display: flex;
+  justify-content: center;
   align-items: center;
-  gap: 40px;
-  flex: 1;
-  overflow: hidden;
 }
 
-/* Left card with adjusted padding */
-.welcome-card {
-  flex: 1;
+/* Glassmorphism card */
+.glass-card {
+  width: 90%;
+  max-width: 1200px;
   background: $card-bg;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid $border-light;
   border-radius: 20px;
-  padding: 30px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05),
-  0 2px 8px rgba(0, 0, 0, 0.03);
-  display: flex;
-  flex-direction: column;
-  max-height: 100%;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  animation: fadeIn 1s ease-out;
+}
 
-  &:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08),
-    0 3px 12px rgba(0, 0, 0, 0.04);
+.card-content {
+  display: flex;
+  padding: 0;
+
+  @media (max-width: 992px) {
+    flex-direction: column;
+  }
+}
+
+/* Information section */
+.info-section {
+  flex: 1;
+  padding: 50px;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba($primary-blue, 0.1), rgba($accent-blue, 0.05));
+    z-index: -1;
   }
 }
 
 .welcome-title {
-  font-size: 28px;
+  font-size: 32px;
   font-weight: 700;
-  color: $text-dark;
-  margin-bottom: 25px;
+  color: $text-light;
+  margin-bottom: 20px;
   line-height: 1.3;
-  letter-spacing: -0.3px;
 
   .highlight {
-    background: linear-gradient(45deg, $primary-blue, $secondary-blue);
+    background: linear-gradient(45deg, $primary-blue, $accent-blue);
     -webkit-background-clip: text;
     background-clip: text;
-    color: transparent;
-    text-shadow: 0 1px 1px rgba(0,0,0,0.05);
+    color: $text-light;
+    font-weight: 800;
   }
 }
 
-/* Role selector with compact design */
+.welcome-description {
+  font-size: 16px;
+  line-height: 1.6;
+  color: rgba($text-light, 0.9);
+  max-width: 500px;
+}
+
+/* Form section */
+.form-section {
+  flex: 1;
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba($dark-blue, 0.3), rgba($primary-blue, 0.1));
+    z-index: -1;
+  }
+}
+
+/* Role selector */
 .role-selector {
-  margin-bottom: 25px;
+  margin-bottom: 30px;
 
   label {
     display: block;
-    margin-bottom: 8px;
-    font-size: 14px;
-    color: $text-medium;
+    margin-bottom: 12px;
+    font-size: 15px;
+    color: $text-light;
     font-weight: 500;
   }
 }
@@ -166,30 +238,35 @@ body {
 
   select {
     width: 100%;
-    padding: 14px 18px;
-    font-size: 15px;
-    border: 2px solid $border-light;
+    padding: 16px 20px;
+    font-size: 16px;
+    border: 2px solid rgba($text-light, 0.2);
     border-radius: 12px;
-    background-color: $background;
-    color: $text-dark;
+    background-color: rgba($text-light, 0.1);
+    color: $text-light;
     cursor: pointer;
     appearance: none;
     transition: all 0.3s ease;
 
     &:focus {
-      border-color: $secondary-blue;
-      box-shadow: 0 0 0 3px rgba($secondary-blue, 0.15);
+      border-color: $accent-blue;
+      box-shadow: 0 0 0 3px rgba($accent-blue, 0.3);
       outline: none;
+    }
+
+    option {
+      background-color: $dark-blue;
+      color: $text-light;
     }
   }
 
   .select-arrow {
     position: absolute;
-    right: 18px;
+    right: 20px;
     top: 50%;
     transform: translateY(-50%);
-    color: $primary-blue;
-    font-size: 8px;
+    color: $text-light;
+    font-size: 10px;
     pointer-events: none;
     transition: transform 0.3s ease;
   }
@@ -199,18 +276,17 @@ body {
   }
 }
 
-/* Button styles with proper spacing */
+/* Button styles */
 .action-buttons {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  margin-top: auto;
+  gap: 15px;
 }
 
 .continue-btn, .register-btn {
   position: relative;
-  padding: 14px 20px;
-  font-size: 15px;
+  padding: 16px 24px;
+  font-size: 16px;
   font-weight: 600;
   border-radius: 12px;
   cursor: pointer;
@@ -219,6 +295,7 @@ body {
   justify-content: center;
   overflow: hidden;
   z-index: 1;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 
   .btn-text {
     z-index: 2;
@@ -227,14 +304,14 @@ body {
 
   .btn-icon {
     position: absolute;
-    right: 20px;
+    right: 24px;
     opacity: 0;
     transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
     z-index: 2;
   }
 
   &:hover .btn-text {
-    transform: translateX(-10px);
+    transform: translateX(-12px);
   }
 
   &:hover .btn-icon {
@@ -248,7 +325,6 @@ body {
   color: $text-light;
   border: none;
   transform: translateY(0);
-  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 
   &::before {
     content: '';
@@ -278,9 +354,9 @@ body {
 }
 
 .register-btn {
-  background: $light-blue;
-  color: $primary-blue;
-  border: none;
+  background: rgba($light-blue, 0.2);
+  color: $text-light;
+  border: 1px solid rgba($light-blue, 0.3);
 
   &::before {
     content: '';
@@ -289,14 +365,14 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, $light-blue, rgba($accent-blue, 0.3));
+    background: rgba($accent-blue, 0.2);
     opacity: 0;
     transition: opacity 0.3s ease;
     z-index: -1;
   }
 
   &:hover {
-    color: $dark-blue;
+    border-color: rgba($light-blue, 0.5);
 
     &::before {
       opacity: 1;
@@ -304,82 +380,73 @@ body {
   }
 }
 
-/* Image container with height constraints */
-.image-container {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  max-height: 100%;
-  overflow: hidden;
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-.image-wrapper {
-  position: relative;
-  border-radius: 20px;
-  overflow: hidden;
-  max-height: 80vh;
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 0.6; }
+  100% { transform: scale(1.1); opacity: 0.4; }
+}
 
-  img {
-    display: block;
-    max-width: 100%;
-    max-height: 80vh;
-    object-fit: contain;
+@keyframes float {
+  0% { transform: translateY(0) translateX(0); }
+  25% { transform: translateY(-20px) translateX(10px); }
+  50% { transform: translateY(0) translateX(20px); }
+  75% { transform: translateY(20px) translateX(10px); }
+  100% { transform: translateY(0) translateX(0); }
+}
+
+/* Responsive design */
+@media (max-width: 992px) {
+  .glass-card {
+    width: 95%;
+  }
+
+  .info-section, .form-section {
+    padding: 40px;
+  }
+
+  .welcome-title {
+    font-size: 28px;
   }
 }
 
-/* Responsive design with height considerations */
-@media (max-width: 1100px) {
-  .welcome-content {
-    flex-direction: column;
-    justify-content: center;
-    gap: 20px;
+@media (max-width: 768px) {
+  .logo-container {
+    top: 20px;
+    left: 20px;
   }
 
-  .welcome-card, .image-container {
-    max-width: 100%;
+  .glass-card {
+    width: 100%;
   }
 
-  .image-wrapper {
-    max-width: 450px;
-    max-height: 40vh;
-    margin: 0 auto;
+  .info-section, .form-section {
+    padding: 30px;
   }
 
   .welcome-title {
     font-size: 24px;
   }
-}
 
-@media (max-width: 768px) {
-  .welcome-container {
-    padding: 15px;
-  }
-
-  .welcome-card {
-    padding: 20px;
-  }
-
-  .decoration-circle {
-    opacity: 0.5;
+  .welcome-description {
+    font-size: 14px;
   }
 }
 
-@media (max-height: 700px) {
-  .welcome-header {
-    margin-bottom: 10px;
+@media (max-width: 576px) {
+  .welcome-content {
+    padding: 0 20px;
   }
 
-  .welcome-title {
-    font-size: 22px;
-    margin-bottom: 15px;
-  }
-
-  .role-selector {
-    margin-bottom: 15px;
+  .info-section, .form-section {
+    padding: 25px;
   }
 
   .continue-btn, .register-btn {
-    padding: 12px 16px;
+    padding: 14px 20px;
   }
 }

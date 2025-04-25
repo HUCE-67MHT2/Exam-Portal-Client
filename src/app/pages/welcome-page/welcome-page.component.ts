@@ -1,14 +1,14 @@
 import {Component} from '@angular/core';
 import {Router} from '@angular/router';
 import {FormsModule} from '@angular/forms';
-import {NgOptimizedImage} from '@angular/common';
+import {NgForOf, NgOptimizedImage} from '@angular/common';
 
 @Component({
   selector: 'app-welcome-page',
   templateUrl: './welcome-page.component.html',
   styleUrls: ['./welcome-page.component.scss'],
   standalone: true,
-  imports: [FormsModule, NgOptimizedImage]
+  imports: [FormsModule, NgOptimizedImage, NgForOf]
 })
 export class WelcomePageComponent {
   selectedRole: string = 'Tôi là học sinh';
