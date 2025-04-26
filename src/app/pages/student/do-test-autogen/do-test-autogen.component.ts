@@ -104,7 +104,7 @@ export class DoTestAutogenComponent implements OnInit, OnDestroy {
       console.log('examSelected',examData)
       this.getResultExamTime(examData.id);
       this.startTimer();
-      setTimeout(() => {
+      setTimeout(() =>   {
         this.getResultExamTime(examData.id);
       }, 500); // delay là 1000 milliseconds (tức 1 giây)
       this.createExamResult(examData.id);
