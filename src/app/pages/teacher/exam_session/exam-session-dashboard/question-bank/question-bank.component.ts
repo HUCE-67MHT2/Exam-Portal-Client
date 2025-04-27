@@ -3,10 +3,12 @@ import { QuestionService } from '../../../../../core/services/question.service';
 import {Component} from "@angular/core";
 import {ActivatedRoute, Router} from "@angular/router";
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+
 
 @Component({
   selector: "app-question-bank",
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: "./question-bank.component.html",
   styleUrl: "./question-bank.component.scss",
 })
@@ -15,7 +17,7 @@ export class QuestionBankComponent {
   exam_session_id = "";
   exam_session_name = "";
   exam_session_description = "";
-  isEditMode = false;
+  isEditing = false;
   questions: any[] = [];
   questionsId: number[] = [];
   questionContent = "";
@@ -77,6 +79,15 @@ export class QuestionBankComponent {
       this.answers.push(answer);
       console.log("Answers:", this.answers);
     })
+  }
+
+  toggleEdit() {
+    this.isEditing = !this.isEditing;
+  }
+
+  deleteQuestion(index: number) {
+    this.questions.splice(index, 1);
+    this.answerResponse.splice(index, 1);
   }
 
 }

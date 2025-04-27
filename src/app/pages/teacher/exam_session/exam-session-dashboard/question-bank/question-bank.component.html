@@ -2,26 +2,57 @@
   <div class="number-question-wrap">
     <div class="number-question">
       <p>Số câu: 10</p>
-      <button (click)="navigateToQuestion()"  class="edit-button">
+      <button (click)="navigateToQuestion()" class="edit-button">
         Thêm câu hỏi
       </button>
-      <button class="edit-button">Sửa câu hỏi</button>
+      <button class="edit-button" (click)="toggleEdit()">
+        {{ isEditing ? 'Xong' : 'Sửa câu hỏi' }}
+      </button>
+
     </div>
   </div>
 
   <div class="question-list-wrap">
     <ul class="question-list">
-      <li class="question" *ngFor="let question of questions; let i = index" >
-        <p class="question-name">
-          Câu {{ i + 1 }}: {{ question.content }}
-        </p>
+      <li class="question" *ngFor="let question of questions; let i = index">
 
-        <div class="answer" *ngFor="let answer of answerResponse[i]; let j = index" [ngClass]="{ 'correct': j === 0 }">
-          <p class="answer-name">
-            Câu {{ j + 1 }}: {{ answer.answerText }}
-          </p>
+        <div class="question-name">
+          <ng-container *ngIf="isEditing; else viewMode">
+            <span class="question-prefix">Câu {{ i + 1 }}:</span>
+            <input
+              class="input input-question"
+              [(ngModel)]="question.content"
+              placeholder="Nhập câu hỏi"
+            />
+            <button class="delete-button" (click)="deleteQuestion(i)">Xóa</button>
+          </ng-container>
+
+          <ng-template #viewMode>
+            <p>Câu {{ i + 1 }}: {{ question.content }}</p>
+          </ng-template>
         </div>
+
+        <div
+          class="answer"
+          *ngFor="let answer of answerResponse[i]; let j = index"
+          [ngClass]="{ correct: j === 0 }"
+        >
+          <ng-container *ngIf="isEditing; else viewAnswer">
+            <input
+              class="input input-answer"
+              [(ngModel)]="answer.answerText"
+              placeholder="Nhập đáp án"
+            />
+          </ng-container>
+
+          <ng-template #viewAnswer>
+            <p class="answer-name">{{ answer.answerText }}</p>
+          </ng-template>
+        </div>
+
       </li>
     </ul>
   </div>
+
+
 </div>

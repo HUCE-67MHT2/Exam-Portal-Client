@@ -61,7 +61,9 @@ li {
         background-color: #fff;
 
         .question-name {
+          display: flex;
           margin-bottom: 15px;
+          padding: 10px 0;
           font-size: 20px;
           font-weight: 600;
         }
@@ -73,8 +75,41 @@ li {
           border: 2px solid #ccc;
           border-radius: 3px;
         }
+
+        .answer-name {
+          height: 24px;
+        }
+
         .correct {
           border-color: rgb(33, 128, 33);
+        }
+
+        .input {
+          flex-grow: 1;
+          border: none;
+          outline: none;
+        }
+
+        .input-question {
+          color: #333;
+          margin-left: 5px;
+          line-height: 30px;
+          font-weight: 600;
+        }
+
+        .input-answer {
+          width: 100%;
+        }
+
+        .delete-button {
+          width: 100px;
+          height: 30px;
+          outline: none;
+          border: none;
+          border-radius: 3px;
+          color: #fff;
+          background: rgb(255, 94, 94);
+          cursor: pointer;
         }
       }
     }
