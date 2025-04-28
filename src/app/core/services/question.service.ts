@@ -19,4 +19,12 @@ export class QuestionService {
   getQuestionsByExamSessionId(sessionId: string): Observable<any> {
     return this.http.get(`${this.baseUrl}/get/question/by/exam/session/id/${sessionId}`);
   }
+
+  updateQuestion(id: number, question: any): Observable<any> {
+    return this.http.put(`${this.baseUrl}/update/question/${id}`, question);
+  }
+
+  deleteQuestion(id: number): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/delete/question/${id}`);
+  }
 }

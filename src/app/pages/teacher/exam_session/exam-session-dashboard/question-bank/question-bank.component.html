@@ -5,7 +5,7 @@
       <button (click)="navigateToQuestion()" class="edit-button">
         Thêm câu hỏi
       </button>
-      <button class="edit-button" (click)="toggleEdit()">
+      <button class="edit-button" (click)="handleEditButtonClick()">
         {{ isEditing ? 'Xong' : 'Sửa câu hỏi' }}
       </button>
 
@@ -49,7 +49,6 @@
             <p class="answer-name">{{ answer.answerText }}</p>
           </ng-template>
         </div>
-
       </li>
     </ul>
   </div>
