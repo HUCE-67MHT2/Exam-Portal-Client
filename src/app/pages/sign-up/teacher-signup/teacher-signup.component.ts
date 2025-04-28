@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {Router} from '@angular/router';
 import {SignupFormComponent} from '../../../shared/components/signup-form/signup-form.component';
-import {TeahcerService} from '../../../core/services/sign-up/teahcer.service';
+import {TeacherService} from '../../../core/services/sign-up/teacher.service';
 import {ToastrService} from 'ngx-toastr';
 
 @Component({
@@ -9,10 +9,10 @@ import {ToastrService} from 'ngx-toastr';
   templateUrl: './teacher-signup.component.html',
   standalone: true,
   imports: [SignupFormComponent],
-  providers: [TeahcerService]
+  providers: [TeacherService]
 })
 export class TeacherSignupComponent {
-  constructor(private router: Router, private teahcerService: TeahcerService, private toastr: ToastrService) {
+  constructor(private router: Router, private teahcerService: TeacherService, private toastr: ToastrService) {
   }
 
   onRegisterTeacher = (teacher: any) => {
