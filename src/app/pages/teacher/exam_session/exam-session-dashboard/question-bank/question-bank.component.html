@@ -1,55 +1,83 @@
 <div class="container">
-  <div class="number-question-wrap">
-    <div class="number-question">
-      <p>Số câu: 10</p>
-      <button (click)="navigateToQuestion()" class="edit-button">
-        Thêm câu hỏi
-      </button>
-      <button class="edit-button" (click)="handleEditButtonClick()">
-        {{ isEditing ? 'Xong' : 'Sửa câu hỏi' }}
-      </button>
-
+  <!-- Header panel stays the same -->
+  <div class="header-panel">
+    <div class="header-content">
+      <h2 class="question-count">Số câu hỏi: {{ questions.length }}</h2>
+      <div class="action-buttons">
+        <button class="btn btn-primary" (click)="navigateToQuestion()">
+          <i class="fas fa-plus-circle"></i> Thêm câu hỏi
+        </button>
+        <button
+          class="btn"
+          [ngClass]="isEditing ? 'btn-success' : 'btn-secondary'"
+          (click)="handleEditButtonClick()"
+        >
+          <i class="fas" [ngClass]="isEditing ? 'fa-check' : 'fa-edit'"></i>
+          {{ isEditing ? "Lưu thay đổi" : "Sửa câu hỏi" }}
+        </button>
+      </div>
     </div>
   </div>
 
-  <div class="question-list-wrap">
-    <ul class="question-list">
-      <li class="question" *ngFor="let question of questions; let i = index">
+  <div class="content-wrapper">
+    <div class="question-list-container">
+      <div *ngIf="questions.length === 0" class="no-questions">
+        <p>Chưa có câu hỏi nào. Hãy thêm câu hỏi để bắt đầu!</p>
+      </div>
 
-        <div class="question-name">
-          <ng-container *ngIf="isEditing; else viewMode">
-            <span class="question-prefix">Câu {{ i + 1 }}:</span>
-            <input
-              class="input input-question"
-              [(ngModel)]="question.content"
-              placeholder="Nhập câu hỏi"
-            />
-            <button class="delete-button" (click)="deleteQuestion(i)">Xóa</button>
-          </ng-container>
-
-          <ng-template #viewMode>
-            <p>Câu {{ i + 1 }}: {{ question.content }}</p>
-          </ng-template>
-        </div>
-
+      <div class="question-list">
         <div
-          class="answer"
-          *ngFor="let answer of answerResponse[i]; let j = index"
-          [ngClass]="{ correct: j === 0 }"
+          class="question-card"
+          *ngFor="let question of questions; let i = index"
         >
-          <ng-container *ngIf="isEditing; else viewAnswer">
-            <input
-              class="input input-answer"
-              [(ngModel)]="answer.answerText"
-              placeholder="Nhập đáp án"
-            />
-          </ng-container>
+          <div class="question-header">
+            <div class="question-number">Câu {{ i + 1 }}</div>
+            <ng-container *ngIf="isEditing">
+              <button class="btn btn-danger" (click)="deleteQuestion(i)">
+                <i class="fas fa-trash"></i> Xóa
+              </button>
+            </ng-container>
+          </div>
 
-          <ng-template #viewAnswer>
-            <p class="answer-name">{{ answer.answerText }}</p>
-          </ng-template>
+          <div class="question-content">
+            <div class="question-label">Nội dung:</div>
+            <ng-container *ngIf="isEditing; else viewQuestionMode">
+              <input
+                type="text"
+                class="question-input"
+                [(ngModel)]="question.content"
+                placeholder="Nhập nội dung câu hỏi"
+              />
+            </ng-container>
+            <ng-template #viewQuestionMode>
+              <p class="question-text">{{ question.content }}</p>
+            </ng-template>
+          </div>
+
+          <div class="answers-container">
+            <div
+              class="answer-item"
+              *ngFor="let answer of answerResponse[i]; let j = index"
+              [ngClass]="{ 'correct-answer': j === 0 }"
+            >
+              <div class="answer-label">{{ ["A", "B", "C", "D", "E"][j] }}</div>
+              <div class="answer-content">
+                <ng-container *ngIf="isEditing; else viewAnswerMode">
+                  <input
+                    class="form-control answer-input"
+                    [(ngModel)]="answer.answerText"
+                    placeholder="Nhập đáp án"
+                  />
+                </ng-container>
+                <ng-template #viewAnswerMode>
+                  <p class="answer-text">{{ answer.answerText }}</p>
+                  <span *ngIf="j === 0" class="correct-badge">Đáp án đúng</span>
+                </ng-template>
+              </div>
+            </div>
+          </div>
         </div>
-      </li>
-    </ul>
+      </div>
+    </div>
   </div>
 </div>
