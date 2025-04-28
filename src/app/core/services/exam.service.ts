@@ -2,12 +2,13 @@ import {Injectable} from "@angular/core";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {ExamStateResponse} from '../models/exam-upload-state.model';
+import { environment } from "../../../environments/environment";
 
 @Injectable({
   providedIn: "root",
 })
 export class ExamService {
-  private baseUrl = "http://localhost:8081/api/exam";
+  private baseUrl = `${environment.apiUrl}/exam`;
 
   constructor(private http: HttpClient) {
   }
