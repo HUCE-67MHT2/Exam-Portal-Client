@@ -49,7 +49,7 @@ export class QuestionBankComponent {
   }
 
   getQuestions() {
-    this.questionService.getQuestionsByExamSessionId(Number(this.examSessionId)).subscribe((response) => {
+    this.questionService.getQuestionsByExamSessionId(this.examSessionId).subscribe((response) => {
       this.questions = response.questions;
       console.log("Questions:", this.questions);
       this.getQuestionId()

@@ -7,7 +7,7 @@ import { environment } from "../../../environments/environment";
   providedIn: "root",
 })
 export class QuestionService {
-  private baseUrl = `${environment.apiUrl}/api/question`;
+  private baseUrl = `${environment.apiUrl}/question`;
 
   constructor(private http: HttpClient) {
   }
@@ -16,7 +16,7 @@ export class QuestionService {
     return this.http.post(`${this.baseUrl}/add/question`, questionData);
   }
 
-  getQuestionsByExamSessionId(sessionId: number): Observable<any> {
+  getQuestionsByExamSessionId(sessionId: string): Observable<any> {
     return this.http.get(`${this.baseUrl}/get/question/by/exam/session/id/${sessionId}`);
   }
 }
