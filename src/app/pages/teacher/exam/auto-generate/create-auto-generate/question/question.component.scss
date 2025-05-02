@@ -32,8 +32,10 @@ li {
 .question-input-number {
   position: fixed;
   z-index: 99;
-  width: 100%;
-  padding: 25px 0;
+  margin-top: 5px;
+  left: 24px;
+  width: calc(100% - 48px);
+  padding: 20px 0;
   background: linear-gradient(135deg, $primary-blue, $secondary-blue);
   border-radius: 12px;
   box-shadow: 0 8px 20px rgba($primary-blue, 0.15);
@@ -140,13 +142,12 @@ li {
   &:first-of-type {
     margin-right: calc(40% + 5px);
     margin-left: 0;
-    background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+    background: linear-gradient(135deg, #3b82f6, #386bf6);
     box-shadow: 0 4px 12px rgba(#3b82f6, 0.3);
 
     @media (max-width: 992px) {
       margin-right: 0;
       margin-bottom: 10px;
-      order: -1; // Move to the top on mobile
     }
 
     &::before {
