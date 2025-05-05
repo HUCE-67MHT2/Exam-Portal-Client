@@ -20,25 +20,31 @@
 
   <!-- Exam Cards Grid -->
   <div class="exam-grid">
-    <div class="exam-card" *ngFor="let exam of filteredExams" (click)="editExam(exam.id, exam.name, this.exam_session_id)">
+    <div
+      class="exam-card"
+      *ngFor="let exam of filteredExams"
+      (click)="editExam(exam.id, exam.name, exam_session_id, exam.type)"
+    >
       <div class="exam-card-header">
-        <h3 class="exam-name">{{exam.name}}</h3>
-        <span class="exam-type">{{exam.type}}</span>
+        <h3 class="exam-name">{{ exam.name }}</h3>
+        <span class="exam-type">{{ exam.type }}</span>
       </div>
-      <p class="exam-description">{{exam.description}}</p>
+      <p class="exam-description">{{ exam.description }}</p>
       <div class="exam-details">
         <div class="detail-item">
           <i class="fa fa-clock-o"></i>
-          <span>{{exam.duration}} phút</span>
+          <span>{{ exam.duration }} phút</span>
         </div>
         <div class="detail-item">
           <i class="fa fa-calendar"></i>
-          <span>{{exam.createDate | date : "dd/MM/yyyy"}}</span>
+          <span>{{ exam.createDate | date : "dd/MM/yyyy" }}</span>
         </div>
       </div>
       <div class="exam-actions">
         <button class="edit-btn">Chỉnh sửa</button>
-        <button class="delete-btn" (click)="confirmDelete($event, exam.id)">Xóa</button>
+        <button class="delete-btn" (click)="confirmDelete($event, exam.id)">
+          Xóa
+        </button>
       </div>
     </div>
 
@@ -63,7 +69,9 @@
       </div>
       <div class="delete-modal-footer">
         <button class="cancel-btn" (click)="cancelDelete()">Hủy</button>
-        <button class="confirm-btn" (click)="proceedWithDelete()">Xác nhận xóa</button>
+        <button class="confirm-btn" (click)="proceedWithDelete()">
+          Xác nhận xóa
+        </button>
       </div>
     </div>
   </div>

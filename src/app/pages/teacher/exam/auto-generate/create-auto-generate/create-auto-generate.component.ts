@@ -10,7 +10,6 @@ import { CommonModule } from "@angular/common";
   styleUrls: ["./create-auto-generate.component.scss"],
 })
 export class CreateAutoGenerateComponent implements OnInit {
-  activeTab: string = "left";
   exam_session_id = "";
   exam_session_name = "";
   exam_session_description = "";
