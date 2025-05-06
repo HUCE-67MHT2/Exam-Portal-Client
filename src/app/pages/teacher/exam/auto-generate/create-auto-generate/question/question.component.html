@@ -35,7 +35,7 @@
             required
           />
           <span class="error" *ngIf="showError && !questions[i].text"
-            >* Bắt buộc nhập nội dung câu hỏi</span
+            >* Nội dung câu hỏi không được để trống</span
           >
         </div>
         <p class="correct-answer">Đáp án đúng</p>
@@ -49,7 +49,7 @@
             required
           />
           <span class="error" *ngIf="showError && !questions[i].answers['1']"
-            >* Bắt buộc nhập đáp án 1</span
+            >* Hãy nhập đáp án 1</span
           >
           <input
             (ngModelChange)="saveState()"
@@ -60,7 +60,7 @@
             required
           />
           <span class="error" *ngIf="showError && !questions[i].answers['2']"
-            >* Bắt buộc nhập đáp án 2</span
+            >* Hãy nhập đáp án 2</span
           >
           <input
             (ngModelChange)="saveState()"
@@ -71,7 +71,7 @@
             required
           />
           <span class="error" *ngIf="showError && !questions[i].answers['3']"
-            >* Bắt buộc nhập đáp án 3</span
+            >* Hãy nhập đáp án 3</span
           >
           <input
             (ngModelChange)="saveState()"
@@ -82,7 +82,7 @@
             required
           />
           <span class="error" *ngIf="showError && !questions[i].answers['4']"
-            >* Bắt buộc nhập đáp án 4</span
+            >* Hãy nhập đáp án 4</span
           >
         </div>
       </li>

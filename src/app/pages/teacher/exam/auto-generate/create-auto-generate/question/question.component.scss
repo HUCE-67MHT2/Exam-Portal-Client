@@ -206,6 +206,11 @@ li {
 
   .question-list {
     padding: 0;
+
+    .error {
+      color: $danger-color;
+      font-size: 1.6rem;
+    }
   }
 
   .question {

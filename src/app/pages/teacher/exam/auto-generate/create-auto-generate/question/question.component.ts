@@ -249,6 +249,7 @@ export class QuestionComponent implements OnInit {
     this.sendQuestionsToBackend().subscribe({
       next: () => {
         this.submitFormattedAnswers();
+        this.router.navigate(["/teacher/exam-session-dashboard"]);
       },
       error: (err) => {
         console.error("❌ Dừng quy trình vì lỗi gửi câu hỏi:", err);
