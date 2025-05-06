@@ -41,7 +41,7 @@
             *ngFor="let answer of answers[i]; let j = index"
             [ngClass]="{ 'correct-answer': j === 0 }"
           >
-            <div class="answer-label">{{ ["A", "B", "C", "D", "E"][j] }}</div>
+            <div class="answer-label">{{ ["A", "B", "C", "D"][j] }}</div>
             <div class="answer-content">
               <p class="answer-text">{{ answer.answerText }}</p>
               <span *ngIf="j === 0" class="correct-badge">Đáp án đúng</span>

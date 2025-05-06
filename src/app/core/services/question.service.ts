@@ -27,4 +27,8 @@ export class QuestionService {
   deleteQuestion(id: number): Observable<any> {
     return this.http.delete(`${this.baseUrl}/delete/question/${id}`);
   }
+
+  getQuestionById(id: number): Observable<any> {
+    return this.http.get(`${this.baseUrl}/get/question/by/id/${id}`);
+  }
 }

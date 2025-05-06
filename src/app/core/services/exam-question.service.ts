@@ -26,4 +26,10 @@ export class ExamQuestionService {
     console.error('Error:', error);
     return throwError(() => new Error(error.message || 'Server error'));
   }
+
+  getQuestionsByExamId(examId: number): Observable<any> {
+    return this.http.get<any>(
+      `${this.baseUrl}/get/question/by/examId/${examId}/default`
+    );
+  }
 }
