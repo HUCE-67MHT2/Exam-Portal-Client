@@ -1,11 +1,11 @@
-import {Component, Input, OnInit} from "@angular/core";
-import {FormsModule} from "@angular/forms";
-import {CommonModule} from "@angular/common";
-import {QuestionService} from "../../../../../../core/services/question.service";
-import {QuestionAnswerService} from "../../../../../../core/services/question-answer.service";
-import {ToastrService} from "ngx-toastr";
-import {ActivatedRoute, Router} from "@angular/router";
-import {catchError, forkJoin, Observable, of, tap, throwError} from "rxjs";
+import { Component, Input, OnInit } from "@angular/core";
+import { FormsModule } from "@angular/forms";
+import { CommonModule } from "@angular/common";
+import { QuestionService } from "../../../../../../core/services/question.service";
+import { QuestionAnswerService } from "../../../../../../core/services/question-answer.service";
+import { ToastrService } from "ngx-toastr";
+import { ActivatedRoute, Router } from "@angular/router";
+import { catchError, forkJoin, Observable, of, tap, throwError } from "rxjs";
 
 @Component({
   selector: "app-question",
@@ -15,17 +15,17 @@ import {catchError, forkJoin, Observable, of, tap, throwError} from "rxjs";
   styleUrls: ["./question.component.scss"],
 })
 export class QuestionComponent implements OnInit {
-  questions: any[] = []; // Danh sách câu hỏi
-  questionNumber: number = 0; // Số lượng câu hỏi muốn tạo
+  questions: any[] = [];
+  questionNumber: number = 0;
   input: any;
   difficulty: any;
   examSessionId: string = "";
   savedQuestionIds: number[] = [];
-  // Timeout để debounce việc lưu
   @Input() exam_session_id!: string;
   @Input() exam_session_name!: string;
   @Input() exam_session_description!: string;
-  private saveTimeout: any; // Timeout để debounce việc lưu
+  private saveTimeout: any;
+  showError: boolean = false; // Thêm biến này
 
   constructor(
     private questionService: QuestionService,
@@ -33,14 +33,14 @@ export class QuestionComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private toastr: ToastrService
-  ) {
-
-  }
+  ) {}
 
   ngOnInit(): void {
     const savedQuestions = localStorage.getItem("questions");
     const savedQuestionNumber = localStorage.getItem("questionNumber");
-    this.examSessionId = JSON.parse(localStorage.getItem("selectedSession") || "{}").id;
+    this.examSessionId = JSON.parse(
+      localStorage.getItem("selectedSession") || "{}"
+    ).id;
 
     if (savedQuestions) {
       const parsedQuestions = JSON.parse(savedQuestions);
@@ -153,7 +153,10 @@ export class QuestionComponent implements OnInit {
             this.savedQuestionIds.push(questionId);
             console.log("ID câu hỏi được lưu:", questionId);
           });
-          this.toastr.success("Tất cả câu hỏi đã được gửi thành công.", "Thành công");
+          this.toastr.success(
+            "Tất cả câu hỏi đã được gửi thành công.",
+            "Thành công"
+          );
           localStorage.removeItem("questions");
         }),
         catchError((err) => {
@@ -169,7 +172,6 @@ export class QuestionComponent implements OnInit {
     }
   }
 
-
   formatAndSaveAnswers(questionIds: number[], rawAnswers: any[]): void {
     const formattedAnswers: Record<string, any> = {};
 
@@ -178,14 +180,13 @@ export class QuestionComponent implements OnInit {
       formattedAnswers[key] = rawAnswers[index];
     });
 
-    const result = {answers: formattedAnswers};
+    const result = { answers: formattedAnswers };
 
     // Lưu vào localStorage
     localStorage.setItem("answers", JSON.stringify(result));
 
     console.log("✅ Đã lưu answers format vào localStorage:", result);
   }
-
 
   getAnswerData() {
     const savedAnswers = localStorage.getItem("answers");
@@ -213,22 +214,45 @@ export class QuestionComponent implements OnInit {
         },
         error: (err) => {
           console.error("❌ Gửi dữ liệu thất bại:", err);
-        }
+        },
       });
     } else {
       console.warn("⚠️ Không tìm thấy dữ liệu answers trong localStorage.");
     }
   }
 
+  isValid(): boolean {
+    for (const q of this.questions) {
+      if (
+        !q.text ||
+        !q.answers["1"] ||
+        !q.answers["2"] ||
+        !q.answers["3"] ||
+        !q.answers["4"]
+      ) {
+        return false;
+      }
+    }
+    return true;
+  }
+
   handleSubmitAll(): void {
+    this.showError = false;
+    if (!this.isValid()) {
+      this.showError = true;
+      this.toastr.error(
+        "Vui lòng nhập đầy đủ nội dung và đáp án cho tất cả câu hỏi.",
+        "Thiếu thông tin"
+      );
+      return;
+    }
     this.sendQuestionsToBackend().subscribe({
       next: () => {
-        // ✅ Sau khi gửi câu hỏi xong thì mới gửi đáp án
         this.submitFormattedAnswers();
       },
       error: (err) => {
         console.error("❌ Dừng quy trình vì lỗi gửi câu hỏi:", err);
-      }
+      },
     });
   }
 }

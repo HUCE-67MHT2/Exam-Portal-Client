@@ -49,7 +49,7 @@ li {
     @media (max-width: 992px) {
       flex-direction: column;
       align-items: flex-start;
-      gap: 20px;
+      gap: 10px;
     }
   }
 
@@ -140,7 +140,6 @@ li {
 
   // Create Questions button (first button)
   &:first-of-type {
-    margin-right: calc(40% + 5px);
     margin-left: 0;
     background: linear-gradient(135deg, #3b82f6, #386bf6);
     box-shadow: 0 4px 12px rgba(#3b82f6, 0.3);
