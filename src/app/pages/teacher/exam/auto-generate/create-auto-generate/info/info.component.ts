@@ -70,8 +70,6 @@ export class InfoComponent implements OnInit, OnDestroy {
     });
   }
 
-
-
   ngOnDestroy() {
     // Xóa dữ liệu khỏi localStorage khi component bị hủy
     localStorage.removeItem("info");
@@ -86,7 +84,6 @@ export class InfoComponent implements OnInit, OnDestroy {
       return;
     }
 
-    // this.sendNumberOfExamAndTestToBackend();
     await this.sendExamInfoToBackend();
 
     this.router.navigate(["teacher/exam-session-dashboard"], {
@@ -143,34 +140,6 @@ export class InfoComponent implements OnInit, OnDestroy {
     return { defaultQuestionPerExam, examSessionId };
   }
 
-  sendNumberOfExamAndTestToBackend() {
-    const parsedValues = this.parseFormValues();
-    if (!parsedValues) {
-      return; // Dừng lại nếu dữ liệu không hợp lệ
-    }
-
-    const { defaultQuestionPerExam, examSessionId } = parsedValues;
-
-    this.examSessionService
-      .updateExamSessionConfiguration(examSessionId, defaultQuestionPerExam)
-      .subscribe({
-        next: (response) => {
-          this.toastr.success(
-            "Cập nhật cấu hình kỳ thi thành công!",
-            "Thành công"
-          );
-          console.log("Response from backend:", response);
-        },
-        error: (error) => {
-          this.toastr.error(
-            "Có lỗi xảy ra khi cập nhật cấu hình kỳ thi.",
-            "Lỗi"
-          );
-          console.error("Error from backend:", error);
-        },
-      });
-  }
-
   getNumberOfExam() {
     const numberOfExam = this.examForm.get("number_of_exam")?.value;
     if (numberOfExam) {
@@ -202,7 +171,6 @@ export class InfoComponent implements OnInit, OnDestroy {
     return `${yyyy}-${MM}-${dd} ${HH}:${mm}:${ss}`;
   }
 
-
   getExamInfo(index: number): FormData {
     const examInfoForm = new FormData();
     const baseName = this.examForm.get("exam_name")?.value;
@@ -225,12 +193,15 @@ export class InfoComponent implements OnInit, OnDestroy {
       "examSessionId",
       Number(this.examSessionId).toString() // Chuyển thành số
     );
+    examInfoForm.append(
+      "defaultQuestionPerExam",
+      Number(this.examForm.get("number_of_exam")?.value).toString()
+    );
 
     return examInfoForm;
   }
 
   async sendExamInfoToBackend() {
-    this.sendNumberOfExamAndTestToBackend();
     const numberOfExam = this.getNumberOfExam();
     const numberOfQuestion = this.getNumberOfQuestion();
 

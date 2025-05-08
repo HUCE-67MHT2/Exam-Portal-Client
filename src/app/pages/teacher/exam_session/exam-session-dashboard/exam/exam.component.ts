@@ -1,10 +1,10 @@
-import {Component, Input, OnInit} from "@angular/core";
-import {Exam} from "../../../../../core/models/exam.model";
-import {FormsModule} from "@angular/forms";
-import {DatePipe, NgForOf, NgIf} from "@angular/common";
-import {ActivatedRoute, Router} from "@angular/router";
-import {ExamService} from "../../../../../core/services/exam.service";
-import {ToastrService} from "ngx-toastr";
+import { Component, Input, OnInit } from "@angular/core";
+import { Exam } from "../../../../../core/models/exam.model";
+import { FormsModule } from "@angular/forms";
+import { DatePipe, NgForOf, NgIf } from "@angular/common";
+import { ActivatedRoute, Router } from "@angular/router";
+import { ExamService } from "../../../../../core/services/exam.service";
+import { ToastrService } from "ngx-toastr";
 @Component({
   selector: "app-exam",
   templateUrl: "./exam.component.html",
@@ -23,9 +23,8 @@ export class ExamComponent implements OnInit {
     private router: Router,
     private examService: ExamService,
     private route: ActivatedRoute,
-    private toastr: ToastrService,
-  ) {
-  }
+    private toastr: ToastrService
+  ) {}
 
   ngOnInit(): void {
     if (!this.exam_session_id) {
@@ -97,18 +96,34 @@ export class ExamComponent implements OnInit {
     console.log(this.exam_session_id);
   }
 
-  editExam(exam_id: number, exam_name: string, exam_session_id: number) {
-    this.router.navigate(["/teacher/edit-exam-with-file"], {
-      queryParams: {
-        exam_id: exam_id,
-        exam_name: exam_name,
-        exam_session_id: exam_session_id,
-        exam_session_name: this.exam_session_name,
-        exam_session_description: this.exam_session_description,
-      },
-    });
+  editExam(
+    exam_id: number,
+    exam_name: string,
+    exam_session_id: number,
+    exam_type?: string
+  ) {
+    if (exam_type === "auto-generate") {
+      this.router.navigate(["/teacher/exam/auto-generate/exam-question-list"], {
+        queryParams: {
+          exam_id: exam_id,
+          exam_name: exam_name,
+          exam_session_id: exam_session_id,
+          exam_session_name: this.exam_session_name,
+          exam_session_description: this.exam_session_description,
+        },
+      });
+    } else {
+      this.router.navigate(["/teacher/edit-exam-with-file"], {
+        queryParams: {
+          exam_id: exam_id,
+          exam_name: exam_name,
+          exam_session_id: exam_session_id,
+          exam_session_name: this.exam_session_name,
+          exam_session_description: this.exam_session_description,
+        },
+      });
+    }
   }
-
 
   showDeleteConfirmation: boolean = false;
   examToDelete: number | null = null;

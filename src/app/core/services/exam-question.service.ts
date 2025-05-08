@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ExamQuestionService {
-  private baseUrl = 'http://localhost:8081/api/exam/question'; 
+  private baseUrl = `${environment.apiUrl}/exam/question`;
 
   constructor(private http: HttpClient) {}
 
@@ -24,5 +25,11 @@ export class ExamQuestionService {
   private handleError(error: HttpErrorResponse) {
     console.error('Error:', error);
     return throwError(() => new Error(error.message || 'Server error'));
+  }
+
+  getQuestionsByExamId(examId: number): Observable<any> {
+    return this.http.get<any>(
+      `${this.baseUrl}/get/question/by/examId/${examId}/default`
+    );
   }
 }

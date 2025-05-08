@@ -5,6 +5,7 @@ import {StudentListPointComponent} from "./student-list-point/student-list-point
 import {ExamComponent} from "./exam/exam.component";
 import {QuestionBankComponent} from "./question-bank/question-bank.component";
 import {CommonModule} from "@angular/common";
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: "app-exam-session-dashboard",
@@ -15,6 +16,7 @@ import {CommonModule} from "@angular/common";
     StudentListPointComponent,
     ExamComponent,
     QuestionBankComponent,
+    RouterLink
   ],
   templateUrl: "./exam-session-dashboard.component.html",
   styleUrl: "./exam-session-dashboard.component.scss",

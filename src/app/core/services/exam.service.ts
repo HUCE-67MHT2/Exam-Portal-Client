@@ -2,12 +2,13 @@ import {Injectable} from "@angular/core";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {ExamStateResponse} from '../models/exam-upload-state.model';
+import { environment } from "../../../environments/environment";
 
 @Injectable({
   providedIn: "root",
 })
 export class ExamService {
-  private baseUrl = "http://localhost:8081/api/exam";
+  private baseUrl = `${environment.apiUrl}/exam`;
 
   constructor(private http: HttpClient) {
   }
@@ -67,4 +68,13 @@ export class ExamService {
     return this.http.post(`${this.baseUrl}/add/exam/auto-generate`, formData);
   }
 
+  getTodayExams() {
+    const token = localStorage.getItem('authToken');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get<ExamStateResponse[]>(`${this.baseUrl}/today-exams`, { headers });
+  }
+
+  getUnfinishedExams(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/exams/unfinished`);
+  }
 }
