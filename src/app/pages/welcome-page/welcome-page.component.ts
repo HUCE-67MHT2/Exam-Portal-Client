@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {AfterViewInit, Component} from '@angular/core';
 import {Router} from '@angular/router';
 import {FormsModule} from '@angular/forms';
 import {NgForOf} from '@angular/common';
@@ -10,7 +10,7 @@ import {NgForOf} from '@angular/common';
   standalone: true,
   imports: [FormsModule, NgForOf]
 })
-export class WelcomePageComponent {
+export class WelcomePageComponent implements AfterViewInit {
   selectedRole: string = 'Tôi là học sinh';
 
   constructor(private router: Router) {
@@ -30,5 +30,25 @@ export class WelcomePageComponent {
     } else if (this.selectedRole === 'Tôi là giáo viên') {
       this.router.navigate(['/sign-up/teacher']).then(() => console.log('Navigate to teacher sign up'));
     }
+  }
+
+  ngAfterViewInit() {
+    const elements = document.querySelectorAll('.led-effect');
+
+    elements.forEach(element => {
+      // @ts-ignore
+      const text = element.textContent.trim();
+      let html = '';
+
+      for (let i = 0; i < text.length; i++) {
+        if (text[i] === ' ') {
+          html += ' ';
+        } else {
+          html += `<span style="animation-delay: ${i * 0.1}s">${text[i]}</span>`;
+        }
+      }
+
+      element.innerHTML = html;
+    });
   }
 }
