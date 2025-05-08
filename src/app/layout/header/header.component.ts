@@ -65,7 +65,14 @@ export class HeaderComponent implements OnInit {
   }
 
   User = () => {
-    this.router.navigate(["/student/user"]);
+    if (this.router.url.includes('/home/teacher')) {
+      this.router.navigate(["/teacher/user"]);
+    } else if (this.router.url.includes('/home/student')) {
+      this.router.navigate(["/student/user"]);
+    } else {
+      // Optional: handle other cases or a default navigation
+      console.log("Current path does not match student or teacher home.");
+    }
   }
   Logout = () => {
     localStorage.clear();
