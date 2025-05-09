@@ -15,8 +15,7 @@ import { RouterLink } from "@angular/router";
     HomeComponent,
     StudentListPointComponent,
     ExamComponent,
-    QuestionBankComponent,
-    RouterLink
+    QuestionBankComponent
   ],
   templateUrl: "./exam-session-dashboard.component.html",
   styleUrl: "./exam-session-dashboard.component.scss",
