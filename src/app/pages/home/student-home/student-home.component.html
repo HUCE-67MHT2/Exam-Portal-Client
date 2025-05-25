@@ -35,18 +35,18 @@
       <h3 class="heading schedule__heading">Lịch thi hôm nay</h3>
       <table class="list schedule__list">
         <thead>
-        <tr class="list-heading">
-          <th class="list-heading-item">Tên bài thi</th>
-          <th class="list-heading-item">Mã bài thi</th>
-          <th class="list-heading-item">Giờ bắt đầu</th>
-        </tr>
+          <tr class="list-heading">
+            <th class="list-heading-item">Tên bài thi</th>
+            <th class="list-heading-item">Mã bài thi</th>
+            <th class="list-heading-item">Giờ bắt đầu</th>
+          </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let exam of todayExams">
-          <td>{{ exam.name }}</td>
-          <td>{{ exam.code }}</td>
-          <td>{{ exam.startDate }}</td>
-        </tr>
+          <tr *ngFor="let exam of todayExams">
+            <td>{{ exam.name }}</td>
+            <td>{{ exam.code }}</td>
+            <td>{{ exam.startDate }}</td>
+          </tr>
         </tbody>
       </table>
     </div>
@@ -75,27 +75,46 @@
       <h3 class="heading achievement__heading">Thành tích</h3>
       <div class="list achievement__list">
         <div class="select-table-wrapper">
-          <select name="select" id="table-select" class="table-select" (change)="switchAchievementView($event)">
+          <select
+            name="select"
+            id="table-select"
+            class="table-select"
+            (change)="switchAchievementView($event)"
+          >
             <option value="general">Chung</option>
-            <option value="table">Bảng</option>
+            <option value="table">Biểu đồ</option>
           </select>
         </div>
         <div class="achievement-content">
-          <div class="general" [style.display]="achievementView === 'general' ? 'block' : 'none'">
+          <div
+            class="general"
+            [style.display]="achievementView === 'general' ? 'block' : 'none'"
+          >
             <table class="general-table">
-              <tr class="list-heading">
-                <th class="list-heading-item">Tên lớp thi</th>
-                <th class="list-heading-item">Giáo viên</th>
-                <th class="list-heading-item score-column">ĐTB</th>
-              </tr>
-              <tr class="list-content">
-                <td class="list-content-item">Toán</td>
-                <td class="list-content-item">Tung</td>
-                <td class="list-content-item score-column">10</td>
-              </tr>
+              <thead>
+                <tr class="list-heading">
+                  <th class="list-heading-item">Tên kỳ thi</th>
+                  <th class="list-heading-item">Giáo viên</th>
+                  <th class="list-heading-item score-column">ĐTB</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let info of achievementInfo" class="list-content">
+                  <td class="list-content-item">{{ info.examName }}</td>
+                  <td class="list-content-item">{{ info.teacherName }}</td>
+                  <td class="list-content-item score-column">
+                    {{ info.totalScore }}
+                  </td>
+                </tr>
+              </tbody>
             </table>
           </div>
-          <div class="table" [style.display]="achievementView === 'table' ? 'block' : 'none'"></div>
+          <div
+            class="table chart-container"
+            [style.display]="achievementView === 'table' ? 'flex' : 'none'"
+          >
+            <canvas id="scoreChart" width="600" height="350"></canvas>
+          </div>
         </div>
       </div>
     </div>

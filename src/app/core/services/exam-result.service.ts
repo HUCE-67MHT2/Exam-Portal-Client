@@ -37,4 +37,13 @@ export class ExamResultService {
     });
   }
 
+getExamResultsByCurrentUser() {
+  const token = localStorage.getItem('authToken');
+  const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+  return this.http.get<any>(`${this.baseUrl}/get/list/exam/result/by/user`, {
+    headers,
+    observe: 'response'
+  });
+}
+
 }
