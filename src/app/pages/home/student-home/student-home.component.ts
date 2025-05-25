@@ -6,6 +6,7 @@ import { ExamResultService } from "../../../core/services/exam-result.service";
 import { ExamSessionEnrollmentService } from "../../../core/services/exam-session-enrollment.service";
 import Chart from "chart.js/auto";
 
+
 @Component({
   selector: "app-student-home",
   imports: [HeaderStudentComponent, CommonModule],
@@ -47,13 +48,15 @@ export class StudentHomeComponent implements OnInit {
 
   getUnfinishedExams = () => {
     this.examService.getUnfinishedExams().subscribe({
-      next: (data: any[]) => {
+      next: (data) => {
+        console.log("unfinishedExams Exams: ", data);
         this.unfinishedExams = data;
       },
       error: (error) => {
         console.error("Lỗi khi lấy bài thi chưa làm:", error);
-      },
-    });
+      }
+    }
+    );
   };
 
   scrollToSection(elementId: string): void {

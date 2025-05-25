@@ -74,7 +74,9 @@ export class ExamService {
     return this.http.get<ExamStateResponse[]>(`${this.baseUrl}/today-exams`, { headers });
   }
 
-  getUnfinishedExams(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.baseUrl}/exams/unfinished`);
+  getUnfinishedExams() {
+    const token = localStorage.getItem('authToken');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get<ExamStateResponse[]>(`${this.baseUrl}/unfinished-exam`, { headers });
   }
 }

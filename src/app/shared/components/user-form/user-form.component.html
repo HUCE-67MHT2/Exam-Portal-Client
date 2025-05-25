@@ -1,5 +1,10 @@
 <head>
-  <title>Online Exam Portal</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/fontawesome.min.css">
+  <link rel="stylesheet" href="../../../../assets/css/user-form.css">
+  <title>Thông tin cá nhân</title>
 </head>
 <body>
 <div class="container">
@@ -22,11 +27,12 @@
         <!-- Nút thay đổi ảnh đại diện -->
         <a class="change-profile-pic" href="#" id="change-avatar">Thay đổi ảnh đại diện</a>
       </div>
-    </div>
-    <div id="hocsinh">
-      <h4>
-        <ng-content select="[role]"></ng-content>
-      </h4>
+      <div id="role">
+        <h4>
+          <ng-content select="[role]"></ng-content>
+        </h4>
+      </div>
+
     </div>
 
     <!-- Phần thông tin cá nhân -->
