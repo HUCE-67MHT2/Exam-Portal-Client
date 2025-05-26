@@ -3,8 +3,8 @@ import { HeaderStudentComponent } from "../../../layout/header/header-student/he
 import { CommonModule } from "@angular/common";
 import { ExamService } from "../../../core/services/exam.service";
 import { ExamResultService } from "../../../core/services/exam-result.service";
-import { ExamSessionEnrollmentService } from "../../../core/services/exam-session-enrollment.service";
 import Chart from "chart.js/auto";
+import { forkJoin, map } from 'rxjs';
 
 @Component({
   selector: "app-student-home",
@@ -23,8 +23,7 @@ export class StudentHomeComponent implements OnInit {
 
   constructor(
     private examService: ExamService,
-    private examResultService: ExamResultService,
-    private examSessionEnrollmentService: ExamSessionEnrollmentService
+    private examResultService: ExamResultService
   ) {}
 
   ngOnInit(): void {
@@ -74,26 +73,49 @@ export class StudentHomeComponent implements OnInit {
   }
 
   getExamResult = () => {
-    this.examResultService.getExamResultsByCurrentUser().subscribe({
-      next: (response) => {
-        console.log("Exam Result: ", response.body);
+  this.examResultService.getExamResultsByCurrentUser().subscribe({
+    next: (response) => {
+      console.log("Exam Result: ", response.body);
 
-        if (Array.isArray(response.body)) {
-          this.achievementInfo = response.body.map((item: any) => ({
-            examName: item.sessionName,
-            teacherName: item.teacherFullName,
-            totalScore: item.averageScore,
-          }));
-        } else {
-          this.achievementInfo = [];
-        }
-        console.log("Achievement Info: ", this.achievementInfo);
+      if (Array.isArray(response.body)) {
+        const sourceData = response.body;
+
+        // Danh sách các Observable trả về response.body
+        const testResultRequests = sourceData.map((item: any) =>
+          this.getTestResults(item.examSessionId).pipe(
+            map((res: any) => res.body) // Lấy body từ HttpResponse
+          )
+        );
+
+        forkJoin(testResultRequests).subscribe({
+          next: (testResultsArray) => {
+            this.achievementInfo = sourceData.map((item: any, index: number) => ({
+              examName: item.sessionName,
+              teacherName: item.teacherFullName,
+              totalScore: item.averageScore,
+              testInfo: testResultsArray[index] // là response.body
+            }));
+
+            console.log("Achievement Info: ", this.achievementInfo);
+            this.renderChart();
+          },
+          error: (err) => {
+            console.error('Lỗi khi lấy testInfo:', err);
+          }
+        });
+      } else {
+        this.achievementInfo = [];
         this.renderChart();
-      },
-      error: (error) => {
-        console.error("Lỗi", error);
-      },
-    });
+      }
+    },
+    error: (error) => {
+      console.error("Lỗi", error);
+    },
+  });
+};
+
+  getTestResults = (id: number) => {
+    return this.examResultService.getExamResultsBySession(id);
   };
 
   renderChart() {
