@@ -1,14 +1,18 @@
-// Modern color palette
-$primary: #04aa6d;
-$primary-light: #00a758;
-$primary-dark: #02774b;
-$success: #10b981;
-$neutral-100: #f3f4f6;
-$neutral-200: #e5e7eb;
-$neutral-300: #d1d5db;
-$neutral-500: #6b7280;
-$neutral-700: #374151;
-$neutral-900: #111827;
+// Modern color palette - Blue theme
+$primary-blue: #1976d2;
+$primary-dark-blue: #0d47a1;
+$primary-light-blue: #bbdefb;
+$secondary-blue: #64b5f6;
+$text-dark: #333333;
+$text-light: #ffffff;
+$text-gray: #757575;
+$bg-light: #f8f9fa;
+$bg-white: #ffffff;
+$border-color: #e0e0e0;
+$success-color: #4caf50;
+$warning-color: #ff9800;
+$error-color: #f44336;
+$card-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 $border-radius-sm: 0.4rem;
 $border-radius: 0.6rem;
 $border-radius-lg: 0.8rem;
@@ -17,51 +21,62 @@ $transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
 body {
   font-family: 'Inter', system-ui, sans-serif;
-  background-color: #f9fafb;
   margin: 0;
   padding: 0;
-  color: $neutral-700;
+  background-color: $bg-light;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  color: $text-dark;
   line-height: 1.6;
   font-size: 1.6rem;
 }
 
 .container {
-  width: 100%;
   max-width: 1200px;
-  margin: 0 auto;
-  padding: 2rem;
-  background-color: white;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
-  0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  border-radius: $border-radius-lg;
+  margin: 20px auto;
+  padding: 25px;
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.7);
+    z-index: -1;
+    border-radius: $border-radius-lg;
+  }
 }
 
 header {
   display: flex;
   align-items: center;
-  margin-bottom: 3rem;
-  padding-bottom: 1.5rem;
-  border-bottom: 1px solid $neutral-200;
+  justify-content: space-between;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid $border-color;
 
   h1 {
-    margin: 0;
     font-size: 2.5rem;
-    font-weight: 700;
-    color: $neutral-900;
-    flex: 1;
+    font-weight: 600;
+    color: $primary-dark-blue;
+    margin: 0;
   }
 
   .svg-icon {
     cursor: pointer;
-    fill: $primary;
+    fill: $primary-blue;
     transition: $transition;
     padding: 0.8rem;
     border-radius: 50%;
-    width: 45px;
-    height: 45px;
+    background: rgba($primary-blue, 0.1);
 
     &:hover {
-      background-color: rgba($primary, 0.1);
+      background: rgba($primary-blue, 0.2);
       transform: translateX(-3px);
     }
   }
@@ -69,130 +84,162 @@ header {
 
 .content {
   width: 100%;
-  max-width: 720px;
+  max-width: 800px;
   margin: 0 auto;
 }
 
 .profile {
   display: flex;
-  align-items: center;
-  margin-bottom: 3rem;
+  margin-bottom: 30px;
+  background-color: $bg-white;
+  border-radius: 12px;
+  box-shadow: $card-shadow;
+  padding: 25px 25px 60px;
+  transition: transform 0.3s, box-shadow 0.3s;
+  position: relative;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  }
 
   .avatar {
     width: 90px;
     height: 90px;
     border-radius: 50%;
-    margin-right: 1.8rem;
+    margin-right: 25px;
     object-fit: cover;
-    border: 3px solid $neutral-200;
+    border: 3px solid $primary-blue;
     transition: $transition;
-    box-shadow: 0 0 0 4px rgba($primary, 0);
-
-    &:hover {
-      box-shadow: 0 0 0 5px rgba($primary, 0.15);
-    }
   }
 
   .profile-info {
+    flex: 1;
+    padding-top: 10px;
+
     .profile-name {
       font-size: 2rem;
       font-weight: 600;
-      margin-bottom: 0.8rem;
-      color: $neutral-900;
+      margin-bottom: 10px;
+      color: $text-dark;
     }
 
     .change-profile-pic {
-      color: $primary;
+      color: $primary-blue;
       text-decoration: none;
-      font-size: 1.6rem;
+      font-size: 1.4rem;
       font-weight: 500;
-      transition: $transition;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       display: inline-block;
-      padding: 0.4rem 0;
+      padding: 6px 0;
       position: relative;
+      overflow: hidden;
 
       &::after {
         content: '';
         position: absolute;
-        width: 0;
-        height: 3px;
         bottom: 0;
         left: 0;
-        background-color: $primary;
-        transition: $transition;
+        width: 0;
+        height: 2px;
+        background-color: $primary-blue;
+        transition: width 0.4s ease;
       }
 
       &:hover {
-        color: $primary-dark;
+        color: darken($primary-blue, 10%);
+        transform: translateY(-2px);
+        text-shadow: 0 2px 10px rgba($primary-blue, 0.2);
 
         &::after {
           width: 100%;
+          box-shadow: 0 1px 3px rgba($primary-blue, 0.4);
         }
+      }
+
+      &:active {
+        transform: translateY(0);
       }
     }
   }
 }
 
-#hocsinh h4 {
-  margin: 0 0 2rem;
-  color: $success;
-  font-size: 1.8rem;
-  font-weight: 600;
-  display: inline-block;
-  padding: 0.5rem 1.2rem;
-  background-color: rgba($success, 0.1);
-  border-radius: $border-radius;
+#role {
+  position: absolute;
+  top: calc(90px + 25px + 10px); // Avatar height + padding + margin
+  bottom: 20px;
+  left: 25px; // Same as profile padding
+  width: 90px; // Match avatar width
+  text-align: center;
+
+  h4 {
+    display: inline-block;
+    padding: 6px 14px;
+    background-color: rgba($primary-blue, 0.1);
+    border: 1px solid rgba($primary-blue, 0.2);
+    border-radius: 20px;
+    color: $primary-blue;
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin: 0;
+    white-space: nowrap;
+    box-shadow: 0 2px 4px rgba($primary-blue, 0.1);
+    transition: $transition;
+
+    &:hover {
+      background-color: rgba($primary-blue, 0.15);
+      transform: translateY(-2px);
+    }
+  }
 }
 
 .personal-info-section,
 .account-info-section {
-  margin-bottom: 3.5rem;
-  background-color: white;
-  border-radius: $border-radius-lg;
-  padding: 2.2rem;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05),
-  0 1px 2px rgba(0, 0, 0, 0.06);
-  transition: $transition;
+  margin-bottom: 30px;
+  background-color: $bg-white;
+  border-radius: 12px;
+  box-shadow: $card-shadow;
+  padding: 25px;
+  transition: transform 0.3s, box-shadow 0.3s;
 
   &:hover {
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
-    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
   }
 
   h2 {
-    font-size: 2.2rem;
+    font-size: 1.8rem;
     font-weight: 600;
-    margin-bottom: 2rem;
-    color: $neutral-900;
-    padding-bottom: 1rem;
-    border-bottom: 1px solid $neutral-200;
+    margin-bottom: 20px;
+    color: $text-dark;
+    padding-bottom: 15px;
+    border-bottom: 1px solid $border-color;
   }
 
   .form-group {
-    margin-bottom: 2rem;
+    margin-bottom: 20px;
 
     input {
       width: 100%;
-      padding: 1.2rem 1.5rem;
-      border: 1px solid $neutral-300;
-      border-radius: $border-radius;
-      font-size: 1.7rem;
-      color: $neutral-900;
-      background-color: white;
+      padding: 12px 15px;
+      border: 1px solid $border-color;
+      border-radius: 8px;
+      font-size: 1.4rem;
       transition: $transition;
+      box-sizing: border-box;
 
       &::placeholder {
-        color: $neutral-500;
+        color: $text-gray;
       }
 
       &:hover {
-        border-color: $primary-light;
+        border-color: $secondary-blue;
       }
 
       &:focus {
         outline: none;
-        border-color: $primary;
-        box-shadow: 0 0 0 4px rgba($primary, 0.15);
+        border-color: $primary-blue;
+        box-shadow: 0 0 0 3px rgba($primary-blue, 0.2);
         transform: translateY(-2px);
       }
     }
@@ -200,7 +247,7 @@ header {
 
   .form-row {
     display: flex;
-    gap: 1.5rem;
+    gap: 15px;
 
     .form-group {
       flex: 1;
@@ -209,57 +256,62 @@ header {
 
   .btn {
     width: 100%;
-    padding: 1.2rem 1.5rem;
-    background-color: $primary;
-    color: white;
+    padding: 12px 20px;
+    background-color: $primary-blue;
+    color: $text-light;
     border: none;
-    border-radius: $border-radius;
+    border-radius: 8px;
+    font-size: 1.4rem;
     font-weight: 500;
-    font-size: 1.7rem;
     cursor: pointer;
     transition: $transition;
-    transform: translateY(0);
 
     &:hover {
-      background-color: $primary-dark;
-      transform: translateY(-2px);
-      box-shadow: 0 4px 6px -1px rgba($primary, 0.4);
+      background-color: $primary-dark-blue;
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba($primary-blue, 0.3);
     }
 
     &:active {
-      transform: translateY(0);
+      transform: scale(0.98);
     }
   }
 }
 
 .change-password-section {
-  margin-top: 2.2rem;
-  padding-top: 2.2rem;
-  border-top: 1px solid $neutral-200;
+  margin-top: 25px;
+  padding-top: 25px;
+  border-top: 1px solid $border-color;
 
   h4 {
-    font-size: 1.8rem;
+    font-size: 1.6rem;
     font-weight: 600;
-    margin-bottom: 1.8rem;
-    color: $neutral-700;
+    margin-bottom: 20px;
+    color: $text-dark;
   }
 
   .btn-change-password {
-    background-color: $neutral-700;
+    background-color: $text-dark;
 
     &:hover {
-      background-color: $neutral-900;
+      background-color: darken($text-dark, 10%);
     }
   }
 }
 
 @media (max-width: 768px) {
-  body {
-    font-size: 1.5rem;
+  .container {
+    padding: 15px;
+    margin: 10px;
   }
 
-  .content {
-    width: 100%;
+  .personal-info-section,
+  .account-info-section {
+    padding: 20px 15px;
+  }
+
+  header h1 {
+    font-size: 2.2rem;
   }
 
   .form-row {
@@ -267,29 +319,35 @@ header {
     gap: 0;
   }
 
-  .container {
-    padding: 1.5rem;
-    border-radius: 0;
+  .profile {
+    flex-direction: column;
+    text-align: center;
+    padding: 20px 15px;
+
+    .avatar {
+      margin-right: 0;
+      margin-bottom: 45px;
+    }
+
+    .profile-info {
+      width: 100%;
+    }
   }
 
-  .personal-info-section,
-  .account-info-section {
-    padding: 1.8rem;
-  }
-
-  header h1 {
-    font-size: 2.2rem;
-  }
-
-  .profile-info .profile-name {
-    font-size: 1.8rem;
+  #role {
+    position: absolute;
+    top: auto;
+    bottom: calc(100% - 130px);
+    left: 50%;
+    transform: translateX(-50%);
+    width: auto;
   }
 }
 
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(20px);
   }
   to {
     opacity: 1;

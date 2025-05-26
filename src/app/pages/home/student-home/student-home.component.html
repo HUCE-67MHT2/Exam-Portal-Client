@@ -48,6 +48,11 @@
             <td>{{ exam.startDate }}</td>
           </tr>
         </tbody>
+        <tbody *ngIf="!todayExams || todayExams.length === 0">
+        <tr>
+          <td colspan="3" style="text-align: center;">Không có lịch thi hôm nay</td>
+        </tr>
+        </tbody>
       </table>
     </div>
 
@@ -57,16 +62,21 @@
         <thead>
           <tr class="list-heading">
             <th class="list-heading-item">Tên bài thi</th>
-            <th class="list-heading-item">Mã bài thi</th>
+            <th class="list-heading-item">Môn thi</th>
             <th class="list-heading-item">Giờ kết thúc</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let exam of unfinishedExams">
             <td>{{ exam.name }}</td>
-            <td>{{ exam.code }}</td>
+            <td>{{ exam.subject }}</td>
             <td>{{ exam.endDate }}</td>
           </tr>
+        </tbody>
+        <tbody *ngIf="!unfinishedExams || unfinishedExams.length === 0">
+        <tr>
+          <td colspan="3" style="text-align: center;">Không có bài thi nào</td>
+        </tr>
         </tbody>
       </table>
     </div>
