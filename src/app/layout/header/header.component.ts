@@ -67,7 +67,17 @@ export class HeaderComponent implements OnInit {
   User = () => {
     if (this.router.url.includes('/home/teacher')) {
       this.router.navigate(["/teacher/user"]);
-    } else if (this.router.url.includes('/home/student')) {
+    }
+    else if (this.router.url.includes('/teacher/create-exam-session')) {
+      this.router.navigate(["/teacher/user"]);
+    }
+    else if (this.router.url.includes('/student/exam-session')) {
+      this.router.navigate(["/student/user"]);
+    }
+    else if (this.router.url.includes('/student/exam-session-detail')) {
+      this.router.navigate(["/student/user"]);
+    }
+    else if (this.router.url.includes('/home/student')) {
       this.router.navigate(["/student/user"]);
     } else {
       // Optional: handle other cases or a default navigation

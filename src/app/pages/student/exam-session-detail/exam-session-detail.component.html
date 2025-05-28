@@ -35,30 +35,30 @@
       </tbody>
     </table>
 
-    <div #passwordForm (click)="closePasswordModal($event)" [class.visible]="isPassword" class="password-form">
-      <div (click)="$event.stopPropagation()" class="container">
-        <!-- Exam information section -->
-        <div *ngIf="selectedExam" class="exam-info">
-          <h2>{{ selectedExam.name }}</h2>
-          <div class="exam-details">
-            <p><span>Loại đề:</span> {{ selectedExam.type }}</p>
-            <p><span>Thời gian:</span> {{ selectedExam.duration }} phút</p>
-          </div>
-        </div>
-
-        <h3>Nhập mật khẩu để bắt đầu làm bài</h3>
-        <div class="input-container">
-          <input
-            #inputBox
-            (input)="onInput(i, $event)"
-            (keydown)="onKeyDown(i, $event)"
-            *ngFor="let input of inputs; let i = index"
-            class="input-box"
-            maxlength="1"
-            type="text"
-          />
+  </main>
+  <div #passwordForm (click)="closePasswordModal($event)" [class.visible]="isPassword" class="password-form">
+    <div (click)="$event.stopPropagation()" class="container">
+      <!-- Exam information section -->
+      <div *ngIf="selectedExam" class="exam-info">
+        <h2>{{ selectedExam.name }}</h2>
+        <div class="exam-details">
+          <p><span>Loại đề:</span> {{ selectedExam.type }}</p>
+          <p><span>Thời gian:</span> {{ selectedExam.duration }} phút</p>
         </div>
       </div>
+
+      <h3>Nhập mật khẩu để bắt đầu làm bài</h3>
+      <div class="input-container">
+        <input
+          #inputBox
+          (input)="onInput(i, $event)"
+          (keydown)="onKeyDown(i, $event)"
+          *ngFor="let input of inputs; let i = index"
+          class="input-box"
+          maxlength="1"
+          type="text"
+        />
+      </div>
     </div>
-  </main>
+  </div>
 </div>
