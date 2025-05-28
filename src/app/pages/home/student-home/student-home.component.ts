@@ -194,6 +194,19 @@ export class StudentHomeComponent implements OnInit {
           responsive: true,
           maintainAspectRatio: false,
           plugins: {
+            title: {
+              display: true,
+              text: "Biểu đồ điểm các Kỳ thi",
+              font: {
+                size: 20,
+                weight: "bold",
+                family: "'Roboto', sans-serif",
+              },
+              color: "#3f9bfa",
+              padding: {
+                bottom: 10,
+              },
+            },
             legend: {
               position: "top",
               labels: {
