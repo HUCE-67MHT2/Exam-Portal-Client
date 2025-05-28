@@ -4,8 +4,7 @@ import { CommonModule } from "@angular/common";
 import { ExamService } from "../../../core/services/exam.service";
 import { ExamResultService } from "../../../core/services/exam-result.service";
 import Chart from "chart.js/auto";
-import { forkJoin, map } from 'rxjs';
-
+import { forkJoin, map } from "rxjs";
 
 @Component({
   selector: "app-student-home",
@@ -14,12 +13,14 @@ import { forkJoin, map } from 'rxjs';
   styleUrl: "./student-home.component.scss",
 })
 export class StudentHomeComponent implements OnInit {
+  [x: string]: any;
   todayExams: any[] = [];
   unfinishedExams: any[] = [];
   activeSection: string = "schedule";
   achievementView: string = "general";
   scoreList: number[] = [];
   achievementInfo: any[] = [];
+  selectedInfo: any = null;
   chart: any;
 
   constructor(
@@ -53,9 +54,8 @@ export class StudentHomeComponent implements OnInit {
       },
       error: (error) => {
         console.error("Lỗi khi lấy bài thi chưa làm:", error);
-      }
-    }
-    );
+      },
+    });
   };
 
   scrollToSection(elementId: string): void {
@@ -76,46 +76,48 @@ export class StudentHomeComponent implements OnInit {
   }
 
   getExamResult = () => {
-  this.examResultService.getExamResultsByCurrentUser().subscribe({
-    next: (response) => {
-      console.log("Exam Result: ", response.body);
+    this.examResultService.getExamResultsByCurrentUser().subscribe({
+      next: (response) => {
+        console.log("Exam Result: ", response.body);
 
-      if (Array.isArray(response.body)) {
-        const sourceData = response.body;
+        if (Array.isArray(response.body)) {
+          const sourceData = response.body;
 
-        // Danh sách các Observable trả về response.body
-        const testResultRequests = sourceData.map((item: any) =>
-          this.getTestResults(item.examSessionId).pipe(
-            map((res: any) => res.body) // Lấy body từ HttpResponse
-          )
-        );
+          // Danh sách các Observable trả về response.body
+          const testResultRequests = sourceData.map((item: any) =>
+            this.getTestResults(item.examSessionId).pipe(
+              map((res: any) => res.body) // Lấy body từ HttpResponse
+            )
+          );
 
-        forkJoin(testResultRequests).subscribe({
-          next: (testResultsArray) => {
-            this.achievementInfo = sourceData.map((item: any, index: number) => ({
-              examName: item.sessionName,
-              teacherName: item.teacherFullName,
-              totalScore: item.averageScore,
-              testInfo: testResultsArray[index] // là response.body
-            }));
+          forkJoin(testResultRequests).subscribe({
+            next: (testResultsArray) => {
+              this.achievementInfo = sourceData.map(
+                (item: any, index: number) => ({
+                  examName: item.sessionName,
+                  teacherName: item.teacherFullName,
+                  totalScore: item.averageScore,
+                  testInfo: testResultsArray[index], // là response.body
+                })
+              );
 
-            console.log("Achievement Info: ", this.achievementInfo);
-            this.renderChart();
-          },
-          error: (err) => {
-            console.error('Lỗi khi lấy testInfo:', err);
-          }
-        });
-      } else {
-        this.achievementInfo = [];
-        this.renderChart();
-      }
-    },
-    error: (error) => {
-      console.error("Lỗi", error);
-    },
-  });
-};
+              console.log("Achievement Info: ", this.achievementInfo);
+              this.renderChart();
+            },
+            error: (err) => {
+              console.error("Lỗi khi lấy testInfo:", err);
+            },
+          });
+        } else {
+          this.achievementInfo = [];
+          this.renderChart();
+        }
+      },
+      error: (error) => {
+        console.error("Lỗi", error);
+      },
+    });
+  };
 
   getTestResults = (id: number) => {
     return this.examResultService.getExamResultsBySession(id);
@@ -275,6 +277,26 @@ export class StudentHomeComponent implements OnInit {
             },
           },
         },
+        plugins: [
+          {
+            id: "custom-datalabels",
+            afterDatasetsDraw: (chart: any) => {
+              const { ctx, data } = chart;
+              ctx.save();
+              chart
+                .getDatasetMeta(0)
+                .data.forEach((bar: any, index: number) => {
+                  const value = data.datasets[0].data[index];
+                  ctx.font = "bold 14px Roboto";
+                  ctx.fillStyle = "#222";
+                  ctx.textAlign = "center";
+                  ctx.textBaseline = "bottom";
+                  ctx.fillText(value, bar.x, bar.y - 6);
+                });
+              ctx.restore();
+            },
+          },
+        ],
       });
     }
   }

@@ -281,9 +281,36 @@ html {
     transition: all 0.4s ease;
 
     .select-table-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
       background: linear-gradient(90deg, #f5f7ff, #f0f4ff);
       padding: 16px 24px;
       border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+
+      .list-content-back {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-left: auto;
+        background: transparent;
+        color: $primary-blue;
+        font-size: 1.4rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        outline: none;
+        overflow: hidden;
+
+        &::before {
+          content: "\f060"; /* Font Awesome arrow-left icon */
+          font-family: "Font Awesome 5 Free";
+          font-weight: 900;
+          margin-right: 8px;
+        }
+
+
+      }
 
       .table-select {
         width: 200px;
@@ -320,6 +347,10 @@ html {
       background: white;
       border-radius: 0 0 16px 16px;
       overflow: hidden;
+
+      .achievement-body {
+        position: relative;
+      }
 
       .general {
         padding: 0;
@@ -406,6 +437,13 @@ html {
         background: linear-gradient(135deg, #fafbff 0%, #f5f8ff 100%);
         border-radius: 0 0 16px 16px;
       }
+
+      .back-container {
+        position: relative;
+        height: 30px;
+      }
+
+
     }
   }
 

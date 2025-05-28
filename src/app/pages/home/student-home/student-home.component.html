@@ -49,9 +49,11 @@
           </tr>
         </tbody>
         <tbody *ngIf="!todayExams || todayExams.length === 0">
-        <tr>
-          <td colspan="3" style="text-align: center;">Không có lịch thi hôm nay</td>
-        </tr>
+          <tr>
+            <td colspan="3" style="text-align: center">
+              Không có lịch thi hôm nay
+            </td>
+          </tr>
         </tbody>
       </table>
     </div>
@@ -74,9 +76,9 @@
           </tr>
         </tbody>
         <tbody *ngIf="!unfinishedExams || unfinishedExams.length === 0">
-        <tr>
-          <td colspan="3" style="text-align: center;">Không có bài thi nào</td>
-        </tr>
+          <tr>
+            <td colspan="3" style="text-align: center">Không có bài thi nào</td>
+          </tr>
         </tbody>
       </table>
     </div>
@@ -94,6 +96,13 @@
             <option value="general">Chung</option>
             <option value="table">Biểu đồ</option>
           </select>
+          <span
+            class="list-content-back"
+            (click)="selectedInfo = null"
+            [style.display]="selectedInfo ? 'flex' : 'none'"
+          >
+            Quay lại
+          </span>
         </div>
         <div class="achievement-content">
           <div
@@ -103,19 +112,42 @@
             <table class="general-table">
               <thead>
                 <tr class="list-heading">
-                  <th class="list-heading-item">Tên kỳ thi</th>
-                  <th class="list-heading-item">Giáo viên</th>
-                  <th class="list-heading-item score-column">ĐTB</th>
+                  <th class="list-heading-item">
+                    {{ selectedInfo ? "Tên đề thi" : "Tên kỳ thi" }}
+                  </th>
+                  <th class="list-heading-item">
+                    {{ selectedInfo ? "" : "Giáo viên" }}
+                  </th>
+                  <th class="list-heading-item score-column">
+                    {{ selectedInfo ? "Điểm" : "ĐTB" }}
+                  </th>
                 </tr>
               </thead>
-              <tbody>
-                <tr *ngFor="let info of achievementInfo" class="list-content">
-                  <td class="list-content-item">{{ info.examName }}</td>
-                  <td class="list-content-item">{{ info.teacherName }}</td>
-                  <td class="list-content-item score-column">
-                    {{ info.totalScore }}
-                  </td>
-                </tr>
+              <tbody class="achievement-body">
+                <ng-container *ngIf="selectedInfo === null">
+                  <tr
+                    *ngFor="let info of achievementInfo"
+                    class="list-content"
+                    (click)="selectedInfo = info"
+                    style="cursor: pointer"
+                  >
+                    <td class="list-content-item">{{ info.examName }}</td>
+                    <td class="list-content-item">{{ info.teacherName }}</td>
+                    <td class="list-content-item">{{ info.totalScore }}</td>
+                  </tr>
+                </ng-container>
+
+                <!-- Nếu đã chọn 1 kỳ thi thì hiển thị testInfo của nó -->
+                <ng-container *ngIf="selectedInfo">
+                  <tr
+                    *ngFor="let test of selectedInfo.testInfo"
+                    class="list-content"
+                  >
+                    <td class="list-content-item">{{ test.examName }}</td>
+                    <td></td>
+                    <td class="list-content-item">{{ test.totalScore }}</td>
+                  </tr>
+                </ng-container>
               </tbody>
             </table>
           </div>

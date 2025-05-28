@@ -46,19 +46,22 @@ export class ExamResultService {
   }
 
   getExamResultsByCurrentUser() {
-    const token = localStorage.getItem("authToken");
-    const headers = new HttpHeaders().set("Authorization", `Bearer ${token}`);
-    return this.http.get<any>(`${this.baseUrl}/get/list/exam/result/by/user`, {
+  const token = localStorage.getItem("authToken");
+  const headers = new HttpHeaders().set("Authorization", `Bearer ${token}`);
+  return this.http.get<any>(
+    `${this.baseUrl}/get/list/exam/result`,
+    {
       headers,
       observe: "response",
-    });
-  }
+    }
+  );
+}
 
   getExamResultsBySession(examSessionId: number) {
     const token = localStorage.getItem("authToken");
     const headers = new HttpHeaders().set("Authorization", `Bearer ${token}`);
     return this.http.get<any>(
-      `${this.baseUrl}/get/list/exam-result/by-session/${examSessionId}`,
+      `${this.baseUrl}/get/detail/exam-result/by-session/${examSessionId}`,
       {
         headers,
         observe: "response",
