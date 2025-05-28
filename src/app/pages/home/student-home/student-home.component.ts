@@ -3,9 +3,8 @@ import { HeaderStudentComponent } from "../../../layout/header/header-student/he
 import { CommonModule } from "@angular/common";
 import { ExamService } from "../../../core/services/exam.service";
 import { ExamResultService } from "../../../core/services/exam-result.service";
-import { ExamSessionEnrollmentService } from "../../../core/services/exam-session-enrollment.service";
 import Chart from "chart.js/auto";
-
+import { forkJoin, map } from "rxjs";
 
 @Component({
   selector: "app-student-home",
@@ -14,18 +13,19 @@ import Chart from "chart.js/auto";
   styleUrl: "./student-home.component.scss",
 })
 export class StudentHomeComponent implements OnInit {
+  [x: string]: any;
   todayExams: any[] = [];
   unfinishedExams: any[] = [];
   activeSection: string = "schedule";
   achievementView: string = "general";
   scoreList: number[] = [];
   achievementInfo: any[] = [];
+  selectedInfo: any = null;
   chart: any;
 
   constructor(
     private examService: ExamService,
-    private examResultService: ExamResultService,
-    private examSessionEnrollmentService: ExamSessionEnrollmentService
+    private examResultService: ExamResultService
   ) {}
 
   ngOnInit(): void {
@@ -54,9 +54,8 @@ export class StudentHomeComponent implements OnInit {
       },
       error: (error) => {
         console.error("Lỗi khi lấy bài thi chưa làm:", error);
-      }
-    }
-    );
+      },
+    });
   };
 
   scrollToSection(elementId: string): void {
@@ -82,21 +81,46 @@ export class StudentHomeComponent implements OnInit {
         console.log("Exam Result: ", response.body);
 
         if (Array.isArray(response.body)) {
-          this.achievementInfo = response.body.map((item: any) => ({
-            examName: item.sessionName,
-            teacherName: item.teacherFullName,
-            totalScore: item.averageScore,
-          }));
+          const sourceData = response.body;
+
+          // Danh sách các Observable trả về response.body
+          const testResultRequests = sourceData.map((item: any) =>
+            this.getTestResults(item.examSessionId).pipe(
+              map((res: any) => res.body) // Lấy body từ HttpResponse
+            )
+          );
+
+          forkJoin(testResultRequests).subscribe({
+            next: (testResultsArray) => {
+              this.achievementInfo = sourceData.map(
+                (item: any, index: number) => ({
+                  examName: item.sessionName,
+                  teacherName: item.teacherFullName,
+                  totalScore: item.averageScore,
+                  testInfo: testResultsArray[index], // là response.body
+                })
+              );
+
+              console.log("Achievement Info: ", this.achievementInfo);
+              this.renderChart();
+            },
+            error: (err) => {
+              console.error("Lỗi khi lấy testInfo:", err);
+            },
+          });
         } else {
           this.achievementInfo = [];
+          this.renderChart();
         }
-        console.log("Achievement Info: ", this.achievementInfo);
-        this.renderChart();
       },
       error: (error) => {
         console.error("Lỗi", error);
       },
     });
+  };
+
+  getTestResults = (id: number) => {
+    return this.examResultService.getExamResultsBySession(id);
   };
 
   renderChart() {
@@ -170,6 +194,19 @@ export class StudentHomeComponent implements OnInit {
           responsive: true,
           maintainAspectRatio: false,
           plugins: {
+            title: {
+              display: true,
+              text: "Biểu đồ điểm các Kỳ thi",
+              font: {
+                size: 20,
+                weight: "bold",
+                family: "'Roboto', sans-serif",
+              },
+              color: "#3f9bfa",
+              padding: {
+                bottom: 10,
+              },
+            },
             legend: {
               position: "top",
               labels: {
@@ -253,6 +290,26 @@ export class StudentHomeComponent implements OnInit {
             },
           },
         },
+        plugins: [
+          {
+            id: "custom-datalabels",
+            afterDatasetsDraw: (chart: any) => {
+              const { ctx, data } = chart;
+              ctx.save();
+              chart
+                .getDatasetMeta(0)
+                .data.forEach((bar: any, index: number) => {
+                  const value = data.datasets[0].data[index];
+                  ctx.font = "bold 14px Roboto";
+                  ctx.fillStyle = "#222";
+                  ctx.textAlign = "center";
+                  ctx.textBaseline = "bottom";
+                  ctx.fillText(value, bar.x, bar.y - 6);
+                });
+              ctx.restore();
+            },
+          },
+        ],
       });
     }
   }
