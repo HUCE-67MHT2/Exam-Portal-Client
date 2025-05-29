@@ -96,7 +96,11 @@ export class StudentHomeComponent implements OnInit {
                 (item: any, index: number) => ({
                   examName: item.sessionName,
                   teacherName: item.teacherFullName,
-                  totalScore: item.averageScore,
+                  totalScore:
+                    item.averageScore !== undefined &&
+                    item.averageScore !== null
+                      ? Math.round(item.averageScore * 100) / 100
+                      : 0,
                   testInfo: testResultsArray[index], // là response.body
                 })
               );
