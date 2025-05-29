@@ -11,7 +11,7 @@ import { ExamQuestionService } from "../../../../../../core/services/exam-questi
 import { Router } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
 import { NgIf } from "@angular/common";
-import { lastValueFrom } from 'rxjs';
+import { lastValueFrom } from "rxjs";
 
 @Component({
   selector: "app-info",
@@ -39,7 +39,9 @@ export class InfoComponent implements OnInit, OnDestroy {
     private examQuestionService: ExamQuestionService,
     private toastr: ToastrService
   ) {
-    this.examSessionId = JSON.parse(localStorage.getItem("selectedSession") || "{}").id;
+    this.examSessionId = JSON.parse(
+      localStorage.getItem("selectedSession") || "{}"
+    ).id;
 
     this.examForm = this.fb.group({
       exam_name: ["", Validators.required],
@@ -162,11 +164,11 @@ export class InfoComponent implements OnInit, OnDestroy {
     const date = new Date(rawDate);
 
     const yyyy = date.getFullYear();
-    const MM = String(date.getMonth() + 1).padStart(2, '0');
-    const dd = String(date.getDate()).padStart(2, '0');
-    const HH = String(date.getHours()).padStart(2, '0');
-    const mm = String(date.getMinutes()).padStart(2, '0');
-    const ss = '00'; // hoặc String(date.getSeconds()).padStart(2, '0') nếu cần chính xác
+    const MM = String(date.getMonth() + 1).padStart(2, "0");
+    const dd = String(date.getDate()).padStart(2, "0");
+    const HH = String(date.getHours()).padStart(2, "0");
+    const mm = String(date.getMinutes()).padStart(2, "0");
+    const ss = "00"; // hoặc String(date.getSeconds()).padStart(2, '0') nếu cần chính xác
 
     return `${yyyy}-${MM}-${dd} ${HH}:${mm}:${ss}`;
   }
@@ -185,10 +187,19 @@ export class InfoComponent implements OnInit, OnDestroy {
       "totalQuestions",
       Number(this.getNumberOfQuestion()).toString() // Chuyển thành số
     );
-    examInfoForm.append("description", this.examForm.get("exam_description")?.value);
+    examInfoForm.append(
+      "description",
+      this.examForm.get("exam_description")?.value
+    );
     examInfoForm.append("subject", this.examForm.get("exam_subject")?.value);
-    examInfoForm.append("startDate", this.formatDateTime(this.examForm.get("exam_start_date")?.value));
-    examInfoForm.append("endDate", this.formatDateTime(this.examForm.get("exam_end_date")?.value));
+    examInfoForm.append(
+      "startDate",
+      this.formatDateTime(this.examForm.get("exam_start_date")?.value)
+    );
+    examInfoForm.append(
+      "endDate",
+      this.formatDateTime(this.examForm.get("exam_end_date")?.value)
+    );
     examInfoForm.append(
       "examSessionId",
       Number(this.examSessionId).toString() // Chuyển thành số
@@ -204,6 +215,7 @@ export class InfoComponent implements OnInit, OnDestroy {
   async sendExamInfoToBackend() {
     const numberOfExam = this.getNumberOfExam();
     const numberOfQuestion = this.getNumberOfQuestion();
+    let hasError = false;
 
     for (let i = 1; i <= numberOfExam; i++) {
       const examInfo = this.getExamInfo(i);
@@ -214,21 +226,34 @@ export class InfoComponent implements OnInit, OnDestroy {
       }
 
       try {
-        const response = await lastValueFrom(this.examService.addAutoGenerateExam(examInfo));
+        const response = await lastValueFrom(
+          this.examService.addAutoGenerateExam(examInfo)
+        );
         const examId = response.examId;
-        this.toastr.success(`Tạo bài thi thành công! (ID: ${examId})`, "Thành công");
 
         const result = await lastValueFrom(
-          this.examQuestionService.generateExamQuestions(examId, numberOfQuestion)
+          this.examQuestionService.generateExamQuestions(
+            examId,
+            numberOfQuestion
+          )
         );
         console.log("Kết quả sinh câu hỏi:", result);
-
-        this.toastr.success(`Sinh câu hỏi thành công cho bài thi ${examId}`, "Thành công");
-
       } catch (error) {
-        this.toastr.error("Có lỗi xảy ra khi tạo bài thi hoặc sinh câu hỏi.", "Lỗi");
+        hasError = true;
+        this.toastr.error(
+          "Có lỗi xảy ra khi tạo bài thi hoặc sinh câu hỏi.",
+          "Lỗi"
+        );
         console.error(`Lỗi trong lần lặp thứ ${i}:`, error);
+        break; // Nếu muốn dừng khi gặp lỗi, nếu không thì bỏ dòng này
       }
+    }
+
+    if (!hasError) {
+      this.toastr.success(
+        `Tạo bài thi thành công!`,
+        "Thành công"
+      );
     }
   }
 }

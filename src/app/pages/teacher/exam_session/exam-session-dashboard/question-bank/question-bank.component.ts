@@ -132,13 +132,13 @@ export class QuestionBankComponent {
         next: () => {
           successCount++;
           if (successCount + errorCount === totalQuestions) {
-            this.showResult(successCount, errorCount, "cập nhật");
+            this.showResult(successCount, errorCount, "cập nhật", "Tất cả");
           }
         },
         error: () => {
           errorCount++;
           if (successCount + errorCount === totalQuestions) {
-            this.showResult(successCount, errorCount, "cập nhật");
+            this.showResult(successCount, errorCount, "cập nhật", "Tất cả");
           }
         },
       });
@@ -151,7 +151,7 @@ export class QuestionBankComponent {
     const totalDeletions = this.questionsIdDelete.length;
 
     if (totalDeletions === 0) {
-      this.toastr.info("Không có câu hỏi nào để xóa.", "Thông báo");
+      // this.toastr.info("Không có câu hỏi nào để xóa.", "Thông báo");
       return;
     }
 
@@ -160,13 +160,13 @@ export class QuestionBankComponent {
         next: () => {
           successCount++;
           if (successCount + errorCount === totalDeletions) {
-            this.showResult(successCount, errorCount, "xóa");
+            this.showResult(successCount, errorCount, "xóa", "Câu hỏi");
           }
         },
         error: () => {
           errorCount++;
           if (successCount + errorCount === totalDeletions) {
-            this.showResult(successCount, errorCount, "xóa");
+            this.showResult(successCount, errorCount, "xóa", "Câu hỏi");
           }
         },
       });
@@ -175,11 +175,10 @@ export class QuestionBankComponent {
     this.questionsIdDelete = []; // Reset danh sách sau khi xóa
   }
 
-  private showResult(successCount: number, errorCount: number, action: string) {
+  private showResult(successCount: number, errorCount: number, action: string, countString: string) {
     if (errorCount === 0) {
       this.toastr.success(
-        `Tất cả ${successCount} câu hỏi đã được ${action} thành công!`,
-        "Thành công"
+        `${countString} câu hỏi đã được ${action} thành công!`
       );
     } else {
       this.toastr.error(
