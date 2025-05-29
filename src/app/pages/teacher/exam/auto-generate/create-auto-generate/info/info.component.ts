@@ -250,10 +250,7 @@ export class InfoComponent implements OnInit, OnDestroy {
     }
 
     if (!hasError) {
-      this.toastr.success(
-        `Tạo bài thi thành công!`,
-        "Thành công"
-      );
+      this.toastr.success(`Tạo bài thi thành công!`, "Thành công");
     }
   }
 }
